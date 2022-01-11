@@ -1,0 +1,1 @@
+export const BASE_URL = "http://3.124.117.144/flighteno-services/index.php/"
