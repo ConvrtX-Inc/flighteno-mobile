@@ -221,7 +221,7 @@ export function CancelOrder(data, token, navigation) {
             console.log("Error", error)
         }).then(Response => {
             dispatch({ type: IS_LOADING, isloading: false })
-            navigation.navigate('Transactions')
+            navigation.navigate("BottomTab")
         })
     }
 }
