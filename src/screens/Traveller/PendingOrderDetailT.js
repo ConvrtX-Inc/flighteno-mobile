@@ -1,0 +1,639 @@
+import React, { useState, useEffect } from 'react';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, Modal, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { color } from '../../Utility/Color';
+import { styles } from '../../Utility/Styles';
+import { useSelector, useDispatch } from 'react-redux'
+import QRCode from 'react-native-qrcode-svg';
+import ButtonTraveller from '../../components/ButtonTraveller';
+import { launchImageLibrary } from 'react-native-image-picker';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
+import { formatAmount } from '../../Utility/Utils';
+import ButtonLarge from '../../components/ButtonLarge';
+import Toast from 'react-native-toast-message';
+import { UpdateOrder, CompleteOrder } from '../../redux/actions/Trips'
+import { generateUID } from '../../Utility/Utils';
+import { RNS3 } from 'react-native-aws3';
+import { IS_LOADING } from '../../redux/constants';
+import ViewImages from '../../components/ViewImages'
+import Clipboard from '@react-native-clipboard/clipboard';
+var windowWidth = Dimensions.get('window').width;
+
+var productUri = ""
+var receiptUri = ""
+export default function PendingOrderDetailT({ route }) {
+    const { currentOrder } = route.params
+    const navigation = useNavigation()
+    const dispatch = useDispatch()
+    const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
+    const [showModal, setSHowModal] = useState(false)
+    const [productPic, setProductPic] = useState(currentOrder.new_image ? currentOrder.new_image : "")
+    const [receiptPic, setReceiptPic] = useState(currentOrder.recipt ? currentOrder.recipt : "")
+    const [uploadProductPic, setUploadProductPic] = useState(0)
+    const [uploadReceiptPic, setUploadReceiptPic] = useState(0)
+    const [showQr, setShowQr] = useState(false)
+    const [showQrDetail, setShowQrDetail] = useState(false)
+    const [showProductPic, setShowProductPic] = useState(false)
+    const [showReceiptPic, setShowReceiptPic] = useState(false)
+    const [showProduct, setSHowProduct] = useState(false) 
+
+    const chooseFile = (type) => {
+        let options = {
+            selectionLimit: 1,
+            mediaType: 'photo',
+            includeBase64: false,
+            maxWidth: 1000,
+            maxHeight: 1000
+        };
+        launchImageLibrary(options, (response) => {
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log(
+                    'User tapped custom button: ',
+                    response.customButton
+                );
+                alert(response.customButton);
+            } else {
+                if (type == "product") {
+                    setProductPic(response.assets[0].uri)
+                    setUploadProductPic(1)
+                }
+                else {
+                    setReceiptPic(response.assets[0].uri)
+                    setUploadReceiptPic(1)
+                }
+            }
+        });
+    };
+
+    const onSuccess = e => {
+        if (e.data == currentOrder._id) {
+            setShowQr(false)
+            setShowQrDetail(true)
+        }
+        else {
+            setShowQr(false)
+            Toast.show({
+                type: 'error',
+                text1: 'Alert!',
+                text2: "Order detail does not match!",
+            })
+        }
+
+    };
+    const uploadProductImage = () => {
+        const file = {
+            uri: productPic,
+            name: generateUID() + ".jpg",
+            type: 'image/jpeg'
+        }
+        const options = {
+            keyPrefix: "flighteno/orders/",
+            bucket: "memee-bucket",
+            region: "eu-central-1",
+            accessKey: "AKIA2YJH3TLHCODGDKFV",
+            secretKey: "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",
+            successActionStatus: 201
+        }
+        RNS3.put(file, options).then(response => {
+            if (response.status !== 201)
+                throw new Error("Failed to upload image to S3");
+            productUri = response.body.postResponse.location
+            if (uploadReceiptPic == 1) {
+                uploadReceiptImage()
+            }
+            else {
+                updateUserOrder()
+            }
+        });
+    }
+
+    const uploadReceiptImage = () => {
+        const file = {
+            uri: receiptPic,
+            name: generateUID() + ".jpg",
+            type: 'image/jpeg'
+        }
+        const options = {
+            keyPrefix: "flighteno/orders/",
+            bucket: "memee-bucket",
+            region: "eu-central-1",
+            accessKey: "AKIA2YJH3TLHCODGDKFV",
+            secretKey: "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",
+            successActionStatus: 201
+        }
+        RNS3.put(file, options).then(response => {
+            if (response.status !== 201)
+                throw new Error("Failed to upload image to S3");
+
+            receiptUri = response.body.postResponse.location
+            updateUserOrder()
+
+        });
+    }
+    // dispatch({ type: IS_LOADING, isloading: false })
+    const uploadImages = () => {
+        if (uploadProductPic == 0 && uploadReceiptPic == 0) {
+            Toast.show({
+                type: 'error',
+                text1: 'Alert!',
+                text2: "Nothing to update!",
+            })
+            return
+        }
+        else {
+            dispatch({ type: IS_LOADING, isloading: true })
+            if (uploadProductPic == 1) {
+                uploadProductImage()
+            }
+            else {
+                if (uploadReceiptPic == 1) {
+                    uploadReceiptImage()
+                }
+                else {
+                    updateUserOrder()
+                }
+            }
+        }
+    }
+
+    const updateUserOrder = () => {
+        var data = {
+            order_id: currentOrder._id,
+            image: productUri == "" ? productPic : productUri,
+            recipt: receiptUri == "" ? receiptPic : receiptUri
+        }
+        dispatch(UpdateOrder(data, token, () => {
+            navigation.goBack()
+        }))
+    }
+
+    const orderCompletion = () => {
+        var data = {
+            order_id: currentOrder._id
+        }
+        dispatch(CompleteOrder(data, token, () => {
+            navigation.goBack()
+        }))
+    }
+
+    const checkUploadedFile = (type) => {
+        if (type == 'product') {
+            if (currentOrder.new_image) {
+                setShowProductPic(true)
+            }
+            else {
+                chooseFile(type)
+            }
+        }
+        else {
+            if (currentOrder.recipt) {
+                setShowReceiptPic(true)
+            }
+            else {
+                chooseFile(type)
+            }
+        }
+    }
+
+    const imageProduct = [{
+        url: currentOrder.new_image,
+    }]
+
+    const imageReceipt = [{
+        url: currentOrder.recipt,
+    }]
+
+    const viewImage = (type) => {
+        if (type == "image") {
+            if (order.new_image) {
+                setShowProductPic(true)
+            }
+        }
+        else {
+            if (order.recipt) {
+                setShowReceiptPic(true)
+            }
+        }
+    }
+
+
+    const selectID = (id) => {
+        Clipboard.setString(id)
+        Toast.show({
+            type: 'success',
+            text2: "Copied to clipboard",
+        })
+    }
+
+    return (
+        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+            <ViewImages
+                showImageViewer={showProductPic}
+                images={imageProduct}
+                closeModal={() => setShowProductPic(false)}
+            />
+            <ViewImages
+                showImageViewer={showReceiptPic}
+                images={imageReceipt}
+                closeModal={() => setShowReceiptPic(false)}
+            />
+            <ViewImages
+                showImageViewer={showProduct}
+                images={[{ url: currentOrder.product_image }]}
+                closeModal={() => setSHowProduct(false)}
+            />
+            <ScrollView>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Image
+                        style={styles.backImg}
+                        resizeMode='stretch'
+                        source={require('../../images/back.png')}
+                    />
+                </TouchableOpacity>
+                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
+                    {currentOrder.status == "accepted" ? "Update Order" : "Order Completed"}
+                </Text>
+
+                <View style={Styles.listView}>
+                    <View style={Styles.upperView}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                                <Image source={currentOrder.buyer_details[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: currentOrder.buyer_details[0].profile_image }}
+                                    style={Styles.userImage}
+                                // resizeMode="contain"
+                                />
+                                <Text style={[Styles.userName, { marginLeft: '3%', flexWrap: 'wrap' }]}>
+                                    {currentOrder.buyer_details[0].full_name}
+                                </Text>
+                            </View>
+                            <View style={[Styles.dateView, { backgroundColor: currentOrder.status == "accepted" ? '#F2BA39' : "#36C5F0" }]}>
+                                <Text style={Styles.dateText}>
+                                    {currentOrder.status == "accepted" ? "Pending" : "Completed"}
+                                </Text>
+                            </View>
+                        </View>
+                        <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
+                            <View>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</Text>
+                                <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_buy_city_name}</Text>
+                                <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_buy_country_name}</Text>
+                            </View>
+                            <Image source={require("../../images/travel1.png")}
+                                resizeMode="contain"
+                                style={{ height: 60, width: 60 }}
+                            />
+                            <View>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</Text>
+                                <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_dilivery_city_name}</Text>
+                                <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_dilivery_country_name}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={{ height: 1, backgroundColor: 'gray' }} />
+                    <View style={Styles.bottomView}>
+                        <TouchableOpacity onPress={() => setSHowProduct(true)} activeOpacity={1}>
+                        <Image source={{ uri: currentOrder.product_image }}
+                            style={Styles.productImage}
+                        />
+                        </TouchableOpacity>
+                        <Text style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{currentOrder.name}</Text>
+                        <Text style={Styles.priceText}>
+                            $ {currentOrder.Total}
+                        </Text>
+                    </View>
+                    {currentOrder.url != "" ?
+                        <View style={styles.productDesc}>
+                            <View style={styles.productDescInerFirst}>
+                                <Text style={styles.productAtrributeHead}>Color</Text>
+                                <Text style={styles.productAtrributeHead}>Weight</Text>
+                                <Text style={styles.productAtrributeHead}>Condition</Text>
+                            </View>
+                            <View style={styles.productDescInerSecond}>
+                                <Text style={styles.productAtrribute}>Black/ Gray</Text>
+                                <Text style={styles.productAtrribute}>1.5 Kg</Text>
+                                <Text style={styles.productAtrribute}>Original, Brand New</Text>
+                            </View>
+                        </View>
+                        : null}
+                    <View style={Styles.bottomView}>
+                        {currentOrder.open_box_check_phisical_apperance == true && currentOrder.use_item_for_testing == true ?
+                            <Text style={styles.productAtrributeHead}>Traveler were allowed to:</Text>
+                            : null}
+                        {currentOrder.open_box_check_phisical_apperance == true ?
+                            <Text style={Styles.priceText}>
+                                Open box and check physical Apperance
+                            </Text>
+                            : null}
+                        {currentOrder.use_item_for_testing == true ?
+                            <Text style={Styles.priceText}>
+                                Use item for testing
+                            </Text>
+                            : null}
+                        <Text style={[Styles.priceText, { marginTop: 10 }]}>
+                            {currentOrder.product_discription}
+                        </Text>
+                    </View>
+
+                </View>
+
+
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                    Upload picture of product
+                </Text>
+                <TouchableOpacity
+                    activeOpacity={currentOrder.status == "accepted" ? 0 : 1}
+                    onPress={() => checkUploadedFile('product')} style={Styles.productImageContainer}>
+                    {productPic ?
+                        <Image
+                            source={{ uri: productPic }}
+                            style={Styles.productImageContainer}
+                        />
+                        :
+                        <Image
+                            source={require('../../images/cameraImg.png')}
+                            style={Styles.innerImage}
+                            resizeMode="contain"
+                        />
+                    }
+                </TouchableOpacity>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                    Upload Receipt
+                </Text>
+                <TouchableOpacity
+                    activeOpacity={currentOrder.status == "accepted" ? 0 : 1}
+                    onPress={() => checkUploadedFile('receipt')} style={Styles.productImageContainer}>
+                    {receiptPic ?
+                        <Image
+                            source={{ uri: receiptPic }}
+                            style={Styles.productImageContainer}
+                        />
+                        :
+                        <Image
+                            source={require('../../images/cameraImg.png')}
+                            style={Styles.innerImage}
+                            resizeMode="contain"
+                        />
+                    }
+                </TouchableOpacity>
+                {!showQrDetail && currentOrder.status == "accepted" ?
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                        Scan QR Code
+                    </Text>
+                    : null}
+                {!showQrDetail && currentOrder.status == "accepted" ?
+                    <TouchableOpacity disabled={currentOrder.status == "accepted" ? false : true} onPress={() => setShowQr(true)} style={Styles.productImageContainer}>
+                        <Image
+                            source={require('../../images/qrCode.png')}
+                            style={Styles.innerImage}
+                            resizeMode="contain"
+                        />
+                    </TouchableOpacity>
+                    : null}
+                {showQrDetail || currentOrder.status == "complete" ?
+                    <View style={{ backgroundColor: color.inputBackColor, width: '90%', alignSelf: 'center', borderRadius: 12, marginVertical: 10 }}>
+                        <View style={{ alignSelf: "center", marginTop: 50, }}>
+                            <QRCode
+                                value={currentOrder._id}
+                            />
+                        </View>
+
+                        <View style={styles.ordernumberStyle}>
+
+                            <View style={styles.orderNumberIst}>
+                                <Text style={styles.loginInputHeading}>Order No.</Text>
+
+                            </View>
+                            <View style={styles.orderNumberSecond}>
+
+                                <Text onLongPress={() => selectID(currentOrder._id)} style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    {currentOrder._id}
+                                </Text>
+                            </View>
+
+                        </View>
+
+                        <View style={styles.orderBillStyle}>
+
+                            <View style={styles.billLeft}>
+                                <Text style={styles.loginInputHeading}>Order price</Text>
+                            </View>
+
+                            <View style={styles.billRight}>
+                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    {formatAmount(currentOrder.product_price)}
+                                </Text>
+                            </View>
+
+                        </View>
+
+                        <View style={styles.orderBillStyle}>
+
+                            <View style={[styles.billLeft, { marginTop: 2 }]}>
+                                <Text style={styles.loginInputHeading}>Estimated Delivery Fee</Text>
+                            </View>
+
+                            <View style={[styles.billRight, { marginTop: 2 }]}>
+                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    {formatAmount(currentOrder.estimated_dilivery_fee)}
+                                </Text>
+                            </View>
+
+                        </View>
+
+
+                        <View style={styles.orderBillStyle}>
+
+                            <View style={[styles.billLeft, { marginTop: 2 }]}>
+                                <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                            </View>
+
+                            <View style={[styles.billRight, { marginTop: 2 }]}>
+                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    {formatAmount(currentOrder.vip_service_fee)}
+                                </Text>
+                            </View>
+
+                        </View>
+
+                        <View style={styles.orderBillStyle}>
+
+                            <View style={[styles.billLeft, { marginTop: 2 }]}>
+                                <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                            </View>
+
+                            <View style={[styles.billRight, { marginTop: 2 }]}>
+                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    {formatAmount(currentOrder.flighteno_cost)}
+                                </Text>
+                            </View>
+
+                        </View>
+
+
+                        <View style={styles.orderBillStyle}>
+
+                            <View style={[styles.billLeft, { marginTop: 2 }]}>
+                                <Text style={styles.loginInputHeading}>Tax</Text>
+                            </View>
+
+                            <View style={[styles.billRight, { marginTop: 2 }]}>
+                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    {formatAmount(currentOrder.tax)}
+                                </Text>
+                            </View>
+
+                        </View>
+
+                        <View style={styles.orderBillStyle}>
+
+                            <View style={[styles.billLeft, { marginTop: 2 }]}>
+                                <Text style={styles.textLarge}>Total</Text>
+                            </View>
+
+                            <View style={[styles.billRight, { marginTop: 2 }]}>
+                                <Text style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    {formatAmount(currentOrder.Total)}
+                                </Text>
+                            </View>
+
+                        </View>
+                    </View>
+                    : null}
+                {showQr ?
+                    <QRCodeScanner
+                        onRead={onSuccess}
+                        flashMode={RNCamera.Constants.FlashMode.torch.off}
+                        cameraStyle={{ height: 300, width: '50%', alignSelf: 'center', borderRadius: 10 }}
+                        topContent={
+                            <Text style={[styles.loginInputHeading, { marginVertical: 10 }]}>
+                                Scan your Code
+                            </Text>
+                        }
+                        bottomContent={
+                            <TouchableOpacity onPress={() => setShowQr(false)} style={Styles.buttonTouchable}>
+                                <Text style={Styles.buttonText}>OK. Got it!</Text>
+                            </TouchableOpacity>
+                        }
+                    />
+                    : null}
+                {currentOrder.status == "accepted" ?
+                    <View style={{ marginVertical: 20 }}>
+                        {!showQrDetail ?
+                            <ButtonTraveller
+                                loader={loading}
+                                title="Save"
+                                onPress={() => uploadImages()}
+                            />
+                            :
+                            <ButtonLarge
+                                title="Complete Order"
+                                loader={loading}
+                                onPress={() => orderCompletion()}
+                            />
+                        }
+                    </View>
+                    : <View style={{ height: 20 }} />}
+            </ScrollView>
+        </View>
+    );
+}
+
+const Styles = StyleSheet.create({
+    listView: {
+        paddingVertical: 20,
+        backgroundColor: color.inputBackColor,
+        width: '90%',
+        alignSelf: 'center',
+        borderRadius: 10,
+        marginBottom: 20
+    },
+    upperView: {
+        paddingHorizontal: '5%'
+    },
+    userImage: {
+        height: 40,
+        width: 40,
+        borderRadius: 20
+    },
+    userName: {
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    bottomView: {
+        paddingHorizontal: '5%',
+        marginTop: 20,
+
+    },
+    productImage: {
+        height: 90,
+        width: '100%',
+        borderRadius: 10
+    },
+    priceText: {
+        fontSize: 16,
+        fontWeight: '900',
+        color: color.skipTextColor
+    },
+    dateView: {
+        height: 32,
+        width: 90,
+        borderRadius: 20,
+        backgroundColor: color.lightBlue,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 'auto'
+    },
+    dateText: {
+        fontSize: 14,
+        color: color.backgroundColor,
+    },
+    userView: {
+        flexDirection: 'row',
+        marginHorizontal: '5%',
+        marginVertical: 20,
+        alignItems: 'center'
+    },
+    productImageContainer: {
+        height: 200,
+        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        borderRadius: 10,
+        backgroundColor: color.inputBackColor
+    },
+    innerImage: {
+        height: 60,
+        width: 70
+    },
+    bottomText: {
+        fontSize: 17,
+        textAlign: 'center',
+        marginTop: 20,
+        color: color.skipTextColor,
+        textTransform: "uppercase"
+    },
+    centerText: {
+        fontSize: 18,
+        color: 'black',
+        marginBottom: 20
+    },
+    textBold: {
+        fontWeight: '500',
+        color: '#000'
+    },
+    buttonText: {
+        fontSize: 21,
+        color: 'rgb(0,122,255)'
+    },
+    buttonTouchable: {
+        padding: 16
+    }
+})
