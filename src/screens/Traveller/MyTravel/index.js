@@ -67,8 +67,9 @@ export default function MyTravel({ route }) {
     const [country, setCountryOrigin] = useState(currentCountry)
     const [countryDeliver, setCountryDestination] = useState(currentCountry)
 
-    const [pickerValuesCity, setPickerValuesCity] = useState(countries[country.country_name]);
-    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState(countries[country.country_name]);
+    // [...new Set(countries[country.country_name])]
+    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country.country_name])]);
+    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country.country_name])]);
 
     const [pickerShowCity, setPickerShowCity] = useState(false);
     const [pickerValueSelectedCity, setPickerValueSelectedCity] = useState(currentCountry.city);
@@ -126,11 +127,13 @@ export default function MyTravel({ route }) {
     const searchCitiesOrigin = (text) => {
         if (originCities != undefined) {
             var seachedCity = originCities.filter(function search(city) { return city.toUpperCase().includes(text.toUpperCase()) })
-            if (text == "") {
-                setPickerValuesCity(originCities)
+            if (text == "") {  
+                 /*Fix for FLIGHT-19*/
+                setPickerValuesCity([...new Set(originCities)])
             }
             else {
-                setPickerValuesCity(seachedCity)
+                 /*Fix for FLIGHT-19*/
+                setPickerValuesCity([...new Set(seachedCity)])
             }
         }
     }
@@ -139,10 +142,12 @@ export default function MyTravel({ route }) {
         if (destinationCities != undefined) {
             var seachedCity = destinationCities.filter(function search(city) { return city.toUpperCase().includes(text.toUpperCase()) })
             if (text == "") {
-                setPickerValuesCityDeliver(destinationCities)
+                /*Fix for FLIGHT-19*/
+                setPickerValuesCityDeliver([...new Set(destinationCities)])
             }
             else {
-                setPickerValuesCityDeliver(seachedCity)
+                 /*Fix for FLIGHT-19*/
+                setPickerValuesCityDeliver([...new Set(seachedCity)])
             }
         }
     }
@@ -489,7 +494,7 @@ export default function MyTravel({ route }) {
                                 </View>
 
                             }
-                            keyExtractor={item => item.id}
+                            keyExtractor={(item, index) => item.key}
                             style={{ borderRadius: 100, marginTop: 3 }}
                         />
                     </View>
@@ -543,7 +548,7 @@ export default function MyTravel({ route }) {
                                 </View>
 
                             }
-                            keyExtractor={item => item.id}
+                            keyExtractor={(item, index) => item.key}
                             style={{ borderRadius: 100, marginTop: 3 }}
                         />
                     </View>
