@@ -5,10 +5,9 @@ import { styles } from '../../Utility/Styles';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
-
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
-import { verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
+import { verificationCodeAction, verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
 
 
 
@@ -38,7 +37,6 @@ export default function VerifyCode({ route }) {
     }, []);
 
 
-
     const verifyCodeFN = () => {
 
         if (code.length < 4) {
@@ -54,11 +52,11 @@ export default function VerifyCode({ route }) {
         form_data.append("code", code)
         form_data.append("phoneNumber", cellNoParam)
 
+
         dispatch(verifyOtpCodeResetPasswordAction(
             form_data,
             () => {
                 setcode("")
-
             },
             () => {
                 navigation.navigate('NewPassword', { cellno: cellNoParam })
@@ -73,6 +71,30 @@ export default function VerifyCode({ route }) {
 
         ))
 
+    }
+
+    /*Fix for FLIGHT-6*/
+    const resendOtp = () => {
+       
+        const form_data = new FormData()
+        form_data.append("phoneNumber", cellNoParam)
+
+        dispatch(verificationCodeAction(
+            form_data,
+            () => {
+                setcode("")
+            },
+            () => {
+                console.log("")
+            },
+            () => {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Alert!',
+                    text2: "Invalid OTP",
+                })
+            }
+        ))
     }
 
 
@@ -105,10 +127,11 @@ export default function VerifyCode({ route }) {
                         setcode(code)
                     })}
                 />
-
-
-
-
+                {/* Fix for FLIGHT-6 */}
+                <Text style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>Didn’t receive code?</Text>
+                <TouchableOpacity onPress={() => resendOtp()}>
+                    <Text style={styles.resentPassTxt}>Resend OTP</Text>
+                </TouchableOpacity>
 
             </ScrollView>
 
