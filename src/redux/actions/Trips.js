@@ -220,6 +220,7 @@ export function CancelOrder(data, token, navigation) {
             dispatch({ type: IS_LOADING, isloading: false })
             console.log("Error", error)
         }).then(Response => {
+            /*Fix for FLIGHT-15*/
             dispatch({ type: IS_LOADING, isloading: false })
             navigation.navigate("BottomTab")
         })
