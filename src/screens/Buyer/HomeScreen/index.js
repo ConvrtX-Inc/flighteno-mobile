@@ -182,6 +182,8 @@ export default function HomeScreen() {
                                         <Image
                                             style={styles.trendingListimg}
                                             source={{ uri: item.product_image }}
+                                            resizeMode='contain'
+
                                         />
                                     </View>
                                 </TouchableOpacity>
@@ -217,7 +219,7 @@ export default function HomeScreen() {
                                             <Text style={styles.countryName}>{' ' + item.product_buy_country_name}</Text>
                                         </View>
 
-                                        <Text style={{ fontSize: 13 }}>{formatAmount(item.Total)}</Text>
+                                        <Text style={{ fontSize: 14, fontWeight:'bold' }}>{formatAmount(item.Total)}</Text>
                                     </View>
 
                                 </TouchableOpacity>
