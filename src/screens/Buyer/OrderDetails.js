@@ -45,6 +45,7 @@ export default function OrderDetails({ route }) {
         // profileRequest.append('admin_id', order?.admin_id)
         // dispatch(GetProfile(profileRequest, token, (data) => {
         //     console.log(data)
+        // }))
 
         // if(true) {
         // if ((order.status == 'accepted' || order.status == 'complete') && order.traveler_id && order.traveler_id.length > 0) {
