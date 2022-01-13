@@ -48,14 +48,16 @@ export default function SelectCountry({ route }) {
     const [country, setCountryOrigin] = useState(currentCountry)
     const [countryDeliver, setCountryDestination] = useState(currentCountry)
 
-    const [pickerValuesCity, setPickerValuesCity] = useState(countries[country.country_name]);
-    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState(countries[country.country_name]);
+    /*Fix for FLIGHT-11*/
+    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country.country_name])]);
+    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country.country_name])]);
 
     const [pickerValueSelectedCity, setPickerValueSelectedCity] = useState(currentCountry.city);
     const [pickerValueSelectedCityDeliver, setPickerValueSelectedCityDeliver] = useState(currentCountry.city);
 
     originCities = countries[country.country_name ? country.country_name : country.name];
     destinationCities = countries[countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name];
+
 
     const onSelect = (selectedCountry) => {
         setCountryCode(selectedCountry.cca2)
@@ -100,10 +102,13 @@ export default function SelectCountry({ route }) {
         if (originCities != undefined) {
             var seachedCity = originCities.filter(function search(city) { return city.toUpperCase().includes(text.toUpperCase()) })
             if (text == "") {
-                setPickerValuesCity(originCities)
+                /*Fix for FLIGHT-11*/
+                setPickerValuesCity([...new Set(originCities)])
             }
             else {
-                setPickerValuesCity(seachedCity)
+                /*Fix for FLIGHT-11*/
+                setPickerValuesCity([...new Set(seachedCity)])
+               
             }
         }
     }
