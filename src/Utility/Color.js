@@ -12,7 +12,8 @@ export const color = {
     buyerTxtBottomColor: '#FFDBEE',
     userNameHomeColor: '#717171',
     countrtTextColor: '#656F85',
-
+    lightGrayColor: '#F6F9FF',
+    inputBorderColor: 'rgba(0,0,0,0.3)',
     otpInputBottomBorderColor: '#B11545',
     travelDateBorderColor: '#D2D2D2',
     travelerListTitle: "#5B5B5B",
