@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { colors } from "react-native-elements";
 import { color } from "../../../Utility/Color";
 
 
@@ -7,15 +6,23 @@ export const styles = StyleSheet.create(
     {
     container:{
         marginLeft:16,
-        marginRight:16
+        marginRight:16,
+        flex:1,
     },
     titleTxt:{
         fontSize:26,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        marginTop:36  
+    },
+    idTypeTxt:{
+        marginTop:16
     },
     idPicture: {
         width:212,
         height:175
+    },
+    stepIndicator:{
+        marginTop:16
     },
     idContainer:{
         flex:1,
@@ -24,17 +31,37 @@ export const styles = StyleSheet.create(
         padding:16,
         borderRadius:16,
         borderWidth:1,
-        borderColor:color.inputBorderColor,
+        borderColor:color.lightGrayColor,
         marginTop:8
     },
+    
     inputLabel:{
         fontSize:14,
         fontWeight:'bold'
     },
+    idNoField:{
+        marginTop:32
+    },
+    inputIdNo:{
+        marginTop:8
+    },
     frontPicTxt: {
-        
+        marginTop:50
     },
     backPicTxt: {
         marginTop:32
+    },
+    dropDown:{
+        borderColor:color.lightGrayColor,
+        borderRadius:100,
+        marginTop:8,
+        backgroundColor:color.lightGrayColor
+    },
+    dropDownContainer: {
+        borderColor:'transparent',   
+    },
+    btnNext: {
+        marginTop:24,
+        marginBottom:24
     }
 })

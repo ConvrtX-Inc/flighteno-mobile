@@ -1,66 +1,102 @@
-import React from 'react';
-import { Text, TouchableOpacity, View, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View, Image, ScrollView, ImagePickerIOS } from 'react-native';
 import ButtonLarge from '../../../components/ButtonLarge';
-import Input from '../../../components/InputField';
 import { styles } from './styles';
-import StepIndicator from 'react-native-step-indicator';
+import DropDownPicker from 'react-native-dropdown-picker';
+import * as ImagePicker from 'react-native-image-picker';
+import InputText from '../../../components/InputText';
+import StepsIndicator from '../../../components/StepsIndicator';
 
-const customStyles = {
-    stepIndicatorSize: 25,
-    currentStepIndicatorSize:30,
-    separatorStrokeWidth: 2,
-    currentStepStrokeWidth: 3,
-    stepStrokeCurrentColor: '#fe7013',
-    stepStrokeWidth: 3,
-    stepStrokeFinishedColor: '#fe7013',
-    stepStrokeUnFinishedColor: '#aaaaaa',
-    separatorFinishedColor: '#fe7013',
-    separatorUnFinishedColor: '#aaaaaa',
-    stepIndicatorFinishedColor: '#fe7013',
-    stepIndicatorUnFinishedColor: '#ffffff',
-    stepIndicatorCurrentColor: '#ffffff',
-    stepIndicatorLabelFontSize: 13,
-    currentStepIndicatorLabelFontSize: 13,
-    stepIndicatorLabelCurrentColor: '#fe7013',
-    stepIndicatorLabelFinishedColor: '#ffffff',
-    stepIndicatorLabelUnFinishedColor: '#aaaaaa',
-    labelColor: '#999999',
-    labelSize: 13,
-    currentStepLabelColor: '#fe7013'
-  }
-  const labels = ["Cart","Delivery Address","Order Summary","Payment Method","Track"];
 
-export default function  SelectIDScreen (){
+export default function  SelectIDScreen ({navigation}){
+
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'Permanent Resident Card', value: 'permanent-resident-card'},
+        {label: 'SSS', value: 'sss'}
+    ]);
+    const [frontImage, setFrontImage] = useState('')
+    const [backImage, setBackImage] = useState('')
+
+    const onImagePickerLaunch = () => {
+
+        let options = {
+            title: 'Select Image',
+            customButtons:[
+                { name: 'customOptionKey', title:'Choose Photo from Custom Option' }
+            ],
+            storageOptions: {
+                skipBackup: true,
+                path:'images'
+            }
+        }
+
+        ImagePicker.launchImageLibrary(options, (response) => {
+            console.log(response)
+        })
+
+        
+    }
+
+    const onFrontPictureTap = () => {
+        onImagePickerLaunch()
+        console.log('on front tap')
+    }
+
+    const onBackPictureTap = () => {
+        onImagePickerLaunch()
+        console.log('on front tap')
+    }
+
+    const onNextTap = () => {
+        console.log('next tap')
+        navigation.navigate('KYCFillOut')
+    }
+
+
     return (
         <ScrollView  style={styles.container}>
-
             <View>
-                 <StepIndicator
-         customStyles={customStyles}
-        //  currentPosition={this.state.currentPosition}
-         labels={labels}
-    />
                 <Text style={styles.titleTxt}>Id Verification</Text>
-                <Text style={[styles.inputLabel]}>ID Type</Text>
-                <View>
-                    <Text>Permanent Resident Card</Text>
+
+                <View style={styles.stepIndicator}>
+                    <StepsIndicator currentPosition={1}/>
                 </View>
 
-                <Text style={styles.inputLabel}>ID No.</Text>
-                <Input />
+                <Text style={[styles.inputLabel, styles.idTypeTxt]}>ID Type</Text>
 
-                <Text style={[ styles.inputLabel,styles.frontPicTxt]}>Upload front picture</Text>
-                <TouchableOpacity style={styles.idContainer}>
+                <DropDownPicker
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    style={styles.dropDown}
+                    dropDownContainerStyle={styles.dropDownContainer}
+                    showTickIcon={false}
+                />
+            
+                <Text style={[styles.inputLabel,styles.idNoField]}>ID No.</Text>
+
+                <View style={styles.inputIdNo}>
+                    <InputText placeholder='CADL-1231231233' />
+                </View>
+                
+
+                <Text style={[ styles.inputLabel,styles.frontPicTxt]}>Upload front picture of ID</Text>
+                <TouchableOpacity style={styles.idContainer} onPress={onFrontPictureTap}> 
                     <Image source={require('../../../images/frontIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>
 
                 <Text style={[styles.inputLabel,styles.backPicTxt]}>Upload back picture of ID</Text>
-                <TouchableOpacity style={styles.idContainer}>
+                <TouchableOpacity style={styles.idContainer} onPress={onBackPictureTap}>
                     <Image source={require('../../../images/backIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>
 
-                <View>
-                    <ButtonLarge loader={false} title="Next" />
+                <View style={styles.btnNext}>
+                    <ButtonLarge loader={false} title="Next" onPress={onNextTap} />
                 </View>
             
             </View>
