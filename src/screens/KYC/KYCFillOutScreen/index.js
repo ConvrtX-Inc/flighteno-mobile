@@ -6,12 +6,30 @@ import StepsIndicator from '../../../components/StepsIndicator';
 import PhoneInput from "react-native-phone-number-input";
 import { styles } from './styles';
 import { useRef, useState  } from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePickerField from '../../../components/DatePicker';
+import moment from 'moment';
+import { useCallback } from 'react';
 
 export default function KYCFillOutScreen (){
 
     const phoneInput = useRef()
 
     const [cellno, setCellNo] = useState('');
+    const [date, setDate] = useState(new Date());
+    const [dateValue, setDateValue] = useState("MM/DD/YYYY");
+    const [onDatePickerShow, setDatePickerShow] = useState(false)
+
+
+    const onDatePickerChange = (event) => {
+        setDatePickerShow(!onDatePickerShow)
+        const currentDate = event?.timestamp || date
+        setDateValue(moment(currentDate).format("MM/DD/YYYY"))
+        setDate( event?.timestamp)
+    }
+    const onDatePickerTap = () => {
+        setDatePickerShow(!onDatePickerShow)
+    }
 
     return(
         <ScrollView  style={styles.container}>
@@ -21,7 +39,6 @@ export default function KYCFillOutScreen (){
                     <StepsIndicator currentPosition={3}/>
                 </View>
                 
-
                 <View style={styles.textField}>
                     <Text style={[styles.inputLabel]}>First Name</Text>
                     <InputText style={styles.inputTxt} placeholder='Yasmin'/>
@@ -54,7 +71,9 @@ export default function KYCFillOutScreen (){
 
                 <View style={styles.textField}>
                     <Text style={[styles.inputLabel]}>Birthdate</Text>
-                    <InputText style={styles.inputTxt}/>
+                    <DatePickerField onPress={() => {
+                        onDatePickerTap()
+                    }} date={dateValue}/>
                 </View>
 
                 <View style={styles.textField}>
@@ -75,8 +94,7 @@ export default function KYCFillOutScreen (){
                             placeholderTextColor: "#707070",
                             keyboardType: "phone-pad",
                             placeholder: "123-456-789",
-                    }}
-                />
+                        }}/>
  
                     </View>
                 </View>
@@ -86,7 +104,24 @@ export default function KYCFillOutScreen (){
                 <View style={styles.btnSubmit}>
                     <ButtonLarge title='Submit' loader={false}/>
                 </View>
-                
+
+
+                {onDatePickerShow  && (
+                    <DateTimePicker
+                        testID='dateTimePicker'
+                        value={date}
+                        mode='date'
+                        display='default'   
+                        // onChange={onDatePickerChange}
+                        onChange={({nativeEvent}) => {
+                            // console.log(nativeEvent)
+                            onDatePickerChange(nativeEvent)
+                            
+                            
+                        }}
+                        minimumDate={new Date()}
+                    />
+                )}
 
             </View>
         </ScrollView>

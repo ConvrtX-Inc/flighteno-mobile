@@ -479,7 +479,6 @@ export default function ManualProductInfo({ route }) {
                                 source={require('../../../images/calendar.png')}
                             />
                         </View>
-
                     </View>
                 </Pressable>
 
@@ -619,11 +618,6 @@ export default function ManualProductInfo({ route }) {
                 )}
                 <Text></Text>
             </ScrollView>
-
-
-
-
-
 
         </View>
     );
