@@ -51,7 +51,7 @@ export default function  SelectIDScreen ({navigation}){
 
     const onNextTap = () => {
         console.log('next tap')
-        navigation.navigate('KYCFillOut')
+        navigation.navigate('KYCSendVerification')
     }
 
 

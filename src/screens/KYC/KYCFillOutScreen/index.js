@@ -11,7 +11,7 @@ import DatePickerField from '../../../components/DatePicker';
 import moment from 'moment';
 import { useCallback } from 'react';
 
-export default function KYCFillOutScreen (){
+export default function KYCFillOutScreen ({navigation}){
 
     const phoneInput = useRef()
 
@@ -27,8 +27,13 @@ export default function KYCFillOutScreen (){
         setDateValue(moment(currentDate).format("MM/DD/YYYY"))
         setDate( event?.timestamp)
     }
+
     const onDatePickerTap = () => {
         setDatePickerShow(!onDatePickerShow)
+    }
+
+    const onSubmitTap = () => {
+        navigation.navigate('KYCTermsPrivacy')
     }
 
     return(
@@ -102,7 +107,7 @@ export default function KYCFillOutScreen (){
 
                
                 <View style={styles.btnSubmit}>
-                    <ButtonLarge title='Submit' loader={false}/>
+                    <ButtonLarge title='Submit' loader={false} onPress={onSubmitTap}/>
                 </View>
 
 
