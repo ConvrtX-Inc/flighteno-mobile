@@ -38,19 +38,28 @@ export default function OrderDetails({ route }) {
         if (order.rated_admin_id) {
             setRated(order.rated_admin_id.find(check))
         }
+        
+        console.log(order?.traveler_id)
+
+        // const profileRequest = new FormData()
+        // profileRequest.append('admin_id', order?.admin_id)
+        // dispatch(GetProfile(profileRequest, token, (data) => {
+        //     console.log(data)
+        // }))
+
+        // if(true) {
+        // if ((order.status == 'accepted' || order.status == 'complete') && order.traveler_id && order.traveler_id.length > 0) {
+        //     var obj = {
+        //         admin_id: order.traveler_id[0].traveler_id
+        //     }
+        //     dispatch(GetProfile(obj, token, (data) => {
+        //         setTraveler(data)
+        //         console.log(data)
+        //     }))
+        // }
+
     }, [])
 
-    useEffect(() => {
-        // if(true) {
-        if ((order.status == 'accepted' || order.status == 'complete') && order.traveler_id && order.traveler_id.length > 0) {
-            var obj = {
-                admin_id: order.traveler_id[0].traveler_id
-            }
-            dispatch(GetProfile(obj, token, (data) => {
-                setTraveler(data)
-            }))
-        }
-    }, [])
 
     function cancelOrder() {
         var obj = {
@@ -110,18 +119,18 @@ export default function OrderDetails({ route }) {
                     />
                 </TouchableOpacity>
                 <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order Details</Text>
-                {traveler ?
+                {!traveler ?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
-                            source={traveler.profile_image ? { uri: traveler.profile_image } : require('../../images/manProfile.png')}
+                            source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
                             style={styles.profileImage}
                         />
                         <View style={{ marginLeft: '3%' }}>
-                            <Text style={Styles.userName}>{traveler.full_name}</Text>
+                            <Text style={Styles.userName}>{traveler?.full_name}</Text>
                             <View>
                                 <View style={{}}>
                                     <AirbnbRating
-                                        defaultRating={traveler.traveler_ratting.length != 0 ? traveler.traveler_ratting[0].avg_rating : 0}
+                                        defaultRating={traveler?.traveler_ratting.length != 0 ? traveler?.traveler_ratting[0]?.avg_rating : 0}
                                         type='star'
                                         ratingCount={5}
                                         size={15}
@@ -129,11 +138,11 @@ export default function OrderDetails({ route }) {
                                         isDisabled={true}
                                     />
                                 </View>
-                                <Text style={styles.ratingText}>{traveler.traveler_ratting.length != 0 ? traveler.traveler_ratting[0].avg_rating : 0} Out of 5.0</Text>
+                                <Text style={styles.ratingText}>{traveler?.traveler_ratting.length != 0 ? traveler?.traveler_ratting[0].avg_rating : 0} Out of 5.0</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
-                    : null}
+                 : null}
                 <CardOrder
                     order={order}>
                 </CardOrder>

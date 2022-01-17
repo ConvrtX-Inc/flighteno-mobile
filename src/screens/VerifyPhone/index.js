@@ -43,6 +43,7 @@ export default function VerifyPhone({ route }) {
     ///////////////////////////////////Get Code For Phone Verification/////////////////////////////
     const VeryfyPhoneFunction = () => {
 
+        // console.log(code)
 
         if (code == "") {
             Toast.show({
@@ -60,6 +61,8 @@ export default function VerifyPhone({ route }) {
         register_data.append("password", passwordParam)
         register_data.append("date", moment().format("YYYY-MM-DD hh:mm:ss"))
 
+
+        // console.log(register_data)
         const form_data = new FormData()
         form_data.append("code", code)
         form_data.append("phoneNumber", cellNoParam)
