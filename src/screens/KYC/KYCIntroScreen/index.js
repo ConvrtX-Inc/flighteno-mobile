@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Image, Text, View } from 'react-native';
+import { Alert, Image, ScrollView, Text, View } from 'react-native';
 import ButtonLarge from '../../../components/ButtonLarge';
 import { styles } from './styles';
 
@@ -16,15 +16,18 @@ export default function KYCIntroScreen({navigation}){
     }
 
     return(
-       <View style={styles.container}>
-           <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
-           <Text style={styles.title}>Your Account{"\n"}is not yet verified</Text>
-           <Text style={styles.desc}>Complete your profile to unlock{"\n"}more flighteno feature</Text>
-           <Image source={require('../../../images/kycVerification.png')}  style={styles.kycImage} />
+        <ScrollView>
+            <View style={styles.container}>
+                <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
+                <Text style={styles.title}>Your Account{"\n"}is not yet verified</Text>
+                <Text style={styles.desc}>Complete your profile to unlock{"\n"}more flighteno feature</Text>
+                <Image source={require('../../../images/kycVerification.png')}  style={styles.kycImage} />
 
-           <View style={styles.btnGetStarted}>
-                <ButtonLarge loader={false} title="Get Started" onPress={onGetStartedTap} />
-           </View> 
+               <View style={styles.btnGetStarted}>
+                    <ButtonLarge loader={false} title="Get Started" onPress={onGetStartedTap} />
+               </View> 
        </View> 
+        </ScrollView>
+       
     )
-}   ``
+}   

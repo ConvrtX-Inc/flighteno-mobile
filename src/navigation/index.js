@@ -52,6 +52,7 @@ import SelectIDScreen from '../screens/KYC/SelectIDScreen';
 import KYCFillOutScreen from '../screens/KYC/KYCFillOutScreen';
 import KYCSelfieVerificationScreen from '../screens/KYC/KYCSelfieVerificationScreen';
 import KYCTermsPrivacyScreen from '../screens/KYC/KYCTermsPrivacyScreen';
+import KYCIDVerificationCameraScreen from '../screens/KYC/KYCIDVerificationCameraScreen';
 // https://extreme-ip-lookup.com/json/
 // https://geolocation-db.com/json/
 
@@ -71,12 +72,13 @@ function Navigation() {
     }, [])
     const { currentUser, currentProfile, token, firstLaunch } = useSelector(({ authRed }) => authRed)
     return (
-        <Stack.Navigator initialRouteName='KYCIntro'>
+        <Stack.Navigator initialRouteName='KYCIDVerificationCamera'>
             <Stack.Screen name="KYCIntro" component={KYCIntroScreen}/>
             <Stack.Screen name="KYCSelectID" component={SelectIDScreen}/>
             <Stack.Screen name='KYCFillOut' component={KYCFillOutScreen} />
             <Stack.Screen name='KYCSendVerification' component={KYCSelfieVerificationScreen} />
             <Stack.Screen name='KYCTermsPrivacy' component={KYCTermsPrivacyScreen} />
+            <Stack.Screen name='KYCIDVerificationCamera' component={KYCIDVerificationCameraScreen} />
         </Stack.Navigator>
         // currentUser ?
         //     <Stack.Navigator
@@ -172,7 +174,6 @@ function Navigation() {
                     
 
         //     </Stack.Navigator>
-
     );
 }
 
