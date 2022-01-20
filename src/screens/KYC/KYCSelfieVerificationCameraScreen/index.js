@@ -6,21 +6,22 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { styles } from './styles';
 
 
-export default function KYCIDVerificationCameraScreen(){
+export default function KYCSelfieVerificationCameraScreen({navigation}){
 
     const cameraRef = useRef()
     const [canDetectFaces,setCanDetectFaces] = useState(false)
+    const [cameraProgress, setCameraProgress] = useState(0)
 
     const facesDetected = ({faces}) => {
-        const rightEye = faces[0].rightEyeOpenProbability;
-        const leftEye = faces[0].leftEyeOpenProbability;
-        const smileprob = faces[0].smilingProbability;
+        const rightEye = faces[0]?.rightEyeOpenProbability;
+        const leftEye = faces[0]?.leftEyeOpenProbability;
         const bothEyes = (rightEye + leftEye) / 2;
 
-        // if(bothEyes <= 0.3){
-        //     console.log('blink detected')
-        // }
-        console.log(faces)
+        if(bothEyes <= 0.3){
+            setCameraProgress(100)
+         navigation.navigate('KYCFillOut')
+        }
+      
     }
 
     return (
@@ -40,7 +41,7 @@ export default function KYCIDVerificationCameraScreen(){
                         <AnimatedCircularProgress
                             size={313}
                             width={6}
-                            fill={70}
+                            fill={cameraProgress}
                             tintColor="#F2BA39"
                             backgroundColor="#CDCDCD"
                             >
@@ -64,16 +65,13 @@ export default function KYCIDVerificationCameraScreen(){
                                         }
                                         onCameraReady={() => {
                                             console.log('camera ready')
-                                            // setCanDetectFaces(true)
+                                            setCameraProgress(50)
+                                            setCanDetectFaces(true)
                                         }}
+                                  
                                         // onFacesDetected={canDetectFaces ? facesDetected : null}
-                                        onFacesDetected={({faces}) => {
-                                            
-                                            // if(canDetectFaces){
-                                            //     console.log('detected')
-                                            // }
-                                        }}
-                                       
+                                        onFacesDetected={canDetectFaces? facesDetected : null}
+    
                                         onFaceDetectionError={error => console.log('FDError', error)}
                                     />
                                 )

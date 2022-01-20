@@ -4,6 +4,7 @@ export const color = {
 
     //App Text Colors
     splashTextColor: '#18243C',
+    blackColor:'#000000',
     skipTextColor: '#656F85',
     termTextColor: '#000000',
     loginTextHeadingColor: '#434343',

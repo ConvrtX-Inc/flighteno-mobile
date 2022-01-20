@@ -1,1 +1,1 @@
-export const BASE_URL = "https://dev-flighteno-convrtx.herokuapp.com/"
+export const BASE_URL = "https://dev-flighteno-convrtx.herokuapp.com/index.php/"

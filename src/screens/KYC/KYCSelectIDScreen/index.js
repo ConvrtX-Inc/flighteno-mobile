@@ -8,7 +8,7 @@ import InputText from '../../../components/InputText';
 import StepsIndicator from '../../../components/StepsIndicator';
 
 
-export default function  SelectIDScreen ({navigation}){
+export default function  KYCSelectIDScreen ({navigation}){
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -40,13 +40,14 @@ export default function  SelectIDScreen ({navigation}){
     }
 
     const onFrontPictureTap = () => {
-        onImagePickerLaunch()
-        console.log('on front tap')
+        // onImagePickerLaunch()
+        navigation.navigate('KYCSelectIDCamera')
+       
     }
 
     const onBackPictureTap = () => {
-        onImagePickerLaunch()
-        console.log('on front tap')
+        // onImagePickerLaunch()
+        navigation.navigate('KYCSelectIDCamera')
     }
 
     const onNextTap = () => {

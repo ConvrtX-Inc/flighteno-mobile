@@ -6,6 +6,11 @@ export const styles = StyleSheet.create({
         marginLeft:16,
         marginRight:16,
         flex:1,
+        flexDirection:'column',
+        flexGrow:1,
+    },
+    content:{
+        flex:1,
     },
     titleTxt:{
         fontSize:26,
@@ -22,7 +27,8 @@ export const styles = StyleSheet.create({
     },
     accountVerImg:{
         width:343,
-        height:343
+        height:343,
+        marginTop:16
     },
     btnSubmit:{
         marginBottom: 24,

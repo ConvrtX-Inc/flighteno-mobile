@@ -15,19 +15,24 @@ export default function KYCIntroScreen({navigation}){
         {text:'Cancel'}])
     }
 
-    return(
-        <ScrollView>
-            <View style={styles.container}>
-                <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
-                <Text style={styles.title}>Your Account{"\n"}is not yet verified</Text>
-                <Text style={styles.desc}>Complete your profile to unlock{"\n"}more flighteno feature</Text>
-                <Image source={require('../../../images/kycVerification.png')}  style={styles.kycImage} />
 
-               <View style={styles.btnGetStarted}>
+    return(
+        <>
+            <View style={styles.container}>
+                <View style={styles.content}>
+                    <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
+                    <Text style={styles.title}>Your Account{"\n"}is not yet verified</Text>
+                    <Text style={styles.desc}>Complete your profile to unlock{"\n"}more flighteno feature</Text>
+                    <Image source={require('../../../images/kycVerification.png')}  style={styles.kycImage} />
+                </View>
+            </View> 
+              
+             
+            <View>
+                <View style={styles.btnGetStarted}>
                     <ButtonLarge loader={false} title="Get Started" onPress={onGetStartedTap} />
-               </View> 
-       </View> 
-        </ScrollView>
-       
+                </View> 
+            </View>
+        </> 
     )
 }   

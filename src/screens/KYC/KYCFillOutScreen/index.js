@@ -114,7 +114,7 @@ export default function KYCFillOutScreen ({navigation}){
                 {onDatePickerShow  && (
                     <DateTimePicker
                         testID='dateTimePicker'
-                        value={date}
+                        value={date ?? new Date()}
                         mode='date'
                         display='default'   
                         // onChange={onDatePickerChange}

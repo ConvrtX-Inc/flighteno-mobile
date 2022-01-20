@@ -134,13 +134,15 @@ function Profile() {
                         />
                         <Text style={styles.menuItemText}>Support</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.menuItem}>
+                <TouchableOpacity style={styles.menuItem} onPress={() => {
+                    navigation.navigate("KYCIntro")
+                }}>
                     <Image source={require('../images/accountVerify.png')}
                         style={styles.menuIcon}
                         resizeMode="contain"
                     />
                     <Text style={styles.menuItemText}>Account Verification</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                     {currentProfile != "buyer" ?
                         <TouchableOpacity onPress={() => navigation.navigate("MyReviews")} style={styles.menuItem}>
                             <Image source={require('../images/review.png')}
