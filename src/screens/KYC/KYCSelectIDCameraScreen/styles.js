@@ -5,10 +5,11 @@ const windowWidth = Dimensions.get('window').width
 
 export const styles = StyleSheet.create({
     body:{
-        ...StyleSheet.absoluteFill,
+        // ...StyleSheet.absoluteFill,
+        flex:1,
         backgroundColor:color.blackColor,
         // flex:1,
-        justifyContent:'center'
+        // justifyContent:'center'
     },
     content:{
       height:392,
@@ -20,7 +21,14 @@ export const styles = StyleSheet.create({
         marginRight:16,
         flexDirection:'column',
         flexGrow:1,
+        justifyContent:'center',
         flex:1
+    },
+    cameraFrame:{
+        width:windowWidth-24,
+        height:251,
+        resizeMode:'center',
+      
     },
     txtCameraTitle:{
         fontWeight:'bold',
@@ -37,8 +45,8 @@ export const styles = StyleSheet.create({
     btnContainer:{
         flexDirection:'row',
         alignItems:'center',
-        marginBottom:32,
-        marginTop:-80
+        marginBottom:16,
+        marginTop:24
     },
     cameraImg: {
         width:32,

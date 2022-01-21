@@ -3,12 +3,11 @@ import { Text, TouchableOpacity, View, Image, ScrollView, ImagePickerIOS } from 
 import ButtonLarge from '../../../components/ButtonLarge';
 import { styles } from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
-import * as ImagePicker from 'react-native-image-picker';
 import InputText from '../../../components/InputText';
 import StepsIndicator from '../../../components/StepsIndicator';
 
 
-export default function  KYCSelectIDScreen ({navigation}){
+export default function  KYCSelectIDScreen ({navigation,route}){
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
@@ -16,42 +15,20 @@ export default function  KYCSelectIDScreen ({navigation}){
         {label: 'Permanent Resident Card', value: 'permanent-resident-card'},
         {label: 'SSS', value: 'sss'}
     ]);
-    const [frontImage, setFrontImage] = useState('')
-    const [backImage, setBackImage] = useState('')
+  
+    const frontPicture = route.params?.frontImg
+    const backPicture = route.params?.backImg
 
-    const onImagePickerLaunch = () => {
-
-        let options = {
-            title: 'Select Image',
-            customButtons:[
-                { name: 'customOptionKey', title:'Choose Photo from Custom Option' }
-            ],
-            storageOptions: {
-                skipBackup: true,
-                path:'images'
-            }
-        }
-
-        ImagePicker.launchImageLibrary(options, (response) => {
-            console.log(response)
-        })
-
-        
-    }
 
     const onFrontPictureTap = () => {
-        // onImagePickerLaunch()
-        navigation.navigate('KYCSelectIDCamera')
-       
+        navigation.navigate('KYCSelectIDCamera', {isFront: true})    
     }
 
     const onBackPictureTap = () => {
-        // onImagePickerLaunch()
-        navigation.navigate('KYCSelectIDCamera')
+        navigation.navigate('KYCSelectIDCamera', {isFront: false})
     }
 
     const onNextTap = () => {
-        console.log('next tap')
         navigation.navigate('KYCSendVerification')
     }
 
@@ -77,6 +54,7 @@ export default function  KYCSelectIDScreen ({navigation}){
                     style={styles.dropDown}
                     dropDownContainerStyle={styles.dropDownContainer}
                     showTickIcon={false}
+                   
                 />
             
                 <Text style={[styles.inputLabel,styles.idNoField]}>ID No.</Text>
@@ -88,12 +66,12 @@ export default function  KYCSelectIDScreen ({navigation}){
 
                 <Text style={[ styles.inputLabel,styles.frontPicTxt]}>Upload front picture of ID</Text>
                 <TouchableOpacity style={styles.idContainer} onPress={onFrontPictureTap}> 
-                    <Image source={require('../../../images/frontIdPicture.png')} style={[styles.idPicture]} />
+                    <Image source={frontPicture ? {uri: frontPicture} : require('../../../images/frontIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>
 
                 <Text style={[styles.inputLabel,styles.backPicTxt]}>Upload back picture of ID</Text>
                 <TouchableOpacity style={styles.idContainer} onPress={onBackPictureTap}>
-                    <Image source={require('../../../images/backIdPicture.png')} style={[styles.idPicture]} />
+                    <Image source={backPicture ? {uri : backPicture} : require('../../../images/backIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>
 
                 <View style={styles.btnNext}>
