@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux'
 
 import { CheckBox } from 'react-native-elements'
 import { FIRST_LAUNCH } from '../../redux/constants';
+import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -36,16 +38,15 @@ export default function TermsandCondition() {
                     />
                 </View>
 
-                <Text style={[styles.HeadingText, { alignSelf: 'center', marginTop: (windowWidth * 4) / 100 }]}>Terms and Conditions</Text>
-
+             
+                <TextBold style={[styles.HeadingText, { alignSelf: 'center', marginTop: (windowWidth * 4) / 100 }]}>Terms and Conditions</TextBold>
                 <View style={styles.termContainer}>
 
-                    <Text style={[styles.termText, { marginBottom: (windowWidth * 5) / 100 }]}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-
-                    <Text style={[styles.termText, { marginBottom: (windowWidth * 5) / 100 }]}>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</Text>
-
-                    <Text style={styles.termText}> It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-
+                    <TextMedium style={[styles.termText, { marginBottom: (windowWidth * 5) / 100 }]}>Lorem Ipsum is simply dummy text of the{"\n"}printing and typesetting industry. Lorem {"\n"}Ipsum has been the industry's standard{"\n"}dummy text ever since the 1500s, when an{"\n"}unknown printer took a galley of type and{"\n"}scrambled 
+                    it to make a type specimen book.{"\n\n"}
+It has survived not only five centuries, but{"\n"}also the leap into electronic typesetting,{"\n"}remaining essentially unchanged.{"\n"}{"\n"}
+It was popularised in the 1960s with the{"\n"}release of Letraset sheets containing Lorem{"\n"}Ipsum passages, and more recently with{"\n"}desktop publishing software like Aldus PageMaker{"\n"}including versions of Lorem{"\n"}Ipsum.</TextMedium>
+              
                 </View>
             </ScrollView>
 
@@ -61,7 +62,8 @@ export default function TermsandCondition() {
                     onPress={() => checkedFN()}
                 />
 
-                <Text style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10 }]}>I agree with Terms & Conditions</Text>
+                <Text ></Text>
+                <TextBold style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10 }]}>I agree with Terms & Conditions</TextBold>
             </View>
 
         </View>

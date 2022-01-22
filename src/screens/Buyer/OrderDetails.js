@@ -15,6 +15,7 @@ import ReviewList from '../../components/ReviewList';
 import ViewImages from '../../components/ViewImages';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
+import TextBold from '../../components/atoms/TextBold';
 
 export default function OrderDetails({ route }) {
     const navigation = useNavigation()
@@ -118,7 +119,7 @@ export default function OrderDetails({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order Details</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order Details</TextBold>
                 {!traveler ?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
@@ -138,7 +139,7 @@ export default function OrderDetails({ route }) {
                                         isDisabled={true}
                                     />
                                 </View>
-                                <Text style={styles.ratingText}>{traveler?.traveler_ratting.length != 0 ? traveler?.traveler_ratting[0].avg_rating : 0} Out of 5.0</Text>
+                                <TextBold style={styles.ratingText}>{traveler?.traveler_ratting.length != 0 ? traveler?.traveler_ratting[0].avg_rating : 0} Out of 5.0</TextBold>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -154,28 +155,26 @@ export default function OrderDetails({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={styles.orderNumberIst}>
-                        <Text style={styles.loginInputHeading}>Order No.</Text>
-
+                        <TextBold style={styles.loginInputHeading}>Order No.</TextBold>
                     </View>
                     <View style={styles.orderNumberSecond}>
-
-                        <Text onLongPress={() => selectID(order._id)}
+                        <TextMedium onLongPress={() => selectID(order._id)}
                          style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {order._id}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <Text style={styles.loginInputHeading}>Order price</Text>
+                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(order.product_price)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -183,13 +182,13 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Estimated Delivery Fee</Text>
+                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(order.estimated_dilivery_fee)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -198,13 +197,13 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                        <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(order.vip_service_fee)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -212,13 +211,13 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(order.flighteno_cost)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -227,13 +226,13 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Tax</Text>
+                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(order.tax)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -241,7 +240,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.textLarge}>Total</Text>
+                        <TextBold style={styles.textLarge}>Total</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -252,9 +251,9 @@ export default function OrderDetails({ route }) {
 
                 </View>
                 <View>
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
                         Picture of product
-                    </Text>
+                    </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.new_image ? true : false}
                         onPress={() => viewImage('image')} style={Styles.productImageContainer}>
                         {order.new_image ?
@@ -270,9 +269,9 @@ export default function OrderDetails({ route }) {
                             />
                         }
                     </TouchableOpacity>
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
                         Product Receipt
-                    </Text>
+                    </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.recipt ? true : false}
                         onPress={() => viewImage('receipt')} style={Styles.productImageContainer}>
                         {order.recipt ?

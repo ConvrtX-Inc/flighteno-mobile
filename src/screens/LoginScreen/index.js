@@ -18,6 +18,8 @@ import {
     Settings
 } from 'react-native-fbsdk-next';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import TextBold from '../../components/atoms/TextBold';
+// import { TextExtrabold } from '../../components/atoms/TextExtraBold';
 
 const clientID = "274927645478-6jq3vb9mph0j7kud7knkq5sciir7uv4c.apps.googleusercontent.com"
 GoogleSignin.configure({
@@ -176,8 +178,9 @@ export default function LoginScreen() {
                         source={require('../../images/mono.png')}
                     />
                 </View>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Login</Text>
 
+                <TextBold  style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Login</TextBold>
+                {/* <TextExtrabold>Hello</TextExtrabold> */}
                 {/* Buton fb gmail Login */}
                 <View style={styles.fbBtnContainer}>
                     <ButtonWithImage
@@ -199,8 +202,7 @@ export default function LoginScreen() {
 
 
                 {/* TextInputs For Login */}
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</Text>
-
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</TextBold>
                 <Input
                     placeholder="myemail@flighteno.com"
                     onChangeText={text => setEmail(text)}
@@ -208,8 +210,7 @@ export default function LoginScreen() {
                     secureTextEntry={false}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Password</Text>
-
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Password</TextBold>
                 <Input
                     placeholder="*********"
                     onChangeText={text => setPassword(text)}
@@ -218,7 +219,7 @@ export default function LoginScreen() {
                 />
 
                 <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
-                    <Text style={[styles.loginInputHeading, { textDecorationLine: 'underline', alignSelf: 'center', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 10) / 100 }]}>Forgot password?</Text>
+                    <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', alignSelf: 'center', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 10) / 100 }]}>Forgot password?</TextBold>
                 </TouchableOpacity>
 
                 <ButtonLarge
@@ -227,13 +228,15 @@ export default function LoginScreen() {
                     onPress={() => loginFunction()}
                 />
 
+
                 <View style={styles.bottomTxt}>
-                    <Text style={styles.loginInputHeading}>
+                    <TextMedium style={styles.loginInputHeading}>
                         Don’t have an account?
-                    </Text>
+                    </TextMedium>
+
 
                     <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-                        <Text style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> Signup</Text>
+                        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> Signup</TextBold>
                     </TouchableOpacity>
                 </View>
 

@@ -1,6 +1,8 @@
 import React, {useRef, useState} from 'react';
 import { Text, StyleSheet, View, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import TextBold from '../../../components/atoms/TextBold';
+import TextMedium from '../../../components/atoms/TextMedium';
 import { color } from '../../../Utility/Color';
 import { styles } from './styles';
 
@@ -14,11 +16,6 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
     const cameraFrameImg = require('../../../images/cameraFrame.png')
 
     const isFrontID = route.params.isFront
-    const [frontImage, setFrontImage] = useState('')
-    const [backImage, setBackImage] = useState('')
-
-   
-
 
     const [photo,setPhoto] = useState('')
     const [isRetake, setRetake] = useState(true)
@@ -99,9 +96,9 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
                     </View>
 
                     <View style={{paddingBottom:32,paddingTop:24, backgroundColor:'rgba(67,67,67,0.8)'}}>
-                        <Text style={styles.txtCameraTitle}>Permanent Resident Card {isFrontID ? "(Front)" : "(Back)"} </Text>
-                        <Text style={styles.txtCameraDesc}>-Place your ID within the frame</Text>
-                        <Text style={styles.txtCameraDesc}>-Please make sure it is clear and has no glare</Text>
+                        <TextBold style={styles.txtCameraTitle}>Permanent Resident Card {isFrontID ? "(Front)" : "(Back)"} </TextBold>
+                        <TextMedium style={styles.txtCameraDesc}>-Place your ID within the frame</TextMedium>
+                        <TextMedium style={styles.txtCameraDesc}>-Please make sure it is clear and has no glare</TextMedium>
                     </View>
                 </View>
             </RNCamera>

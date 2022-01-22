@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     },
     titleTxt:{
         fontSize:26,
-        fontWeight:'bold',
+       
         marginTop:36  
     },
     stepsIndicator: {

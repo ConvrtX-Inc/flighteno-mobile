@@ -13,6 +13,7 @@ import { createOrder } from '../../../redux/actions/BuyerOrder';
 import { generateUID } from '../../../Utility/Utils';
 import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../../../redux/constants';
+import TextBold from '../../../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 export default function OrderDetail() {
@@ -81,7 +82,7 @@ export default function OrderDetail() {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order details</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order details</TextBold>
 
                 {global.productImage.url ?
                     <Image

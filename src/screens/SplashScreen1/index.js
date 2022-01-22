@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
 import countries from '../../Utility/countries.json';
+import TextExtraBold from '../../components/atoms/TextExtraBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 var countryName = 'Pakistan'
 // const customData = require('../../Utility/countries.json');
@@ -23,16 +25,15 @@ export default function SplashScreen1() {
           />
 
           <TouchableOpacity onPress={() => navigation.navigate("TermsandCondition")} style={styles.skipText}>
-            <Text style={styles.skipText}>Skip</Text>
+            <TextMedium style={styles.skipText}>Skip</TextMedium>
           </TouchableOpacity>
         </View>
 
         {/* Splash Text */}
 
         <View style={styles.splashTxtContainer}>
-          <Text style={styles.splashText}>Shop anything</Text>
-          <Text style={styles.splashText}>all over the</Text>
-          <Text style={styles.splashText}>world</Text>
+          {/* <Text style={styles.splashText}>Shop anything</Text> */}
+        <TextExtraBold  style={styles.splashText}>Shop anything {"\n"}all over the{"\n"}world</TextExtraBold>
         </View>
 
         <View style={styles.nextImgContainer}>

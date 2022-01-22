@@ -77,122 +77,18 @@ function Navigation() {
     }, [])
     const { currentUser, currentProfile, token, firstLaunch } = useSelector(({ authRed }) => authRed)
     return (
-        <Stack.Navigator>
-                 <Stack.Screen 
-                    name="KYCIntro" 
-                    component={KYCIntroScreen} 
-                    options={() => {return {
-                    headerShown:true,
-                    headerTransparent:true,
-              headerBackTitleVisible:false,
-              headerTitle:false
-             }}}
-              />
-              <Stack.Screen 
-                    name='KYCFillOut' 
-                    component={KYCFillOutScreen} 
-                    options={() => {return {
-                        headerShown:true,
-                        headerTransparent:true,
-                        headerBackTitleVisible:false,
-                        headerTitle:false
-                    }}}    
-                />
-                <Stack.Screen 
-                    name="KYCSelectID" 
-                    component={KYCSelectIDScreen} 
-                    options={() => {return {
-                    headerShown:true,
-                    headerTransparent:true,
-                    headerBackTitleVisible:false,
-                    headerTitle:false
-                  }}}
-                />
-                <Stack.Screen
-                    name="KYCSelectIDCamera"
-                    component={KYCSelectIDCameraScreen}
-                    options={() => {return {
-                        headerShown:true,
-                        headerStyle:{backgroundColor:color.lightBlue},
-                        headerTintColor:color.backgroundColor,
-                        headerBackTitleVisible:false,
-                        headerTitle:"Id Verification"
-                      }}}
-                />
-                 <Stack.Screen
-                    name='KYCSendVerification' 
-                    component={KYCSelfieVerificationScreen} 
-                    options={() => {return {
-                        headerShown:true,
-                        headerTransparent:true,
-                        headerBackTitleVisible:false,
-                        headerTitle:false
-                    }}}    
-                />
-                 <Stack.Screen name='KYCTermsPrivacy' component={KYCTermsPrivacyScreen} />
-              <Stack.Screen
-                   name='KYCSelfieVerificationCamera'
-                   component={KYCSelfieVerificationCameraScreen} 
-                   options={() => {return {
-                    headerShown:true,
-                    headerTransparent:true,
-                    headerBackTitleVisible:false,
-                    headerTitle:false
-                 }}}    
-             />
-        </Stack.Navigator>
-      //  currentUser ?
-      //      <Stack.Navigator
-       //         initialRouteName={currentProfile ? "BottomTab" : "SelectProfile"}
-        //        screenOptions={{
-         //           headerShown: false
-          //      }}
-        //     >
-        //         <Stack.Screen name="SelectProfile" component={SelectProfile} />
-        //         <Stack.Screen name="BottomTab" component={BottomTab} />
-        //         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        //         <Stack.Screen name="ManualProductInfo" component={ManualProductInfo} />
-        //         <Stack.Screen name="OrderDetail" component={OrderDetail} />
-        //         <Stack.Screen name="SelectCountry" component={SelectCountry} />
-        //         <Stack.Screen name="Congratulation" component={Congratulation} />
-        //         <Stack.Screen name="TopTabTraveller" component={TopTabTraveller} />
-        //         <Stack.Screen name="MyTravel" component={MyTravel} />
-        //         <Stack.Screen name="UrlData" component={UrlData} />
-        //         <Stack.Screen name="OrderDestination" component={OrderDestination} />
-        //         <Stack.Screen name="ChatTraveler" component={ChatTraveler} />
-        //         <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        //         <Stack.Screen name="Settings" component={Settings} />
-        //         <Stack.Screen name="EditProfile" component={EditProfile} />
-        //         <Stack.Screen name="Support" component={Support} />
-        //         <Stack.Screen name="Notifications" component={Notifications} />
-        //         <Stack.Screen name="Transactions" component={Transactions} />
-        //         <Stack.Screen name="MyOrdersList" component={MyOrdersList} />
-        //         <Stack.Screen name="OrderDetails" component={OrderDetails} />
-        //         <Stack.Screen name="PlainReceipt" component={PlainReceipt} />
-        //         <Stack.Screen name="RateTransaction" component={RateTransaction} />
-        //         <Stack.Screen name="TravelerProfile" component={TravelerProfile} />
-        //         <Stack.Screen name="EditOffer" component={EditOffer} />
-        //         <Stack.Screen name="SetupStripe" component={SetupStripe} />
-        //         <Stack.Screen name="StripeWebView" component={StripeWebView} />
-        //         <Stack.Screen name="CongratulationSupport" component={CongratulationSupport} />
-        //         <Stack.Screen name="MyReviews" component={MyReviews} />
-        //         <Stack.Screen name="OfferAccepted" component={OfferAccepted} />
-        //         <Stack.Screen name="TrendingOrderDetail" component={TrendingOrderDetail} />
-        //         <Stack.Screen name="ChangePassword" component={ChangePassword} />
-        //         <Stack.Screen name="SupportTicket" component={SupportTicket} />
-        //         <Stack.Screen name="OrderDetailBaseOnOrderId" component={OrderDetailBaseOnOrderId} />
-        //         <Stack.Screen name="SupportReply" component={SupportReply} />
-        //         <Stack.Screen 
+        // <Stack.Navigator>
+        //          <Stack.Screen 
         //             name="KYCIntro" 
         //             component={KYCIntroScreen} 
         //             options={() => {return {
-        //                 headerShown:true,
-        //                 headerTransparent:true,
-        //                 headerBackTitleVisible:false,
-        //                 headerTitle:false
-        //             }}}
-        //         />
-        //         <Stack.Screen 
+        //             headerShown:true,
+        //             headerTransparent:true,
+        //       headerBackTitleVisible:false,
+        //       headerTitle:false
+        //      }}}
+        //       />
+        //       <Stack.Screen 
         //             name='KYCFillOut' 
         //             component={KYCFillOutScreen} 
         //             options={() => {return {
@@ -223,7 +119,7 @@ function Navigation() {
         //                 headerTitle:"Id Verification"
         //               }}}
         //         />
-        //         <Stack.Screen
+        //          <Stack.Screen
         //             name='KYCSendVerification' 
         //             component={KYCSelfieVerificationScreen} 
         //             options={() => {return {
@@ -233,8 +129,8 @@ function Navigation() {
         //                 headerTitle:false
         //             }}}    
         //         />
-        //         <Stack.Screen name='KYCTermsPrivacy' component={KYCTermsPrivacyScreen} />
-        //         <Stack.Screen
+        //          <Stack.Screen name='KYCTermsPrivacy' component={KYCTermsPrivacyScreen} />
+        //       <Stack.Screen
         //            name='KYCSelfieVerificationCamera'
         //            component={KYCSelfieVerificationCameraScreen} 
         //            options={() => {return {
@@ -242,56 +138,158 @@ function Navigation() {
         //             headerTransparent:true,
         //             headerBackTitleVisible:false,
         //             headerTitle:false
-        //         }}}    
-        //         />
-        //     </Stack.Navigator>
-        //     :
-        //     firstLaunch == 0
-        //         ?
-        //         <Stack.Navigator
-        //             initialRouteName="SplashScreen1"
-        //             screenOptions={{
-        //                 headerShown: false
-        //             }}
-        //         >
-
-
-        //             <Stack.Screen name="SplashScreen1" component={SplashScreen1} />
-        //             <Stack.Screen name="SplashScreen2" component={SplashScreen2}
-        //                 options={{
-        //                     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
-        //                 }}
-        //             />
-        //             <Stack.Screen name="TermsandCondition" component={TermsandCondition}
-        //                 options={{
-        //                     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
-        //                 }}
-        //             />
-        //             <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        //             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        //             <Stack.Screen name="VerifyPhone" component={VerifyPhone} />
-        //             <Stack.Screen name="ResetPassword" component={ResetPassword} />
-        //             <Stack.Screen name="VerifyCode" component={VerifyCode} />
-        //             <Stack.Screen name="NewPassword" component={NewPassword} />
-        //             <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        //          }}}    
+        //      />
+        // </Stack.Navigator>
+       currentUser ?
+           <Stack.Navigator
+               initialRouteName={currentProfile ? "BottomTab" : "SelectProfile"}
+               screenOptions={{
+                   headerShown: false
+               }}
+            >
+                <Stack.Screen name="SelectProfile" component={SelectProfile} />
+                <Stack.Screen name="BottomTab" component={BottomTab} />
+                <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                <Stack.Screen name="ManualProductInfo" component={ManualProductInfo} />
+                <Stack.Screen name="OrderDetail" component={OrderDetail} />
+                <Stack.Screen name="SelectCountry" component={SelectCountry} />
+                <Stack.Screen name="Congratulation" component={Congratulation} />
+                <Stack.Screen name="TopTabTraveller" component={TopTabTraveller} />
+                <Stack.Screen name="MyTravel" component={MyTravel} />
+                <Stack.Screen name="UrlData" component={UrlData} />
+                <Stack.Screen name="OrderDestination" component={OrderDestination} />
+                <Stack.Screen name="ChatTraveler" component={ChatTraveler} />
+                <Stack.Screen name="ChatScreen" component={ChatScreen} />
+                <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="EditProfile" component={EditProfile} />
+                <Stack.Screen name="Support" component={Support} />
+                <Stack.Screen name="Notifications" component={Notifications} />
+                <Stack.Screen name="Transactions" component={Transactions} />
+                <Stack.Screen name="MyOrdersList" component={MyOrdersList} />
+                <Stack.Screen name="OrderDetails" component={OrderDetails} />
+                <Stack.Screen name="PlainReceipt" component={PlainReceipt} />
+                <Stack.Screen name="RateTransaction" component={RateTransaction} />
+                <Stack.Screen name="TravelerProfile" component={TravelerProfile} />
+                <Stack.Screen name="EditOffer" component={EditOffer} />
+                <Stack.Screen name="SetupStripe" component={SetupStripe} />
+                <Stack.Screen name="StripeWebView" component={StripeWebView} />
+                <Stack.Screen name="CongratulationSupport" component={CongratulationSupport} />
+                <Stack.Screen name="MyReviews" component={MyReviews} />
+                <Stack.Screen name="OfferAccepted" component={OfferAccepted} />
+                <Stack.Screen name="TrendingOrderDetail" component={TrendingOrderDetail} />
+                <Stack.Screen name="ChangePassword" component={ChangePassword} />
+                <Stack.Screen name="SupportTicket" component={SupportTicket} />
+                <Stack.Screen name="OrderDetailBaseOnOrderId" component={OrderDetailBaseOnOrderId} />
+                <Stack.Screen name="SupportReply" component={SupportReply} />
+                <Stack.Screen 
+                    name="KYCIntro" 
+                    component={KYCIntroScreen} 
+                    options={() => {return {
+                        headerShown:true,
+                        headerTransparent:true,
+                        headerBackTitleVisible:false,
+                        headerTitle:false
+                    }}}
+                />
+                <Stack.Screen 
+                    name='KYCFillOut' 
+                    component={KYCFillOutScreen} 
+                    options={() => {return {
+                        headerShown:true,
+                        headerTransparent:true,
+                        headerBackTitleVisible:false,
+                        headerTitle:false
+                    }}}    
+                />
+                <Stack.Screen 
+                    name="KYCSelectID" 
+                    component={KYCSelectIDScreen} 
+                    options={() => {return {
+                    headerShown:true,
+                    headerTransparent:true,
+                    headerBackTitleVisible:false,
+                    headerTitle:false
+                  }}}
+                />
+                <Stack.Screen
+                    name="KYCSelectIDCamera"
+                    component={KYCSelectIDCameraScreen}
+                    options={() => {return {
+                        headerShown:true,
+                        headerStyle:{backgroundColor:color.lightBlue},
+                        headerTintColor:color.backgroundColor,
+                        headerBackTitleVisible:false,
+                        headerTitle:"Id Verification"
+                      }}}
+                />
+                <Stack.Screen
+                    name='KYCSendVerification' 
+                    component={KYCSelfieVerificationScreen} 
+                    options={() => {return {
+                        headerShown:true,
+                        headerTransparent:true,
+                        headerBackTitleVisible:false,
+                        headerTitle:false
+                    }}}    
+                />
+                <Stack.Screen name='KYCTermsPrivacy' component={KYCTermsPrivacyScreen} />
+                <Stack.Screen
+                   name='KYCSelfieVerificationCamera'
+                   component={KYCSelfieVerificationCameraScreen} 
+                   options={() => {return {
+                    headerShown:true,
+                    headerTransparent:true,
+                    headerBackTitleVisible:false,
+                    headerTitle:false
+                }}}    
+                />
+            </Stack.Navigator>
+            :
+            firstLaunch == 0
+                ?
+                <Stack.Navigator
+                    initialRouteName="SplashScreen1"
+                    screenOptions={{
+                        headerShown: false
+                    }}
+                >
+                    <Stack.Screen name="SplashScreen1" component={SplashScreen1} />
+                    <Stack.Screen name="SplashScreen2" component={SplashScreen2}
+                        options={{
+                            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+                        }}
+                    />
+                    <Stack.Screen name="TermsandCondition" component={TermsandCondition}
+                        options={{
+                            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+                        }}
+                    />
+                    <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                    <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                    <Stack.Screen name="VerifyPhone" component={VerifyPhone} />
+                    <Stack.Screen name="ResetPassword" component={ResetPassword} />
+                    <Stack.Screen name="VerifyCode" component={VerifyCode} />
+                    <Stack.Screen name="NewPassword" component={NewPassword} />
+                    <Stack.Screen name="HomeScreen" component={HomeScreen} />
                    
 
-        //         </Stack.Navigator>
-        //         :
-        //         <Stack.Navigator
-        //             initialRouteName="LoginScreen"
-        //             screenOptions={{
-        //                 headerShown: false
-        //             }}
-        //         >
-        //             <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        //             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        //             <Stack.Screen name="VerifyPhone" component={VerifyPhone} />
-        //             <Stack.Screen name="ResetPassword" component={ResetPassword} />
-        //             <Stack.Screen name="VerifyCode" component={VerifyCode} />
-        //             <Stack.Screen name="NewPassword" component={NewPassword} />
-        //             <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        //     </Stack.Navigator>
+                </Stack.Navigator>
+                :
+                <Stack.Navigator
+                    initialRouteName="LoginScreen"
+                    screenOptions={{
+                        headerShown: false
+                    }}
+                >
+                    <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                    <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                    <Stack.Screen name="VerifyPhone" component={VerifyPhone} />
+                    <Stack.Screen name="ResetPassword" component={ResetPassword} />
+                    <Stack.Screen name="VerifyCode" component={VerifyCode} />
+                    <Stack.Screen name="NewPassword" component={NewPassword} />
+                    <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            </Stack.Navigator>
     );
 }
 

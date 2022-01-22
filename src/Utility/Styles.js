@@ -29,8 +29,7 @@ export const styles = StyleSheet.create({
     },
     splashText: {
         color: color.splashTextColor,
-        fontSize: (windowWidth * 6.5) / 100,
-        fontWeight: 'bold',
+        fontSize: (windowWidth * 8.5) / 100,
     },
     splashTxtContainer: {
         marginLeft: '5%',
@@ -39,7 +38,6 @@ export const styles = StyleSheet.create({
     skipText: {
         color: color.skipTextColor,
         fontSize: (windowWidth * 4) / 100,
-        fontWeight: '500',
         marginLeft: 'auto',
         marginRight: '5%',
     },
@@ -63,8 +61,7 @@ export const styles = StyleSheet.create({
     HeadingText: {
         color: color.splashTextColor,
         fontSize: (windowWidth * 7) / 100,
-        fontWeight: 'bold',
-
+       
     },
     termContainer: {
         width: '100%',
@@ -82,7 +79,6 @@ export const styles = StyleSheet.create({
     },
     termAgreeText: {
         color: color.splashTextColor,
-        fontWeight: 'bold',
         fontSize: 15
     },
 
@@ -96,13 +92,11 @@ export const styles = StyleSheet.create({
     },
     loginInputHeading: {
         color: color.loginTextHeadingColor,
-        fontSize: 15,
-        fontWeight: 'bold'
+        fontSize: 15, 
     },
     textLarge: {
         color: color.loginTextHeadingColor,
         fontSize: 18,
-        fontWeight: 'bold'
     },
     bottomTxt: {
         flexDirection: 'row',
@@ -220,12 +214,11 @@ export const styles = StyleSheet.create({
     },
     goodMorningTxt: {
         color: '#717171',
-        fontWeight: 'bold',
     },
     selectProfileH: {
         color: color.termTextColor,
         fontSize: (windowWidth * 5.5) / 100,
-        fontWeight: 'bold',
+       
     },
     selectProfileImg: {
 
@@ -255,7 +248,6 @@ export const styles = StyleSheet.create({
     buyerTxtTop: {
         fontSize: 29,
         color: color.buyerTxtTopColor,
-        fontWeight: 'bold',
         marginTop: (windowWidth * 11) / 100,
     },
     buyerTxtBottom: {
@@ -741,7 +733,6 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         color: color.splashTextColor,
         marginLeft: '5%',
-        fontWeight: '800'
     },
     profileImage: {
         height: 80,
@@ -750,7 +741,6 @@ export const styles = StyleSheet.create({
     },
     ratingText: {
         fontSize: 15,
-        fontWeight: 'bold',
         marginLeft: '1%',
         marginRight: '5%'
     },

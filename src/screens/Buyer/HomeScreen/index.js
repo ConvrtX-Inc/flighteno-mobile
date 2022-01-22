@@ -12,6 +12,7 @@ import { formatAmount } from '../../../Utility/Utils';
 import { GetDataFromUrl } from '../../../redux/actions/BuyerOrder'
 import { UrlTile } from 'react-native-maps';
 import { IS_LOADING } from '../../../redux/constants';
+import TextBold from '../../../components/atoms/TextBold'
 
 var windowWidth = Dimensions.get('window').width;
 export default function HomeScreen() {
@@ -120,8 +121,8 @@ export default function HomeScreen() {
                                     resizeMode='stretch'
                                     source={require('../../../images/location.png')}
                                 />
-                                <Text style={styles.dubaiTxt}> {currentCountry.city}, </Text>
-                                <Text style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentCountry.country_name}</Text>
+                                <TextMedium style={styles.dubaiTxt}> {currentCountry.city}, </TextMedium>
+                                <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentCountry.country_name}</TextMedium>
                             </View>
 
                         </View>
@@ -141,14 +142,14 @@ export default function HomeScreen() {
 
                     <View style={{ marginLeft: '5%' }}>
 
-                        <Text style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100 }]}>Hello, {currentUser.full_name}</Text>
-                        <Text style={[styles.HeadingText, { marginTop: 0 }]}>Create order</Text>
+                        <TextBold style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100 }]}>Hello, {currentUser.full_name}</TextBold>
+                        <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>Create order</TextBold>
 
                     </View>
 
 
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter URL</Text>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter URL</TextBold>
 
                     <InputImag
                         placeholder="https://www.amazon.com/s?bbn"
@@ -159,7 +160,7 @@ export default function HomeScreen() {
                         loader={urlLoading}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter manual info</Text>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter manual info</TextBold>
 
                     <InputImag
                         placeholder="Product name"
@@ -169,7 +170,7 @@ export default function HomeScreen() {
                         secureTextEntry={false}
                     />
 
-                    <Text style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>Trending orders</Text>
+                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>Trending orders</TextBold>
 
                     <FlatList
                         horizontal={true}
@@ -195,7 +196,7 @@ export default function HomeScreen() {
                     />
 
 
-                    <Text style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>Recent orders</Text>
+                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>Recent orders</TextBold>
 
                     <FlatList
                         horizontal={true}
@@ -212,14 +213,14 @@ export default function HomeScreen() {
                                     </View>
                                     <View style={{ marginLeft: index == 0 ? '1%' : 0 }}>
 
-                                        <Text numberOfLines={3} style={{ fontSize: 15, fontWeight: 'bold', marginTop: 5, width: (windowWidth * 28) / 100 }}>{item.name}</Text>
+                                        <TextBold numberOfLines={3} style={{ fontSize: 15,  marginTop: 5, width: (windowWidth * 28) / 100 }}>{item.name}</TextBold>
 
                                         <View style={{ flexDirection: 'row' }}>
-                                            <Text style={styles.countryFlag}>{getFlag(item.product_buy_country_name)}</Text>
-                                            <Text style={styles.countryName}>{' ' + item.product_buy_country_name}</Text>
+                                            <TextMedium style={styles.countryFlag}>{getFlag(item.product_buy_country_name)}</TextMedium>
+                                            <TextMedium style={styles.countryName}>{' ' + item.product_buy_country_name}</TextMedium>
                                         </View>
 
-                                        <Text style={{ fontSize: 14, fontWeight:'bold' }}>{formatAmount(item.Total)}</Text>
+                                        <TextBold style={{ fontSize: 14 }}>{formatAmount(item.Total)}</TextBold>
                                     </View>
 
                                 </TouchableOpacity>

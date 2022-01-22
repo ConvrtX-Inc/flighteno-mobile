@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { color } from '../../Utility/Color';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetMyOrders } from '../../redux/actions/Trips';
+import TextBold from '../../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 export default function Transactions() {
@@ -66,7 +67,7 @@ export default function Transactions() {
 
                     <View style={{ marginLeft: '5%' }}>
 
-                        <Text style={[styles.HeadingText, { marginTop: 0 }]}>Transactions</Text>
+                        <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>Transactions</TextBold>
 
                     </View>
 
@@ -78,7 +79,7 @@ export default function Transactions() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <Text style={styles.buyerTxtTop}>Pending Order</Text>
+                            <TextBold style={styles.buyerTxtTop}>Pending Order</TextBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
@@ -99,7 +100,7 @@ export default function Transactions() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <Text style={styles.buyerTxtTop}>Completed</Text>
+                            <TextBold style={styles.buyerTxtTop}>Completed</TextBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
@@ -120,7 +121,7 @@ export default function Transactions() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <Text style={styles.buyerTxtTop}>Cancelled</Text>
+                            <TextBold style={styles.buyerTxtTop}>Cancelled</TextBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Alert, Image, ScrollView, Text, View } from 'react-native';
+import TextExtraBold from '../../../components/atoms/TextExtraBold';
+import TextMedium from '../../../components/atoms/TextMedium';
 import ButtonLarge from '../../../components/ButtonLarge';
 import { styles } from './styles';
 
@@ -21,8 +23,8 @@ export default function KYCIntroScreen({navigation}){
             <View style={styles.container}>
                 <View style={styles.content}>
                     <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
-                    <Text style={styles.title}>Your Account{"\n"}is not yet verified</Text>
-                    <Text style={styles.desc}>Complete your profile to unlock{"\n"}more flighteno feature</Text>
+                    <TextExtraBold style={styles.title}>Your Account{"\n"}is not yet verified</TextExtraBold>
+                    <TextMedium style={styles.desc}>Complete your profile to unlock{"\n"}more flighteno feature</TextMedium>
                     <Image source={require('../../../images/kycVerification.png')}  style={styles.kycImage} />
                 </View>
             </View> 

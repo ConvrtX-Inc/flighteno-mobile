@@ -31,7 +31,6 @@ export const styles = StyleSheet.create({
       
     },
     txtCameraTitle:{
-        fontWeight:'bold',
         fontSize:20,
         textAlign:'center',
         color:color.backgroundColor

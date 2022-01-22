@@ -8,6 +8,8 @@ import { ProfileSelection } from '../../redux/actions/Auth';
 import { CURRENT_PROFILE } from '../../redux/constants';
 
 import { useDispatch, useSelector } from 'react-redux';
+import TextBold from '../../components/atoms/TextBold';
+import TextSemiBold from '../../components/atoms/TextSemiBold';
 
 var windowWidth = Dimensions.get('window').width;
 export default function SelectProfile() {
@@ -60,9 +62,9 @@ export default function SelectProfile() {
                                     resizeMode='stretch'
                                     source={require('../../images/clap.png')}
                                 />
-                                <Text style={styles.goodMorningTxt}> Good {greetings}</Text>
+                                <TextBold style={styles.goodMorningTxt}> Good {greetings}</TextBold>
                             </View>
-                            <Text style={styles.selectProfileH}>Select your profile</Text>
+                            <TextBold style={styles.selectProfileH}>Select your profile</TextBold>
                         </View>
 
                         <View style={styles.SelectProfileHeaderSecond}>
@@ -84,8 +86,8 @@ export default function SelectProfile() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <Text style={styles.buyerTxtTop}>Buyer</Text>
-                            <Text style={styles.buyerTxtBottom}>Get what you want</Text>
+                            <TextBold style={styles.buyerTxtTop}>Buyer</TextBold>
+                            <TextSemiBold style={styles.buyerTxtBottom}>Get what you want</TextSemiBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
@@ -111,8 +113,8 @@ export default function SelectProfile() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, marginBottom: 30, elevation: 0, }]}
                         >
 
-                            <Text style={styles.buyerTxtTop}>Traveller</Text>
-                            <Text style={styles.buyerTxtBottom}>Save your travel expense</Text>
+                            <TextBold style={styles.buyerTxtTop}>Traveller</TextBold>
+                            <TextSemiBold style={styles.buyerTxtBottom}>Save your travel expense</TextSemiBold>
 
                             <Image
                                 style={styles.treeImg}

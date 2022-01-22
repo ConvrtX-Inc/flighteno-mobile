@@ -11,7 +11,6 @@ export const styles = StyleSheet.create(
     },
     titleTxt:{
         fontSize:26,
-        fontWeight:'bold',
         marginTop:36  
     },
     idTypeTxt:{
@@ -37,7 +36,6 @@ export const styles = StyleSheet.create(
     
     inputLabel:{
         fontSize:14,
-        fontWeight:'bold'
     },
     idNoField:{
         marginTop:32
@@ -55,10 +53,12 @@ export const styles = StyleSheet.create(
         borderColor:color.lightGrayColor,
         borderRadius:100,
         marginTop:8,
-        backgroundColor:color.lightGrayColor
+        backgroundColor:color.lightGrayColor,
+       
     },
     dropDownContainer: {
-        borderColor:'transparent',   
+        borderColor:'transparent',  
+       
     },
     btnNext: {
         marginTop:24,
