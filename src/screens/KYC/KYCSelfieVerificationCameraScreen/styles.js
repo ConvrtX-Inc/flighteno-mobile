@@ -8,12 +8,10 @@ export const styles = StyleSheet.create({
     },
     titleTxt:{
         fontSize:26,
-        fontWeight:'bold',
         marginTop:36  
     },
     scanTxt:{
         fontSize:26,
-        fontWeight:'bold',
         marginTop:38,
         textAlign:'center'
     },

@@ -10,7 +10,7 @@ import { styles } from './styles';
 export default function KYCSelfieVerificationScreen ({navigation}){
 
     const onNextTap = () => {
-        navigation.navigate('KYCSelfieVerificationCamera')
+        navigation.navigate('KYCFillOut')
     }
 
     return(

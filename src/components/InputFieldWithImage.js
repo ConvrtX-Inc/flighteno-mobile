@@ -12,7 +12,6 @@ const Input = ({ placeholder, value, onChangeText, secureTextEntry, onPress, loa
                     value={value}
                     onChangeText={onChangeText}
                     secureTextEntry={secureTextEntry}
-
                 />
 
             </View>
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: 'GilroyMedium',
         backgroundColor: '#F6F9FF',
         paddingHorizontal: 20
     },

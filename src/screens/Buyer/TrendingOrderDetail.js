@@ -7,6 +7,7 @@ import { formatAmount } from '../../Utility/Utils';
 import ViewImages from '../../components/ViewImages'
 import ButtonLarge from "../../components/ButtonLarge";
 import { useSelector } from 'react-redux'
+import TextBold from '../../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 const TrendingOrderDetail = ({ route }) => {
@@ -33,16 +34,16 @@ const TrendingOrderDetail = ({ route }) => {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{order.name}</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{order.name}</TextBold>
                 <View style={Styles.bottomView}>
                     <TouchableHighlight underlayColor="transparent" onPress={() => setShowProductPic(true)}>
                         <Image source={{ uri: order.product_image }}
                             style={Styles.productImage}
                         />
                     </TouchableHighlight>
-                    <Text style={Styles.priceText}>
+                    <TextBold style={Styles.priceText}>
                         {formatAmount(order.product_price)}
-                    </Text>
+                    </TextBold>
                 </View>
                 <View style={{ marginVertical: 20 }}>
                     <ButtonLarge
@@ -68,7 +69,6 @@ const Styles = StyleSheet.create({
     },
     priceText: {
         fontSize: 16,
-        fontWeight: '900',
         color: color.skipTextColor,
         marginTop: 20
     },

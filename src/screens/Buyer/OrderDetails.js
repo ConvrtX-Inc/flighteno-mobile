@@ -16,6 +16,7 @@ import ViewImages from '../../components/ViewImages';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 export default function OrderDetails({ route }) {
     const navigation = useNavigation()
@@ -244,9 +245,9 @@ export default function OrderDetails({ route }) {
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(order.Total)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>

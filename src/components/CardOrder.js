@@ -5,6 +5,9 @@ import moment from 'moment'
 import { styles } from '../Utility/Styles';
 import { formatAmount } from '../Utility/Utils';
 import ViewImages from './ViewImages';
+import TextBold from './atoms/TextBold';
+import TextMedium from './atoms/TextMedium'
+import TextRegular from './atoms/TextMedium'
 
 const CardOrder = ({ order }) => {
     const [showProductPic, setShowProductPic] = useState(false)
@@ -28,34 +31,34 @@ const CardOrder = ({ order }) => {
                 <View style={Styles.upperView}>
                     <View style={{ flexDirection: 'row', }}>
 
-                        <Text style={Styles.userName}>Order No.</Text>
-                        <Text numberOfLines={1} style={[Styles.priceText, { marginLeft: '3%', width: '38%' }]}>
+                        <TextBold style={Styles.userName}>Order No.</TextBold>
+                        <TextMedium numberOfLines={1} style={[Styles.priceText, { marginLeft: '3%', width: '38%' }]}>
                             {order._id}
-                        </Text>
+                        </TextMedium>
                         <View style={[Styles.dateView, { backgroundColor: getOrderStatusColor() }]}>
-                            <Text style={Styles.dateText}>{getOrderStatus()}</Text>
+                            <TextBold style={Styles.dateText}>{getOrderStatus()}</TextBold>
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={Styles.userName}>Date Placed</Text>
-                        <Text style={[Styles.priceText, { marginLeft: '3%', width: '38%' }]}>
+                        <TextBold style={Styles.userName}>Date Placed</TextBold>
+                        <TextMedium style={[Styles.priceText, { marginLeft: '3%', width: '38%' }]}>
                             {moment(order.preferred_date.$date.$numberLong, 'x').format("DD/MM/YYYY")}
-                        </Text>
+                        </TextMedium>
                     </View>
                     <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                         <View>
-                            <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</Text>
-                            <Text style={[styles.travelListValue, { color: 'black' }]}>{order.product_buy_city_name}</Text>
-                            <Text style={[styles.travelListTitle, { color: 'black' }]}>{order.product_buy_country_name}</Text>
+                            <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</TextBold>
+                            <TextBold style={[styles.travelListValue, { color: 'black' }]}>{order.product_buy_city_name}</TextBold>
+                            <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_buy_country_name}</TextRegular>
                         </View>
                         <Image source={require("../images/travel1.png")}
                             resizeMode="contain"
                             style={{ height: 60, width: 60 }}
                         />
                         <View>
-                            <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</Text>
-                            <Text style={[styles.travelListValue, { color: 'black' }]}>{order.product_dilivery_city_name}</Text>
-                            <Text style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_country_name}</Text>
+                            <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</TextBold>
+                            <TextBold style={[styles.travelListValue, { color: 'black' }]}>{order.product_dilivery_city_name}</TextBold>
+                            <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_country_name}</TextRegular>
                         </View>
                     </View>
                 </View>
@@ -66,10 +69,10 @@ const CardOrder = ({ order }) => {
                         style={Styles.productImage}
                     />
                     </TouchableOpacity>
-                    <Text style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{order.name}</Text>
-                    <Text style={Styles.priceText}>
+                    <TextBold style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{order.name}</TextBold>
+                    <TextMedium style={Styles.priceText}>
                         {formatAmount(order.Total)}
-                    </Text>
+                    </TextMedium>
                 </View>
             </View>
 
@@ -111,7 +114,6 @@ const Styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        fontWeight: 'bold',
     },
     bottomView: {
         paddingHorizontal: '5%',
@@ -125,7 +127,6 @@ const Styles = StyleSheet.create({
     },
     priceText: {
         fontSize: 16,
-        fontWeight: '900',
         color: color.skipTextColor
     },
     dateView: {

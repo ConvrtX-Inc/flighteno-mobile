@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: 'GilroyRegular',
         backgroundColor: '#F6F9FF',
         paddingHorizontal: 20,
         textAlignVertical: 'top'

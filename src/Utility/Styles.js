@@ -685,11 +685,10 @@ export const styles = StyleSheet.create({
     travelListTitle: {
         fontSize: 15,
         color: color.travelerListTitle,
-        fontWeight: '900'
     },
     travelListValue: {
         fontSize: 17,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: color.backgroundColor
     },
     orderDestinationHeader: {
@@ -746,7 +745,6 @@ export const styles = StyleSheet.create({
     },
     emptyListText: {
         fontSize: 18,
-        fontWeight: 'bold',
         marginTop: 30,
         textAlign: 'center'
     }

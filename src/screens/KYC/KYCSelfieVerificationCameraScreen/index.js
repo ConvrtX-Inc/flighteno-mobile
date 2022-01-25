@@ -4,6 +4,8 @@ import {RNCamera, FaceDetector} from 'react-native-camera';
 import StepsIndicator from '../../../components/StepsIndicator';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { styles } from './styles';
+import TextBold from '../../../components/atoms/TextBold';
+import TextMedium from '../../../components/atoms/TextMedium';
 
 
 export default function KYCSelfieVerificationCameraScreen({navigation}){
@@ -19,7 +21,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation}){
 
         if(bothEyes <= 0.3){
             setCameraProgress(100)
-         navigation.navigate('KYCFillOut')
+         navigation.navigate('KYCSelfieVerificationCamera')
         }
       
     }
@@ -27,15 +29,15 @@ export default function KYCSelfieVerificationCameraScreen({navigation}){
     return (
         <ScrollView style={styles.container}>
             <View>
-                <Text style={styles.titleTxt}>Selfie Verification</Text>
+                <TextBold style={styles.titleTxt}>Selfie Verification</TextBold>
 
                 <View  style={styles.stepsIndicator}>
                     <StepsIndicator currentPosition={2}/>
                 </View>
 
                 <View style={styles.scanContainer}>
-                    <Text style={styles.scanTxt}>Scan your face</Text>
-                    <Text style={styles.blinkTxt}>Please Blink</Text>
+                    <TextBold style={styles.scanTxt}>Scan your face</TextBold>
+                    <TextMedium style={styles.blinkTxt}>Please Blink</TextMedium>
 
                     <View style={styles.cameraView}>
                         <AnimatedCircularProgress
