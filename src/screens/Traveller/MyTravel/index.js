@@ -19,6 +19,8 @@ import TextSemiBold from '../../../components/atoms/TextSemiBold';
 var windowWidth = Dimensions.get('window').width;
 var originCities = ""
 var destinationCities = ""
+
+{/* Fix for FLIGHT-46 */}
 export default function MyTravel({ route }) {
 
     const navigation = useNavigation();

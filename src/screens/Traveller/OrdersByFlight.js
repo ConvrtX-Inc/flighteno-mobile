@@ -19,6 +19,8 @@ var storeNamesList = [
         checked: false
     },
 ]
+
+{/* Fix for FLIGHT-46 */}
 export default function OrdersByFlight() {
 
     const navigation = useNavigation();

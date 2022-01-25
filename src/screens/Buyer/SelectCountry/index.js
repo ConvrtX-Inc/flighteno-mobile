@@ -17,6 +17,7 @@ import TextBold from '../../../components/atoms/TextBold';
 var windowWidth = Dimensions.get('window').width;
 var originCities = ""
 var destinationCities = ""
+{/* Fix for FLIGHT-46 */}
 export default function SelectCountry({ route }) {
 
     const navigation = useNavigation();

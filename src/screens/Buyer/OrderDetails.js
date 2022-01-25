@@ -18,6 +18,7 @@ import Toast from 'react-native-toast-message';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 
+{/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
     const navigation = useNavigation()
     const dispatch = useDispatch()
@@ -41,7 +42,7 @@ export default function OrderDetails({ route }) {
             setRated(order.rated_admin_id.find(check))
         }
         
-        console.log(order?.traveler_id)
+  
 
         // const profileRequest = new FormData()
         // profileRequest.append('admin_id', order?.admin_id)
@@ -121,7 +122,7 @@ export default function OrderDetails({ route }) {
                     />
                 </TouchableOpacity>
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order Details</TextBold>
-                {!traveler ?
+                {order?.traveler_id?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
                             source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}

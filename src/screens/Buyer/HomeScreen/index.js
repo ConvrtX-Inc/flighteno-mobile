@@ -15,6 +15,7 @@ import { IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold'
 
 var windowWidth = Dimensions.get('window').width;
+{/* Fix for FLIGHT-46 */}
 export default function HomeScreen() {
 
     const navigation = useNavigation();

@@ -12,6 +12,8 @@ import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 
 var windowWidth = Dimensions.get('window').width;
+
+{/* Fix for FLIGHT-46 */}
 export default function SelectProfile() {
 
     const navigation = useNavigation();

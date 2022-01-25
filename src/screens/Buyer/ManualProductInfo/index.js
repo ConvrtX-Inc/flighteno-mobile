@@ -19,6 +19,7 @@ import TextRegular from '../../../components/atoms/TextRegular';
 import TextMedium from '../../../components/atoms/TextMedium';
 
 var windowWidth = Dimensions.get('window').width;
+{/* Fix for FLIGHT-46 */}
 export default function ManualProductInfo({ route }) {
 
     const navigation = useNavigation();

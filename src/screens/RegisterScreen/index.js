@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 var windowWidth = Dimensions.get('window').width;
 
+{/* Fix for FLIGHT-46 */}
 export default function RegisterScreen() {
 
     const navigation = useNavigation();

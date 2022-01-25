@@ -29,6 +29,8 @@ GoogleSignin.configure({
 
 Settings.initializeSDK();
 var windowWidth = Dimensions.get('window').width;
+
+{/* Fix for FLIGHT-46 */}
 export default function LoginScreen() {
 
     const navigation = useNavigation();

@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux'
 import TextBold from '../../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
+
+{/* Fix for FLIGHT-46 */}
 const TrendingOrderDetail = ({ route }) => {
     const { order } = route.params
     const navigation = useNavigation()

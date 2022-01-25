@@ -17,6 +17,7 @@ import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 
 var windowWidth = Dimensions.get('window').width;
+{/* Fix for FLIGHT-46 */}
 export default function OrderDetail() {
 
     const navigation = useNavigation();

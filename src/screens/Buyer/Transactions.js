@@ -9,6 +9,7 @@ import { GetMyOrders } from '../../redux/actions/Trips';
 import TextBold from '../../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
+{/* Fix for FLIGHT-46 */}
 export default function Transactions() {
 
     const navigation = useNavigation();

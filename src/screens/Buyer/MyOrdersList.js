@@ -10,6 +10,7 @@ import moment from 'moment'
 import CardOrder from '../../components/CardOrder';
 import TextBold from '../../components/atoms/TextBold';
 
+{/* Fix for FLIGHT-46 */}
 export default function MyOrdersList({ route }) {
     const { orderStatus, orders } = route.params
     const navigation = useNavigation()
@@ -36,6 +37,7 @@ export default function MyOrdersList({ route }) {
                     source={require('../../images/back.png')}
                 />
             </TouchableOpacity>
+          
             <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
                 My {orderStatus == "Pending" ? "Pending" : orderStatus == "Completed" ? "Completed" : "Cancelled"} Orders
             </TextBold>
