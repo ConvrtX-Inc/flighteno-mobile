@@ -487,7 +487,6 @@ export const styles = StyleSheet.create({
     },
     subHeading: {
         fontSize: 17,
-        fontWeight: 'bold',
         width: (windowWidth * 90) / 100,
         marginHorizontal: '5%',
     },
@@ -504,7 +503,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     productAtrributeHead: {
-        fontWeight: 'bold'
+        // fontWeight: 'bold'
     },
     productAtrribute: {
         color: color.countrtTextColor,
@@ -665,7 +664,7 @@ export const styles = StyleSheet.create({
     },
     travelDateTitle: {
         marginBottom: 5,
-        fontWeight: 'bold'
+        // fontWeight: 'bold'
     },
     travelList: {
         width: '90%',

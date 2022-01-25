@@ -9,12 +9,10 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function TopTabTraveller() {
     return (
-
         <Tab.Navigator
             tabBarOptions={{
-                labelStyle: { fontSize: 22, textAlign: 'left', fontWeight: 'bold', textTransform: 'none' },
-                // tabStyle: { width: 100 },
-                style: { backgroundColor: '#fff' },
+                labelStyle: { fontSize: 22, textAlign: 'left',textTransform: 'none', fontFamily:'GilroyBold' },
+                style: { backgroundColor: '#fff',  },
                 indicatorStyle: {
                     backgroundColor: '#E12082',
                 },

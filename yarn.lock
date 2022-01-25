@@ -6917,6 +6917,11 @@ react-native-modal-datetime-picker@^13.0.1:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-pager-view@^5.4.9:
+  version "5.4.9"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.4.9.tgz#c0d40847cfeda5a4e729b53271b0ee0fedff3eb5"
+  integrity sha512-D6tzxpwMGdl6CXgtskGWhKRc5cJakCazESRGt7PkqnpyiH3N35ft1KmR82pCSQetAFlytFiToeu3a/dG5CELvA==
+
 react-native-parsed-text@0.0.22:
   version "0.0.22"
   resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.22.tgz#a23c756eaa5d6724296814755085127f9072e5f5"
@@ -7046,10 +7051,10 @@ react-native-switch@^2.0.0:
   dependencies:
     prop-types "^15.6.0"
 
-react-native-tab-view@2.16.0:
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.16.0.tgz#cae72c7084394bd328fac5fefb86cd966df37a86"
-  integrity sha512-ac2DmT7+l13wzIFqtbfXn4wwfgtPoKzWjjZyrK1t+T8sdemuUvD4zIt+UImg03fu3s3VD8Wh/fBrIdcqQyZJWg==
+react-native-tab-view@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz#1f8d7a835ab4f5b1b1407ec8dddc1053b53fa3c6"
+  integrity sha512-M5pRN6utQfytKWoKlKVzg5NbkYu308qNoW1khGTtEOTs1k14p2dHJ/BWOJoJYHKbPVUyZldbG9MFT7gUl4YHnw==
 
 react-native-toast-message@^1.4.9:
   version "1.6.0"

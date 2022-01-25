@@ -78,7 +78,7 @@ function Profile() {
                                 <TextBold style={Styles.fullName}>{currentUser ? currentUser.full_name : null}</TextBold>
                                 {currentProfile != "buyer" && currentUser ?
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.ratingText}>{currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0} out of 5</Text>
+                                        <TextBold style={styles.ratingText}>{currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0} out of 5</TextBold>
                                         <AirbnbRating
                                             defaultRating={currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0}
                                             type='star'

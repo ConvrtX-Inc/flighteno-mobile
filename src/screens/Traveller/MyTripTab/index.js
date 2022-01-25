@@ -5,6 +5,8 @@ import { styles } from '../../../Utility/Styles';
 import { useSelector } from 'react-redux';
 
 import TopTabTraveller from '../TopTabTraveller';
+import TextBold from '../../../components/atoms/TextBold';
+import { color } from '../../../Utility/Color';
 
 export default function MyTripTab() {
     const { currentUser } = useSelector(({ authRed }) => authRed)
@@ -33,7 +35,7 @@ export default function MyTripTab() {
                     </View>
                 </View> */}
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ marginLeft: '5%', marginTop: 15, marginBottom: 10 }}>Let’s Post your flight</Text>
+                <TextBold style={{ marginLeft: '5%', marginTop: 15, marginBottom: 10, color: color.grayText, size:16 }}>Let’s Post your flight</TextBold>
                 {currentUser ?
                     <TouchableOpacity onPress={() => { navigation.navigate('Profile') }}>
                         <Image

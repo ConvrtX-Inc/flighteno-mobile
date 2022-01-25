@@ -21,7 +21,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation}){
 
         if(bothEyes <= 0.3){
             setCameraProgress(100)
-         navigation.navigate('KYCSelfieVerificationCamera')
+            navigation.navigate('KYCSelfieVerificationCamera')
         }
       
     }

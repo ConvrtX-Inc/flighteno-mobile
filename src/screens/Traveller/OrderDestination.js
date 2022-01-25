@@ -13,6 +13,7 @@ import Icon1 from 'react-native-vector-icons/Feather'
 import { UserOrders, FilterOrders } from '../../redux/actions/Trips';
 import { formatAmount } from '../../Utility/Utils';
 import ViewImages from '../../components/ViewImages';
+import TextBold from '../../components/atoms/TextBold';
 
 var storeNamesList = [
     {
@@ -425,7 +426,7 @@ export default function OrderDestination({ route }) {
                 : null}
             {!showFilter ?
                 <View style={styles.orderDestinationHeader}>
-                    <Text style={styles.HeadingText}>Recent orders</Text>
+                    <TextBold style={styles.HeadingText}>Recent orders</TextBold>
                     <TouchableOpacity onPress={() => { setShowFilter(!showFilter), setSelectedRange(0) }} style={styles.filterButton}>
                         <Image source={require('../../images/filter.png')}
                             style={styles.filterImage} />

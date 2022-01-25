@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import TextBold from './atoms/TextBold';
 
 
 const ButtonTraveller = ({ title, onPress, font, loader }) => {
@@ -18,7 +19,7 @@ const ButtonTraveller = ({ title, onPress, font, loader }) => {
             >
 
                 {loader == false ?
-                    <Text style={{ textAlign: "center", fontFamily: font, fontSize: 16, color: "#fff" }}>{title}</Text>
+                    <TextBold style={{ textAlign: "center",  fontSize: 16, color: "#fff" }}>{title}</TextBold>
                     :
                     <ActivityIndicator size="small" color="#fff" />
                 }

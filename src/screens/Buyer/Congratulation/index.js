@@ -7,6 +7,8 @@ import { color } from '../../../Utility/Color';
 import ButtonLarge from '../../../components/ButtonLarge';
 import QRCode from 'react-native-qrcode-svg';
 import { formatAmount } from '../../../Utility/Utils';
+import TextBold from '../../../components/atoms/TextBold';
+import TextMedium from '../../../components/atoms/TextMedium';
 
 var windowWidth = Dimensions.get('window').width;
 export default function Congratulation({ route }) {
@@ -50,10 +52,10 @@ export default function Congratulation({ route }) {
                     />
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={[styles.HeadingText, { marginTop: (windowWidth * 6) / 100, marginLeft: '0%' }]}>Your order
-                    </Text>
-                    <Text style={[styles.HeadingText, { marginTop: (windowWidth * 0) / 100, marginLeft: '0%' }]}>
-                        has been placed</Text>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 6) / 100, marginLeft: '0%' }]}>Your order
+                    </TextBold>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 0) / 100, marginLeft: '0%' }]}>
+                        has been placed</TextBold>
                 </View>
 
                 <View style={{ alignSelf: "center", marginTop: 50, }}>
@@ -65,14 +67,14 @@ export default function Congratulation({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={styles.orderNumberIst}>
-                        <Text style={styles.loginInputHeading}>Order No.</Text>
+                        <TextBold style={styles.loginInputHeading}>Order No.</TextBold>
 
                     </View>
                     <View style={styles.orderNumberSecond}>
 
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {data.order_number}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -80,13 +82,13 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <Text style={styles.loginInputHeading}>Order price</Text>
+                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(data.order_price)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -94,13 +96,13 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Estimated Delivery Fee</Text>
+                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(data.estimated_dilivery_fee)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -109,13 +111,13 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                        <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(data.vip_service_fee)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -123,13 +125,13 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(data.flighteno_cost)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -138,13 +140,13 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Tax</Text>
+                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(data.tax)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -152,20 +154,20 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.textLarge}>Total</Text>
+                        <TextBold style={styles.textLarge}>Total</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(data.Total)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
                 
-                <Text style={[styles.termText, { fontSize: 16, color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'center', marginTop: 70 }]}>
+                <TextMedium style={[styles.termText, { fontSize: 16, color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'center', marginTop: 70 }]}>
                     Please wait for a traveler to gather your order and contact you for further discussion and prepare for your payment.
-                </Text>
+                </TextMedium>
 
 
 

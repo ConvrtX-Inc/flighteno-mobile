@@ -82,12 +82,14 @@ const BottomTab = ({ route }) => {
                     fontWeight: 'bold',
                 },
                 style: {
-                    padding: 5
+                    padding: 5,
+                    backgroundColor:color.backgroundColor
                     // borderTopLeftRadius: 15,
                     // borderTopRightRadius: 15,
                     // position: 'absolute'
                 },
-                keyboardHidesTabBar: true
+                keyboardHidesTabBar: true,
+                
             }}
         >
             <Tab.Screen

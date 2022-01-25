@@ -7,6 +7,8 @@ import { color } from '../../Utility/Color';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment'
 import { UserTrips } from '../../redux/actions/Trips';
+import TextBold from '../../components/atoms/TextBold';
+import TextSemiBold from '../../components/atoms/TextSemiBold';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -45,9 +47,9 @@ export default function OrdersByFlight() {
 
             <View style={Styles.header}>
 
-                <Text style={[styles.HeadingText, { marginTop: 0 }]}>Orders By Flight</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>Orders By Flight</TextBold>
                 <TouchableOpacity onPress={() => navigation.navigate("AllOrders")}>
-                    <Text style={Styles.viewAll}>View All</Text>
+                    <TextSemiBold style={Styles.viewAll}>View All</TextSemiBold>
                 </TouchableOpacity>
 
             </View>
@@ -66,25 +68,25 @@ export default function OrdersByFlight() {
                             >
                                 <View style={styles.travelerListInnerView}>
                                     <View>
-                                        <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>From</Text>
-                                        <Text style={styles.travelListValue}>{item.city}</Text>
-                                        <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</Text>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>From</TextSemiBold>
+                                        <TextBold style={styles.travelListValue}>{item.city}</TextBold>
+                                        <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                     </View>
                                     <Image source={require("../../images/travel.png")}
                                         resizeMode="contain"
                                         style={{ height: 60, width: 60 }}
                                     />
                                     <View>
-                                        <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>To</Text>
-                                        <Text style={styles.travelListValue}>{item.cityTo}</Text>
-                                        <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</Text>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>To</TextSemiBold>
+                                        <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
+                                        <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                     </View>
                                 </View>
                                 <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
                                 <View style={styles.travelerListInnerView}>
                                     <View>
-                                        <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>Date</Text>
-                                        <Text style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>Date</TextSemiBold>
+                                        <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                     </View>
                                 </View>
                                 <View style={{ height: 15 }} />
