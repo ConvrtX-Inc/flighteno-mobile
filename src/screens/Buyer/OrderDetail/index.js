@@ -13,8 +13,11 @@ import { createOrder } from '../../../redux/actions/BuyerOrder';
 import { generateUID } from '../../../Utility/Utils';
 import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../../../redux/constants';
+import TextBold from '../../../components/atoms/TextBold';
+import TextMedium from '../../../components/atoms/TextMedium';
 
 var windowWidth = Dimensions.get('window').width;
+{/* Fix for FLIGHT-46 */}
 export default function OrderDetail() {
 
     const navigation = useNavigation();
@@ -81,7 +84,7 @@ export default function OrderDetail() {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order details</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order details</TextBold>
 
                 {global.productImage.url ?
                     <Image
@@ -96,33 +99,33 @@ export default function OrderDetail() {
 
                 }
 
-                <Text style={styles.subHeading}>{buyerOrderData.prodect_name}</Text>
+                <TextBold style={styles.subHeading}>{buyerOrderData.prodect_name}</TextBold>
 
-                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
                     {buyerOrderData.product_discription}
-                </Text>
+                </TextMedium>
 
 
                 <View style={styles.productDesc}>
 
                     <View style={styles.productDescInerFirst}>
 
-                        <Text style={styles.productAtrributeHead}>Product Type</Text>
-                        <Text style={styles.productAtrributeHead}>Weight</Text>
-                        <Text style={styles.productAtrributeHead}>Quantity</Text>
+                        <TextBold style={styles.productAtrributeHead}>Product Type</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>Weight</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>Quantity</TextBold>
 
                     </View>
                     <View style={styles.productDescInerSecond}>
-                        <Text style={styles.productAtrribute}>{buyerOrderData.product_type}</Text>
-                        <Text style={styles.productAtrribute}>{buyerOrderData.product_weight ? buyerOrderData.product_weight : "Not available"} {buyerOrderData.product_weight ? "kg" : ""}</Text>
-                        <Text style={styles.productAtrribute}>{buyerOrderData.quantity}</Text>
+                        <TextMedium style={styles.productAtrribute}>{buyerOrderData.product_type}</TextMedium>
+                        <TextMedium style={styles.productAtrribute}>{buyerOrderData.product_weight ? buyerOrderData.product_weight : "Not available"} {buyerOrderData.product_weight ? "kg" : ""}</TextMedium>
+                        <TextMedium style={styles.productAtrribute}>{buyerOrderData.quantity}</TextMedium>
                     </View>
 
                 </View>
 
 
-                <Text style={[styles.productAtrributeHead, { alignSelf: 'center', marginTop: 20 }]}>Allow Traveler to:</Text>
-                <Text style={[styles.productAtrribute, { alignSelf: 'center' }]}>(If Applicable)</Text>
+                <TextBold style={[styles.productAtrributeHead, { alignSelf: 'center', marginTop: 20 }]}>Allow Traveler to:</TextBold>
+                <TextMedium style={[styles.productAtrribute, { alignSelf: 'center' }]}>(If Applicable)</TextMedium>
 
 
                 <View style={styles.agreeTermContainer}>
@@ -137,7 +140,7 @@ export default function OrderDetail() {
                         onPress={() => setChecked(!checked)}
                     />
 
-                    <Text style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Open box and check physical Apperance</Text>
+                    <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Open box and check physical Apperance</TextMedium>
                 </View>
 
                 <View style={[styles.agreeTermContainer, { marginTop: -10 }]}>
@@ -152,7 +155,7 @@ export default function OrderDetail() {
                         onPress={() => setUseForTesting(!useForTesting)}
                     />
 
-                    <Text style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</Text>
+                    <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</TextMedium>
                 </View>
 
 

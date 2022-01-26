@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { color } from '../../Utility/Color';
 import { getChatMessages } from '../../redux/actions/Chat';
 import moment from 'moment'
+import TextBold from '../../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -33,7 +34,7 @@ export default function ChatScreen() {
                 <FlatList
                     data={chatMessages}
                     nestedScrollEnabled
-                    ListEmptyComponent={<Text style={[styles.emptyListText, {marginTop: -20}]}>There are no messages!</Text>}
+                    ListEmptyComponent={<TextBold style={[styles.emptyListText, {marginTop: -20}]}>There are no messages!</TextBold>}
                     ListHeaderComponent={<View>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
                             <Image
@@ -42,7 +43,7 @@ export default function ChatScreen() {
                                 source={require('../../images/back.png')}
                             />
                         </TouchableOpacity>
-                        <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Inbox</Text>
+                        <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Inbox</TextBold>
                         <View style={{ marginVertical: 30 }}>
                             <FlatList
                                 data={chatMessages}

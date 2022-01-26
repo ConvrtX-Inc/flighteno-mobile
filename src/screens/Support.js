@@ -16,8 +16,11 @@ import { customerSupport } from '../redux/actions/Auth';
 import { IS_LOADING } from '../redux/constants';
 import axios from 'axios'
 import { BASE_URL } from '../BASE_URL';
+import TextBold from '../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
+
+{/* Fix for FLIGHT-46 */}
 export default function Support({ route }) {
 
     const navigation = useNavigation();
@@ -241,10 +244,10 @@ export default function Support({ route }) {
                         source={require('../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Support</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Support</TextBold>
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Subject</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Subject</TextBold>
 
                 <Input
                     placeholder={"Write subject here..."}
@@ -253,7 +256,7 @@ export default function Support({ route }) {
                     secureTextEntry={false}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Order No.</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Order No.</TextBold>
 
                 <Input
                     placeholder="ex. 00235421151"
@@ -263,7 +266,7 @@ export default function Support({ route }) {
                 />
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Your Message</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Your Message</TextBold>
 
                 <InputMultiline
                     placeholder="What would you like to tell us?"
@@ -272,7 +275,7 @@ export default function Support({ route }) {
                 />
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload pictures</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload pictures</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseImages()}>
                         <View style={styles.imgPickView}>
@@ -305,7 +308,7 @@ export default function Support({ route }) {
                     </View>
                 </View>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload Videos</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload Videos</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseVideos()}>
                         <View style={styles.imgPickView}>

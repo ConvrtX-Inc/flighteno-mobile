@@ -7,6 +7,8 @@ import moment from 'moment'
 import Toast from 'react-native-toast-message';
 import messaging from '@react-native-firebase/messaging';
 import Input from '../../components/InputField';
+import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 import ButtonLarge from '../../components/ButtonLarge';
 import { registerUserFN, verificationCodeAction } from '../../redux/actions/Auth';
 
@@ -16,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 var windowWidth = Dimensions.get('window').width;
 
+{/* Fix for FLIGHT-46 */}
 export default function RegisterScreen() {
 
     const navigation = useNavigation();
@@ -118,12 +121,9 @@ export default function RegisterScreen() {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Register</Text>
-
-
-
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Register</TextBold>
                 {/* TextInputs For Login */}
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Full name</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Full name</TextBold>
 
                 <Input
                     placeholder="John doe"
@@ -132,7 +132,7 @@ export default function RegisterScreen() {
                     secureTextEntry={false}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</TextBold>
 
                 <Input
                     placeholder="myemail@flighteno.com"
@@ -141,7 +141,7 @@ export default function RegisterScreen() {
                     secureTextEntry={false}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Password</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Password</TextBold>
 
                 <Input
                     placeholder="**************"
@@ -151,7 +151,7 @@ export default function RegisterScreen() {
                 />
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</TextBold>
 
                 <PhoneInput
                     ref={phoneInput}
@@ -169,7 +169,7 @@ export default function RegisterScreen() {
                         placeholderTextColor: "#707070",
                         keyboardType: "phone-pad",
                         placeholder: "123-456-789",
-
+                        fontFamily:'GilroyRegular'
                     }}
                 />
 
@@ -183,12 +183,12 @@ export default function RegisterScreen() {
                 </View>
 
                 <View style={styles.bottomTxt}>
-                    <Text style={styles.loginInputHeading}>
+                    <TextBold style={styles.loginInputHeading}>
                         Don’t have an account?
-                    </Text>
+                    </TextBold>
 
                     <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                        <Text style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> Login</Text>
+                        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> Login</TextBold>
                     </TouchableOpacity>
                 </View>
 

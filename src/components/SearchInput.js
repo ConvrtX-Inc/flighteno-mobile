@@ -33,7 +33,7 @@ const Styles = StyleSheet.create({
         paddingLeft: 20,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: 'GilroyRegular',
         backgroundColor: color.inputBackColor,
         borderRightWidth: 0
     },

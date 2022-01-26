@@ -6,6 +6,7 @@ import ButtonLarge from '../components/ButtonLarge';
 import { styles } from '../Utility/Styles'
 import moment from 'moment';
 import {getTickets} from '../redux/actions/Auth'
+import TextBold from '../components/atoms/TextBold';
 const windowWidth = Dimensions.get('window').width;
 
 export default function SupportTicket({ navigation }) {
@@ -27,7 +28,7 @@ export default function SupportTicket({ navigation }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Support</Text>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Support</TextBold>
             <View style={[Styles.userDataPortion, { borderBottomWidth: 0, }]}>
                 <FlatList
                     data={supportTickets}

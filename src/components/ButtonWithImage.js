@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { color } from '../Utility/Color';
+import TextBold from './atoms/TextBold';
 
 const ButtonWithImage = ({ img, title, onPress, loader }) => {
     return (
@@ -14,7 +15,7 @@ const ButtonWithImage = ({ img, title, onPress, loader }) => {
                 style={styles.tinyLogo}
                 source={img}
             />
-            <Text style={{ textAlign: "center", fontFamily: 'OpenSans-SemiBold', fontSize: 14, fontWeight: 'bold', color: color.splashTextColor }}>{title}</Text>
+            <TextBold style={{ textAlign: "center",  fontSize: 14,  color: color.splashTextColor }}>{title}</TextBold>
             {loader ?
                 <ActivityIndicator size="small" color={color.lightBlue} />
                 : null}

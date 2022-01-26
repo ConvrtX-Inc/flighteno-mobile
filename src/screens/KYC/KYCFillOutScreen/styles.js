@@ -6,7 +6,6 @@ import {
 export const styles = StyleSheet.create({
     titleTxt: {
         fontSize: 26,
-        fontWeight: 'bold',
         marginTop: 36
     },
     container: {
@@ -20,11 +19,11 @@ export const styles = StyleSheet.create({
         marginTop: 16
     },
     inputLabel: {
-        fontSize: 14,
-        fontWeight: 'bold'
+        fontSize: 14
     },
     inputTxt: {
-        marginTop: 8
+        marginTop: 8,
+        fontFamily:'GilroyMedium'
     },
     btnSubmit: {
         marginTop: 24,

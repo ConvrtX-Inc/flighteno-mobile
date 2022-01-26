@@ -7,6 +7,8 @@ import { AirbnbRating } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux'
 import { ProfileSelection, Logout } from '../redux/actions/Auth'
 import { CURRENT_PROFILE } from '../redux/constants'
+import TextBold from '../components/atoms/TextBold';
+import TextMedium from '../components/atoms/TextMedium';
 
 function Profile() {
     const navigation = useNavigation()
@@ -72,11 +74,11 @@ function Profile() {
                     {currentUser ?
                         <View style={Styles.topView}>
                             <View style={{ width: '85%' }}>
-                                <Text style={Styles.firstName}>Hello, {currentUser ? currentUser.full_name.split(" ")[0] : null}</Text>
-                                <Text style={Styles.fullName}>{currentUser ? currentUser.full_name : null}</Text>
+                                <TextBold style={Styles.firstName}>Hello, {currentUser ? currentUser.full_name.split(" ")[0] : null}</TextBold>
+                                <TextBold style={Styles.fullName}>{currentUser ? currentUser.full_name : null}</TextBold>
                                 {currentProfile != "buyer" && currentUser ?
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.ratingText}>{currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0} out of 5</Text>
+                                        <TextBold style={styles.ratingText}>{currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0} out of 5</TextBold>
                                         <AirbnbRating
                                             defaultRating={currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0}
                                             type='star'
@@ -102,7 +104,7 @@ function Profile() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <Text style={styles.menuItemText}>My orders</Text>
+                        <TextMedium style={styles.menuItemText}>My orders</TextMedium>
                     </TouchableOpacity>
                     {currentProfile != "buyer" ?
                         <TouchableOpacity onPress={() => navigation.navigate("BottomTab", { screen: "Track" })} style={styles.menuItem}>
@@ -110,7 +112,7 @@ function Profile() {
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <Text style={styles.menuItemText}>Orders By Flight</Text>
+                            <TextMedium style={styles.menuItemText}>Orders By Flight</TextMedium>
                         </TouchableOpacity>
                         : null}
                     <TouchableOpacity onPress={() => navigation.navigate("ChatScreen")} style={styles.menuItem}>
@@ -118,36 +120,38 @@ function Profile() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <Text style={styles.menuItemText}>Messages</Text>
+                        <TextMedium style={styles.menuItemText}>Messages</TextMedium>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onShare} style={styles.menuItem}>
                         <Image source={require('../images/inviteFriends.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <Text style={styles.menuItemText}>Invite Friends</Text>
+                        <TextMedium style={styles.menuItemText}>Invite Friends</TextMedium>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate("SupportTicket")} style={styles.menuItem}>
                         <Image source={require('../images/support.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <Text style={styles.menuItemText}>Support</Text>
+                        <TextMedium style={styles.menuItemText}>Support</TextMedium>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.menuItem}>
+                <TouchableOpacity style={styles.menuItem} onPress={() => {
+                    navigation.navigate("KYCIntro")
+                }}>
                     <Image source={require('../images/accountVerify.png')}
                         style={styles.menuIcon}
                         resizeMode="contain"
                     />
-                    <Text style={styles.menuItemText}>Account Verification</Text>
-                </TouchableOpacity> */}
+                    <TextMedium style={styles.menuItemText}>Account Verification</TextMedium>
+                </TouchableOpacity>
                     {currentProfile != "buyer" ?
                         <TouchableOpacity onPress={() => navigation.navigate("MyReviews")} style={styles.menuItem}>
                             <Image source={require('../images/review.png')}
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <Text style={styles.menuItemText}>My Reviews</Text>
+                            <TextMedium style={styles.menuItemText}>My Reviews</TextMedium>
                         </TouchableOpacity>
                         : null}
                     <TouchableOpacity onPress={() => changeProfile()} style={styles.menuItem}>
@@ -155,14 +159,14 @@ function Profile() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <Text style={styles.menuItemText}>Switch To {currentProfile == "buyer" ? 'Traveler' : 'Buyer'}</Text>
+                        <TextMedium style={styles.menuItemText}>Switch To {currentProfile == "buyer" ? 'Traveler' : 'Buyer'}</TextMedium>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => logout()} style={styles.menuItem}>
                         <Image source={require('../images/logout.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <Text style={styles.menuItemText}>Logout</Text>
+                        <TextMedium style={styles.menuItemText}>Logout</TextMedium>
                     </TouchableOpacity>
                 </ScrollView>
                 : null}
@@ -186,12 +190,10 @@ const Styles = StyleSheet.create({
     },
     firstName: {
         fontSize: 16,
-        fontWeight: 'bold',
         color: color.userNameHomeColor
     },
     fullName: {
         fontSize: 22,
-        fontWeight: 'bold',
         marginVertical: 5
     },
 

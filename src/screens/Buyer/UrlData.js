@@ -14,8 +14,12 @@ import { color } from '../../Utility/Color';
 import { Switch } from 'react-native-switch';
 import moment from 'moment'
 import { CREATE_ORDER_DETAIL } from '../../redux/constants';
+import TextBold from '../../components/atoms/TextBold';
+import TextSemiBold from '../../components/atoms/TextSemiBold';
 
 var windowWidth = Dimensions.get('window').width;
+
+{/* Fix for FLIGHT-46 */}
 export default function UrlData({ route }) {
 
     const navigation = useNavigation();
@@ -223,10 +227,10 @@ export default function UrlData({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Data from url</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Data from url</TextBold>
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Your URL</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Your URL</TextBold>
 
                 <Input
                     placeholder={data.url}
@@ -236,7 +240,7 @@ export default function UrlData({ route }) {
                     editable={false}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Product Type</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Product Type</TextBold>
 
                 {/* custom Picker */}
 
@@ -245,7 +249,7 @@ export default function UrlData({ route }) {
                         <View style={styles.pickerVIew}>
 
                             <View style={styles.pickerLeftView}>
-                                <Text style={styles.textSelected}>{pickerValueSelected}</Text>
+                                <TextMedium style={styles.textSelected}>{pickerValueSelected}</TextMedium>
                             </View>
                             <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
                                 <Image
@@ -283,27 +287,27 @@ export default function UrlData({ route }) {
                     // resizeMode='stretch'
                     source={{uri: data.product_image}}
                 />
-                <Text style={styles.subHeading}>{data.name}</Text>
-                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+                <TextBold style={styles.subHeading}>{data.name}</TextBold>
+                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
                 {data.name}
-                </Text>
+                </TextMedium>
                 <View style={styles.productDesc}>
                     <View style={styles.productDescInerFirst}>
-                        <Text style={styles.productAtrributeHead}>Color</Text>
-                        <Text style={styles.productAtrributeHead}>Weight</Text>
-                        <Text style={styles.productAtrributeHead}>Condition</Text>
+                        <TextBold style={styles.productAtrributeHead}>Color</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>Weight</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>Condition</TextBold>
                     </View>
                     <View style={styles.productDescInerSecond}>
-                        <Text style={styles.productAtrribute}>Not available</Text>
-                        <Text style={styles.productAtrribute}>Not available</Text>
-                        <Text style={styles.productAtrribute}>Not available</Text>
+                        <TextMedium style={styles.productAtrribute}>Not available</TextMedium>
+                        <TextMedium style={styles.productAtrribute}>Not available</TextMedium>
+                        <TextMedium style={styles.productAtrribute}>Not available</TextMedium>
                     </View>
                 </View>
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Date </Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Date </TextBold>
                 <Pressable onPress={() => showMode('date', 'date')}>
                     <View style={styles.pickerVIew}>
                         <View style={styles.pickerLeftView}>
-                            <Text style={styles.textSelected}>{dateValue}</Text>
+                            <TextMedium style={styles.textSelected}>{dateValue}</TextMedium>
                         </View>
                         <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
                             <Image
@@ -314,21 +318,21 @@ export default function UrlData({ route }) {
                         </View>
                     </View>
                 </Pressable>
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Time</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Time</TextBold>
                 <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'from')}>
-                        <Text style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</Text>
+                        <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</TextMedium>
                     </TouchableOpacity>
-                    <Text>to</Text>
+                    <TextMedium>to</TextMedium>
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'to')}>
-                        <Text style={{ color: color.verifyPhoneTextColor, }}>{toTime}</Text>
+                        <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{toTime}</TextMedium>
                     </TouchableOpacity>
                 </View>
                 <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
-                        <Text style={styles.loginInputHeading}>Quantity</Text>
-                        <Text style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</Text>
+                        <TextBold style={styles.loginInputHeading}>Quantity</TextBold>
+                        <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</TextMedium>
                     </View>
                     <View style={styles.rightQuantityStyle}>
                         <TouchableOpacity onPress={() => decreaseQuantity()}>
@@ -340,7 +344,7 @@ export default function UrlData({ route }) {
                                 />
                             </View>
                         </TouchableOpacity>
-                        <Text style={[styles.loginInputHeading, { fontSize: 18, marginHorizontal: 10, }]}>{quantity}</Text>
+                        <TextBold style={[styles.loginInputHeading, { fontSize: 18, marginHorizontal: 10, }]}>{quantity}</TextBold>
                         <TouchableOpacity onPress={() => increaseQuantity()}>
                             <View style={styles.quantityChange}>
                                 <Image
@@ -355,8 +359,8 @@ export default function UrlData({ route }) {
                 <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
-                        <Text style={styles.loginInputHeading}>Do you need box?</Text>
-                        <Text style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</Text>
+                        <TextBold style={styles.loginInputHeading}>Do you need box?</TextBold>
+                        <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
                     </View>
                     <View style={styles.rightQuantityStyle}>
                         <Switch
@@ -392,11 +396,11 @@ export default function UrlData({ route }) {
 
                 <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
 
-                <Text style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</Text>
+                <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
 
-                <Text style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</Text>
+                <TextMedium style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextMedium>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Try our VIP Service</Text>
+                <TextSemiBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Try our VIP Service</TextSemiBold>
 
                 {/* custom Picker */}
 
@@ -404,7 +408,7 @@ export default function UrlData({ route }) {
                     <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
                         <View style={styles.pickerVIew}>
                             <View style={styles.pickerLeftView}>
-                                <Text style={styles.textSelected}>{pickerValueSelectedVip}</Text>
+                                <TextMedium style={styles.textSelected}>{pickerValueSelectedVip}</TextMedium>
                             </View>
                             <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
                                 <Image
@@ -423,7 +427,7 @@ export default function UrlData({ route }) {
                                     <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
                                         <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueVipFN(index)}>
                                             <View>
-                                                <Text style={styles.textSelected}>{item.option}</Text>
+                                                <TextMedium style={styles.textSelected}>{item.option}</TextMedium>
                                             </View>
                                         </TouchableOpacity>
                                     </View>
@@ -437,7 +441,7 @@ export default function UrlData({ route }) {
                 </View>
                 {/* custom Picker end */}
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>VIP Service Fee</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>VIP Service Fee</TextBold>
 
                 <Input
                     placeholder="$50.00"

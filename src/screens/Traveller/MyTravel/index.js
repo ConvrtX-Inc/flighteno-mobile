@@ -11,12 +11,16 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment'
 import { AddTrip, UserTrips } from '../../../redux/actions/Trips';
+import TextBold from '../../../components/atoms/TextBold'
 import Toast from 'react-native-toast-message';
+import TextSemiBold from '../../../components/atoms/TextSemiBold';
 
 
 var windowWidth = Dimensions.get('window').width;
 var originCities = ""
 var destinationCities = ""
+
+{/* Fix for FLIGHT-46 */}
 export default function MyTravel({ route }) {
 
     const navigation = useNavigation();
@@ -208,7 +212,7 @@ export default function MyTravel({ route }) {
         <View style={styles.ScreenCss}>
 
             <ScrollView>
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Traveling From</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Traveling From</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -226,6 +230,7 @@ export default function MyTravel({ route }) {
                             }}
                             onClose={() => setCountry1(false)}
                             onOpen={() => setCountry1(true)}
+                            
                         />
 
                         <Image
@@ -238,7 +243,7 @@ export default function MyTravel({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{country.country_name ? country.country_name : country.name}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{country.country_name ? country.country_name : country.name}</TextMedium>
                     </View>
                 </TouchableOpacity>
 
@@ -247,7 +252,7 @@ export default function MyTravel({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
-                        <Text style={styles.countryNameCSS}>City</Text>
+                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}
@@ -259,7 +264,7 @@ export default function MyTravel({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{pickerValueSelectedCity}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCity}</TextMedium>
                     </View>
 
                 </View>
@@ -267,7 +272,7 @@ export default function MyTravel({ route }) {
 
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Traveling To</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Traveling To</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -297,7 +302,7 @@ export default function MyTravel({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</TextMedium>
                     </View>
                 </TouchableOpacity>
 
@@ -306,8 +311,7 @@ export default function MyTravel({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                        <Text style={styles.countryNameCSS}>City</Text>
-
+                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}
@@ -319,7 +323,7 @@ export default function MyTravel({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{pickerValueSelectedCityDeliver}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCityDeliver}</TextMedium>
                     </View>
 
                 </View>
@@ -329,7 +333,7 @@ export default function MyTravel({ route }) {
                 <View style={styles.travelDateContainer}>
 
                     <View style={[styles.travelDateInner, { alignItems: 'flex-start' }]}>
-                        <Text style={styles.travelDateTitle}>Depart</Text>
+                        <TextBold style={styles.travelDateTitle}>Depart</TextBold>
 
                         <TouchableOpacity onPress={() => showMode('dep')}>
                             <View style={{
@@ -345,7 +349,7 @@ export default function MyTravel({ route }) {
                                         source={require('../../../images/calendar.png')}
                                     />
                                 </View>
-                                <Text style={styles.travelDateText}>{depDate}</Text>
+                                <TextBold style={styles.travelDateText}>{depDate}</TextBold>
                             </View>
                         </TouchableOpacity>
 
@@ -353,7 +357,7 @@ export default function MyTravel({ route }) {
 
 
                     <View style={[styles.travelDateInner, { alignItems: 'flex-end' }]}>
-                        <Text style={[styles.travelDateTitle, { marginRight: 37 }]}>Return</Text>
+                        <TextBold style={[styles.travelDateTitle, { marginRight: 37 }]}>Return</TextBold>
                         <TouchableOpacity onPress={() => showMode('ret')}>
 
                             <View style={{
@@ -401,25 +405,25 @@ export default function MyTravel({ route }) {
                                 >
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>From</Text>
-                                            <Text style={styles.travelListValue}>{item.city}</Text>
-                                            <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</Text>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>From</TextSemiBold>
+                                            <TextBold style={styles.travelListValue}>{item.city}</TextBold>
+                                            <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                         </View>
                                         <Image source={require("../../../images/travel.png")}
                                             resizeMode="contain"
                                             style={{ height: 60, width: 60 }}
                                         />
                                         <View>
-                                            <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>To</Text>
-                                            <Text style={styles.travelListValue}>{item.cityTo}</Text>
-                                            <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</Text>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>To</TextSemiBold>
+                                            <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
+                                            <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                         </View>
                                     </View>
                                     <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <Text style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>Date</Text>
-                                            <Text style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>Date</TextSemiBold>
+                                            <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                         </View>
                                     </View>
                                     <View style={{ height: 15 }} />

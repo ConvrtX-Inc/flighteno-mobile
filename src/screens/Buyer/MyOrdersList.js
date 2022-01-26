@@ -8,7 +8,9 @@ import SearchInput from '../../components/SearchInput';
 var windowWidth = Dimensions.get('window').width;
 import moment from 'moment'
 import CardOrder from '../../components/CardOrder';
+import TextBold from '../../components/atoms/TextBold';
 
+{/* Fix for FLIGHT-46 */}
 export default function MyOrdersList({ route }) {
     const { orderStatus, orders } = route.params
     const navigation = useNavigation()
@@ -35,9 +37,10 @@ export default function MyOrdersList({ route }) {
                     source={require('../../images/back.png')}
                 />
             </TouchableOpacity>
-            <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
+          
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
                 My {orderStatus == "Pending" ? "Pending" : orderStatus == "Completed" ? "Completed" : "Cancelled"} Orders
-            </Text>
+            </TextBold>
             <SearchInput
                 placeholder="Search Product Name, Order No."
                 onChangeText={(text) => handleSearch(text)}
@@ -52,9 +55,9 @@ export default function MyOrdersList({ route }) {
                     </TouchableOpacity>
                 }
                 keyExtractor={item => item.id}
-                ListEmptyComponent={<Text style={styles.emptyListText}>
+                ListEmptyComponent={<TextBold style={styles.emptyListText}>
                     There are no {orderStatus == "Pending" ? "Pending" : orderStatus == "Completed" ? "Completed" : "Cancelled"} orders!
-                </Text>}
+                </TextBold>}
             />
         </View>
     );

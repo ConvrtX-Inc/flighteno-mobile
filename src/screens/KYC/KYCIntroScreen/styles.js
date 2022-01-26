@@ -6,7 +6,14 @@ export const styles = StyleSheet.create({
     container:{
         marginLeft:16,
         marginRight:16,
-        alignItems:'center', 
+        // alignItems:'center', 
+        flexDirection:'column',
+        flexGrow:1,
+        flex:1
+    },
+    content:{
+        flex:1,
+        alignItems:'center'
     },
     logoTxt:{
         width:162,
@@ -20,7 +27,6 @@ export const styles = StyleSheet.create({
     },
     title:{
         fontSize:26,
-        fontWeight:'bold',
         textAlign:'center',
         marginTop:24,
     },
@@ -30,7 +36,7 @@ export const styles = StyleSheet.create({
         marginTop:16
     },
     btnGetStarted: {
-        marginTop:72,
-        width:windowWidth
+        width:windowWidth,
+        marginBottom:40
     }
 })

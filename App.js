@@ -12,6 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { I18nextProvider } from 'react-i18next'
 import i18next from 'i18next'
 import common_en from './src/translation/en/common.json'
+import { lightTheme } from './src/lightTheme.js';
 LogBox.ignoreLogs(['Reanimated 2', 'VirtualizedLists should never be nested']);
 // i18next.init({
 //   lng: 'en', // if you're using a language detector, do not define the lng option
@@ -40,12 +41,14 @@ const { store, persistor } = configureStore();
 //   // any_custom_type: () => { }
 // };
 
+
+
 function App() {
   return (
-    <Provider store={store}>
+    <Provider store={store} >
       <I18nextProvider i18n={i18next}>
         <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer>
+          <NavigationContainer theme={lightTheme}>
           <StatusBar barStyle="dark-content" hidden={false} backgroundColor={color.backgroundColor} translucent={false} />
             <Navigation />
             <Toast position="bottom" ref={(ref) => Toast.setRef(ref)} />

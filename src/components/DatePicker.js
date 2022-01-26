@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import TextMedium from './atoms/TextMedium';
 
 const DatePickerField = ({onPress, date}) => {
     return (
@@ -7,7 +8,7 @@ const DatePickerField = ({onPress, date}) => {
         <Pressable onPress={onPress}>
             <View style={styles.pickerVIew}>
                 <View style={styles.pickerLeftView}>
-                    <Text style={styles.textSelected}>{date}</Text>
+                    <TextMedium style={styles.textSelected}>{date}</TextMedium>
                 </View>
             <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
                 <Image

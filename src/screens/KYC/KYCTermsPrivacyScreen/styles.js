@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
         flex:1,
     },
     titleTxt: {
-        fontWeight:'bold',
         fontSize:30,
         marginTop:20
     },

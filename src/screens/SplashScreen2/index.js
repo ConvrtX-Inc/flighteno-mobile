@@ -2,6 +2,8 @@ import * as React from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
+import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -22,16 +24,14 @@ export default function SplashScreen2() {
           />
 
           <TouchableOpacity onPress={() => navigation.navigate("TermsandCondition")} style={styles.skipText}>
-            <Text style={styles.skipText}>Skip</Text>
+            <TextMedium  style={styles.skipText}>Skip</TextMedium>
           </TouchableOpacity>
         </View>
 
         {/* Splash Text */}
 
         <View style={styles.splashTxtContainer}>
-          <Text style={styles.splashText}>Travel with</Text>
-          <Text style={styles.splashText}>Flighteno</Text>
-          <Text style={styles.splashText}>and Earn</Text>
+          <TextBold style={styles.splashText}>Travel with{"\n"}Flighteno{"\n"}and Earn</TextBold>
         </View>
 
         <View style={styles.nextImgContainer}>

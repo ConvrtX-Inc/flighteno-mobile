@@ -28,6 +28,9 @@
   	    android:value="AIzaSyBRcx1R7x2brC0Q2wf1kAcco3P13xL8o6M"/>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+      <meta-data 
+        android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+        android:value="ocr, face" />
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -40,5 +43,6 @@
             <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
         </intent-filter>
       </activity>
+      
     </application>
 </manifest>

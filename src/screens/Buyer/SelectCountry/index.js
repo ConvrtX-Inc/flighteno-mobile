@@ -11,11 +11,13 @@ import Toast from 'react-native-toast-message';
 import moment from 'moment';
 import { CREATE_ORDER_DETAIL } from '../../../redux/constants';
 import { formatAmount } from '../../../Utility/Utils';
+import TextBold from '../../../components/atoms/TextBold';
 
 
 var windowWidth = Dimensions.get('window').width;
 var originCities = ""
 var destinationCities = ""
+{/* Fix for FLIGHT-46 */}
 export default function SelectCountry({ route }) {
 
     const navigation = useNavigation();
@@ -154,10 +156,10 @@ export default function SelectCountry({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Select country</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Select country</TextBold>
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Buy Product From</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Buy Product From</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -186,7 +188,7 @@ export default function SelectCountry({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{country.country_name ? country.country_name : country.name}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{country.country_name ? country.country_name : country.name}</TextMedium>
                     </View>
                 </TouchableOpacity>
 
@@ -195,7 +197,7 @@ export default function SelectCountry({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
-                        <Text style={styles.countryNameCSS}>City</Text>
+                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}
@@ -206,7 +208,7 @@ export default function SelectCountry({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{pickerValueSelectedCity}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCity}</TextMedium>
                     </View>
 
                 </View>
@@ -214,7 +216,7 @@ export default function SelectCountry({ route }) {
 
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Deliver Product To</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Deliver Product To</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -243,7 +245,7 @@ export default function SelectCountry({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</TextMedium>
                     </View>
                 </TouchableOpacity>
 
@@ -252,7 +254,7 @@ export default function SelectCountry({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                        <Text style={styles.countryNameCSS}>City</Text>
+                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}
@@ -264,24 +266,24 @@ export default function SelectCountry({ route }) {
                     <View style={styles.vertyicalLine}></View>
 
                     <View style={styles.countryNameCSSContainer}>
-                        <Text style={styles.countryNameCSS}>{pickerValueSelectedCityDeliver}</Text>
+                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCityDeliver}</TextMedium>
                     </View>
 
                 </View>
 
 
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%' }]}>Delivery date</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%' }]}>Delivery date</TextBold>
 
 
-                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
                     Based on country selection we estimate this should be delivered by
-                </Text>
+                </TextMedium>
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 4) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 4) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
                     {deliveryDay + " " + deliveryDateFormat}
-                </Text>
+                </TextBold>
 
 
                 {/* <View style={styles.ordernumberStyle}>
@@ -302,13 +304,13 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <Text style={styles.loginInputHeading}>Order price</Text>
+                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(buyerOrderData.product_price)}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -316,13 +318,13 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Estimated Delivery Fee</Text>
+                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(Math.round((buyerOrderData.product_price / 100) * 10) < 50 ? 50 : Math.round((buyerOrderData.product_price / 100) * 10))}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -331,13 +333,13 @@ export default function SelectCountry({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                            <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
-                            <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                            <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                 {formatAmount(buyerOrderData.vip_service_fee)}
-                            </Text>
+                            </TextMedium>
                         </View>
 
                     </View>
@@ -346,13 +348,13 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(Math.round((buyerOrderData.product_price / 100) * 7))}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -361,13 +363,13 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.loginInputHeading}>Tax</Text>
+                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(Math.round((buyerOrderData.product_price / 100) * 5))}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -375,13 +377,13 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <Text style={styles.textLarge}>Total</Text>
+                        <TextBold style={styles.textLarge}>Total</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                        <Text style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {formatAmount(Math.round(buyerOrderData.product_price) + Math.round((buyerOrderData.product_price / 100) * 10) + Math.round((buyerOrderData.product_price / 100) * 7) + Math.round((buyerOrderData.product_price / 100) * 5) + Math.round(buyerOrderData.vip_service_fee))}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>

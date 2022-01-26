@@ -1,1 +1,1 @@
-export const BASE_URL = "http://3.124.117.144/flighteno-services/index.php/"
+export const BASE_URL = "https://dev-flighteno-convrtx.herokuapp.com/index.php/"

@@ -10,6 +10,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DatePickerField from '../../../components/DatePicker';
 import moment from 'moment';
 import { useCallback } from 'react';
+import TextBold from '../../../components/atoms/TextBold';
 
 export default function KYCFillOutScreen ({navigation}){
 
@@ -39,50 +40,50 @@ export default function KYCFillOutScreen ({navigation}){
     return(
         <ScrollView  style={styles.container}>
             <View>
-                <Text style={styles.titleTxt}>Fill Out Information</Text>
+                <TextBold style={styles.titleTxt}>Fill Out Information</TextBold>
                 <View style={styles.stepsIndicator}>
                     <StepsIndicator currentPosition={3}/>
                 </View>
                 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>First Name</Text>
+                    <TextBold style={[styles.inputLabel]}>First Name</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Yasmin'/>
                 </View>
 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>Middle Name</Text>
+                    <TextBold style={[styles.inputLabel]}>Middle Name</TextBold>
                     <InputText placeholder='Che'/>
                 </View>
 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>Last Name</Text>
+                    <TextBold style={[styles.inputLabel]}>Last Name</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Latika'/>
                 </View>
 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>Suffix</Text>
+                    <TextBold style={[styles.inputLabel]}>Suffix</TextBold>
                     <InputText style={styles.inputTxt} placeholder='eg.Jr.'/>
                 </View>
 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>Address Line 1</Text>
+                    <TextBold style={[styles.inputLabel]}>Address Line 1</TextBold>
                     <InputText style={styles.inputTxt} placeholder='500 Kingston Rd'/>
                 </View>
 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>Address Line 2</Text>
+                    <TextBold style={[styles.inputLabel]}>Address Line 2</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Toronto ON M4L 1V3(Toronto, Ontoario)'/>
                 </View>
 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>Birthdate</Text>
+                    <TextBold style={[styles.inputLabel]}>Birthdate</TextBold>
                     <DatePickerField onPress={() => {
                         onDatePickerTap()
                     }} date={dateValue}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <Text style={[styles.inputLabel]}>Phone Number</Text>
+                    <TextBold style={[styles.inputLabel]}>Phone Number</TextBold>
                     <View>
                         <PhoneInput
                             ref={phoneInput}
@@ -99,6 +100,7 @@ export default function KYCFillOutScreen ({navigation}){
                             placeholderTextColor: "#707070",
                             keyboardType: "phone-pad",
                             placeholder: "123-456-789",
+                            
                         }}/>
  
                     </View>
@@ -114,7 +116,7 @@ export default function KYCFillOutScreen ({navigation}){
                 {onDatePickerShow  && (
                     <DateTimePicker
                         testID='dateTimePicker'
-                        value={date}
+                        value={date ?? new Date()}
                         mode='date'
                         display='default'   
                         // onChange={onDatePickerChange}
