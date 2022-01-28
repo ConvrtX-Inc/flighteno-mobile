@@ -113,7 +113,7 @@ export default function MyTravel({ route }) {
             setPickerValueSelectedCityDeliver(selectedCountry.name)
         }
         else {
-            setPickerValuesCityDeliver(destinationCities)
+            setPickerValuesCityDeliver([...new Set(destinationCities)] )
             setPickerValueSelectedCityDeliver(destinationCities.length > 0 ? destinationCities[0] : '')
         }
 
