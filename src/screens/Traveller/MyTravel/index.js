@@ -398,6 +398,7 @@ export default function MyTravel({ route }) {
                     <FlatList
                         data={tripsData}
                         nestedScrollEnabled
+                        keyExtractor={(item, index) => item + index}
                         renderItem={({ item, index }) =>
                             <View style={{}}>
                                 <LinearGradient
@@ -500,7 +501,7 @@ export default function MyTravel({ route }) {
                                 </View>
 
                             }
-                            keyExtractor={(item, index) => item.key}
+                            keyExtractor={(item, index) => item + index}
                             style={{ borderRadius: 100, marginTop: 3 }}
                         />
                     </View>
@@ -554,7 +555,7 @@ export default function MyTravel({ route }) {
                                 </View>
 
                             }
-                            keyExtractor={(item, index) => item.key}
+                            keyExtractor={(item, index) => item + index}
                             style={{ borderRadius: 100, marginTop: 3 }}
                         />
                     </View>
