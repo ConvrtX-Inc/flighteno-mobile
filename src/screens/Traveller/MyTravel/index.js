@@ -89,7 +89,10 @@ export default function MyTravel({ route }) {
         setCountryOrigin(selectedCountry)
         originCities = countries[selectedCountry.name]
         if (originCities == undefined) {
-            setPickerValueSelectedCity(selectedCountry.name)
+            // setPickerValueSelectedCity(selectedCountry.name)
+            setPickerValuesCity([])
+            setPickerValueSelectedCity('')
+
         }
         else {
             // fix for FLIGHT-19
@@ -97,6 +100,8 @@ export default function MyTravel({ route }) {
             setPickerValuesCity([...new Set(originCities)])
             setPickerValueSelectedCity(originCities.length > 0 ? originCities[0] : '')
         }
+
+        console.log(selectedCountry)
 
     }
 
@@ -111,6 +116,9 @@ export default function MyTravel({ route }) {
 
         if (destinationCities == undefined) {
             setPickerValueSelectedCityDeliver(selectedCountry.name)
+            setPickerValuesCityDeliver([])
+            setPickerValueSelectedCityDeliver('')
+
         }
         else {
             setPickerValuesCityDeliver([...new Set(destinationCities)] )
@@ -228,7 +236,7 @@ export default function MyTravel({ route }) {
                             withEmoji
                             onSelect={(country) => onSelect(country)}
                             modalProps={{
-                                visible: country1
+                                visible:country1
                             }}
                             onClose={() => setCountry1(false)}
                             onOpen={() => setCountry1(true)}
@@ -287,12 +295,14 @@ export default function MyTravel({ route }) {
                             withAlphaFilter={withAlphaFilterDeliver}
                             withCallingCode={withCallingCodeDeliver}
                             withEmoji={withEmojiDeliver}
-                            onSelect={(country) => onSelectDestinationCountry(country)}
+                            // onSelect={(country) => onSelectDestinationCountry(country)}
+                            onSelect={onSelectDestinationCountry}
                             modalProps={{
                                 visible: country2
                             }}
                             onClose={() => setCountry2(false)}
                             onOpen={() => setCountry2(true)}
+                        
                         />
                         <Image
                             style={styles.countryDropImg}
