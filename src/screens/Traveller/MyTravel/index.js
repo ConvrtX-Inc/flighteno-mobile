@@ -71,7 +71,7 @@ export default function MyTravel({ route }) {
     const [country, setCountryOrigin] = useState(currentCountry)
     const [countryDeliver, setCountryDestination] = useState(currentCountry)
 
-    // [...new Set(countries[country.country_name])]
+    
     const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country.country_name])]);
     const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country.country_name])]);
 
@@ -89,12 +89,19 @@ export default function MyTravel({ route }) {
         setCountryOrigin(selectedCountry)
         originCities = countries[selectedCountry.name]
         if (originCities == undefined) {
-            setPickerValueSelectedCity(selectedCountry.name)
+            // setPickerValueSelectedCity(selectedCountry.name)
+            setPickerValuesCity([])
+            setPickerValueSelectedCity('')
+
         }
         else {
+            // fix for FLIGHT-19
             setPickerValuesCity(originCities)
+            setPickerValuesCity([...new Set(originCities)])
             setPickerValueSelectedCity(originCities.length > 0 ? originCities[0] : '')
         }
+
+        console.log(selectedCountry)
 
     }
 
@@ -109,9 +116,12 @@ export default function MyTravel({ route }) {
 
         if (destinationCities == undefined) {
             setPickerValueSelectedCityDeliver(selectedCountry.name)
+            setPickerValuesCityDeliver([])
+            setPickerValueSelectedCityDeliver('')
+
         }
         else {
-            setPickerValuesCityDeliver(destinationCities)
+            setPickerValuesCityDeliver([...new Set(destinationCities)] )
             setPickerValueSelectedCityDeliver(destinationCities.length > 0 ? destinationCities[0] : '')
         }
 
@@ -226,7 +236,7 @@ export default function MyTravel({ route }) {
                             withEmoji
                             onSelect={(country) => onSelect(country)}
                             modalProps={{
-                                visible: country1
+                                visible:country1
                             }}
                             onClose={() => setCountry1(false)}
                             onOpen={() => setCountry1(true)}
@@ -285,12 +295,14 @@ export default function MyTravel({ route }) {
                             withAlphaFilter={withAlphaFilterDeliver}
                             withCallingCode={withCallingCodeDeliver}
                             withEmoji={withEmojiDeliver}
-                            onSelect={(country) => onSelectDestinationCountry(country)}
+                            // onSelect={(country) => onSelectDestinationCountry(country)}
+                            onSelect={onSelectDestinationCountry}
                             modalProps={{
                                 visible: country2
                             }}
                             onClose={() => setCountry2(false)}
                             onOpen={() => setCountry2(true)}
+                        
                         />
                         <Image
                             style={styles.countryDropImg}
@@ -396,6 +408,7 @@ export default function MyTravel({ route }) {
                     <FlatList
                         data={tripsData}
                         nestedScrollEnabled
+                        keyExtractor={(item, index) => item + index}
                         renderItem={({ item, index }) =>
                             <View style={{}}>
                                 <LinearGradient
@@ -498,7 +511,7 @@ export default function MyTravel({ route }) {
                                 </View>
 
                             }
-                            keyExtractor={(item, index) => item.key}
+                            keyExtractor={(item, index) => item + index}
                             style={{ borderRadius: 100, marginTop: 3 }}
                         />
                     </View>
@@ -552,7 +565,7 @@ export default function MyTravel({ route }) {
                                 </View>
 
                             }
-                            keyExtractor={(item, index) => item.key}
+                            keyExtractor={(item, index) => item + index}
                             style={{ borderRadius: 100, marginTop: 3 }}
                         />
                     </View>

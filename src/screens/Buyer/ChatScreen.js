@@ -7,6 +7,7 @@ import { color } from '../../Utility/Color';
 import { getChatMessages } from '../../redux/actions/Chat';
 import moment from 'moment'
 import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -60,7 +61,7 @@ export default function ChatScreen() {
                                                 style={styles.profileImage}
                                                 resizeMode="cover"
                                             />
-                                            <Text numberOfLines={1} style={{ textAlign: 'left' }}>{item.reciverImageName[0].full_name.split(" ")[0]}</Text>
+                                            <TextMedium numberOfLines={1} style={{ textAlign: 'left' }}>{item.reciverImageName[0].full_name.split(" ")[0]}</TextMedium>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -71,7 +72,7 @@ export default function ChatScreen() {
                     renderItem={({ item, index }) =>
                         <View>
                             {index == 0 ?
-                                <Text style={[styles.HeadingText, { marginLeft: '5%' }]}>Messages</Text>
+                                <TextBold style={[styles.HeadingText, { marginLeft: '5%' }]}>Messages</TextBold>
                                 : null}
                             <TouchableOpacity onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], receiverId: item.reciver_id, chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                 style={[Styles.itemView, {}]}>
@@ -82,10 +83,10 @@ export default function ChatScreen() {
                                     />
                                 </View>
                                 <View style={{ width: '55%', marginLeft: '3%', }}>
-                                    <Text numberOfLines={1} style={[Styles.addText, { textAlign: 'left' }]}>{item.reciverImageName[0].full_name.split(" ")[0] + (item.order_name.length > 0 ? ', ' + item.order_name[0].order_name : "")}</Text>
-                                    <Text numberOfLines={1} style={[Styles.dateText, {}]}>{item.messages[0]?.currentMessage.text}</Text>
+                                    <TextBold numberOfLines={1} style={[Styles.addText, { textAlign: 'left' }]}>{item.reciverImageName[0].full_name.split(" ")[0] + (item.order_name.length > 0 ? ', ' + item.order_name[0].order_name : "")}</TextBold>
+                                    <TextMedium numberOfLines={1} style={[Styles.dateText, {}]}>{item.messages[0]?.currentMessage.text}</TextMedium>
                                 </View>
-                                <Text style={[Styles.dateText, { marginLeft: 'auto', width: '20%' }]}>{moment(item.messages[0]?.currentMessage.createdAt).format("DD MMM")}</Text>
+                                <TextMedium style={[Styles.dateText, { marginLeft: 'auto', width: '20%' }]}>{moment(item.messages[0]?.currentMessage.createdAt).format("DD MMM")}</TextMedium>
                             </TouchableOpacity>
                         </View>
                     }
@@ -103,7 +104,7 @@ const Styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 5
     },
-    addText: { fontSize: 16, textAlign: 'center', marginTop: 5, fontWeight: 'bold' },
+    addText: { fontSize: 16, textAlign: 'center', marginTop: 5 },
     nameText: {
         fontSize: 15,
         color: 'gray',

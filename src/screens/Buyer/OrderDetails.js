@@ -42,6 +42,8 @@ export default function OrderDetails({ route }) {
             setRated(order.rated_admin_id.find(check))
         }
         
+        
+        console.log(order?.traveler_id[0]?.traveler_id)
   
 
         // const profileRequest = new FormData()
@@ -122,7 +124,7 @@ export default function OrderDetails({ route }) {
                     />
                 </TouchableOpacity>
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order Details</TextBold>
-                {order?.traveler_id?
+                {order?.traveler_id[0]?.traveler_id?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
                             source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
@@ -290,9 +292,9 @@ export default function OrderDetails({ route }) {
                         }
                     </TouchableOpacity>
                     {!isComplete && order.status == "accepted" ?
-                        <Text style={Styles.bottomText}>
+                        <TextMedium style={Styles.bottomText}>
                             PLEASE COORDINATE WITH THE{'\n'}TRAVELER TO RECEIVE THE PRODUCT
-                        </Text>
+                        </TextMedium>
                         : null}
                 </View>
                 {isComplete && !rated ?

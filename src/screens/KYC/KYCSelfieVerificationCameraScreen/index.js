@@ -8,11 +8,12 @@ import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 
 
-export default function KYCSelfieVerificationCameraScreen({navigation}){
+export default function KYCSelfieVerificationCameraScreen({navigation, route}){
 
     const cameraRef = useRef()
     const [canDetectFaces,setCanDetectFaces] = useState(false)
     const [cameraProgress, setCameraProgress] = useState(0)
+    const { kyc } = route.params
 
     const facesDetected = ({faces}) => {
         const rightEye = faces[0]?.rightEyeOpenProbability;
@@ -21,7 +22,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation}){
 
         if(bothEyes <= 0.3){
             setCameraProgress(100)
-            navigation.navigate('KYCSelfieVerificationCamera')
+            navigation.navigate('KYCFillOut', {kyc:kyc })
         }
       
     }
