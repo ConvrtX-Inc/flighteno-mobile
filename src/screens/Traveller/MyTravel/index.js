@@ -71,7 +71,7 @@ export default function MyTravel({ route }) {
     const [country, setCountryOrigin] = useState(currentCountry)
     const [countryDeliver, setCountryDestination] = useState(currentCountry)
 
-    // [...new Set(countries[country.country_name])]
+    
     const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country.country_name])]);
     const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country.country_name])]);
 
@@ -92,7 +92,9 @@ export default function MyTravel({ route }) {
             setPickerValueSelectedCity(selectedCountry.name)
         }
         else {
+            // fix for FLIGHT-19
             setPickerValuesCity(originCities)
+            setPickerValuesCity([...new Set(originCities)])
             setPickerValueSelectedCity(originCities.length > 0 ? originCities[0] : '')
         }
 
