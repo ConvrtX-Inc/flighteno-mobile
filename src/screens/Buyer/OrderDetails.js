@@ -312,7 +312,7 @@ export default function OrderDetails({ route }) {
                             title="Cancel Order"
                             loader={loading}
                             color='#E01E82'
-                            onPress={() => cancelOrder()}
+                            // onPress={() => cancelOrder()}
                         />
                     </View> : null}
                 {order.review_details ?

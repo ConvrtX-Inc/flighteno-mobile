@@ -40,6 +40,7 @@ export default function OrderDetail() {
 
     const handleSubmit = () => {
         dispatch({ type: IS_LOADING, isloading: true })
+        
         if (global.productImage.uri) {
             const file = {
                 uri: global.productImage.uri,
@@ -62,6 +63,8 @@ export default function OrderDetail() {
                 buyerOrderData["use_item_for_testing"] = useForTesting
                 buyerOrderData["product_image"] = response.body.postResponse.location
                 dispatch({ type: CREATE_ORDER_DETAIL, data: buyerOrderData })
+
+               
                 dispatch(createOrder(buyerOrderData, navigate, token))
 
             });

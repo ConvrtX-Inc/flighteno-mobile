@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
 var windowWidth = Dimensions.get('window').width;
 import { useSelector, useDispatch } from 'react-redux'
+import TextBold from '../components/atoms/TextBold';
+import TextMedium from '../components/atoms/TextMedium';
 
 export default function Settings() {
     const navigation = useNavigation();
@@ -22,7 +24,7 @@ export default function Settings() {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Settings</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Settings</TextBold>
                 <View style={{ height: 30 }} />
                 {currentUser.signup_source
                     ? null
@@ -33,14 +35,14 @@ export default function Settings() {
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <Text style={styles.menuItemText}>Profile</Text>
+                            <TextMedium style={styles.menuItemText}>Profile</TextMedium>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")} style={styles.menuItem}>
                             <Image source={require('../images/setting.png')}
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <Text style={styles.menuItemText}>Change Password</Text>
+                            <TextMedium style={styles.menuItemText}>Change Password</TextMedium>
                         </TouchableOpacity>
                     </View>
                 }
@@ -50,7 +52,7 @@ export default function Settings() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <Text style={styles.menuItemText}>Payment</Text>
+                        <TextMedium style={styles.menuItemText}>Payment</TextMedium>
                     </TouchableOpacity>
                     : null}
                 <TouchableOpacity onPress={() => navigation.navigate("Notifications")} style={styles.menuItem}>
@@ -58,7 +60,7 @@ export default function Settings() {
                         style={styles.menuIcon}
                         resizeMode="contain"
                     />
-                    <Text style={styles.menuItemText}>Notifications</Text>
+                    <TextMedium style={styles.menuItemText}>Notifications</TextMedium>
                 </TouchableOpacity>
             </ScrollView>
         </View>

@@ -233,7 +233,15 @@ function Navigation() {
                         headerTitle:false
                     }}}    
                 />
-                <Stack.Screen name='KYCTermsPrivacy' component={KYCTermsPrivacyScreen} />
+                <Stack.Screen 
+                 name='KYCTermsPrivacy' 
+                 component={KYCTermsPrivacyScreen} options={() => {
+                    return {
+                        headerShown:true,
+                        headerBackTitleVisible:false,
+                        headerTitle:false
+                    }
+                }} />
                 <Stack.Screen
                    name='KYCSelfieVerificationCamera'
                    component={KYCSelfieVerificationCameraScreen} 

@@ -101,8 +101,6 @@ export default function MyTravel({ route }) {
             setPickerValueSelectedCity(originCities.length > 0 ? originCities[0] : '')
         }
 
-        console.log(selectedCountry)
-
     }
 
     function getUniqueValues(value, index, self) {
