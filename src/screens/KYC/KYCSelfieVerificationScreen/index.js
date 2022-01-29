@@ -7,10 +7,13 @@ import ButtonLarge from '../../../components/ButtonLarge';
 import StepsIndicator from '../../../components/StepsIndicator';
 import { styles } from './styles';
 
-export default function KYCSelfieVerificationScreen ({navigation}){
+export default function KYCSelfieVerificationScreen ({navigation, route}){
+
+    const { kyc } = route.params
+
 
     const onNextTap = () => {
-        navigation.navigate('KYCFillOut')
+        navigation.navigate('KYCSelfieVerificationCamera', { kyc: kyc })
     }
 
     return(

@@ -12,9 +12,10 @@ import moment from 'moment';
 import { useCallback } from 'react';
 import TextBold from '../../../components/atoms/TextBold';
 
-export default function KYCFillOutScreen ({navigation}){
+export default function KYCFillOutScreen ({navigation,route}){
 
     const phoneInput = useRef()
+    const { kyc } = route.params
 
     const [cellno, setCellNo] = useState('');
     const [date, setDate] = useState(new Date());
@@ -26,7 +27,7 @@ export default function KYCFillOutScreen ({navigation}){
         setDatePickerShow(!onDatePickerShow)
         const currentDate = event?.timestamp || date
         setDateValue(moment(currentDate).format("MM/DD/YYYY"))
-        setDate( event?.timestamp)
+        setDate(event?.timestamp)
     }
 
     const onDatePickerTap = () => {
@@ -34,7 +35,8 @@ export default function KYCFillOutScreen ({navigation}){
     }
 
     const onSubmitTap = () => {
-        navigation.navigate('KYCTermsPrivacy')
+        console.log(kyc)
+        // navigation.navigate('KYCTermsPrivacy')
     }
 
     return(

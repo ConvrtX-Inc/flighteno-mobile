@@ -30,6 +30,10 @@ export default function OrderDetail() {
     const [checked, setChecked] = useState(false);
     const [useForTesting, setUseForTesting] = useState(false);
 
+    useEffect(() => {
+        
+    },[])
+
     const navigate = (routeName, data) => {
         navigation.navigate(routeName, data);
     };

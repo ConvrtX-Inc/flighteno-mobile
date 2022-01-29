@@ -11,14 +11,18 @@ import TextBold from '../../../components/atoms/TextBold';
 export default function  KYCSelectIDScreen ({navigation,route}){
 
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    
     const [items, setItems] = useState([
-        {label: 'Permanent Resident Card', value: 'permanent-resident-card'},
+        {label: 'Permanent Resident Card', value: 'permanent resident card'},
         {label: 'SSS', value: 'sss'}
     ]);
-  
+
+    //form fields
+    const [idType, setIdType] = useState(null);
+    const [idNo, setIdNo] = useState('')
     const frontPicture = route.params?.frontImg
     const backPicture = route.params?.backImg
+
 
     const onFrontPictureTap = () => {
         navigation.navigate('KYCSelectIDCamera', {isFront: true})    
@@ -29,7 +33,13 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     }
 
     const onNextTap = () => {
-        navigation.navigate('KYCSendVerification')
+        console.log(idNo)
+        console.log(idType)
+        console.log(frontPicture)
+        console.log(backPicture)
+        
+        const kycForm = {idNo: idNo, idType: idType, frontPic: frontPicture, backPic: backPicture}
+        navigation.navigate('KYCSendVerification', {kyc: kycForm})
     }
 
     return (
@@ -45,10 +55,10 @@ export default function  KYCSelectIDScreen ({navigation,route}){
             
                 <DropDownPicker
                     open={open}
-                    value={value}
+                    value={idType}
                     items={items}
                     setOpen={setOpen}
-                    setValue={setValue}
+                    setValue={setIdType}
                     setItems={setItems}
                     style={styles.dropDown}
                     dropDownContainerStyle={styles.dropDownContainer}
@@ -58,7 +68,7 @@ export default function  KYCSelectIDScreen ({navigation,route}){
                 <TextBold style={[styles.inputLabel,styles.idNoField]}>ID No.</TextBold>
 
                 <View style={styles.inputIdNo}>
-                    <InputText placeholder='CADL-1231231233' />
+                    <InputText placeholder='CADL-1231231233' value={idNo} onChangeText={setIdNo} />
                 </View>
                 
 
