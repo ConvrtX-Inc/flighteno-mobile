@@ -216,7 +216,7 @@ export default function Chattravelereler({ route }) {
     }
 
     function getOfferBodyB(order) {
-        return addSpaces('Order No:') + order.orderDetail._id + '\n\n' +
+        return addSpaces('Order No:', false) + order.orderDetail._id + '\n\n' +
             addSpaces('Order Price:') + order.orderDetail.product_price + '\n' +
             addSpaces('Estimate Delivery Fee:') + order.offer.offerPrice + '\n' +
             addSpaces('VIP Service Fee:') + order.orderDetail.vip_service_fee + '\n' +
@@ -225,8 +225,8 @@ export default function Chattravelereler({ route }) {
             addSpaces('Total:') + (parseInt(order.orderDetail.product_price) + parseInt(order.offer.offerPrice) + parseInt(route.params.orderDetail.vip_service_fee) + parseInt(route.params.orderDetail.flighteno_cost) + parseInt(route.params.orderDetail.tax))
     }
 
-    function addSpaces(text) {
-        return text.padEnd(25, ' ') + '$'
+    function addSpaces(text, addDollar=true) {
+        return text.padEnd(1, ' ') + addDollar ? '$' : '';
     }
 
     useEffect(() => {
