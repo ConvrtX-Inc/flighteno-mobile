@@ -17,6 +17,7 @@ var windowWidth = Dimensions.get('window').width;
 var nameParam = ''
 var emailParam = ''
 var passwordParam = ''
+var formattedCellNoParam = ''
 var cellNoParam = ''
 export default function VerifyPhone({ route }) {
 
@@ -33,8 +34,9 @@ export default function VerifyPhone({ route }) {
         emailParam = route.params.email
         passwordParam = route.params.password
         cellNoParam = route.params.cellno
+        formattedCellNoParam = route.params.formattedPhoneNo
 
-        setUserCell(cellNoParam)
+        setUserCell(formattedCellNoParam)
 
     }, []);
 
@@ -65,7 +67,7 @@ export default function VerifyPhone({ route }) {
         // console.log(register_data)
         const form_data = new FormData()
         form_data.append("code", code)
-        form_data.append("phoneNumber", cellNoParam)
+        form_data.append("phoneNumber", formattedCellNoParam)
 
         dispatch(verifyOtpCodeAction(
             form_data,
@@ -96,7 +98,7 @@ export default function VerifyPhone({ route }) {
     const resendOtp = () => {
 
         const form_data = new FormData()
-        form_data.append("phoneNumber", cellNoParam)
+        form_data.append("phoneNumber", formattedCellNoParam)
 
         dispatch(verificationCodeAction(
             form_data,

@@ -32,9 +32,18 @@ export default function RegisterScreen() {
     const [password, setPassword] = useState('');
 
     const phoneInput = useRef()
+    const [dialCode, setDialCode] = useState('');
 
     ///////////////////////////////////Get Code For Phone Verification/////////////////////////////
     const getVerificationCode = () => {
+         const formattedPhoneNo = `${dialCode}${cellno}`;
+        if(!phoneInput.current?.isValidNumber(formattedPhoneNo)){
+            Toast.show({
+                type: 'info',
+                text2: "Invalid phone number",
+            })
+            return
+        }
 
         if (name == "") {
             Toast.show({
@@ -70,7 +79,7 @@ export default function RegisterScreen() {
         }
 
         const form_data = new FormData()
-        form_data.append("phoneNumber", cellno)
+        form_data.append("phoneNumber", formattedPhoneNo)
 
         dispatch(verificationCodeAction(
             form_data,
@@ -81,7 +90,8 @@ export default function RegisterScreen() {
                 setPassword("")
             },
             () => {
-                navigation.navigate("VerifyPhone", { name: name, password: password, cellno: cellno, email: email })
+                console.log("cell no",formattedPhoneNo)
+                navigation.navigate("VerifyPhone", { name: name, password: password, formattedPhoneNo: formattedPhoneNo, cellno: cellno, email: email })
             },
             () => {
                 Toast.show({
@@ -157,9 +167,12 @@ export default function RegisterScreen() {
                     ref={phoneInput}
                     defaultValue={cellno}
                     defaultCode="AU"
-                    onChangeFormattedText={(text) => {
-                        // setValue(text);
+                     
+                    onChangeText={(text) => {
                         setCellNo(text)
+                    }}
+                    onChangeCountry={(country) =>{
+                        setDialCode(`+${country.callingCode}`)   
                     }}
                     containerStyle={styles.phoneContainer}
                     textInputStyle={styles.phoneInput}
