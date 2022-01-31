@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
@@ -22,7 +22,7 @@ export default function EditProfile() {
     const { currentUser, loading, token } = useSelector(({ authRed }) => authRed)
     const [fullName, setFullName] = useState(currentUser.full_name);
     const [image, setImage] = useState(null)
-
+    const[phone,setPhone] = useState("")
     const phoneInput = useRef()
     
     const chooseFile = () => {
@@ -154,16 +154,12 @@ export default function EditProfile() {
                     />
 
                     <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</Text>
-
+                   
                     <PhoneInput
                         ref={phoneInput}
-                        defaultValue={currentUser.phone_number.replace("+", ' ')}
+                        defaultValue={currentUser.phone_number}
                         defaultCode={currentUser.country}
                         disabled={true}
-                        onChangeFormattedText={(text) => {
-                            // setValue(text);
-                            setCellNo(text)
-                        }}
                         containerStyle={styles.phoneContainer}
                         textInputStyle={styles.phoneInput}
                         textContainerStyle={styles.phoneTextContainer}
