@@ -41,7 +41,7 @@ export default function SelectCountry({ route }) {
     const [modalVisibleCityDeliver, setModalVisibleCityDeliver] = useState("")
     const [withCountryNameButton, setWithCountryNameButton] = useState("")
     const [withCountryNameButtonDeliver, setWithCountryNameButtonDeliver] = useState("")
-    const [deliveryDate, setDeliveryDate] = useState(moment(moment(buyerOrderData.preferred_dilivery_date).format("MM/DD/YYYY")).add(14, 'days'))
+    const [deliveryDate, setDeliveryDate] = useState(moment(moment(buyerOrderData.preferred_dilivery_date_db_format)).add(14, 'days'))
     const [deliveryDay, setDeliveryDay] = useState(moment(deliveryDate).format('dddd'))
     const [deliveryDateFormat, setDeliveryDateFormat] = useState(moment(deliveryDate).format("MM/DD/YYYY"))
     const [country1, setCountry1] = useState(false)
