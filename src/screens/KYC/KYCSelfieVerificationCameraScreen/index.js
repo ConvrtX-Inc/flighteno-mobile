@@ -22,9 +22,23 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
 
         if(bothEyes <= 0.3){
             setCameraProgress(100)
-            navigation.navigate('KYCFillOut', {kyc:kyc })
+            takePicture()
         }
       
+    }
+
+    const takePicture = async() => {
+        if(cameraRef.current){
+            const options = { quality: 0.5, base64: true, skipProcessing: true };
+            const data = await cameraRef.current.takePictureAsync(options);
+            const source = data.uri;
+
+            if (source) {
+                await cameraRef.current.pausePreview();
+                kyc.profile_image = source
+                navigation.navigate('KYCFillOut',{ kyc:kyc })
+            }
+        }
     }
 
     return (
@@ -51,7 +65,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
                             {
                                 (fill) => (       
                                     <RNCamera 
-                                    ref={cameraRef}
+                                        ref={cameraRef}
                                         style={styles.camera} 
                                         captureAudio={false}
                                         androidCameraPermissionOptions={{
@@ -71,10 +85,13 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
                                             setCameraProgress(50)
                                             setCanDetectFaces(true)
                                         }}
+                                        onPictureTaken={() => {
+                                            navigation.navigate('KYCFillOut', {kyc:kyc })
+                                        }}
                                   
                                         // onFacesDetected={canDetectFaces ? facesDetected : null}
                                         onFacesDetected={canDetectFaces? facesDetected : null}
-    
+                                    
                                         onFaceDetectionError={error => console.log('FDError', error)}
                                     />
                                 )

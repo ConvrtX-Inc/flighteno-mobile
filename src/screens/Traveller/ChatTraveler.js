@@ -588,7 +588,8 @@ export default function Chattravelereler({ route }) {
                         onPressYes={() => offerConfirmation(offerStatus)}
                         onPressNo={() => setModal(false)}
                         title={`Would you like to ${offerStatus}${'\n'}the ${currentPerson} offer?`}
-                    />
+                    />  
+
                     <TouchableOpacity onPress={() => backAction1()}>
                         <Image
                             style={styles.backImg}
@@ -614,6 +615,7 @@ export default function Chattravelereler({ route }) {
                         onSend={messages => onSend(messages)}
                         user={user}
                         // scrollToBottom
+                        
                         showUserAvatar
                         // renderAvatar={props => customtAvatar(props)}
                         onPressAvatar={() => console.log(user)}
@@ -630,12 +632,11 @@ export default function Chattravelereler({ route }) {
                             </View>
                         )}
                         alwaysShowSend
-
                         textInputStyle={{
                             backgroundColor: '#F4F4F4',
                             borderRadius: 20,
                             paddingLeft: 20,
-                            paddingRight: 30
+                            paddingRight: 30,
                         }}
                         renderActions={messages => micBtn(messages)}
                     />

@@ -9,6 +9,8 @@ export function createOrder(data, navigate, token) {
     console.log('token', token);
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
+
+        //api has been updated from the backend
         axios({
             method: 'post',
             url: `${BASE_URL}Rest_calls/createOrder`,
@@ -21,7 +23,9 @@ export function createOrder(data, navigate, token) {
             console.log("Error", error)
             dispatch({ type: IS_LOADING, isloading: false })
         }).then(Response => {
-            navigate("Congratulation", { data: Response.data })
+
+            console.log(Response)
+            // navigate("Congratulation", { data: Response.data })
             dispatch({ type: IS_LOADING, isloading: false })
         })
     }

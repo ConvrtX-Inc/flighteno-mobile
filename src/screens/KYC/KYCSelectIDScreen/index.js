@@ -6,6 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import InputText from '../../../components/InputText';
 import StepsIndicator from '../../../components/StepsIndicator';
 import TextBold from '../../../components/atoms/TextBold';
+import Toast from 'react-native-toast-message';
 
 
 export default function  KYCSelectIDScreen ({navigation,route}){
@@ -18,10 +19,10 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     ]);
 
     //form fields
-    const [idType, setIdType] = useState(null);
+    const [idType, setIdType] = useState('');
     const [idNo, setIdNo] = useState('')
-    const frontPicture = route.params?.frontImg
-    const backPicture = route.params?.backImg
+    const frontPicture = route.params?.frontImg ?? ''
+    const backPicture = route.params?.backImg ?? ''
 
 
     const onFrontPictureTap = () => {
@@ -33,13 +34,20 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     }
 
     const onNextTap = () => {
-        console.log(idNo)
-        console.log(idType)
-        console.log(frontPicture)
-        console.log(backPicture)
-        
         const kycForm = {idNo: idNo, idType: idType, frontPic: frontPicture, backPic: backPicture}
-        navigation.navigate('KYCSendVerification', {kyc: kycForm})
+        console.log(kycForm)
+
+        
+        if(backPicture === '' || frontPicture === '' || idNo === '' ||idType === '' ){
+            Toast.show({
+                type: 'error',
+                text1: 'Alert!',
+                text2: "Fill up all the required fields",
+            })
+        }else{  
+            navigation.navigate('KYCSendVerification', {kyc: kycForm})
+        }
+        
     }
 
     return (

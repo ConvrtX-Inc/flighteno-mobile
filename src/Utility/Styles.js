@@ -594,6 +594,7 @@ export const styles = StyleSheet.create({
         width: '80%',
         marginLeft: 10,
         fontSize: 16,
+        color:'#111'
     },
     textSelectedCity: {
         fontSize: 16,
