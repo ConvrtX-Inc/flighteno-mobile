@@ -243,12 +243,13 @@ export function GetProfile(data, token, callback, updateRating) {
             console.log("Error", error)
         }).then(Response => {
             dispatch({ type: IS_LOADING, isloading: false })
-            if (Response.data.user_data.length > 0) {
+
+            if (Response?.data?.user_data?.length > 0) {
                 callback(Response.data.user_data[0])
             }
-            if (Response.data.user_data[0].traveler_ratting.length > 0) {
-                updateRating(Response.data.user_data[0].traveler_ratting[0].avg_rating)
-            }
+            // if (Response?.data?.user_data[0].traveler_ratting?.length > 0) {
+            //     updateRating(Response.data.user_data[0].traveler_ratting[0].avg_rating)
+            // }
         })
     }
 }

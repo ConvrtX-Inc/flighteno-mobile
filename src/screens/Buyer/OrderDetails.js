@@ -41,27 +41,18 @@ export default function OrderDetails({ route }) {
         if (order.rated_admin_id) {
             setRated(order.rated_admin_id.find(check))
         }
-        
-        
-        console.log(order?.traveler_id[0]?.traveler_id)
-  
 
-        // const profileRequest = new FormData()
-        // profileRequest.append('admin_id', order?.admin_id)
-        // dispatch(GetProfile(profileRequest, token, (data) => {
-        //     console.log(data)
-        // }))
 
-        // if(true) {
-        // if ((order.status == 'accepted' || order.status == 'complete') && order.traveler_id && order.traveler_id.length > 0) {
-        //     var obj = {
-        //         admin_id: order.traveler_id[0].traveler_id
-        //     }
-        //     dispatch(GetProfile(obj, token, (data) => {
-        //         setTraveler(data)
-        //         console.log(data)
-        //     }))
-        // }
+        // fix for flight-45
+        var obj = {
+            admin_id: order?.traveler_id[0]?.traveler_id
+        }
+    
+      
+        const userToken = token.replace('Token: ','')
+        dispatch(GetProfile(obj, userToken, (data) => {
+            setTraveler(data)
+        }))
 
     }, [])
 
@@ -130,21 +121,18 @@ export default function OrderDetails({ route }) {
                             source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
                             style={styles.profileImage}
                         />
-                        <View style={{ marginLeft: '3%' }}>
-                            <Text style={Styles.userName}>{traveler?.full_name}</Text>
-                            <View>
-                                <View style={{}}>
-                                    <AirbnbRating
-                                        defaultRating={traveler?.traveler_ratting.length != 0 ? traveler?.traveler_ratting[0]?.avg_rating : 0}
-                                        type='star'
-                                        ratingCount={5}
-                                        size={15}
-                                        showRating={false}
-                                        isDisabled={true}
-                                    />
-                                </View>
-                                <TextBold style={styles.ratingText}>{traveler?.traveler_ratting.length != 0 ? traveler?.traveler_ratting[0].avg_rating : 0} Out of 5.0</TextBold>
-                            </View>
+                        <View style={{alignItems:'flex-start', paddingLeft:16}}>
+                            <TextBold style={Styles.userName}>{traveler?.full_name}</TextBold>
+                            <AirbnbRating
+                                defaultRating={traveler?.traveler_ratting?.length != 0 ? traveler?.traveler_ratting[0]?.avg_rating : 0}
+                                type='star'
+                                ratingCount={5}
+                                size={15}
+                                showRating={false}
+                                isDisabled={true}
+                            
+                            />
+                            <TextBold style={styles.ratingText}>{traveler?.traveler_ratting?.length != 0 ? traveler?.traveler_ratting[0].avg_rating : 0} Out of 5.0</TextBold>
                         </View>
                     </TouchableOpacity>
                  : null}
@@ -316,7 +304,7 @@ export default function OrderDetails({ route }) {
                         />
                     </View> : null}
                 {order.review_details ?
-                    order.review_details.length > 0 ?
+                    order.review_details?.length > 0 ?
                         <ReviewList review={order.review_details[0]}
                             onPressUser={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })}
                         />
@@ -346,7 +334,6 @@ const Styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        fontWeight: 'bold',
     },
     bottomView: {
         paddingHorizontal: '5%',

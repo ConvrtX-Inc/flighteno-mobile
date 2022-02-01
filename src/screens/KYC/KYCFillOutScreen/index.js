@@ -158,7 +158,6 @@ export default function KYCFillOutScreen ({navigation,route}){
                         onChange={({nativeEvent}) => {
                             // console.log(nativeEvent)
                             onDatePickerChange(nativeEvent)
-                            
                         }}
                         // minimumDate={new Date()}
                     />
