@@ -24,7 +24,7 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
             user_id:currentUser?._id,
             id_type: kyc?.idType,
             id_number: kyc?.idNo,
-            id_front:kyc?.fronPic,
+            id_front:kyc?.frontPic,
             id_back: kyc?.backPic,
             profile_image: kyc?.profile_image,
             first_name: kyc?.firstName,
@@ -37,6 +37,8 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
             phone_number: kyc?.phone
         }   
 
+
+      
         dispatch({ type: IS_LOADING, isloading: true })
         dispatch(VerifyAccount(token,kycRequest,() => {
 
@@ -81,7 +83,7 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
                 It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
 
             <View style={styles.btnAccept}>
-                <ButtonLarge loader={false} title='Accept and Continue' onPress={onAcceptTap} />
+                <ButtonLarge loader={loading} title='Accept and Continue' onPress={onAcceptTap} />
             </View>
             
         </ScrollView>
