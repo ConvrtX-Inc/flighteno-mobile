@@ -6,6 +6,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { styles } from './styles';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
+import { imgToBase64 } from '../../../Utility/Utils';
 
 
 export default function KYCSelfieVerificationCameraScreen({navigation, route}){
@@ -35,8 +36,13 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
 
             if (source) {
                 await cameraRef.current.pausePreview();
-                kyc.profile_image = source
+
+                imgToBase64(source).then((data) => {
+                    kyc.profile_image = data
+                })
+                
                 navigation.navigate('KYCFillOut',{ kyc:kyc })
+               
             }
         }
     }
