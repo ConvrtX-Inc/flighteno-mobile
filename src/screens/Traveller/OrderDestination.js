@@ -14,6 +14,7 @@ import { UserOrders, FilterOrders } from '../../redux/actions/Trips';
 import { formatAmount } from '../../Utility/Utils';
 import ViewImages from '../../components/ViewImages';
 import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 var storeNamesList = [
     {
@@ -185,28 +186,76 @@ export default function OrderDestination({ route }) {
     }
 
     const applyFilter = () => {
-        var filteredArray = []
-        if (pName != "") {
-            filteredArray = ordersToDestination.filter(function (el) {
-                return el.product_type == pickerValueSelected &&
-                    el.name == pName &&
-                    el.product_price >= minPrice
-            });
-        } else {
-            filteredArray = ordersToDestination.filter(function (el) {
-                return el.product_type == pickerValueSelected &&
-                    el.product_price >= minPrice
-            });
-        }
-        function compare(a) {
-            if (a[rangeValue] == rangeValue) {
-                return sortMethod;
+
+        
+
+        // console.log(ordersToDestination[0]?.name)
+
+    //    const filteredArray =  ordersToDestination.filter(function(data) {
+    //         // return data?.name === pName
+    //     })
+
+  
+
+        // ordersToDestination.forEach(el => {
+        //     console.log(el.name === pName.toLowerCase())
+        // });
+
+
+        //name filtering
+        const nameData = ordersToDestination.filter((item) => {
+            const itemData = item?.name.toLowerCase();
+            const textData = pName.toLowerCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        
+        //price filtering
+        const priceArray = ordersToDestination.filter(function (el) {
+            return el.product_price >= minPrice
+        });
+
+
+        //sort by price high to low
+        
+        var newArr = ordersToDestination
+     
+
+        for(var i = 0; i < newArr.length; i++){
+            var item = newArr[i]?.product_price
+            for(var j = i-1; j>=0 && (newArr[j] < item); j--){
+                newArr[j+1] = newArr[j]
             }
-            return 0;
+
+            newArr[j+1] = item
         }
-        var sortedData = filteredArray.sort(compare)
-        setFilterOrderData([...sortedData])
-        setShowFilter(false)
+
+        console.log(newArr)
+     
+        // console.log(newArr)
+
+
+        // var filteredArray = []
+        // if (pName != "") {
+        //     filteredArray = ordersToDestination.filter(function (el) {
+        //         return el.product_type == pickerValueSelected &&
+        //             el.name == pName &&
+        //             el.product_price >= minPrice
+        //     });
+        // } else {
+        //     filteredArray = ordersToDestination.filter(function (el) {
+        //         return el.product_type == pickerValueSelected &&
+        //             el.product_price >= minPrice
+        //     });
+        // }
+        // function compare(a) {
+        //     if (a[rangeValue] == rangeValue) {
+        //         return sortMethod;
+        //     }
+        //     return 0;
+        // }
+        // var sortedData = filteredArray.sort(compare)
+        // setFilterOrderData([...sortedData])
+        // setShowFilter(false)
     }
 
     const showGallery = (data) => {
@@ -286,17 +335,64 @@ export default function OrderDestination({ route }) {
                         <View style={{ alignSelf: 'center', width: '90%' }}>
                             <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Price</Text>
                         </View>
-                        <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <TouchableOpacity disabled={true} style={styles.timePickerVIew}>
-                                <Text style={{ color: color.verifyPhoneTextColor, }}>{minPrice}</Text>
-                            </TouchableOpacity>
+
+                        <View style={{flex:1, flexDirection:'row'}}>
+                            <View style={{flex:1}}>
+                                <Input
+                                    placeholder="0"
+                                    onChangeText={(value) =>{
+                                      if(value == ''){
+                                        setMinPrice(0)
+                                      }else{
+                                        setMinPrice(parseInt(value))
+                                      }
+                                      
+                                    }}
+                                    value={minPrice?.toString() ?? 0}
+                                    keyboardType='numeric'
+                                    secureTextEntry={false}
+                                />
+                            </View>
+                            <View style={{justifyContent:'center'}}>
+                                <TextMedium>to</TextMedium>
+                            </View>
+                            <View style={{flex:1}}>
+                                <Input
+                                    placeholder="5000"
+                                 
+                                    secureTextEntry={false}
+                                    editable={false}
+                                />
+                            </View>
+                        </View>
+                        {/* <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}> */}
+                            {/* <TouchableOpacity disabled={true} style={styles.timePickerVIew}>
+                                <Text style={{ color: color.verifyPhoneTextColor, }}>{minPrice} </Text>
+
+                            </TouchableOpacity> */}
+{/* 
+                            <Input
+                            placeholder="0"
+                            // onChangeText={text => setPName(text)}
+                            value={minPrice}
+                            secureTextEntry={false}
+                                />
 
                             <Text>to</Text>
 
-                            <TouchableOpacity disabled={true} style={styles.timePickerVIew}>
+                            <Input
+                            placeholder="6"
+                            // onChangeText={text => setPName(text)}
+                            value={minPrice}
+                            secureTextEntry={false}
+                            /> */}
+
+                            {/* <TouchableOpacity disabled={true} style={styles.timePickerVIew}>
                                 <Text style={{ color: color.verifyPhoneTextColor, }}>{maxPrice}</Text>
-                            </TouchableOpacity>
-                        </View>
+                            </TouchableOpacity> */}
+                        {/* </View> */}
+
+
                         <Slider
                             value={minPrice}
                             onValueChange={(value) => setMinPrice(value)}
@@ -440,8 +536,8 @@ export default function OrderDestination({ route }) {
                     renderItem={({ item }) =>
                         <View style={Styles.listView}>
                             <View style={Styles.upperView}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    {item.profile_data[0].profile_image != "" ?
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    {item?.profile_data[0]?.profile_image != "" ?
                                         <Image source={{ uri: item.profile_data[0].profile_image }}
                                             style={Styles.userImage}
                                         />
@@ -450,22 +546,22 @@ export default function OrderDestination({ route }) {
                                             style={Styles.userImage}
                                         />
                                     }
-                                    <Text style={Styles.userName}>{item.profile_data[0].full_name}</Text>
-                                </View>
+                                    <TextBold style={Styles.userName}>{item.profile_data[0].full_name}</TextBold>
+                                </View> */}
                                 <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                                     <View>
-                                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</Text>
-                                        <Text style={[styles.travelListValue, { color: 'black' }]}>{item.product_buy_city_name}</Text>
-                                        <Text style={[styles.travelListTitle, { color: 'black' }]}>{item.product_buy_country_name}</Text>
+                                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</TextBold>
+                                        <TextBold style={[styles.travelListValue, { color: 'black' }]}>{item.product_buy_city_name}</TextBold>
+                                        <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{item.product_buy_country_name}</TextRegular>
                                     </View>
                                     <Image source={require("../../images/travel1.png")}
                                         resizeMode="contain"
                                         style={{ height: 60, width: 60 }}
                                     />
                                     <View>
-                                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</Text>
-                                        <Text style={[styles.travelListValue, { color: 'black' }]}>{item.product_dilivery_city_name}</Text>
-                                        <Text style={[styles.travelListTitle, { color: 'black' }]}>{item.product_dilivery_country_name}</Text>
+                                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</TextBold>
+                                        <TextBold style={[styles.travelListValue, { color: 'black' }]}>{item.product_dilivery_city_name}</TextBold>
+                                        <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{item.product_dilivery_country_name}</TextRegular>
                                     </View>
                                 </View>
                             </View>
@@ -478,12 +574,12 @@ export default function OrderDestination({ route }) {
                                         />
                                     </TouchableHighlight>
                                     <View style={{ marginLeft: '5%', flexGrow: 1, flex: 1 }}>
-                                        <Text style={[Styles.userName, { marginLeft: 0, }]}>{item.name}</Text>
-                                        <Text style={Styles.priceText}>{formatAmount(item.product_price)}</Text>
-                                        <Text style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>Estimated Delivery fee</Text>
-                                        <Text style={Styles.priceText}>
+                                        <TextBold style={[Styles.userName, { marginLeft: 0, }]}>{item.name}</TextBold>
+                                        <TextMedium style={Styles.priceText}>{formatAmount(item.product_price)}</TextMedium>
+                                        <TextBold style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>Estimated Delivery fee</TextBold>
+                                        <TextMedium style={Styles.priceText}>
                                             {formatAmount(Math.round((item.product_price / 100) * 10) < 50 ? 50 : Math.round((item.product_price / 100) * 10))}
-                                        </Text>
+                                        </TextMedium>
                                     </View>
                                 </View>
                             </View>
@@ -521,7 +617,7 @@ const Styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         marginLeft: '5%'
     },
     bottomView: {
@@ -538,7 +634,7 @@ const Styles = StyleSheet.create({
     },
     priceText: {
         fontSize: 16,
-        fontWeight: '900',
+        // fontWeight: '900',
         color: color.skipTextColor,
     },
     searchInput: {
