@@ -189,7 +189,7 @@ export default function OrderDestination({ route }) {
 
         
 
-        // console.log(ordersToDestination[0]?.name)
+       
 
     //    const filteredArray =  ordersToDestination.filter(function(data) {
     //         // return data?.name === pName
@@ -200,6 +200,13 @@ export default function OrderDestination({ route }) {
         // ordersToDestination.forEach(el => {
         //     console.log(el.name === pName.toLowerCase())
         // });
+
+        //product type filtering
+        const typeData = ordersToDestination.filter((item) => {
+            const itemData = item?.product_type.toLowerCase();
+            const textData = pickerValueSelected.toLowerCase();
+            return itemData.indexOf(textData) > -1;
+        });
 
 
         //name filtering
@@ -214,48 +221,75 @@ export default function OrderDestination({ route }) {
             return el.product_price >= minPrice
         });
 
-
-        //sort by price high to low
+       
+        //store filtering api key missing
+        // console.log(storeName)      
         
-        var newArr = ordersToDestination
-     
 
-        for(var i = 0; i < newArr.length; i++){
-            var item = newArr[i]?.product_price
-            for(var j = i-1; j>=0 && (newArr[j] < item); j--){
-                newArr[j+1] = newArr[j]
+
+        //sort by vip service fee high to low
+        function compareVip(a,b){
+            if(a.vip_service_fee > b.vip_service_fee){
+                return -1
             }
-
-            newArr[j+1] = item
+            if(a.vip_service_fee < b.vip_service_fee){
+                return 1
+            }
+            return 0
         }
 
-        console.log(newArr)
-     
-        // console.log(newArr)
+        // ordersToDestination.sort(compareVip)
+
+        //sort by recent added
+        //work in progress
 
 
-        // var filteredArray = []
-        // if (pName != "") {
-        //     filteredArray = ordersToDestination.filter(function (el) {
-        //         return el.product_type == pickerValueSelected &&
-        //             el.name == pName &&
-        //             el.product_price >= minPrice
-        //     });
-        // } else {
-        //     filteredArray = ordersToDestination.filter(function (el) {
-        //         return el.product_type == pickerValueSelected &&
-        //             el.product_price >= minPrice
-        //     });
-        // }
-        // function compare(a) {
-        //     if (a[rangeValue] == rangeValue) {
-        //         return sortMethod;
-        //     }
-        //     return 0;
-        // }
-        // var sortedData = filteredArray.sort(compare)
-        // setFilterOrderData([...sortedData])
-        // setShowFilter(false)
+        //sort by product price high to low
+        function comparePriceHighLow(a,b){
+            if(a.product_price > b.product_price){
+                return -1
+            }
+            if(a.product_price < b.product_price){
+                return 1
+            }
+            return 0
+        }
+
+        function comparePriceLowHigh(a,b){
+            if(a.product_price < b.product_price){
+                return -1
+            }
+            if(a.product_price > b.product_price){
+                return 1
+            }
+            return 0
+        }
+        
+        // ordersToDestination.sort(comparePriceHighLow)
+
+  
+        //sort by delivery fee high-low
+        function compareDelFeeHighLow(a,b){
+            if(a.estimated_dilivery_fee > b.estimated_dilivery_fee){
+                return -1
+            }
+            if(a.product_price < b.product_price){
+                return 1
+            }
+            return 0
+        }
+
+        //sort by delivery fee low-high
+        function compareDelFeeHighLow(a,b){
+            if(a.estimated_dilivery_fee < b.estimated_dilivery_fee){
+                return -1
+            }
+            if(a.product_price > b.product_price){
+                return 1
+            }
+            return 0
+        }
+
     }
 
     const showGallery = (data) => {
@@ -278,7 +312,7 @@ export default function OrderDestination({ route }) {
                             <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
                                 <Icon name="cross" size={35} style={{ margin: 0 }} />
                             </TouchableOpacity>
-                            <Text style={[styles.HeadingText, { marginTop: 10 }]}>Filter</Text>
+                            <TextBold style={[styles.HeadingText, { marginTop: 10 }]}>Filter</TextBold>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
                             <Text style={[styles.loginInputHeading, { marginTop: 5 }]}>Product Type</Text>
                         </View>
