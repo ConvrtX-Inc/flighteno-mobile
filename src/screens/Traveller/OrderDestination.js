@@ -15,6 +15,7 @@ import { formatAmount } from '../../Utility/Utils';
 import ViewImages from '../../components/ViewImages';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import TextSemiBold from '../../components/atoms/TextSemiBold';
 
 var storeNamesList = [
     {
@@ -187,44 +188,57 @@ export default function OrderDestination({ route }) {
 
     const applyFilter = () => {
 
-        
+        var filteredArr = ordersToDestination ?? []
 
-       
+        //for product type
+        if(pickerValueSelected){
 
-    //    const filteredArray =  ordersToDestination.filter(function(data) {
-    //         // return data?.name === pName
-    //     })
+            if(filteredArr.length > 0){
 
-  
+                const newData = filteredArr.filter((item) => {
+                    const itemData = item?.product_type.toLowerCase();
+                    const textData = pickerValueSelected.toLowerCase();
+                    
+                    return itemData.indexOf(textData) > -1
+    
+                });
 
-        // ordersToDestination.forEach(el => {
-        //     console.log(el.name === pName.toLowerCase())
-        // });
-
-        //product type filtering
-        const typeData = ordersToDestination.filter((item) => {
-            const itemData = item?.product_type.toLowerCase();
-            const textData = pickerValueSelected.toLowerCase();
-            return itemData.indexOf(textData) > -1;
-        });
+                filteredArr = newData
+    
+            }
 
 
-        //name filtering
-        const nameData = ordersToDestination.filter((item) => {
-            const itemData = item?.name.toLowerCase();
-            const textData = pName.toLowerCase();
-            return itemData.indexOf(textData) > -1;
-        });
-        
-        //price filtering
-        const priceArray = ordersToDestination.filter(function (el) {
-            return el.product_price >= minPrice
-        });
+        }
 
-       
-        //store filtering api key missing
-        // console.log(storeName)      
-        
+        //for product name
+        if(pName){
+
+            if(filteredArr.length > 0){
+
+                const nameData = filteredArr.filter((item) => {
+                    const itemData = item?.name.toLowerCase();
+                    const textData = pName.toLowerCase();
+                    return itemData.indexOf(textData) > -1;
+                });
+
+                filteredArr = nameData
+
+            }
+           
+        }
+
+
+        //for price
+        if(minPrice){
+
+            const priceData = filteredArr.filter(function (el) {
+                return el.product_price >= minPrice
+            });
+
+            filteredArr = priceData
+
+        }
+
 
 
         //sort by vip service fee high to low
@@ -238,35 +252,28 @@ export default function OrderDestination({ route }) {
             return 0
         }
 
-        // ordersToDestination.sort(compareVip)
-
-        //sort by recent added
-        //work in progress
-
 
         //sort by product price high to low
         function comparePriceHighLow(a,b){
-            if(a.product_price > b.product_price){
+            if(a.Total > b.Total){
                 return -1
             }
-            if(a.product_price < b.product_price){
+            if(a.Total < b.Total){
                 return 1
             }
             return 0
         }
 
         function comparePriceLowHigh(a,b){
-            if(a.product_price < b.product_price){
+            if(a.Total < b.Total){
                 return -1
             }
-            if(a.product_price > b.product_price){
+            if(a.Total > b.Total){
                 return 1
             }
             return 0
         }
-        
-        // ordersToDestination.sort(comparePriceHighLow)
-
+       
   
         //sort by delivery fee high-low
         function compareDelFeeHighLow(a,b){
@@ -280,7 +287,7 @@ export default function OrderDestination({ route }) {
         }
 
         //sort by delivery fee low-high
-        function compareDelFeeHighLow(a,b){
+        function compareDelFeeLowHigh(a,b){
             if(a.estimated_dilivery_fee < b.estimated_dilivery_fee){
                 return -1
             }
@@ -289,6 +296,33 @@ export default function OrderDestination({ route }) {
             }
             return 0
         }
+
+        switch (rangeValue.toLowerCase()) {
+            case 'order_created_date':
+                //
+                break;
+            case 'vip_service_fee':
+                filteredArr.sort(compareVip)
+                break;
+            case 'total_low_high':
+                filteredArr.sort(comparePriceLowHigh)
+                break;
+            case 'total_high_low':
+                filteredArr.sort(comparePriceHighLow)
+                break
+            case 'est_del_fee_low_high':
+                filteredArr.sort(compareDelFeeLowHigh)
+                break
+            case 'est_del_fee_high_low':
+                filteredArr.sort(compareDelFeeHighLow)
+                break
+            default:
+                break;
+        }
+
+        filteredArr.forEach(item => {
+            console.log(item?.name + ' ' + item?.Total)
+        });
 
     }
 
@@ -314,7 +348,7 @@ export default function OrderDestination({ route }) {
                             </TouchableOpacity>
                             <TextBold style={[styles.HeadingText, { marginTop: 10 }]}>Filter</TextBold>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
-                            <Text style={[styles.loginInputHeading, { marginTop: 5 }]}>Product Type</Text>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginTop: 5 }]}>Product Type</TextSemiBold>
                         </View>
                         <View style={{ marginTop: 10, }}>
                             <Pressable onPress={() => setPickerShow(!pickerShow)}>
@@ -358,7 +392,7 @@ export default function OrderDestination({ route }) {
                                 : null}
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Product name</Text>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20 }]}>Product name</TextSemiBold>
                         </View>
                         <Input
                             placeholder="Enter product name"
@@ -367,7 +401,7 @@ export default function OrderDestination({ route }) {
                             secureTextEntry={false}
                         />
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Price</Text>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20 }]}>Price</TextSemiBold>
                         </View>
 
                         <View style={{flex:1, flexDirection:'row'}}>
@@ -451,16 +485,16 @@ export default function OrderDestination({ route }) {
                         <View style={styles.sliderTxtContainer}>
 
                             <View style={styles.sliderTxtContainerFirst}>
-                                <Text style={styles.sliderTxt}>0</Text>
+                                <TextMedium style={styles.sliderTxt}>0</TextMedium>
                             </View>
 
                             <View style={[styles.sliderTxtContainerOther, { marginLeft: 'auto' }]}>
-                                <Text style={styles.sliderTxt}>500000</Text>
+                                <TextMedium style={styles.sliderTxt}>500000</TextMedium>
                             </View>
 
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Store name</Text>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20 }]}>Store name</TextSemiBold>
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%', flexDirection: 'row' }}>
                             <TextInput
@@ -482,7 +516,7 @@ export default function OrderDestination({ route }) {
                                 renderItem={({ item, index }) =>
 
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-                                        <Text style={Styles.storeNameListText}>{item.name}</Text>
+                                        <TextMedium style={Styles.storeNameListText}>{item.name}</TextMedium>
                                         <CheckBox
                                             checkedIcon='dot-circle-o'
                                             uncheckedIcon='circle'
@@ -499,49 +533,49 @@ export default function OrderDestination({ route }) {
                             />
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <Text style={[styles.HeadingText, { marginTop: 10 }]}>Sort</Text>
+                            <TextBold style={[styles.HeadingText, { marginTop: 10 }]}>Sort</TextBold>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
                             <TouchableOpacity onPress={() => selectRange(1, 'vip_service_fee', 1)}
                                 style={Styles.rangeButton}>
-                                <Text style={[styles.loginInputHeading,
+                                <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 1 ? color.blueColor : color.loginTextHeadingColor }]}>
                                     Vip Service Fee (High - Low)
-                                </Text>
+                                </TextSemiBold>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => selectRange(2, 'order_created_date', -1)}
                                 style={Styles.rangeButton}>
-                                <Text style={[styles.loginInputHeading,
+                                <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 2 ? color.blueColor : color.loginTextHeadingColor }]}>
                                     Recent added
-                                </Text>
+                                </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(3, 'Total', -1)}
+                            <TouchableOpacity onPress={() => selectRange(3, 'total_low_high', -1)}
                                 style={Styles.rangeButton}>
-                                <Text style={[styles.loginInputHeading,
+                                <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 3 ? color.blueColor : color.loginTextHeadingColor }]}>
                                     Price (Low - High)
-                                </Text>
+                                </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(4, 'Total', 1)}
+                            <TouchableOpacity onPress={() => selectRange(4, 'total_high_low', 1)}
                                 style={Styles.rangeButton}>
-                                <Text style={[styles.loginInputHeading,
+                                <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 4 ? color.blueColor : color.loginTextHeadingColor }]}>
                                     Price (High - Low)
-                                </Text>
+                                </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(5, 'estimated_dilivery_fee', -1)}
+                            <TouchableOpacity onPress={() => selectRange(5, 'est_del_fee_low_high', -1)}
                                 style={Styles.rangeButton}>
-                                <Text style={[styles.loginInputHeading,
+                                <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 5 ? color.blueColor : color.loginTextHeadingColor }]}>
                                     Delivery Fee (Low - High)
-                                </Text>
+                                </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(6, 'estimated_dilivery_fee', +1)}
+                            <TouchableOpacity onPress={() => selectRange(6, 'est_del_fee_high_low', +1)}
                                 style={Styles.rangeButton}>
-                                <Text style={[styles.loginInputHeading,
+                                <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 6 ? color.blueColor : color.loginTextHeadingColor }]}>
                                     Delivery Fee (High - Low)
-                                </Text>
+                                </TextSemiBold>
                             </TouchableOpacity>
                         </View>
                         <View style={{ marginVertical: 20 }}>
