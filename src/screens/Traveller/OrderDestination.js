@@ -299,7 +299,11 @@ export default function OrderDestination({ route }) {
 
         switch (rangeValue.toLowerCase()) {
             case 'order_created_date':
-                //
+                const currDate = new Date().getTime()
+                const dateArr = filteredArr.filter(function (el) {
+                    return el?.order_created_date?.$date >= currDate
+                });
+                filteredArr = dateArr
                 break;
             case 'vip_service_fee':
                 filteredArr.sort(compareVip)
@@ -320,10 +324,15 @@ export default function OrderDestination({ route }) {
                 break;
         }
 
-        filteredArr.forEach(item => {
-            console.log(item?.name + ' ' + item?.Total)
-        });
+        // filteredArr.forEach(item => {
+        //     console.log(item?.name + ' ' + item?.Total)
+        // });
 
+        // console.log(new Date().getTime())
+
+        // setFilterOrderData(filteredArr)
+            
+        // setShowFilter(false)
     }
 
     const showGallery = (data) => {
