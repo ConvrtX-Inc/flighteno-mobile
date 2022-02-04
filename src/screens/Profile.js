@@ -17,8 +17,10 @@ function Profile() {
     const { currentProfile, currentUser, token } = useSelector(({ authRed }) => authRed)
 
     const onShare = async () => {
+
+        //fix for flight-17
         try {
-            let url = 'https://www.google.com/'
+            let url = 'www.flighteno.com/register/refer-friend/s5d65sag3/register.php'
             const result = await Share.share({
                 title: 'Download Flighteno Now!\n\n',
                 message: 'Hi, Friend. Register now at Flighteno here is the app link ' + url,
