@@ -158,7 +158,7 @@ export default function EditProfile() {
                     <PhoneInput
                         ref={phoneInput}
                         defaultValue={currentUser.phone_number}
-                        defaultCode={currentUser.country}
+                        defaultCode={currentUser.country_code}
                         disabled={true}
                         containerStyle={styles.phoneContainer}
                         textInputStyle={styles.phoneInput}
