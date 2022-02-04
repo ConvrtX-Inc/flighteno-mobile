@@ -7,6 +7,7 @@ import QRCode from 'react-native-qrcode-svg';
 var windowWidth = Dimensions.get('window').width;
 
 export default function PlainReceipt({ route }) {
+    
     const navigation = useNavigation()
 
     return (

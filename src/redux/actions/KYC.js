@@ -1,13 +1,14 @@
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
+import { BASE_URL } from '../../BASE_URL/index';
 import { IS_LOADING } from '../constants';
 
 
-export function SubmitKYC(data, token, navigate, message) {
+export function VerifyAccount(token, data, message) {
     return async dispatch => {
-        dispatch({ type: IS_LOADING, isloading: true })
         axios({
             method: 'post',
-            url: `${BASE_URL}Rest_calls/knowYourCustomer_post`,
+            url: `${BASE_URL}Rest_calls/knowYourCustomer`,
             data: data,
             headers: { "Authorization": token },
             validateStatus: (status) => {
@@ -15,12 +16,14 @@ export function SubmitKYC(data, token, navigate, message) {
             },
         }).catch(error => {
             console.log("Error", error)
-            dispatch({ type: IS_LOADING, isloading: false })
         }).then(Response => {
-            navigate()
+
+            Toast.show({
+                type: 'success',
+                text2: "Successfully submitted KYC",
+            })
             message()
-            console.log(Response)
-            dispatch({ type: IS_LOADING, isloading: false })
+            dispatch({ type: IS_LOADING, isloading: false})
         })
     }
 }

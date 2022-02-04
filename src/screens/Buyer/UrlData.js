@@ -28,7 +28,7 @@ export default function UrlData({ route }) {
     const dispatch = useDispatch()
     const [filePath, setFilePath] = useState({});
     const [date, setDate] = useState(new Date());
-    const [dateValue, setDateValue] = useState("MM/DD/YYYY");
+    const [dateValue, setDateValue] = useState(moment());
     const [fromTime, setFromTime] = useState("13:00 ");
     const [toTime, setToTime] = useState("18:00 ")
     const [mode, setMode] = useState('date');
@@ -113,7 +113,8 @@ export default function UrlData({ route }) {
         const currentDate = selectedDate || date;
         if (mode == 'date') {
             setShow(false);
-            setDateValue(moment(currentDate).format("MM/DD/YYYY"));
+            // setDateValue(moment(currentDate).format("YYYY/MM/DD"));
+            setDateValue(currentDate);
         }
         else {
             if (valueType == 'from') {
@@ -197,7 +198,8 @@ export default function UrlData({ route }) {
             product_type: pickerValueSelected,
             product_price: data.price ? data.price : data.product_price,
             product_discription: data.name,
-            preferred_dilivery_date: dateValue,
+            preferred_dilivery_date: moment(dateValue).format("MM/DD/YYYY"),
+            preferred_dilivery_date_db_format: dateValue.toString(),
             preferred_dilivery_start_time: fromTime,
             preferred_dilivery_end_time: toTime,
             vip_service_status: pickerValueSelectedVip,
@@ -307,7 +309,7 @@ export default function UrlData({ route }) {
                 <Pressable onPress={() => showMode('date', 'date')}>
                     <View style={styles.pickerVIew}>
                         <View style={styles.pickerLeftView}>
-                            <TextMedium style={styles.textSelected}>{dateValue}</TextMedium>
+                            <TextMedium style={styles.textSelected}>{moment(dateValue).format('MM/DD/YYYY')}</TextMedium>
                         </View>
                         <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
                             <Image
@@ -441,16 +443,21 @@ export default function UrlData({ route }) {
                 </View>
                 {/* custom Picker end */}
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>VIP Service Fee</TextBold>
-
-                <Input
-                    placeholder="$50.00"
-                    onChangeText={text => setVipServiceFee(text.replace(/[^0-9]/g, ''))}
-                    value={vipServiceFee}
-                    secureTextEntry={false}
-                    editable={pickerValueSelectedVip == "No" ? false : true}
-                    keyboardType="number"
-                />
+                {
+                    pickerValueSelectedVip == "Yes" ? (
+                        <View>
+                            <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>VIP Service Fee</TextBold>
+                                <Input
+                                    placeholder="$50.00"
+                                    onChangeText={text => setVipServiceFee(text.replace(/[^0-9]/g, ''))}
+                                    value={vipServiceFee}
+                                    secureTextEntry={false}
+                                    editable={pickerValueSelectedVip == "No" ? false : true}
+                                    keyboardType="number"
+                                />
+                        </View>
+                    ) : null
+                }                
 
                 <View style={{ height: 50 }} />
 

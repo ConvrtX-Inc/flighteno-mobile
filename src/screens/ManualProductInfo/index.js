@@ -16,8 +16,6 @@ export default function ManualProductInfo({ route }) {
     const { loading } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
 
-
-
     const [email, setEmail] = useState('');
 
 

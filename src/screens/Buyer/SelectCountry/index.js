@@ -41,7 +41,7 @@ export default function SelectCountry({ route }) {
     const [modalVisibleCityDeliver, setModalVisibleCityDeliver] = useState("")
     const [withCountryNameButton, setWithCountryNameButton] = useState("")
     const [withCountryNameButtonDeliver, setWithCountryNameButtonDeliver] = useState("")
-    const [deliveryDate, setDeliveryDate] = useState(moment(moment(buyerOrderData.preferred_dilivery_date).format("MM/DD/YYYY")).add(14, 'days'))
+    const [deliveryDate, setDeliveryDate] = useState(moment(moment(buyerOrderData.preferred_dilivery_date_db_format)).add(14, 'days'))
     const [deliveryDay, setDeliveryDay] = useState(moment(deliveryDate).format('dddd'))
     const [deliveryDateFormat, setDeliveryDateFormat] = useState(moment(deliveryDate).format("MM/DD/YYYY"))
     const [country1, setCountry1] = useState(false)
@@ -66,10 +66,12 @@ export default function SelectCountry({ route }) {
         setCountryOrigin(selectedCountry)
         originCities = countries[selectedCountry.name]
         if (originCities == undefined) {
-            setPickerValueSelectedCity(selectedCountry.name)
+            setPickerValuesCity([])
+            setPickerValueSelectedCity('')
         }
         else {
             setPickerValuesCity(originCities)
+            setPickerValuesCity([...new Set(originCities)])
             setPickerValueSelectedCity(originCities.length > 0 ? originCities[0] : '')
         }
 
@@ -81,10 +83,12 @@ export default function SelectCountry({ route }) {
         setCountryDestination(selectedCountry)
         destinationCities = countries[selectedCountry.name]
         if (destinationCities == undefined) {
-            setPickerValueSelectedCityDeliver(selectedCountry.name)
+            // setPickerValueSelectedCityDeliver(selectedCountry.name)
+            setPickerValuesCityDeliver([])
+            setPickerValueSelectedCityDeliver('')
         }
         else {
-            setPickerValuesCityDeliver(destinationCities)
+            setPickerValuesCityDeliver([...new Set(destinationCities)] )
             setPickerValueSelectedCityDeliver(destinationCities.length > 0 ? destinationCities[0] : '')
         }
 
@@ -119,10 +123,10 @@ export default function SelectCountry({ route }) {
         if (destinationCities != undefined) {
             var seachedCity = destinationCities.filter(function search(city) { return city.toUpperCase().includes(text.toUpperCase()) })
             if (text == "") {
-                setPickerValuesCityDeliver(destinationCities)
+                setPickerValuesCityDeliver([...new Set(destinationCities)])
             }
             else {
-                setPickerValuesCityDeliver(seachedCity)
+                setPickerValuesCityDeliver([...new Set(seachedCity)])
             }
         }
     }
@@ -140,6 +144,8 @@ export default function SelectCountry({ route }) {
         buyerOrderData["product_dilivery_date"] = deliveryDateFormat
         buyerOrderData["estimated_dilivery_fee"] = deliveryFee
         buyerOrderData["tax"] = Math.round((buyerOrderData.product_price / 100) * 5)
+
+        
         dispatch({ type: CREATE_ORDER_DETAIL, data: buyerOrderData })
         navigation.navigate("OrderDetail")
     }
@@ -427,7 +433,7 @@ export default function SelectCountry({ route }) {
                                 placeholderTextColor="#656F85"
                                 onChangeText={text => searchCitiesOrigin(text)}
                                 secureTextEntry={false}
-
+                                
                             />
                         </View>
 

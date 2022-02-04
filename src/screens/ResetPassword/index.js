@@ -10,6 +10,8 @@ import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { otpResetPasswordAction } from '../../redux/actions/Auth';
 import { IS_LOADING } from '../../redux/constants';
+import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -101,17 +103,17 @@ export default function ResetPassword() {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Reset password</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Reset password</TextBold>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                <TextMedium style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
                     Enter your email ID  or phone number associated with your account and we’ll send an verification code for reset your password
-                </Text>
+                </TextMedium>
 
 
                 {/* TextInputs For Reset Password */}
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</TextBold>
 
                 <Input
                     placeholder="myemail@flighteno.com"
@@ -120,10 +122,7 @@ export default function ResetPassword() {
                     secureTextEntry={false}
                 />
 
-
-
-
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</TextBold>
 
                 <PhoneInput
                     ref={phoneInput}

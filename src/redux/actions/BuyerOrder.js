@@ -4,13 +4,18 @@ import { IS_LOADING } from '../constants';
 
 
 export function createOrder(data, navigate, token) {
+    console.log('data', data);
+    console.log('navigate', navigate);
+    console.log('token', token);
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
+
+        //api has been updated from the backend
         axios({
             method: 'post',
             url: `${BASE_URL}Rest_calls/createOrder`,
             data: data,
-            headers: { "Authorization": token },
+            headers: { "Authorization": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjYxYmIyN2NiOWM3Yjc4NTVkNzViNDAzNCIsImRhdGUiOiIyMDIyLTAxLTI5IDEwOjI3OjA3IiwiaWF0Ijp7IiRkYXRlIjp7IiRudW1iZXJMb25nIjoiMTY0NTE4MDAyNzAwMCJ9fX0.0Kbfh0e-gteX8gW3xWe0BsdyRurN859MdNRLzNn8bkQ' },
             validateStatus: (status) => {
                 return true;
             },
@@ -18,7 +23,9 @@ export function createOrder(data, navigate, token) {
             console.log("Error", error)
             dispatch({ type: IS_LOADING, isloading: false })
         }).then(Response => {
-            navigate("Congratulation", { data: Response.data })
+
+            console.log(Response)
+            // navigate("Congratulation", { data: Response.data })
             dispatch({ type: IS_LOADING, isloading: false })
         })
     }

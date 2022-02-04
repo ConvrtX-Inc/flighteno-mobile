@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, Image, ScrollView, ImagePickerIOS } from 'react-native';
+
 import ButtonLarge from '../../../components/ButtonLarge';
 import { styles } from './styles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import InputText from '../../../components/InputText';
 import StepsIndicator from '../../../components/StepsIndicator';
 import TextBold from '../../../components/atoms/TextBold';
+import Toast from 'react-native-toast-message';
+import { imgToBase64 } from '../../../Utility/Utils';
 
 
 export default function  KYCSelectIDScreen ({navigation,route}){
@@ -18,10 +21,15 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     ]);
 
     //form fields
-    const [idType, setIdType] = useState(null);
+    const [idType, setIdType] = useState('');
     const [idNo, setIdNo] = useState('')
-    const frontPicture = route.params?.frontImg
-    const backPicture = route.params?.backImg
+    const [imgFrontBase64, setImgFrontBase64] = useState('')
+    const [imgBackBase64, setImgBackBase64] = useState('')
+    
+
+
+    const frontPicture = route.params?.frontImg ?? ''
+    const backPicture = route.params?.backImg ?? ''
 
 
     const onFrontPictureTap = () => {
@@ -33,14 +41,35 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     }
 
     const onNextTap = () => {
-        console.log(idNo)
-        console.log(idType)
-        console.log(frontPicture)
-        console.log(backPicture)
+       
         
-        const kycForm = {idNo: idNo, idType: idType, frontPic: frontPicture, backPic: backPicture}
-        navigation.navigate('KYCSendVerification', {kyc: kycForm})
+        if(backPicture === '' || frontPicture === '' || idNo === '' ||idType === '' ){
+
+            Toast.show({
+                type: 'error',
+                text1: 'Alert!',
+                text2: "Fill up all the required fields",
+            })
+            
+        }else{  
+
+            const kycForm = {idNo: idNo, idType: idType, frontPic: imgFrontBase64, backPic: imgBackBase64}
+
+            imgToBase64(frontPicture).then((data) => {
+                setImgFrontBase64(data)
+            })
+     
+            imgToBase64(backPicture).then((data) => {
+                 setImgBackBase64(data)
+            })
+
+            navigation.navigate('KYCSendVerification', { kyc: kycForm })
+
+        }
+
+        
     }
+
 
     return (
         <ScrollView  style={styles.container}>

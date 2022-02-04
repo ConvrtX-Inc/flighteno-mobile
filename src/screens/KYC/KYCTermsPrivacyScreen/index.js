@@ -1,47 +1,78 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
+import { RNS3 } from 'react-native-aws3';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import TextBold from '../../../components/atoms/TextBold';
 import ButtonLarge from '../../../components/ButtonLarge';
-import { SubmitKYC } from '../../../redux/actions/KYC';
+import { VerifyAccount} from '../../../redux/actions/KYC';
+import { IS_LOADING } from '../../../redux/constants';
+import { generateUID } from '../../../Utility/Utils';
 import { styles } from './styles';
 
 export default function KYCTermsPrivacyScreen({navigation, route}){
 
     const dispatch = useDispatch()
-    // const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
-    const { token } = useSelector(({authRed}) => authRed)
+    const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
+    // const { token } = useSelector(({authRed}) => authRed)
+    const { kyc } = route.params
 
-
+    
     const onAcceptTap = () => {
 
-        const kycRequest = new FormData()
-        kycRequest.append('id_type','')
-        kycRequest.append('id_number','')
-        kycRequest.append('id_front','')
-        kycRequest.append('id_back','')
-        kycRequest.append('profile_image','')
-        kycRequest.append('first_name','')
-        kycRequest.append('middle_name','')
-        kycRequest.append('last_name','')
-        kycRequest.append('suffix','')
-        kycRequest.append('address_line_1','')
-        kycRequest.append('location','')
-        kycRequest.append('birth_date','')
-        kycRequest.append('phone_number','')
+        const kycRequest = {
+            user_id:currentUser?._id,
+            id_type: kyc?.idType,
+            id_number: kyc?.idNo,
+            id_front:kyc?.frontPic,
+            id_back: kyc?.backPic,
+            profile_image: kyc?.profile_image,
+            first_name: kyc?.firstName,
+            middle_name: kyc?.middleName,
+            last_name: kyc?.lastName,
+            suffix:kyc?.suffix,
+            address_line_1:kyc?.addressLine1,
+            location:kyc?.addressLine2,
+            birth_date: kyc?.birthdate,
+            phone_number: kyc?.phone
+        }   
 
-        dispatch(SubmitKYC(kycRequest,token,() => {
-          
-        },() => {
-            Toast.show({
-                type: 'success',
-                text1: 'Alert!',
-                text2: "Thanks for your response!",
-            })
-        }))
+
+      
+        dispatch({ type: IS_LOADING, isloading: true })
+        dispatch(VerifyAccount(token,kycRequest,() => {
+
+            navigation.navigate('Profile')
+
+        }))   
 
     }
+
+    //for future reference on uploading photos to S3
+    // const uploadPhotos = () => {
+        
+    //         dispatch({ type: IS_LOADING, isloading: true })
+         
+    //         const file = {
+    //                 uri: kyc?.backPic,
+    //                 name: generateUID() + ".jpg",
+    //                 type: 'image/jpeg'
+    //         }
+    //         const options = {
+    //             keyPrefix: "flighteno/reviews/",
+    //             bucket: "memee-bucket",
+    //             region: "eu-central-1",
+    //             accessKey: "AKIA2YJH3TLHCODGDKFV",
+    //             secretKey: "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",
+    //             successActionStatus: 201
+    //         }
+    //             RNS3.put(file, options).then(response => {
+    //                 if (response.status !== 201)
+    //                     throw new Error("Failed to upload image to S3");
+    //                 else
+    //                     console.log(response?.body)
+    //         });
+    // }
 
     return(
         <ScrollView style={styles.container}>
@@ -52,7 +83,7 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
                 It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
 
             <View style={styles.btnAccept}>
-                <ButtonLarge loader={false} title='Accept and Continue' onPress={onAcceptTap} />
+                <ButtonLarge loader={loading} title='Accept and Continue' onPress={onAcceptTap} />
             </View>
             
         </ScrollView>

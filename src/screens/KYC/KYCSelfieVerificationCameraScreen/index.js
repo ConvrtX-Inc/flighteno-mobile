@@ -6,6 +6,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { styles } from './styles';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
+import { imgToBase64 } from '../../../Utility/Utils';
 
 
 export default function KYCSelfieVerificationCameraScreen({navigation, route}){
@@ -22,9 +23,28 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
 
         if(bothEyes <= 0.3){
             setCameraProgress(100)
-            navigation.navigate('KYCFillOut', {kyc:kyc })
+            takePicture()
         }
       
+    }
+
+    const takePicture = async() => {
+        if(cameraRef.current){
+            const options = { quality: 0.5, base64: true, skipProcessing: true };
+            const data = await cameraRef.current.takePictureAsync(options);
+            const source = data.uri;
+
+            if (source) {
+                await cameraRef.current.pausePreview();
+
+                imgToBase64(source).then((data) => {
+                    kyc.profile_image = data
+                })
+                
+                navigation.navigate('KYCFillOut',{ kyc:kyc })
+               
+            }
+        }
     }
 
     return (
@@ -51,7 +71,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
                             {
                                 (fill) => (       
                                     <RNCamera 
-                                    ref={cameraRef}
+                                        ref={cameraRef}
                                         style={styles.camera} 
                                         captureAudio={false}
                                         androidCameraPermissionOptions={{
@@ -71,10 +91,13 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
                                             setCameraProgress(50)
                                             setCanDetectFaces(true)
                                         }}
+                                        onPictureTaken={() => {
+                                            navigation.navigate('KYCFillOut', {kyc:kyc })
+                                        }}
                                   
                                         // onFacesDetected={canDetectFaces ? facesDetected : null}
                                         onFacesDetected={canDetectFaces? facesDetected : null}
-    
+                                    
                                         onFaceDetectionError={error => console.log('FDError', error)}
                                     />
                                 )
