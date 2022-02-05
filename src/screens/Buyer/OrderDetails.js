@@ -54,22 +54,25 @@ export default function OrderDetails({ route }) {
             setTraveler(data)
         }))
 
+        console.log(order)
+
     }, [])
 
 
     function cancelOrder() {
         var obj = {
-            admin_id: currentUser._id,
-            order_id: order._id
+            admin_id: currentUser?._id,
+            order_id: order?._id
         }
         dispatch(CancelOrder(obj, token, navigation))
+       
     }
 
     const imageProduct = [{
         url: order.new_image,
     }]
 
-    const imageReceipt = [{
+    const imageReceipt = [{ 
         url: order.recipt,
     }]
 
@@ -300,7 +303,7 @@ export default function OrderDetails({ route }) {
                             title="Cancel Order"
                             loader={loading}
                             color='#E01E82'
-                            // onPress={() => cancelOrder()}
+                            onPress={cancelOrder}
                         />
                     </View> : null}
                 {order.review_details ?
