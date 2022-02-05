@@ -225,8 +225,9 @@ export default function Chattravelereler({ route }) {
             addSpaces('Total:') + (parseInt(order.orderDetail.product_price) + parseInt(order.offer.offerPrice) + parseInt(route.params.orderDetail.vip_service_fee) + parseInt(route.params.orderDetail.flighteno_cost) + parseInt(route.params.orderDetail.tax))
     }
 
-    function addSpaces(text, addDollar=true) {
-        return text.padEnd(1, ' ') + addDollar ? '$' : '';
+    function addSpaces(text, showDollar=true) {
+        // return text.padEnd(1, ' ') + addDollar ? '$' : '';
+        return showDollar ? `${text} $` : text;
     }
 
     useEffect(() => {
