@@ -19,6 +19,7 @@ var emailParam = ''
 var passwordParam = ''
 var formattedCellNoParam = ''
 var cellNoParam = ''
+var countryCodeParam = ''
 export default function VerifyPhone({ route }) {
 
     const navigation = useNavigation();
@@ -35,6 +36,7 @@ export default function VerifyPhone({ route }) {
         passwordParam = route.params.password
         cellNoParam = route.params.cellno
         formattedCellNoParam = route.params.formattedPhoneNo
+        countryCodeParam = route.params.countryCode
 
         setUserCell(formattedCellNoParam)
 
@@ -61,6 +63,7 @@ export default function VerifyPhone({ route }) {
         register_data.append("email", emailParam)
         register_data.append("phoneNumber", cellNoParam)
         register_data.append("password", passwordParam)
+        register_data.append("country_code", countryCodeParam)
         register_data.append("date", moment().format("YYYY-MM-DD hh:mm:ss"))
 
 
