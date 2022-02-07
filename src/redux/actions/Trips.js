@@ -222,7 +222,7 @@ export function CancelOrder(data, token, navigation) {
         }).then(Response => {
             /*Fix for FLIGHT-15*/
             dispatch({ type: IS_LOADING, isloading: false })
-            navigation.navigate('Track',{ initialRouteName:'Transactions', screen:'MyOrdersList', params:{ orderStatus:'Cancelled' }})
+            navigation.navigate('Track',{ screen:'Transactions'})
         })
     }
 }

@@ -14,6 +14,8 @@ target 'flighteno' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
+  pod 'react-native-image-editor', :path => '../node_modules/@react-native-community/image-editor'
+
   target 'flightenoTests' do
     inherit! :complete
     # Pods for testing

@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { useSelector, useDispatch } from 'react-redux'
 import { CURRENT_COUNTRY } from '../redux/constants';
-
 import SplashScreen1 from "../screens/SplashScreen1";
 import SplashScreen2 from "../screens/SplashScreen2";
 import TermsandCondition from '../screens/TermsandCondition';
@@ -56,6 +55,7 @@ import KYCSelectIDScreen from '../screens/KYC/KYCSelectIDScreen';
 import KYCSelectIDCameraScreen from '../screens/KYC/KYCSelectIDCameraScreen';
 import { color } from '../Utility/Color';
 import { colors } from 'react-native-elements';
+import KYCTestScreen from '../screens/KYC/KYCTestScreen';
 // https://extreme-ip-lookup.com/json/
 // https://geolocation-db.com/json/
 
@@ -144,11 +144,13 @@ function Navigation() {
        currentUser ?
            <Stack.Navigator
                initialRouteName={currentProfile ? "BottomTab" : "SelectProfile"}
+            //    initialRouteName="KYCTestScreen"
                screenOptions={{
                    headerShown: false
                }}
             >
                 <Stack.Screen name="SelectProfile" component={SelectProfile} />
+                <Stack.Screen name="KYCTestScreen" component={KYCTestScreen} />
                 <Stack.Screen name="BottomTab" component={BottomTab} />
                 <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen name="ManualProductInfo" component={ManualProductInfo} />
