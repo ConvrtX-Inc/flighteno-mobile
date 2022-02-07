@@ -96,11 +96,13 @@ export default function OrderDetail() {
                 {global.productImage.url ?
                     <Image
                         style={styles.productImg}
+                        resizeMode='contain'
                         source={{ uri: global.productImage.url }}
                     />
                     :
                     <Image
                         style={styles.productImg}
+                        resizeMode='contain'
                         source={{ uri: global.productImage.uri }}
                     />
 

@@ -39,7 +39,7 @@ const TrendingOrderDetail = ({ route }) => {
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{order.name}</TextBold>
                 <View style={Styles.bottomView}>
                     <TouchableHighlight underlayColor="transparent" onPress={() => setShowProductPic(true)}>
-                        <Image source={{ uri: order.product_image }}
+                        <Image resizeMode='contain' source={{ uri: order.product_image }}
                             style={Styles.productImage}
                         />
                     </TouchableHighlight>
