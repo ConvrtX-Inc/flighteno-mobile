@@ -107,6 +107,7 @@ export default function OrderDestination({ route }) {
     const [storeValue, setStoreValue] = useState("")
     const [storeName, setNameOfStore] = useState("")
     const [sortMethod, setSortMethod] = useState(-1)
+
     const [storeNames, setStoreName] = useState([
         {
             id: 1,
@@ -130,6 +131,8 @@ export default function OrderDestination({ route }) {
         },
     ])
 
+  
+
     useFocusEffect(
         React.useCallback(() => {
             setShowFilter(false)
@@ -151,6 +154,7 @@ export default function OrderDestination({ route }) {
 
     useEffect(() => {
         setFilterOrderData(ordersToDestination)
+     
     }, [ordersToDestination]);
 
     const selectPickerValueFN = (index) => {
@@ -188,151 +192,101 @@ export default function OrderDestination({ route }) {
 
     const applyFilter = () => {
 
-        var filteredArr = ordersToDestination ?? []
-
+        var filteredArray = []
+        // filteredArr.push('hello')
+    
         //for product type
         if(pickerValueSelected){
 
-            if(filteredArr.length > 0){
+            filteredArray = filterOrderData.filter((item) => {
 
-                const newData = filteredArr.filter((item) => {
-                    const itemData = item?.product_type.toLowerCase();
-                    const textData = pickerValueSelected.toLowerCase();
-                    
-                    return itemData.indexOf(textData) > -1
-    
-                });
+                const itemType = item?.product_type.toLowerCase();
+                const itemName = item?.name.toLowerCase()
+                const itemPrice = item?.product_price
 
-                filteredArr = newData
-    
-            }
+                const pickerData = pickerValueSelected.toLowerCase();
+ 
+                return itemType.indexOf(pickerData) > -1  && itemName.indexOf(pName.toLowerCase()) > -1
+                && itemPrice >= minPrice
 
-
-        }
-
-        //for product name
-        if(pName){
-
-            if(filteredArr.length > 0){
-
-                const nameData = filteredArr.filter((item) => {
-                    const itemData = item?.name.toLowerCase();
-                    const textData = pName.toLowerCase();
-                    return itemData.indexOf(textData) > -1;
-                });
-
-                filteredArr = nameData
-
-            }
-           
-        }
-
-
-        //for price
-        if(minPrice){
-
-            const priceData = filteredArr.filter(function (el) {
-                return el.product_price >= minPrice
             });
-
-            filteredArr = priceData
-
+    
         }
 
 
+        function compare(a,b){
 
-        //sort by vip service fee high to low
-        function compareVip(a,b){
-            if(a.vip_service_fee > b.vip_service_fee){
-                return -1
-            }
-            if(a.vip_service_fee < b.vip_service_fee){
-                return 1
-            }
-            return 0
-        }
-
-
-        //sort by product price high to low
-        function comparePriceHighLow(a,b){
-            if(a.Total > b.Total){
-                return -1
-            }
-            if(a.Total < b.Total){
-                return 1
-            }
-            return 0
-        }
-
-        function comparePriceLowHigh(a,b){
-            if(a.Total < b.Total){
-                return -1
-            }
-            if(a.Total > b.Total){
-                return 1
-            }
-            return 0
-        }
-       
-  
-        //sort by delivery fee high-low
-        function compareDelFeeHighLow(a,b){
-            if(a.estimated_dilivery_fee > b.estimated_dilivery_fee){
-                return -1
-            }
-            if(a.product_price < b.product_price){
-                return 1
-            }
-            return 0
-        }
-
-        //sort by delivery fee low-high
-        function compareDelFeeLowHigh(a,b){
-            if(a.estimated_dilivery_fee < b.estimated_dilivery_fee){
-                return -1
-            }
-            if(a.product_price > b.product_price){
-                return 1
-            }
-            return 0
-        }
-
-        switch (rangeValue.toLowerCase()) {
+            switch (rangeValue.toLowerCase()) {
             case 'order_created_date':
-                const currDate = new Date().getTime()
-                const dateArr = filteredArr.filter(function (el) {
-                    return el?.order_created_date?.$date >= currDate
-                });
-                filteredArr = dateArr
+                // const currDate = new Date().getTime()
+                // const dateArr = filteredArrTmp.filter(function (el) {
+                //     return el?.order_created_date?.$date >= currDate
+                // });
+                // filteredArrTmp = dateArr
                 break;
             case 'vip_service_fee':
-                filteredArr.sort(compareVip)
+                if(a.vip_service_fee > b.vip_service_fee){
+                    return -1
+                }
+                if(a.vip_service_fee < b.vip_service_fee){
+                    return 1
+                }
+                return 0
                 break;
             case 'total_low_high':
-                filteredArr.sort(comparePriceLowHigh)
+                if(a.Total < b.Total){
+                    return -1
+                }
+                if(a.Total > b.Total){
+                    return 1
+                }
+                return 0
                 break;
             case 'total_high_low':
-                filteredArr.sort(comparePriceHighLow)
+                if(a.Total > b.Total){
+                    return -1
+                }
+                if(a.Total < b.Total){
+                    return 1
+                }
+                return 0
                 break
             case 'est_del_fee_low_high':
-                filteredArr.sort(compareDelFeeLowHigh)
+                if(a.estimated_dilivery_fee < b.estimated_dilivery_fee){
+                    return -1
+                }
+                if(a.estimated_dilivery_fee > b.estimated_dilivery_fee){
+                    return 1
+                }
+                return 0
                 break
             case 'est_del_fee_high_low':
-                filteredArr.sort(compareDelFeeHighLow)
+                if(a.estimated_dilivery_fee > b.estimated_dilivery_fee){
+                    return -1
+                }
+                if(a.estimated_dilivery_fee < b.estimated_dilivery_fee){
+                    return 1
+                }
+                return 0
                 break
             default:
                 break;
+            }
+
         }
 
-        // filteredArr.forEach(item => {
-        //     console.log(item?.name + ' ' + item?.Total)
-        // });
+        if(rangeValue){
+            filteredArray.sort(compare)
+        }
 
-        // console.log(new Date().getTime())
+        filteredArray.forEach(item => {
+            console.log(item?.name + '' + item?.product_price)
+        });
 
-        // setFilterOrderData(filteredArr)
-            
-        // setShowFilter(false)
+
+        setFilterOrderData(filteredArray)
+        setShowFilter(false)
+        
     }
 
     const showGallery = (data) => {
@@ -435,7 +389,7 @@ export default function OrderDestination({ route }) {
                             </View>
                             <View style={{flex:1}}>
                                 <Input
-                                    placeholder="5000"
+                                    placeholder="500000"
                                  
                                     secureTextEntry={false}
                                     editable={false}
