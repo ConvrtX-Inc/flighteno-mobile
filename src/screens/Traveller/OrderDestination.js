@@ -217,13 +217,7 @@ export default function OrderDestination({ route }) {
         function compare(a,b){
 
             switch (rangeValue.toLowerCase()) {
-            case 'order_created_date':
-                // const currDate = new Date().getTime()
-                // const dateArr = filteredArrTmp.filter(function (el) {
-                //     return el?.order_created_date?.$date >= currDate
-                // });
-                // filteredArrTmp = dateArr
-                break;
+            
             case 'vip_service_fee':
                 if(a.vip_service_fee > b.vip_service_fee){
                     return -1
@@ -275,17 +269,23 @@ export default function OrderDestination({ route }) {
 
         }
 
-        if(rangeValue){
-            filteredArray.sort(compare)
+        switch (rangeValue.toLowerCase()) {
+            case 'order_created_date':
+               const currDate = new Date().getTime().toFixed(0)
+                filteredArray = filterOrderData.filter(function (item) {
+                    return currDate >= item.order_created_date?.$date?.$numberLong
+                });
+                setFilterOrderData(filteredArray)
+                break;
+            default:
+                filteredArray.sort(compare)
+                break;
         }
 
-        filteredArray.forEach(item => {
-            console.log(item?.name + '' + item?.product_price)
-        });
-
-
+      
         setFilterOrderData(filteredArray)
-        setShowFilter(false)
+        setShowFilter(!showFilter)
+
         
     }
 
