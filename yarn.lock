@@ -1355,6 +1355,11 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
+"@nartc/react-native-barcode-mask@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@nartc/react-native-barcode-mask/-/react-native-barcode-mask-1.2.0.tgz#e01ab43f1fa848d73121c27d3675c2d6557d670f"
+  integrity sha512-QXawZlaQz+QQ6Jrg4AEgrCXxsYltLZ89sxJXyt36pDRnT122aoK0/84m2dORd29V+/22BjwceXDZePayqXDaRA==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -1572,6 +1577,11 @@
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-2.0.2.tgz#ba8b40f560ead8d014740d1cdea970b33f19312e"
   integrity sha512-tTNXRCgnhJBu79mulQwzabXRpDqfh/uaDqfHVpvF0nX4NTpolpy6mvTRiFg7eWFPGRArsnZz1EYp6rHfJWGgEA==
+
+"@react-native-community/image-editor@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/image-editor/-/image-editor-2.3.0.tgz#8ac6c3691fd2c762d2abeb84c01a3b201bac3b1e"
+  integrity sha512-+UJY8WkTkfSkjoU5blQnEI7tTg11jJLoM+YojjiQpEopUaRlYQU4SZ9Zd6F6wWfvc9bjvIeMY6FlKuESK/q4fQ==
 
 "@react-native-community/masked-view@^0.1.11":
   version "0.1.11"

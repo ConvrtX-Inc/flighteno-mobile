@@ -20,7 +20,7 @@ export default function Transactions() {
 
     useFocusEffect(
         React.useCallback(() => {
-            var obj = {
+            var obj = { 
                 admin_id: currentUser._id
             }
             dispatch(GetMyOrders(obj, token))

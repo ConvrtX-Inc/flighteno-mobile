@@ -286,7 +286,7 @@ export default function UrlData({ route }) {
                 {/* custom Picker end */}
                 <Image
                     style={styles.productImg}
-                    // resizeMode='stretch'
+                    resizeMode='contain'
                     source={{uri: data.product_image}}
                 />
                 <TextBold style={styles.subHeading}>{data.name}</TextBold>

@@ -5,10 +5,12 @@ import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 import { color } from '../../../Utility/Color';
 import { styles } from './styles';
+import ImageEditor from "@react-native-community/image-editor";
 
 export default function KYCSelectIDCameraScreen ({navigation,route}){
 
     const cameraRef = useRef()
+    const photoRef = useRef()
 
     const cameraImg = require('../../../images/switchCamera.png')
     const sendImg = require('../../../images/sendWhite.png')
@@ -21,6 +23,7 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
     const [isRetake, setRetake] = useState(true)
 
     const [type,setType] = useState('back')
+    const windowWidth = Dimensions.get('window').width
     
 
     const onSwitchTap = () => {
@@ -51,11 +54,18 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
 
     const onSendTap = () => {
 
-        if(isFrontID){
-            navigation.navigate('KYCSelectID', {frontImg:  photo})
-        }else{
-            navigation.navigate('KYCSelectID', {backImg: photo})
-        }
+        // if(isFrontID){
+        //     navigation.navigate('KYCSelectID', {frontImg:  photo})
+        // }else{
+        //     navigation.navigate('KYCSelectID', {backImg: photo})
+        // }
+        ImageEditor.cropImage(photo,{
+            offset:{ x:0, y:0},
+            size:  { width: windowWidth - 24 /1.5 , height:251/2   },
+            resizeMode:'contain'
+        }).then((url) => {
+            setPhoto(url)
+        })
        
     }
 
@@ -92,7 +102,7 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
             >
                 <View style={{...StyleSheet.absoluteFill}}>
                     <View style={styles.container}>
-                        <Image source={cameraFrameImg} style={styles.cameraFrame} />
+                        <Image ref={photoRef} source={cameraFrameImg} style={styles.cameraFrame} />
                     </View>
 
                     <View style={{paddingBottom:32,paddingTop:24, backgroundColor:'rgba(67,67,67,0.8)'}}>
@@ -103,7 +113,7 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
                 </View>
             </RNCamera>
                 :
-                <Image source={{uri: photo}} style={{flex:1}}/>
+                <Image ref={photoRef} source={{uri: photo}} style={{flex:1}}/>
                 }
                 
             </View>
