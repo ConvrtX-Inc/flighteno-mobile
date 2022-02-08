@@ -216,7 +216,7 @@ export default function Chattravelereler({ route }) {
     }
 
     function getOfferBodyB(order) {
-        return addSpaces('Order No:', false) + order.orderDetail._id + '\n\n' +
+        return addSpaces('Order No: ', false) + order.orderDetail._id + '\n\n' +
             addSpaces('Order Price:') + order.orderDetail.product_price + '\n' +
             addSpaces('Estimate Delivery Fee:') + order.offer.offerPrice + '\n' +
             addSpaces('VIP Service Fee:') + order.orderDetail.vip_service_fee + '\n' +
@@ -258,8 +258,24 @@ export default function Chattravelereler({ route }) {
                 setMessages([...messages])
                 socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message1, sender_status: currentProfile, status: "offer", order_id: route.params.orderDetail._id });
                 socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message2, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id });
-            })
+            });
 
+            // Fix for https://team-1634092271346.atlassian.net/browse/FLIGHT-22
+            var message1 = {
+                _id: Math.floor(Math.random() * 1000000),
+                text: getOfferBodyA(route.params),
+                createdAt: new Date(),
+                user: currentChatUser,
+            }
+            var message2 = {
+                _id: Math.floor(Math.random() * 1000000),
+                text: getOfferBodyB(route.params),
+                createdAt: new Date(),
+                user: currentChatUser,
+            }
+            messages.push(message1)
+            messages.push(message2)
+            setMessages([...messages])
         }
         if (route.params.currentStatus == "message") {
             route.params.chatHistory.forEach(element => {
