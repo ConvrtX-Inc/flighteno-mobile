@@ -79,6 +79,8 @@ export default function VerifyCode({ route }) {
         const form_data = new FormData()
         form_data.append("phoneNumber", cellNoParam)
 
+        console.log(cellNoParam)
+
         dispatch(verificationCodeAction(
             form_data,
             () => {

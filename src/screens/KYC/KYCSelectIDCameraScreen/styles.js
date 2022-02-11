@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         // justifyContent:'center'
     },
     content:{
-      height:392,
+      height:232,
       backgroundColor:color.backgroundColor,
       overflow:'hidden'
     },

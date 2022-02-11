@@ -19,13 +19,15 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
 
     const isFrontID = route.params.isFront
 
+    const windowWidth = Dimensions.get('window').width
     const [photo,setPhoto] = useState('')
     const [isRetake, setRetake] = useState(true)
+    const [imgWidth, setImgWidth] = useState(windowWidth)
+    const [imgHeight, setImgHeight] = useState(windowWidth/2)
 
     const [type,setType] = useState('back')
-    const windowWidth = Dimensions.get('window').width
     
-
+    
     const onSwitchTap = () => {
         if(type === 'front'){
             setType('back')
@@ -41,7 +43,16 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
             const data = await cameraRef.current.takePictureAsync(options)
             const source = data?.uri
 
-            setPhoto(source)
+
+            Image.getSize(source,(width, height) => {
+                ImageEditor.cropImage(source, {
+                    offset: {x:960, y:8},
+                    size: {width: width/1.5  , height: height/1.4  },
+                    resizeMode:'contain',
+                }).then((url) => {
+                     setPhoto(url) 
+                 })
+             })
         }
 
         setRetake(false)
@@ -53,19 +64,12 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
     }
 
     const onSendTap = () => {
-
-        // if(isFrontID){
-        //     navigation.navigate('KYCSelectID', {frontImg:  photo})
-        // }else{
-        //     navigation.navigate('KYCSelectID', {backImg: photo})
-        // }
-        ImageEditor.cropImage(photo,{
-            offset:{ x:0, y:0},
-            size:  { width: windowWidth - 24 /1.5 , height:251/2   },
-            resizeMode:'contain'
-        }).then((url) => {
-            setPhoto(url)
-        })
+       
+        if(isFrontID){
+            navigation.navigate('KYCSelectID', {frontImg:  photo})
+        }else{
+            navigation.navigate('KYCSelectID', {backImg: photo})
+        }
        
     }
 
@@ -80,13 +84,14 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
                 }
               
                 <TouchableOpacity style={[styles.btnWrapper, {alignItems:'flex-end', marginRight:18}]} onPress={onSendTap}>
-                   <Image source={sendImg} style={styles.sendImg} />
+                   <Image source={sendImg} style={styles.sendImg}  />
                 </TouchableOpacity>
             </View>
             
 
             <View style={styles.content}>
                 {isRetake ?
+                <>
                     <RNCamera 
                         ref={cameraRef}
                         style={{...StyleSheet.absoluteFill}} 
@@ -104,23 +109,26 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
                     <View style={styles.container}>
                         <Image ref={photoRef} source={cameraFrameImg} style={styles.cameraFrame} />
                     </View>
-
-                    <View style={{paddingBottom:32,paddingTop:24, backgroundColor:'rgba(67,67,67,0.8)'}}>
-                        <TextBold style={styles.txtCameraTitle}>Permanent Resident Card {isFrontID ? "(Front)" : "(Back)"} </TextBold>
-                        <TextMedium style={styles.txtCameraDesc}>-Place your ID within the frame</TextMedium>
-                        <TextMedium style={styles.txtCameraDesc}>-Please make sure it is clear and has no glare</TextMedium>
-                    </View>
                 </View>
+                
             </RNCamera>
+               
+            </>
                 :
-                <Image ref={photoRef} source={{uri: photo}} style={{flex:1}}/>
+                photo ? <Image ref={photoRef} source={{uri: photo}} style={{flex:1, height:80}}/>: null
                 }
                 
             </View>
+
+             <View style={{position:'relative',paddingBottom:32,paddingTop:24, backgroundColor:'rgba(67,67,67,0.8)'}}>
+                    <TextBold style={styles.txtCameraTitle}>Permanent Resident Card {isFrontID ? "(Front)" : "(Back)"} </TextBold>
+                    <TextMedium style={styles.txtCameraDesc}>-Place your ID within the frame</TextMedium>
+                    <TextMedium style={styles.txtCameraDesc}>-Please make sure it is clear and has no glare</TextMedium>
+                </View>
             
             {isRetake ?
             <TouchableOpacity onPress={takePicture}>
-                <View style={{alignItems:'center', marginTop:40}}>
+                <View style={{alignItems:'center', marginTop:24}}>
                     <Image source={cameraPressImg} style={{width: 84, height:84}} />
                 </View>
             </TouchableOpacity>
