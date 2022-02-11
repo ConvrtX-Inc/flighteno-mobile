@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, ImageBackground, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, ImageBackground, FlatList, Platform, PermissionsAndroid } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { styles } from '../../../Utility/Styles';
 import InputImag from '../../../components/InputFieldWithImage';
@@ -13,9 +13,12 @@ import { GetDataFromUrl } from '../../../redux/actions/BuyerOrder'
 import { UrlTile } from 'react-native-maps';
 import { IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold'
+import Geolocation from 'react-native-geolocation-service';
+import Geocoder from 'react-native-geocoder';
+
 
 var windowWidth = Dimensions.get('window').width;
-{/* Fix for FLIGHT-46 */}
+{/* Fix for FLIGHT-46 */ }
 export default function HomeScreen() {
 
     const navigation = useNavigation();
@@ -25,23 +28,65 @@ export default function HomeScreen() {
     const [productName, setProductName] = useState('');
     const [urlLoading, setUrlLoading] = useState(false)
     const { myRecentOrders, trendingOrders } = useSelector(({ tripsRed }) => tripsRed)
-
+    const [currentAddress, setCurrentAddress] = useState();
     const goToDetails = (order) => {
         navigation.navigate("OrderDetails", { order: order })
     }
 
     useFocusEffect(
         React.useCallback(() => {
-        dispatch({type: IS_LOADING, isloading: false})
+            dispatch({ type: IS_LOADING, isloading: false })
             dispatch(GetTrendingOrders(token))
             var obj = {
                 admin_id: currentUser._id
             }
+            getCurrentAddress();
             dispatch(GetMyRecentOrders(obj, token))
             return () => {
             };
+
+
         }, [])
     );
+
+
+    async function getCurrentAddress() {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+                console.log("granted", granted)
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+
+                    Geolocation.getCurrentPosition(
+                        (position) => {
+                            const coordinates = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            }
+                            console.log("COORS", coordinates)
+                            Geocoder.geocodePosition(coordinates).then(res => {
+                                setCurrentAddress(res[0]);
+                            })
+                        },
+                        (error) => {
+                            console.log("error:", error)
+                            Toast.show({
+                                type: 'error',
+                                text2: "Please enable your device's location",
+                            })
+                            return
+                        },
+                        {
+                            enableHighAccuracy: false,
+                            timeout: 2000,
+                        }
+                    )
+                }
+            } catch (err) {
+                console.warn(err)
+            }
+        }
+    }
 
     function getFlag(name) {
         return countriesFlags.find(element => element.name == name)?.flag
@@ -116,15 +161,18 @@ export default function HomeScreen() {
                                 />
                             </TouchableOpacity>
 
-                            <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginLeft: (windowWidth * 15) / 100, }}>
-                                <Image
-                                    style={styles.locationImg}
-                                    resizeMode='stretch'
-                                    source={require('../../../images/location.png')}
-                                />
-                                <TextMedium style={styles.dubaiTxt}> {currentCountry.city}, </TextMedium>
-                                <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentCountry.country_name}</TextMedium>
-                            </View>
+                            {
+                                currentAddress ?
+                                    <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginLeft: (windowWidth * 15) / 100, }}>
+                                        <Image
+                                            style={styles.locationImg}
+                                            resizeMode='stretch'
+                                            source={require('../../../images/location.png')}
+                                        />
+                                        <TextMedium style={styles.dubaiTxt}> {currentAddress?.locality}, </TextMedium>
+                                        <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentAddress?.country}</TextMedium>
+                                    </View> : null
+                            }
 
                         </View>
 
@@ -214,7 +262,7 @@ export default function HomeScreen() {
                                     </View>
                                     <View style={{ marginLeft: index == 0 ? '1%' : 0 }}>
 
-                                        <TextBold numberOfLines={3} style={{ fontSize: 15,  marginTop: 5, width: (windowWidth * 28) / 100 }}>{item.name}</TextBold>
+                                        <TextBold numberOfLines={3} style={{ fontSize: 15, marginTop: 5, width: (windowWidth * 28) / 100 }}>{item.name}</TextBold>
 
                                         <View style={{ flexDirection: 'row' }}>
                                             <TextMedium style={styles.countryFlag}>{getFlag(item.product_buy_country_name)}</TextMedium>
