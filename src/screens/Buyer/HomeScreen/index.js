@@ -44,7 +44,7 @@ export default function HomeScreen() {
     );
 
     function getFlag(name) {
-        return countriesFlags.find(element => element.name == name).flag
+        return countriesFlags.find(element => element.name == name)?.flag
     }
 
     const goToUrl = () => {
