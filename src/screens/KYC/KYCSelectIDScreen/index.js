@@ -60,10 +60,11 @@ export default function  KYCSelectIDScreen ({navigation,route}){
             })
      
             imgToBase64(backPicture).then((data) => {
-                 setImgBackBase64(data)
+                setImgBackBase64(data)
             })
 
             navigation.navigate('KYCSendVerification', { kyc: kycForm })
+         
 
         }
 

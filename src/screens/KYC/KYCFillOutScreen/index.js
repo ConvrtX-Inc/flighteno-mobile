@@ -8,16 +8,17 @@ import { styles } from './styles';
 import { useRef, useState  } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DatePickerField from '../../../components/DatePicker';
-import moment from 'moment';
 import { useCallback } from 'react';
 import Toast from 'react-native-toast-message';
 import TextBold from '../../../components/atoms/TextBold';
+import moment from 'moment';
 
 export default function KYCFillOutScreen ({navigation,route}){
 
-    const phoneInput = useRef()
-    const { kyc } = route.params
+    // const phoneInput = useRef()
+    const { kyc } = route?.params
 
+    const phoneInput = React.useRef()
 
     const [firstName, setFirstName] = useState('')
     const [middleName, setMiddleName] =  useState('')
@@ -28,7 +29,9 @@ export default function KYCFillOutScreen ({navigation,route}){
     
     const [birthdate, setBirthDate] = useState(new Date())
     const [birthDateValue, setBirthDateValue] = useState("MM/DD/YYYY");
-    const [cellno, setCellNo] = useState('');
+
+    const [formattedPhone, setFormattedPhone] = useState('');
+    const [phoneVal, setPhoneVal] = useState('')
     
 
     const [onDatePickerShow, setDatePickerShow] = useState(false)
@@ -57,18 +60,35 @@ export default function KYCFillOutScreen ({navigation,route}){
         kyc.addressLine1 = addressLine1
         kyc.addressLine2 = addressLine2
         kyc.birthdate = birthdate
-        kyc.phone = cellno
+        kyc.phone = formattedPhone
 
-        if(firstName === '' || middleName === '' || lastName ===''  || addressLine1 === '' || addressLine2 === '' || cellno === ''){
+       
+
+        // const checkValid = phoneInput.current?.isValidNumber(cellno)
+        const isValidNum = phoneInput.current?.isValidNumber(phoneVal)
+        
+
+        if(firstName === '' || middleName === '' || lastName ===''  || addressLine1 === '' || addressLine2 === '' || formattedPhone === '' ){
+
             Toast.show({
                 type: 'error',
                 text1: 'Alert!',
                 text2: "Fill up all the required fields",
             })
-        }else{
-            navigation.navigate('KYCTermsPrivacy', {kyc: kyc})
-        }
 
+        }else{
+                        
+            if(!isValidNum){
+                Toast.show({
+                    type: 'error',
+                    text2: "Phone number not valid",
+                })
+            }else{
+               navigation.navigate('KYCTermsPrivacy', {kyc: kyc})
+            }
+           
+        }
+        
     
     }
 
@@ -122,11 +142,10 @@ export default function KYCFillOutScreen ({navigation,route}){
                     <View>
                         <PhoneInput
                             ref={phoneInput}
-                            defaultValue={cellno}
+                            defaultValue={phoneVal}
                             defaultCode="AU"
-                            onChangeFormattedText={(text) => {
-                                setCellNo(text)
-                            }}
+                            onChangeFormattedText={setFormattedPhone}
+                            onChangeText = {setPhoneVal}
                             containerStyle={styles.phoneContainer}
                             textInputStyle={styles.phoneInput}
                             textContainerStyle={styles.phoneTextContainer}
@@ -153,13 +172,13 @@ export default function KYCFillOutScreen ({navigation,route}){
                         testID='dateTimePicker'
                         value={birthdate ?? new Date()}
                         mode='date'
+                        maximumDate={moment().subtract(18,'years').toDate()}
                         display='calendar'
                         // onChange={onDatePickerChange}
                         onChange={({nativeEvent}) => {
                             // console.log(nativeEvent)
                             onDatePickerChange(nativeEvent)
                         }}
-                        // minimumDate={new Date()}
                     />
                 )}
 
