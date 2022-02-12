@@ -45,7 +45,7 @@ export default function OrderDetails({ route }) {
 
         // fix for flight-45
         var obj = {
-            admin_id: order?.traveler_id[0]?.traveler_id
+            admin_id: order?.admin_id
         }
     
       
@@ -54,7 +54,7 @@ export default function OrderDetails({ route }) {
             setTraveler(data)
         }))
 
-        console.log(order)
+       
 
     }, [])
 
@@ -118,7 +118,7 @@ export default function OrderDetails({ route }) {
                     />
                 </TouchableOpacity>
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order Details</TextBold>
-                {order?.traveler_id[0]?.traveler_id?
+                {order?.admin_id?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
                             source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
@@ -282,11 +282,11 @@ export default function OrderDetails({ route }) {
                             />
                         }
                     </TouchableOpacity>
-                    {!isComplete && order.status == "accepted" ?
+                    {/* {!isComplete && order.status == "accepted" ? */}
                         <TextMedium style={Styles.bottomText}>
                             PLEASE COORDINATE WITH THE{'\n'}TRAVELER TO RECEIVE THE PRODUCT
                         </TextMedium>
-                        : null}
+                        {/* : null} */}
                 </View>
                 {isComplete && !rated ?
                     <View style={{ marginVertical: 20 }}>

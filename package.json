@@ -54,6 +54,7 @@
     "react-native-maps": "^0.28.0",
     "react-native-media-controls": "^2.3.0",
     "react-native-modal-datetime-picker": "^13.0.1",
+    "react-native-modal-picker": "^0.0.16",
     "react-native-pager-view": "^5.4.9",
     "react-native-permissions": "^3.0.5",
     "react-native-phone-number-input": "^2.1.0",

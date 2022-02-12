@@ -15,7 +15,7 @@ export default function Settings() {
         <View style={styles.ScreenCss}>
 
             <ScrollView>
-                {console.log(currentUser.signup_source)}
+               
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
                         style={styles.backImg}
@@ -26,9 +26,7 @@ export default function Settings() {
 
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Settings</TextBold>
                 <View style={{ height: 30 }} />
-                {currentUser.signup_source
-                    ? null
-                    :
+             
                     <View>
                         <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={styles.menuItem}>
                             <Image source={require('../images/person.png')}
@@ -45,8 +43,8 @@ export default function Settings() {
                             <TextMedium style={styles.menuItemText}>Change Password</TextMedium>
                         </TouchableOpacity>
                     </View>
-                }
-                {currentProfile == 'traveler' ?
+                
+               
                     <TouchableOpacity onPress={() => navigation.navigate("SetupStripe")} style={styles.menuItem}>
                         <Image source={require('../images/payment.png')}
                             style={styles.menuIcon}
@@ -54,13 +52,20 @@ export default function Settings() {
                         />
                         <TextMedium style={styles.menuItemText}>Payment</TextMedium>
                     </TouchableOpacity>
-                    : null}
+                
                 <TouchableOpacity onPress={() => navigation.navigate("Notifications")} style={styles.menuItem}>
                     <Image source={require('../images/notification.png')}
                         style={styles.menuIcon}
                         resizeMode="contain"
                     />
                     <TextMedium style={styles.menuItemText}>Notifications</TextMedium>
+                </TouchableOpacity>
+                <TouchableOpacity >
+                    <Image source={require('../images/notification.png')}
+                        style={styles.menuIcon}
+                        resizeMode="contain"
+                    />
+                    <TextMedium style={styles.menuItemText}>Change Language</TextMedium>
                 </TouchableOpacity>
             </ScrollView>
         </View>
