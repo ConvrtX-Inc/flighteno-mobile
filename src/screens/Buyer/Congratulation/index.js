@@ -127,7 +127,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
+                        <TextBold style={styles.loginInputHeading}>Flighteno cost</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
