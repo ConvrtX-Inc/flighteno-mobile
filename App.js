@@ -41,8 +41,6 @@ const { store, persistor } = configureStore();
 //   // any_custom_type: () => { }
 // };
 
-
-
 function App() {
   return (
     <Provider store={store} >

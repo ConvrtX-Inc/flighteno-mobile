@@ -7,6 +7,7 @@ import { styles } from './styles';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 import { imgToBase64 } from '../../../Utility/Utils';
+import { useTranslation } from 'react-i18next';
 
 
 export default function KYCSelfieVerificationCameraScreen({navigation, route}){
@@ -15,6 +16,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
     const [canDetectFaces,setCanDetectFaces] = useState(false)
     const [cameraProgress, setCameraProgress] = useState(0)
     const { kyc } = route.params
+    const {t} = useTranslation()
 
     const facesDetected = ({faces}) => {
         const rightEye = faces[0]?.rightEyeOpenProbability;
@@ -50,15 +52,15 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
     return (
         <ScrollView style={styles.container}>
             <View>
-                <TextBold style={styles.titleTxt}>Selfie Verification</TextBold>
+                <TextBold style={styles.titleTxt}>{t('kyc.selfieVer')}</TextBold>
 
                 <View  style={styles.stepsIndicator}>
                     <StepsIndicator currentPosition={2}/>
                 </View>
 
                 <View style={styles.scanContainer}>
-                    <TextBold style={styles.scanTxt}>Scan your face</TextBold>
-                    <TextMedium style={styles.blinkTxt}>Please Blink</TextMedium>
+                    <TextBold style={styles.scanTxt}>{t('kyc.scanFace')}</TextBold>
+                    <TextMedium style={styles.blinkTxt}>{t('kyc.pleaseBlink')}</TextMedium>
 
                     <View style={styles.cameraView}>
                         <AnimatedCircularProgress
@@ -97,7 +99,6 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
                                   
                                         // onFacesDetected={canDetectFaces ? facesDetected : null}
                                         onFacesDetected={canDetectFaces? facesDetected : null}
-                                    
                                         onFaceDetectionError={error => console.log('FDError', error)}
                                     />
                                 )

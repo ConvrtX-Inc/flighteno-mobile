@@ -4,17 +4,20 @@ import TextExtraBold from '../../../components/atoms/TextExtraBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 import ButtonLarge from '../../../components/ButtonLarge';
 import { styles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export default function KYCIntroScreen({navigation}){
 
+    const {t} = useTranslation()
+
     const onGetStartedTap = () => {
-        Alert.alert("Important","To ensure a smooth process, please read the following reminders: \n\n - Prepare your valid id\n - Know your citizenship id number", 
+        Alert.alert(t('kyc.important'),"To ensure a smooth process, please read the following reminders: \n\n - Prepare your valid id\n - Know your citizenship id number", 
         [{ 
-            text:'Ok, Got It', 
+            text:t('kyc.okGot'), 
             onPress: ()=> {
                 navigation.navigate('KYCSelectID')
         }, }, 
-        {text:'Cancel'}])
+        {text:t('kyc.cancel')}])
     }
 
 
@@ -23,8 +26,8 @@ export default function KYCIntroScreen({navigation}){
             <View style={styles.container}>
                 <View style={styles.content}>
                     <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
-                    <TextExtraBold style={styles.title}>Your Account{"\n"}is not yet verified</TextExtraBold>
-                    <TextMedium style={styles.desc}>Complete your profile to unlock{"\n"}more flighteno feature</TextMedium>
+                    <TextExtraBold style={styles.title}>{t('kyc.accountNotVer')}</TextExtraBold>
+                    <TextMedium style={styles.desc}>{t('kyc.completeProf')}</TextMedium>
                     <Image source={require('../../../images/kycVerification.png')}  style={styles.kycImage} />
                 </View>
             </View> 
@@ -32,7 +35,7 @@ export default function KYCIntroScreen({navigation}){
              
             <View>
                 <View style={styles.btnGetStarted}>
-                    <ButtonLarge loader={false} title="Get Started" onPress={onGetStartedTap} />
+                    <ButtonLarge loader={false} title={t('kyc.getStarted')} onPress={onGetStartedTap} />
                 </View> 
             </View>
         </> 

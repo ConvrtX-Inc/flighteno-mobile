@@ -5,10 +5,14 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import MyTravel from '../MyTravel';
 import OrderDestination from '../OrderDestination';
 import { color } from '../../../Utility/Color';
+import { useTranslation } from 'react-i18next';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function TopTabTraveller() {
+
+    const {t} = useTranslation()
+
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -21,8 +25,8 @@ export default function TopTabTraveller() {
                 activeTintColor: '#E12082'
             }}
         >
-            <Tab.Screen name="My Travel" component={MyTravel} />
-            <Tab.Screen name="Orders to your Destination" component={OrderDestination} />
+            <Tab.Screen name={t('travelHome.myTravel')} component={MyTravel} />
+            <Tab.Screen name={t('travelHome.ordersDestination')} component={OrderDestination} />
         </Tab.Navigator>
 
     );

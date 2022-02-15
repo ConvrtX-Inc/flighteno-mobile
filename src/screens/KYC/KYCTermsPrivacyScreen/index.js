@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, Text, View } from 'react-native';
 import { RNS3 } from 'react-native-aws3';
 import Toast from 'react-native-toast-message';
@@ -16,6 +17,7 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     // const { token } = useSelector(({authRed}) => authRed)
     const { kyc } = route.params
+    const {t} = useTranslation()
 
     
     const onAcceptTap = () => {
@@ -76,7 +78,7 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
 
     return(
         <ScrollView style={styles.container}>
-            <TextBold style={styles.titleTxt}>Terms and Conditions</TextBold>
+            <TextBold style={styles.titleTxt}>{t('common.termsConditions')}</TextBold>
             <Text style={styles.subTitleTxt}>By using Flighteno™, you agree to our Terms and Condition and Privacy Policy</Text>
             <Text style={styles.termsTxt}>By tapping accept and continue , I agree to the Terms and Condition and Privacy Policy and i am giving flighteno my concent to use my personal data to: facilitate my transaction and avail of products and services; industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.

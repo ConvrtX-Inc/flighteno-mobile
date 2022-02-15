@@ -12,6 +12,7 @@ import moment from 'moment';
 import { CREATE_ORDER_DETAIL } from '../../../redux/constants';
 import { formatAmount } from '../../../Utility/Utils';
 import TextBold from '../../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -21,6 +22,7 @@ var destinationCities = ""
 export default function SelectCountry({ route }) {
 
     const navigation = useNavigation();
+    const {t} = useTranslation()
     const { loading, currentCountry } = useSelector(({ authRed }) => authRed)
     const { buyerOrderData } = useSelector(({ buyerOrderRed }) => buyerOrderRed)
     const dispatch = useDispatch()
@@ -162,10 +164,10 @@ export default function SelectCountry({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Select country</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('buyerHome.selCountry')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Buy Product From</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.buyProdFrom')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -222,7 +224,7 @@ export default function SelectCountry({ route }) {
 
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Deliver Product To</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.delProdTo')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -279,7 +281,7 @@ export default function SelectCountry({ route }) {
 
 
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%' }]}>Delivery date</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%' }]}>{t('buyerHome.delDate')}</TextBold>
 
 
                 <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
@@ -310,7 +312,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
+                        <TextBold style={styles.loginInputHeading}>{t('buyerHome.orderPrice')}</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
@@ -324,7 +326,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
+                        <TextBold style={styles.loginInputHeading}>{t('track.estimatedDelFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -354,7 +356,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
+                        <TextBold style={styles.loginInputHeading}>Flighteno {t('track.cost')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -369,7 +371,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
+                        <TextBold style={styles.loginInputHeading}>{t('track.tax')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -383,7 +385,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.textLarge}>Total</TextBold>
+                        <TextBold style={styles.textLarge}>{t('track.total')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -396,7 +398,7 @@ export default function SelectCountry({ route }) {
 
                 <View style={{ marginTop: 40, marginBottom: 20 }}>
                     <ButtonLarge
-                        title="Continue"
+                        title={t('buyerHome.continue')}
                         loader={loading}
                         onPress={() => handleSubmit()}
                     />

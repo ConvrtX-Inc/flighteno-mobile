@@ -7,11 +7,13 @@ import { styles } from '../Utility/Styles'
 import moment from 'moment';
 import {getTickets} from '../redux/actions/Auth'
 import TextBold from '../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 const windowWidth = Dimensions.get('window').width;
 
 export default function SupportTicket({ navigation }) {
     const { loading, supportTickets, currentUser, token } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
     useEffect(() => {
         var data = {
@@ -28,7 +30,7 @@ export default function SupportTicket({ navigation }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Support</TextBold>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('support.support')}</TextBold>
             <View style={[Styles.userDataPortion, { borderBottomWidth: 0, }]}>
                 <FlatList
                     data={supportTickets}
@@ -79,7 +81,7 @@ export default function SupportTicket({ navigation }) {
             </View>
             <View style={{ position: "absolute", bottom: 20, width: '100%' }}>
                 <ButtonLarge
-                    title="Send New Ticket"
+                    title={t('support.sendNewTicket')}
                     onPress={() => navigation.navigate("Support")}
                     loader={loading}
                 />

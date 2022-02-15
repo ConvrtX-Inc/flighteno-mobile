@@ -17,6 +17,7 @@ import { IS_LOADING } from '../redux/constants';
 import axios from 'axios'
 import { BASE_URL } from '../BASE_URL';
 import TextBold from '../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -33,6 +34,7 @@ export default function Support({ route }) {
     const [videos, setVideos] = useState([]);
     const [imagesUri, setImagesUri] = useState([])
     const [videosUri, setVideosUri] = useState([])
+    const {t} = useTranslation()
 
     const chooseImages = () => {
         let options = {
@@ -244,7 +246,7 @@ export default function Support({ route }) {
                         source={require('../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Support</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('support.support')}</TextBold>
 
 
                 <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Subject</TextBold>

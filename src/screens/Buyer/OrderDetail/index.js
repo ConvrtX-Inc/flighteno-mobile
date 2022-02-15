@@ -15,6 +15,7 @@ import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
@@ -23,6 +24,7 @@ export default function OrderDetail() {
     const navigation = useNavigation();
     const { loading, token } = useSelector(({ authRed }) => authRed)
     const { buyerOrderData } = useSelector(({ buyerOrderRed }) => buyerOrderRed)
+    const {t} = useTranslation()
     const dispatch = useDispatch()
 
 
@@ -91,7 +93,7 @@ export default function OrderDetail() {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order details</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('buyerHome.orderDetails')}</TextBold>
 
                 {global.productImage.url ?
                     <Image
@@ -119,9 +121,9 @@ export default function OrderDetail() {
 
                     <View style={styles.productDescInerFirst}>
 
-                        <TextBold style={styles.productAtrributeHead}>Product Type</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>Weight</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>Quantity</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.productType')}</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.weight')}</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.quantity')}</TextBold>
 
                     </View>
                     <View style={styles.productDescInerSecond}>
@@ -133,8 +135,8 @@ export default function OrderDetail() {
                 </View>
 
 
-                <TextBold style={[styles.productAtrributeHead, { alignSelf: 'center', marginTop: 20 }]}>Allow Traveler to:</TextBold>
-                <TextMedium style={[styles.productAtrribute, { alignSelf: 'center' }]}>(If Applicable)</TextMedium>
+                <TextBold style={[styles.productAtrributeHead, { alignSelf: 'center', marginTop: 20 }]}>{t('buyerHome.allowTravelerTo')}:</TextBold>
+                <TextMedium style={[styles.productAtrribute, { alignSelf: 'center' }]}>({t('buyerHome.ifApplicable')})</TextMedium>
 
 
                 <View style={styles.agreeTermContainer}>
@@ -170,7 +172,7 @@ export default function OrderDetail() {
 
                 <View style={{ marginBottom: 30, marginTop: 26 }}>
                     <ButtonLarge
-                        title="Continue"
+                        title={t('buyerHome.continue')}
                         loader={loading}
                         onPress={() => handleSubmit()}
                     />

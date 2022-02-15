@@ -1,4 +1,6 @@
+import { use } from 'i18next';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Image } from 'react-native';
 import { ScrollView, Text, View } from 'react-native';
 import TextBold from '../../../components/atoms/TextBold';
@@ -11,6 +13,8 @@ export default function KYCSelfieVerificationScreen ({navigation, route}){
 
     const { kyc } = route.params
 
+    const {t} = useTranslation()
+
 
     const onNextTap = () => {
         navigation.navigate('KYCSelfieVerificationCamera', { kyc: kyc })
@@ -21,14 +25,14 @@ export default function KYCSelfieVerificationScreen ({navigation, route}){
             
             <View style={styles.container}>
                 <View style={styles.content}>
-                    <TextBold style={styles.titleTxt}>Selfie Verification</TextBold>
+                    <TextBold style={styles.titleTxt}>{t('kyc.selfieVer')}</TextBold>
 
                     <View  style={styles.stepsIndicator}>
                         <StepsIndicator currentPosition={2}/>
                     </View>
 
-                    <TextBold style={styles.titleTxt}>Prepare to scan your face</TextBold>
-                    <TextMedium style={styles.desc}>Make sure you are in a well-lit room{"\n"} and hold the phone as shown in the picture</TextMedium>
+                    <TextBold style={styles.titleTxt}>{t('kyc.prepareToScan')}</TextBold>
+                    <TextMedium style={styles.desc}>{t('kyc.scanInstruct')}</TextMedium>
 
                     <Image source={require('../../../images/selfieVerification.png')} style={styles.accountVerImg}/>  
                 </View>
@@ -37,7 +41,7 @@ export default function KYCSelfieVerificationScreen ({navigation, route}){
               
 
             <View style={styles.btnSubmit}>
-                <ButtonLarge title='Next' loader={false} onPress={onNextTap}/>
+                <ButtonLarge title={t('kyc.next')} loader={false} onPress={onNextTap}/>
             </View>              
            
         </>

@@ -266,7 +266,7 @@ export function GetTrendingOrders(token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
-            console.log(Response)
+     
             dispatch({ type: TRENDING_ORDERS, data: Response.data.data })
         })
     }
