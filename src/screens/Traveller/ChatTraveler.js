@@ -212,13 +212,13 @@ export default function Chattravelereler({ route }) {
     }
 
     function getOfferBodyA(order) {
-        return `Preffered Delivery Date:\n\n${order.offer.deliveryDate} \n\nNotes:\n\n${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
+        return `Prefered Delivery Date:\n\n${order.offer.deliveryDate} \n\nNotes:\n\n${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
     }
 
     function getOfferBodyB(order) {
         return addSpaces('Order No: ', false) + order.orderDetail._id + '\n\n' +
             addSpaces('Order Price:') + order.orderDetail.product_price + '\n' +
-            addSpaces('Estimate Delivery Fee:') + order.offer.offerPrice + '\n' +
+            addSpaces('Estimated Delivery Fee:') + order.offer.offerPrice + '\n' +
             addSpaces('VIP Service Fee:') + order.orderDetail.vip_service_fee + '\n' +
             addSpaces('Flighteno cost:') + order.orderDetail.flighteno_cost + '\n' +
             addSpaces('Tax:') + order.orderDetail.tax + '\n\n' +

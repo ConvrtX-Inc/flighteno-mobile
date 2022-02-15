@@ -206,7 +206,7 @@ export default function OrderDetailT({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                            <Text style={styles.loginInputHeading}>Flighteno cost</Text>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
