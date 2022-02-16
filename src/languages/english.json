@@ -32,7 +32,37 @@
             "accountVerify":"Account Verification",
             "switchTo":"Switch To",
             "ordersByFlight": "Orders By Flight",
-            "hello": "Hello"
+            "hello": "Hello",
+            "viewAll": "View All",
+            "myReviews": "My Reviews",
+            "logout": "Logout",
+            "settings": "Settings",
+            "profile": "Profile",
+            "changePass": "Change Password",
+            "payment": "Payment",
+            "notifications": "Notifications",
+            "changeLanguage": "Change Language",
+            "editProfile": "Edit Profile",
+            "fullName": "Full Name",
+            "save":"Save",
+            "oldPass":"Old Password",
+            "enterNewPass": "Enter new password",
+            "confirmPass": "Confirm password",
+            "newPass": "New Password",
+            "noNotifications":"There are no notifications",
+            "updateOrder": "Update Order",
+            "orderCompleted": "Order Completed",
+            "uploadPicProd": "Upload picture of product",
+            "uploadReceipt":"Upload receipt",
+            "scanQR": "Scan QR Code",
+            "scanCode": "Scan your Code",
+            "completeOrder":"Complete Order",
+            "okGotIt": "OK. Got it",
+            "register": "Register",
+            "good":"Good",
+            "morning":"Morning",
+            "afternoon":"Afternoon",
+            "evening":"Evening"
         },
         "track": {
             "transactions": "Transactions",
@@ -40,6 +70,7 @@
             "completed": "Completed",
             "cancelled":"Cancelled",
             "my":"My",
+            "accepted":"Accepted",
             "pending":"Pending",
             "orders": "Orders",
             "orderDetails": "Order Details",
@@ -55,7 +86,9 @@
             "prodReceipt":"Product Receipt",
             "pleaseCoord":"Please coordinate with the \ntraveller to receive the product",
             "cancelOrder":"Cancel Order",
-            "rateTransaction":"Rate Transaction"
+            "rateTransaction":"Rate Transaction",
+            "orderByFlight": "Orders By Flight",
+            "allOrders": "All Orders"
         },
         "messages":{
             "inbox":"Inbox",
@@ -95,7 +128,8 @@
             "manualInfo": "Manual information",
             "price":"Price",
             "enterDesc":"Enter Description",
-            "uploadPic":"Upload picture" 
+            "uploadPic":"Upload picture",
+            "city": "City"
         },
         "support":{
             "support": "Support",
@@ -152,8 +186,7 @@
             "delFee": "Delivery Fee",
             "recentAdded":"Recent added",
             "applyFilter": "Apply Filter",
-            "date": "Date"
-            
+            "date": "Date"   
         }
     }
 }

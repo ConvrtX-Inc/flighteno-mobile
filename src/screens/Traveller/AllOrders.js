@@ -10,6 +10,8 @@ import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Entypo'
 import { GetTravelerOrders } from '../../redux/actions/Trips';
 import CardOrderUser from '../../components/CardOrderUser';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -24,19 +26,19 @@ var storeNamesList = [
 var ordersList = [
     {
         id: '1',
-        name: "All Orders",
+        name: t('travel.allOrders'),
         value: 'all',
         checked: true
     },
     {
         id: '2',
-        name: "Completed",
+        name: t('track.completed'),
         value: 'complete',
         checked: false
     },
     {
         id: '3',
-        name: "Pending",
+        name: t('track.accepted'),
         value: 'accepted',
         checked: false
     },
@@ -52,6 +54,7 @@ export default function AllOrders() {
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const { travlerOrders } = useSelector(({ tripsRed }) => tripsRed)
     const [ordersByTravler, setOrderByTravler] = useState(travlerOrders)
+    const {t} = useTranslation()
 
     useEffect(() => {
         setOrderByTravler(travlerOrders.reverse())
@@ -158,13 +161,13 @@ export default function AllOrders() {
 
                 <View style={Styles.header}>
 
-                    <Text style={[styles.HeadingText, { marginTop: 0 }]}>All Orders</Text>
+                    <Text style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</Text>
                     {!showFilter ?
                         <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
                             <Image source={require('../../images/filter.png')}
                                 style={styles.filterImage}
                             />
-                            <Text style={{ fontWeight: 'bold', fontSize: 15, color: color.userNameHomeColor }}>Filter</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</Text>
                         </TouchableOpacity>
                         : null}
 

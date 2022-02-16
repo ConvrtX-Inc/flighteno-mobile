@@ -157,7 +157,7 @@ function Profile() {
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <TextMedium style={styles.menuItemText}>My Reviews</TextMedium>
+                            <TextMedium style={styles.menuItemText}>{t('common.myReviews')}</TextMedium>
                         </TouchableOpacity>
                         : null}
                     <TouchableOpacity onPress={() => changeProfile()} style={styles.menuItem}>
@@ -172,7 +172,7 @@ function Profile() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Logout</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.logout')}</TextMedium>
                     </TouchableOpacity>
                 </ScrollView>
                 : null}

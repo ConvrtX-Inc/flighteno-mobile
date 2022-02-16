@@ -185,7 +185,7 @@ export default function LoginScreen() {
                     />
                 </View>
 
-                <TextBold  style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.login')}</TextBold>
+                <TextBold  style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.login')}</TextBold>
                 {/* <TextExtrabold>Hello</TextExtrabold> */}
                 {/* Buton fb gmail Login */}
                 <View style={styles.fbBtnContainer}>
@@ -208,7 +208,7 @@ export default function LoginScreen() {
 
 
                 {/* TextInputs For Login */}
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.email')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
                 <Input
                     placeholder="myemail@flighteno.com"
                     onChangeText={text => setEmail(text)}
@@ -216,7 +216,7 @@ export default function LoginScreen() {
                     secureTextEntry={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.password')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.password')}</TextBold>
                 <Input
                     placeholder="*********"
                     onChangeText={text => setPassword(text)}

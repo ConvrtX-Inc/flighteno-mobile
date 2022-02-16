@@ -5,6 +5,7 @@ import { styles } from '../../Utility/Styles';
 import { color } from '../../Utility/Color';
 import moment from 'moment';
 import CardOrderUser from '../../components/CardOrderUser';
+import { useTranslation } from 'react-i18next';
 
 var storeNamesList = [
     {
@@ -17,6 +18,7 @@ var storeNamesList = [
 export default function OrdersSpecificCountry({ route }) {
     const { flightBaseOrders, date } = route.params
     const navigation = useNavigation();
+    const {t} = useTranslation()
 
     return (
         <View style={styles.ScreenCss}>
@@ -30,7 +32,7 @@ export default function OrdersSpecificCountry({ route }) {
 
             <View style={Styles.header}>
 
-                <Text style={[styles.HeadingText, { marginTop: 0 }]}>Orders - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
+                <Text style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.orders')} - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
 
             </View>
             <FlatList

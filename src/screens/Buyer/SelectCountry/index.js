@@ -205,7 +205,7 @@ export default function SelectCountry({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
-                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
+                        <TextMedium style={styles.countryNameCSS}>{t('buyerHome.city')}</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}
@@ -262,7 +262,7 @@ export default function SelectCountry({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
+                        <TextMedium style={styles.countryNameCSS}>{t('buyerHome.city')}</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}

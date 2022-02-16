@@ -6,10 +6,12 @@ var windowWidth = Dimensions.get('window').width;
 import { useSelector, useDispatch } from 'react-redux'
 import TextBold from '../components/atoms/TextBold';
 import TextMedium from '../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
 export default function Settings() {
     const navigation = useNavigation();
     const { currentProfile, currentUser, token } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
 
     return (
         <View style={styles.ScreenCss}>
@@ -24,7 +26,7 @@ export default function Settings() {
                     />
                 </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Settings</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.settings')}</TextBold>
                 <View style={{ height: 30 }} />
              
                     <View>
@@ -33,14 +35,14 @@ export default function Settings() {
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <TextMedium style={styles.menuItemText}>Profile</TextMedium>
+                            <TextMedium style={styles.menuItemText}>{t('common.profile')}</TextMedium>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")} style={styles.menuItem}>
                             <Image source={require('../images/setting.png')}
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <TextMedium style={styles.menuItemText}>Change Password</TextMedium>
+                            <TextMedium style={styles.menuItemText}>{t('common.changePass')}</TextMedium>
                         </TouchableOpacity>
                     </View>
                 
@@ -50,7 +52,7 @@ export default function Settings() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Payment</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.payment')}</TextMedium>
                     </TouchableOpacity>
                 
                 <TouchableOpacity onPress={() => navigation.navigate("Notifications")} style={styles.menuItem}>
@@ -58,14 +60,14 @@ export default function Settings() {
                         style={styles.menuIcon}
                         resizeMode="contain"
                     />
-                    <TextMedium style={styles.menuItemText}>Notifications</TextMedium>
+                    <TextMedium style={styles.menuItemText}>{t('common.notifications')}</TextMedium>
                 </TouchableOpacity>
                 <TouchableOpacity >
                     <Image source={require('../images/notification.png')}
                         style={styles.menuIcon}
                         resizeMode="contain"
                     />
-                    <TextMedium style={styles.menuItemText}>Change Language</TextMedium>
+                    <TextMedium style={styles.menuItemText}>{t('common.changeLanguage')}</TextMedium>
                 </TouchableOpacity>
             </ScrollView>
         </View>

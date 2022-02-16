@@ -7,6 +7,8 @@ import ButtonLarge from '../components/ButtonLarge';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { UpdatePassword } from '../redux/actions/Auth';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -18,6 +20,7 @@ export default function ChangePassword() {
     const [oldPassword, setOldPassword] = useState("")
     const [password, setPassword] = useState("");
     const [cPassword, setCPassword] = useState("")
+    const {t} = useTranslation()
 
     const passwordChange = () => {
         if (oldPassword == "") {
@@ -81,29 +84,29 @@ export default function ChangePassword() {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Change Password</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.changePass')}</TextBold>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Old password</Text>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.oldPass')}</Text>
 
                 <Input
-                    placeholder="Old Password"
+                    placeholder={t('common.oldPass')}
                     onChangeText={text => setOldPassword(text)}
                     value={oldPassword}
                     secureTextEntry={false}
                 />
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter new password</Text>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.enterNewPass')}</Text>
 
                 <Input
-                    placeholder="New Password"
+                    placeholder={t('common.newPass')}
                     onChangeText={text => setPassword(text)}
                     value={password}
                     secureTextEntry={true}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Confirm password</Text>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.confirmPass')}</Text>
 
                 <Input
-                    placeholder="Confirm Password"
+                    placeholder={t('common.confirmPass')}
                     onChangeText={text => setCPassword(text)}
                     value={cPassword}
                     secureTextEntry={true}
@@ -111,7 +114,7 @@ export default function ChangePassword() {
 
                 <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
                     <ButtonLarge
-                        title="Save"
+                        title={t('common.save')}
                         loader={loading}
                         onPress={passwordChange}
                     />

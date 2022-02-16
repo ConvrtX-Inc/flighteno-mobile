@@ -28,6 +28,8 @@ export default function EditOffer({ route }) {
     const [notes, setNotes] = useState("")
     const [orderDetail, setOrderDetail] = useState({})
     const [orderDetailId, setOrderDetailId] = useState("")
+
+    
     useEffect(() => {
         ordersToDestination.forEach(element => {
             if (element._id == route.params.ID) {

@@ -12,6 +12,8 @@ import { UpdateProfile } from '../redux/actions/Auth';
 import { generateUID } from '../Utility/Utils';
 import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../redux/constants';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -24,6 +26,7 @@ export default function EditProfile() {
     const [image, setImage] = useState(null)
     const[phone,setPhone] = useState("")
     const phoneInput = useRef()
+    const {t} = useTranslation()
     
     const chooseFile = () => {
         let options = {
@@ -127,7 +130,7 @@ export default function EditProfile() {
                         />
                     </TouchableOpacity>
 
-                    <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Edit Profile</Text>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.editProfile')}</TextBold>
 
                     <TouchableOpacity onPress={chooseFile} style={Styles.profileButton}>
                         <Image
@@ -135,7 +138,7 @@ export default function EditProfile() {
                             style={styles.profileImage} />
                     </TouchableOpacity>
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Full Name</Text>
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.fullName')}</Text>
 
                     <Input
                         placeholder={fullName}
@@ -143,7 +146,7 @@ export default function EditProfile() {
                         value={fullName}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</Text>
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.email')}</Text>
 
                     <Input
                         placeholder="myemail@flighteno.com"
@@ -153,7 +156,7 @@ export default function EditProfile() {
                         editable={false}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</Text>
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.phoneNum')}</Text>
                    
                     <PhoneInput
                         ref={phoneInput}
@@ -174,7 +177,7 @@ export default function EditProfile() {
 
                     <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
                         <ButtonLarge
-                            title="Save"
+                            title={t('common.save')}
                             loader={loading}
                             onPress={updateProfile}
                         />

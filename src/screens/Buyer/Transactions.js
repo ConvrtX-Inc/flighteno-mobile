@@ -70,7 +70,7 @@ export default function Transactions() {
 
                     <View style={{ marginLeft: '5%' }}>
 
-                        <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.transactions')}</TextBold>
+                        <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.transactions')}</TextBold>
 
                     </View>
 

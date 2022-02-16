@@ -40,7 +40,7 @@ export default function MyOrdersList({ route }) {
                 />
             </TouchableOpacity>
           
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>
                 {t('track.my')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')} {t('track.orders')}
             </TextBold>
             <SearchInput

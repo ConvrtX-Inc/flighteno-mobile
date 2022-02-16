@@ -26,13 +26,13 @@ export default function SelectProfile() {
     useEffect(() => {
         var hours = moment().format('HH')
         if (hours >= 12 && hours <= 17) {
-            setGreetings("Afternoon")
+            setGreetings(t('common.afternoon'))
         }
         else if (hours >= 17) {
-            setGreetings("Evening")
+            setGreetings(t('common.evening'))
         }
         else {
-            setGreetings("Morning")
+            setGreetings(t('common.morning'))
         }
     }, []);
 
@@ -66,7 +66,7 @@ export default function SelectProfile() {
                                     resizeMode='stretch'
                                     source={require('../../images/clap.png')}
                                 />
-                                <TextBold style={styles.goodMorningTxt}> Good {greetings}</TextBold>
+                                <TextBold style={styles.goodMorningTxt}> {t('common.good')} {greetings}</TextBold>
                             </View>
                             <TextBold style={styles.selectProfileH}>{t('common.selectProfile')}</TextBold>
                         </View>

@@ -18,6 +18,7 @@ import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../../redux/constants';
 import ViewImages from '../../components/ViewImages'
 import Clipboard from '@react-native-clipboard/clipboard';
+import { useTranslation } from 'react-i18next';
 var windowWidth = Dimensions.get('window').width;
 
 var productUri = ""
@@ -37,6 +38,7 @@ export default function PendingOrderDetailT({ route }) {
     const [showProductPic, setShowProductPic] = useState(false)
     const [showReceiptPic, setShowReceiptPic] = useState(false)
     const [showProduct, setSHowProduct] = useState(false) 
+    const {t} = useTranslation()
 
     const chooseFile = (type) => {
         let options = {
@@ -257,7 +259,7 @@ export default function PendingOrderDetailT({ route }) {
                     />
                 </TouchableOpacity>
                 <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
-                    {currentOrder.status == "accepted" ? "Update Order" : "Order Completed"}
+                    {currentOrder.status == "accepted" ? t('common.updateOrder') : t('common.orderCompleted')}
                 </Text>
 
                 <View style={Styles.listView}>
@@ -281,7 +283,7 @@ export default function PendingOrderDetailT({ route }) {
                         </View>
                         <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</Text>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.from')}</Text>
                                 <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_buy_city_name}</Text>
                                 <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_buy_country_name}</Text>
                             </View>
@@ -290,7 +292,7 @@ export default function PendingOrderDetailT({ route }) {
                                 style={{ height: 60, width: 60 }}
                             />
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</Text>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.to')}</Text>
                                 <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_dilivery_city_name}</Text>
                                 <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_dilivery_country_name}</Text>
                             </View>
@@ -311,9 +313,9 @@ export default function PendingOrderDetailT({ route }) {
                     {currentOrder.url != "" ?
                         <View style={styles.productDesc}>
                             <View style={styles.productDescInerFirst}>
-                                <Text style={styles.productAtrributeHead}>Color</Text>
-                                <Text style={styles.productAtrributeHead}>Weight</Text>
-                                <Text style={styles.productAtrributeHead}>Condition</Text>
+                                <Text style={styles.productAtrributeHead}>{t('buyerHome.color')}</Text>
+                                <Text style={styles.productAtrributeHead}>{t('buyerHome.weight')}</Text>
+                                <Text style={styles.productAtrributeHead}>{t('buyerHome.condition')}</Text>
                             </View>
                             <View style={styles.productDescInerSecond}>
                                 <Text style={styles.productAtrribute}>Black/ Gray</Text>
@@ -345,7 +347,7 @@ export default function PendingOrderDetailT({ route }) {
 
 
                 <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                    Upload picture of product
+                   {t('common.uploadPicProd')}
                 </Text>
                 <TouchableOpacity
                     activeOpacity={currentOrder.status == "accepted" ? 0 : 1}
@@ -364,7 +366,7 @@ export default function PendingOrderDetailT({ route }) {
                     }
                 </TouchableOpacity>
                 <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                    Upload Receipt
+                    {t('common.uploadReceipt')}
                 </Text>
                 <TouchableOpacity
                     activeOpacity={currentOrder.status == "accepted" ? 0 : 1}
@@ -384,7 +386,7 @@ export default function PendingOrderDetailT({ route }) {
                 </TouchableOpacity>
                 {!showQrDetail && currentOrder.status == "accepted" ?
                     <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                        Scan QR Code
+                        {t('common.scanQR')}
                     </Text>
                     : null}
                 {!showQrDetail && currentOrder.status == "accepted" ?
@@ -407,7 +409,7 @@ export default function PendingOrderDetailT({ route }) {
                         <View style={styles.ordernumberStyle}>
 
                             <View style={styles.orderNumberIst}>
-                                <Text style={styles.loginInputHeading}>Order No.</Text>
+                                <Text style={styles.loginInputHeading}>{t('track.orderNo')}.</Text>
 
                             </View>
                             <View style={styles.orderNumberSecond}>
@@ -422,7 +424,7 @@ export default function PendingOrderDetailT({ route }) {
                         <View style={styles.orderBillStyle}>
 
                             <View style={styles.billLeft}>
-                                <Text style={styles.loginInputHeading}>Order price</Text>
+                                <Text style={styles.loginInputHeading}>{t('track.orderPrice')}</Text>
                             </View>
 
                             <View style={styles.billRight}>
@@ -436,7 +438,7 @@ export default function PendingOrderDetailT({ route }) {
                         <View style={styles.orderBillStyle}>
 
                             <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                <Text style={styles.loginInputHeading}>Estimated Delivery Fee</Text>
+                                <Text style={styles.loginInputHeading}>{t('track.estimatedDelFee')}</Text>
                             </View>
 
                             <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -451,7 +453,7 @@ export default function PendingOrderDetailT({ route }) {
                         <View style={styles.orderBillStyle}>
 
                             <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                                <Text style={styles.loginInputHeading}>{t('track.vipServFee')}</Text>
                             </View>
 
                             <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -465,7 +467,7 @@ export default function PendingOrderDetailT({ route }) {
                         <View style={styles.orderBillStyle}>
 
                             <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                                <Text style={styles.loginInputHeading}>Flighteno {t('track.cost')}</Text>
                             </View>
 
                             <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -494,7 +496,7 @@ export default function PendingOrderDetailT({ route }) {
                         <View style={styles.orderBillStyle}>
 
                             <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                <Text style={styles.textLarge}>Total</Text>
+                                <Text style={styles.textLarge}>{t('track.total')}</Text>
                             </View>
 
                             <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -513,12 +515,12 @@ export default function PendingOrderDetailT({ route }) {
                         cameraStyle={{ height: 300, width: '50%', alignSelf: 'center', borderRadius: 10 }}
                         topContent={
                             <Text style={[styles.loginInputHeading, { marginVertical: 10 }]}>
-                                Scan your Code
+                                {t('common.scanCode')}
                             </Text>
                         }
                         bottomContent={
                             <TouchableOpacity onPress={() => setShowQr(false)} style={Styles.buttonTouchable}>
-                                <Text style={Styles.buttonText}>OK. Got it!</Text>
+                                <Text style={Styles.buttonText}>{t('common.okGotIt')}!</Text>
                             </TouchableOpacity>
                         }
                     />
@@ -528,12 +530,12 @@ export default function PendingOrderDetailT({ route }) {
                         {!showQrDetail ?
                             <ButtonTraveller
                                 loader={loading}
-                                title="Save"
+                                title={t('common.save')}
                                 onPress={() => uploadImages()}
                             />
                             :
                             <ButtonLarge
-                                title="Complete Order"
+                                title={t('common.completeOrder')}
                                 loader={loading}
                                 onPress={() => orderCompletion()}
                             />

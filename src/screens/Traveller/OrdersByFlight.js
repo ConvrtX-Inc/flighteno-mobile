@@ -9,6 +9,7 @@ import moment from 'moment'
 import { UserTrips } from '../../redux/actions/Trips';
 import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -27,6 +28,7 @@ export default function OrdersByFlight() {
     const dispatch = useDispatch()
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const { tripsData } = useSelector(({ tripsRed }) => tripsRed)
+    const {t} = useTranslation()
 
     useFocusEffect(
         React.useCallback(() => {
@@ -49,9 +51,9 @@ export default function OrdersByFlight() {
 
             <View style={Styles.header}>
 
-                <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>Orders By Flight</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.orderByFlight')}</TextBold>
                 <TouchableOpacity onPress={() => navigation.navigate("AllOrders")}>
-                    <TextSemiBold style={Styles.viewAll}>View All</TextSemiBold>
+                    <TextSemiBold style={Styles.viewAll}>{t('common.viewAll')}</TextSemiBold>
                 </TouchableOpacity>
 
             </View>
@@ -70,7 +72,7 @@ export default function OrdersByFlight() {
                             >
                                 <View style={styles.travelerListInnerView}>
                                     <View>
-                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>From</TextSemiBold>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.from')}</TextSemiBold>
                                         <TextBold style={styles.travelListValue}>{item.city}</TextBold>
                                         <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                     </View>
@@ -79,7 +81,7 @@ export default function OrdersByFlight() {
                                         style={{ height: 60, width: 60 }}
                                     />
                                     <View>
-                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>To</TextSemiBold>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.to')}</TextSemiBold>
                                         <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
                                         <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                     </View>
@@ -87,7 +89,7 @@ export default function OrdersByFlight() {
                                 <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
                                 <View style={styles.travelerListInnerView}>
                                     <View>
-                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>Date</TextSemiBold>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.date')}</TextSemiBold>
                                         <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                     </View>
                                 </View>
