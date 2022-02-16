@@ -97,10 +97,10 @@ export default function  KYCSelectIDScreen ({navigation,route}){
                     showTickIcon={false}
                 />
             
-                <TextBold style={[styles.inputLabel,styles.idNoField]}>{t('kyc.idNo')}.</TextBold>
+                <TextBold style={[styles.inputLabel,styles.idNoField]}>{t('kyc.IdNo')}.</TextBold>
 
                 <View style={styles.inputIdNo}>
-                    <InputText placeholder='CADL-1231231233' value={idNo} onChangeText={setIdNo} />
+                    <InputText placeholder='CADL-1231231233' maxLength={14} value={idNo} onChangeText={setIdNo} />
                 </View>
                 
 

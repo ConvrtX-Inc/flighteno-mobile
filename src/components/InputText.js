@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { color } from '../Utility/Color';
 
-const InputText = ({placeholder, value, onChangeText, secureTextEntry, editable, keyboardType, style}) => {
+const InputText = ({maxLength,placeholder, value, onChangeText, secureTextEntry, editable, keyboardType, style}) => {
     return (
         <TextInput 
             style={[styles.input, style]}
@@ -13,7 +13,7 @@ const InputText = ({placeholder, value, onChangeText, secureTextEntry, editable,
             secureTextEntry={secureTextEntry}
             editable={editable}
             keyboardType={keyboardType ? "phone-pad" : "default"}
-            
+            maxLength={maxLength}
         />
     );
 }

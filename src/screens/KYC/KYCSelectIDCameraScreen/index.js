@@ -46,8 +46,8 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
 
             Image.getSize(source,(width, height) => {
                 ImageEditor.cropImage(source, {
-                    offset: {x:960, y:8},
-                    size: {width: width/1.5  , height: height/1.4  },
+                    offset: {x:960, y:0},
+                    size: {width: width/1.1  , height: height/1.4  },
                     resizeMode:'contain',
                 }).then((url) => {
                      setPhoto(url) 
