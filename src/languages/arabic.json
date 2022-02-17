@@ -5,6 +5,8 @@
             "travelText":"السفر مع \nFlighteno\nواكسب"
         },
         "common":{
+            "home":"مسكن",
+            "track":"مسار",
             "termsConditions": "الأحكام والشروط",
             "iAgreeTerms": "أوافق على الشروط والأحكام",
             "skip": "يتخطى",

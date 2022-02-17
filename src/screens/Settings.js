@@ -125,7 +125,8 @@ export default function Settings() {
                             i18n.changeLanguage(item?.value)
                             storeCurrentLanguage(item?.value)
                         }}
-                        placeholder='Change Language'
+                        placeholder={t('common.changeLanguage')}
+                        placeholderStyle={{textAlign:'left'}}
                         style={{borderWidth:0}}
                         onPress={() => {setOpen(!isOpen)}}
                         onClose={() => {setOpen(!isOpen)}}

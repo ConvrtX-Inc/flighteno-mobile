@@ -5,6 +5,8 @@
             "travelText":"Travel with \nFlighteno\nand Earn"
         },
         "common":{
+            "home":"Home",
+            "track":"Track",
             "termsConditions": "Terms and Conditions",
             "iAgreeTerms": "I agree with terms & conditions",
             "skip": "Skip",

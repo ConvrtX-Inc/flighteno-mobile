@@ -19,6 +19,7 @@ import AllOrders from '../screens/Traveller/AllOrders';
 import OrdersSpecificCountry from '../screens/Traveller/OrdersSpecificCountry';
 import PendingOrderDetailT from '../screens/Traveller/PendingOrderDetailT';
 import ChatScreen from '../screens/Buyer/ChatScreen';
+import { useTranslation } from 'react-i18next';
 
 const Stack = createStackNavigator();
 
@@ -70,8 +71,10 @@ function TravelerStack() {
 
 const Tab = createBottomTabNavigator();
 const BottomTab = ({ route }) => {
-    const { currentProfile } = useSelector(({ authRed }) => authRed)
     
+    const { currentProfile } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
+
     return (
         <Tab.Navigator
             // initialRouteName="Home"
@@ -103,6 +106,7 @@ const BottomTab = ({ route }) => {
                             source={require('../images/homeFlighteno.png')}
                         />
                     ),
+                    tabBarLabel: t('common.home')
                 }}
             />
             <Tab.Screen
@@ -116,6 +120,7 @@ const BottomTab = ({ route }) => {
                             source={require('../images/messages.png')}
                         />
                     ),
+                    tabBarLabel: t('common.messages')
                 }}
             />
             <Tab.Screen
@@ -129,6 +134,7 @@ const BottomTab = ({ route }) => {
                             source={require('../images/truckcrop.png')}
                         />
                     ),
+                    tabBarLabel: t('common.track')
                 }}
             />
             <Tab.Screen
@@ -142,7 +148,8 @@ const BottomTab = ({ route }) => {
                             source={require('../images/profile.png')}
                         />
                     ),
-                    tabBarVisible: false
+                    tabBarVisible: false,
+                    tabBarLabel: t('common.profile')
                 }}
             />
         </Tab.Navigator>
