@@ -93,7 +93,7 @@ export default function OrderDetail() {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('buyerHome.orderDetails')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.orderDetails')}</TextBold>
 
                 {global.productImage.url ?
                     <Image
@@ -121,9 +121,9 @@ export default function OrderDetail() {
 
                     <View style={styles.productDescInerFirst}>
 
-                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.productType')}</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.weight')}</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.quantity')}</TextBold>
+                        <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.productType')}</TextBold>
+                        <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.weight')}</TextBold>
+                        <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
 
                     </View>
                     <View style={styles.productDescInerSecond}>

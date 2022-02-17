@@ -4,11 +4,14 @@ import italian from './italian.json'
 import french from './french.json'
 import arabic from './arabic.json'
 import { initReactI18next } from 'react-i18next'
+import { useState } from 'react'
+
+
 
 i18next
 .use(initReactI18next).init({
     compatibilityJSON: 'v3',
-    lng:'ar',
+    lng:'en',
     resources:{
         en: english,
         it: italian,
@@ -20,5 +23,7 @@ i18next
     },
 
 })
+
+
 
 export default  i18next;

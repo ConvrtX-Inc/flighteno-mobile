@@ -130,7 +130,7 @@ export default function EditProfile() {
                         />
                     </TouchableOpacity>
 
-                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.editProfile')}</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.editProfile')}</TextBold>
 
                     <TouchableOpacity onPress={chooseFile} style={Styles.profileButton}>
                         <Image
@@ -138,7 +138,7 @@ export default function EditProfile() {
                             style={styles.profileImage} />
                     </TouchableOpacity>
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.fullName')}</Text>
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.fullName')}</Text>
 
                     <Input
                         placeholder={fullName}
@@ -146,7 +146,7 @@ export default function EditProfile() {
                         value={fullName}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.email')}</Text>
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</Text>
 
                     <Input
                         placeholder="myemail@flighteno.com"
@@ -156,7 +156,7 @@ export default function EditProfile() {
                         editable={false}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.phoneNum')}</Text>
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</Text>
                    
                     <PhoneInput
                         ref={phoneInput}

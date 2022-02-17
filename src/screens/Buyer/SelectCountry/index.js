@@ -164,10 +164,10 @@ export default function SelectCountry({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('buyerHome.selCountry')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.selCountry')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.buyProdFrom')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('buyerHome.buyProdFrom')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -205,7 +205,7 @@ export default function SelectCountry({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
-                        <TextMedium style={styles.countryNameCSS}>{t('buyerHome.city')}</TextMedium>
+                        <TextMedium style={[styles.countryNameCSS,{textAlign:'left'}]}>{t('buyerHome.city')}</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}
@@ -224,7 +224,7 @@ export default function SelectCountry({ route }) {
 
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.delProdTo')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.delProdTo')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -262,7 +262,7 @@ export default function SelectCountry({ route }) {
                 <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
 
                     <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                        <TextMedium style={styles.countryNameCSS}>{t('buyerHome.city')}</TextMedium>
+                        <TextMedium style={[styles.countryNameCSS, {textAlign:'left'}]}>{t('buyerHome.city')}</TextMedium>
 
                         <Image
                             style={[styles.countryDropImg, { marginLeft: 16 }]}
@@ -281,7 +281,7 @@ export default function SelectCountry({ route }) {
 
 
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%' }]}>{t('buyerHome.delDate')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.delDate')}</TextBold>
 
 
                 <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
@@ -312,7 +312,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <TextBold style={styles.loginInputHeading}>{t('buyerHome.orderPrice')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.orderPrice')}</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
@@ -326,7 +326,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>{t('track.estimatedDelFee')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -341,7 +341,7 @@ export default function SelectCountry({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
+                            <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -371,7 +371,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>{t('track.tax')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -385,7 +385,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.textLarge}>{t('track.total')}</TextBold>
+                        <TextBold style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>

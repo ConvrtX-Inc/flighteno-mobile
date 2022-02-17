@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 import { sendEditOffer } from '../../redux/actions/Chat';
 import { formatAmount } from '../../Utility/Utils';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -28,6 +29,7 @@ export default function EditOffer({ route }) {
     const [notes, setNotes] = useState("")
     const [orderDetail, setOrderDetail] = useState({})
     const [orderDetailId, setOrderDetailId] = useState("")
+    const {t} = useTranslation()
 
     
     useEffect(() => {
@@ -86,16 +88,16 @@ export default function EditOffer({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Edit offer</Text>
+                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('travelHome.editOffer')}</Text>
                 {orderDetail == {} ? null
                     :
                     <View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '5%', marginTop: 20 }}>
-                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>Estimated Delivery Fee</Text>
+                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5,textAlign:'left' }]}>{t('track.estimatedDelFee')}</Text>
                             <Text style={Styles.priceText}>{formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}</Text>
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Your Delivery Fee Offer</Text>
+                            <Text style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.yourDelFeeOffer')}</Text>
                         </View>
                         <Input
                             placeholder="$90.00"
@@ -107,12 +109,12 @@ export default function EditOffer({ route }) {
                         <View style={styles.ordernumberStyle}>
 
                             <View style={[styles.orderNumberIst, { paddingLeft: '5%' }]}>
-                                <Text style={styles.loginInputHeading}>Order No.</Text>
+                                <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderNo')}.</Text>
 
                             </View>
                             <View style={styles.orderNumberSecond}>
 
-                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify',textAlign:'left' }]}>
                                     {orderDetailId}
                                 </Text>
                             </View>
@@ -123,7 +125,7 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={styles.billLeft}>
-                                    <Text style={styles.loginInputHeading}>Order price</Text>
+                                    <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.orderPrice')}</Text>
                                 </View>
 
                                 <View style={styles.billRight}>
@@ -137,7 +139,7 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.loginInputHeading}>Estimated Delivery Fee</Text>
+                                    <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</Text>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -152,7 +154,7 @@ export default function EditOffer({ route }) {
                                 <View style={styles.orderBillStyle}>
 
                                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                        <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                                        <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</Text>
                                     </View>
 
                                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -167,7 +169,7 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                                    <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>Flightneno {t('track.cost')}</Text>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -182,7 +184,7 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.loginInputHeading}>Tax</Text>
+                                    <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</Text>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -196,7 +198,7 @@ export default function EditOffer({ route }) {
                             <View style={[styles.orderBillStyle, { marginTop: 20 }]}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.textLarge}>Total</Text>
+                                    <Text style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</Text>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -207,7 +209,7 @@ export default function EditOffer({ route }) {
 
                             </View>
                             <View style={{ alignSelf: 'center', width: '90%', marginTop: 30 }}>
-                                <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Preferred Delivery Date</Text>
+                                <Text style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</Text>
                             </View>
                             <Pressable style={{ marginTop: 5 }} onPress={() => setShow(!show)}>
                                 <View style={styles.pickerVIew}>
@@ -225,7 +227,7 @@ export default function EditOffer({ route }) {
                                 </View>
                             </Pressable>
                             <View style={{ alignSelf: 'center', width: '90%', }}>
-                                <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Notes</Text>
+                                <Text style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.notes')}</Text>
                             </View>
                             <InputMulti
                                 placeholder="Let's meet in the morning"
@@ -235,7 +237,7 @@ export default function EditOffer({ route }) {
                             <View style={{ marginTop: 80, marginBottom: 20 }}>
                                 <ButtonTraveller
                                     loader={loading}
-                                    title="Edit Offer"
+                                    title={t('travelHome.editOffer')}
                                     onPress={() => sendOffer()}
                                 />
                             </View>

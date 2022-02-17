@@ -58,7 +58,7 @@ export default function MyOrdersList({ route }) {
                 }
                 keyExtractor={item => item.id}
                 ListEmptyComponent={<TextBold style={styles.emptyListText}>
-                    There are no {orderStatus == "Pending" ? "Pending" : orderStatus == "Completed" ? "Completed" : "Cancelled"} orders!
+                    {t('common.thereAreNo')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')}  {t('track.orders').toLowerCase()}!
                 </TextBold>}
             />
         </View>

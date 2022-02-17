@@ -66,7 +66,7 @@ export default function OrderDetailT({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('track.orderDetails')}</Text>
+                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('track.orderDetails')}</Text>
                 <View style={Styles.listView}>
                     <View style={Styles.upperView}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -88,18 +88,18 @@ export default function OrderDetailT({ route }) {
                         </View>
                         <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.from')}</Text>
-                                <Text style={[styles.travelListValue, { color: 'black' }]}>{orderDetail.product_buy_city_name}</Text>
-                                <Text style={[styles.travelListTitle, { color: 'black' }]}>{orderDetail.product_buy_country_name}</Text>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</Text>
+                                <Text style={[styles.travelListValue, { color: 'black', textAlign:'left' }]}>{orderDetail.product_buy_city_name}</Text>
+                                <Text style={[styles.travelListTitle, { color: 'black', textAlign:'left' }]}>{orderDetail.product_buy_country_name}</Text>
                             </View>
                             <Image source={require("../../images/travel1.png")}
                                 resizeMode="contain"
                                 style={{ height: 60, width: 60 }}
                             />
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.to')}</Text>
-                                <Text style={[styles.travelListValue, { color: 'black' }]}>{orderDetail.product_dilivery_city_name}</Text>
-                                <Text style={[styles.travelListTitle, { color: 'black' }]}>{orderDetail.product_dilivery_country_name}</Text>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</Text>
+                                <Text style={[styles.travelListValue, { color: 'black', textAlign:'left' }]}>{orderDetail.product_dilivery_city_name}</Text>
+                                <Text style={[styles.travelListTitle, { color: 'black', textAlign:'left' }]}>{orderDetail.product_dilivery_country_name}</Text>
                             </View>
                         </View>
                     </View>
@@ -117,19 +117,19 @@ export default function OrderDetailT({ route }) {
                         </Text>
                         <View style={{ height: 20 }} />
                         <View style={Styles.propertView}>
-                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>{t('buyerHome.color')}</Text>
+                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5, textAlign:'left' }]}>{t('buyerHome.color')}</Text>
                             <Text style={Styles.priceText}>Black/gray</Text>
                         </View>
                         <View style={Styles.propertView}>
-                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>{t('buyerHome.weight')}</Text>
+                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5, textAlign:'left' }]}>{t('buyerHome.weight')}</Text>
                             <Text style={Styles.priceText}>{orderDetail.product_weight} Kg</Text>
                         </View>
                         <View style={Styles.propertView}>
-                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>{t('buyerHome.quantity')}</Text>
+                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5, textAlign:'left' }]}>{t('buyerHome.quantity')}</Text>
                             <Text style={Styles.priceText}>{orderDetail.quantity}</Text>
                         </View>
                         <View style={Styles.propertView}>
-                            <Text style={[Styles.userName, { marginLeft: 0, color: 'black', minWidth: '24%', marginRight: 5 }]}>{t('track.estimatedDelFee')}</Text>
+                            <Text style={[Styles.userName, { marginLeft: 0, color: 'black', minWidth: '24%', marginRight: 5, textAlign:'left' }]}>{t('track.estimatedDelFee')}</Text>
                             <Text style={Styles.priceText}>
                                 {formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}
                             </Text>
@@ -148,12 +148,12 @@ export default function OrderDetailT({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={[styles.orderNumberIst, { paddingLeft: '5%' }]}>
-                        <Text style={styles.loginInputHeading}>{t('track.orderNo')}}.</Text>
+                        <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderNo')}.</Text>
 
                     </View>
                     <View style={styles.orderNumberSecond}>
 
-                        <Text onLongPress={() => selectID(orderDetail._id)} style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <Text onLongPress={() => selectID(orderDetail._id)} style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', textAlign:'left'}]}>
                             {orderDetail._id}
                         </Text>
                     </View>
@@ -164,7 +164,7 @@ export default function OrderDetailT({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={styles.billLeft}>
-                            <Text style={styles.loginInputHeading}>{t('track.orderPrice')}</Text>
+                            <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderPrice')}</Text>
                         </View>
 
                         <View style={styles.billRight}>
@@ -178,7 +178,7 @@ export default function OrderDetailT({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={styles.loginInputHeading}>{t('track.estimatedDelFee')}</Text>
+                            <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</Text>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -193,7 +193,7 @@ export default function OrderDetailT({ route }) {
                         <View style={styles.orderBillStyle}>
 
                             <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                                <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</Text>
                             </View>
 
                             <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -208,7 +208,7 @@ export default function OrderDetailT({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={styles.loginInputHeading}>Flighteno {t('track.cost')}</Text>
+                            <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>Flighteno {t('track.cost')}</Text>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -223,7 +223,7 @@ export default function OrderDetailT({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={styles.loginInputHeading}>{t('track.tax')}</Text>
+                            <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</Text>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -237,7 +237,7 @@ export default function OrderDetailT({ route }) {
                     <View style={[styles.orderBillStyle, { marginTop: 20 }]}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={styles.textLarge}>{t('track.total')}</Text>
+                            <Text style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</Text>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>

@@ -258,10 +258,10 @@ export default function ManualProductInfo({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('buyerHome.manualInfo')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.manualInfo')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.productName')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productName')}</TextBold>
 
                 <Input
                     placeholder={name}
@@ -271,7 +271,7 @@ export default function ManualProductInfo({ route }) {
                     editable={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.productType')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
 
                 {/* custom Picker */}
 
@@ -301,7 +301,7 @@ export default function ManualProductInfo({ route }) {
                                 data={pickerValues}
                                 nestedScrollEnabled={true}
                                 renderItem={({ item, index }) =>
-                                    <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
+                                    <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1 }}>
                                         <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueFN(index)}>
                                             <View>
                                                 <Text style={styles.textSelected}>{item.option}</Text>
@@ -320,7 +320,7 @@ export default function ManualProductInfo({ route }) {
                 </View>
                 {/* custom Picker end */}
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.price')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.price')}</TextBold>
 
                 <Input
                     placeholder="Enter price (for eg: $10.00)"
@@ -334,7 +334,7 @@ export default function ManualProductInfo({ route }) {
 
                 <TextRegular style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextRegular>
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.tryVipServ')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextBold>
 
                 {/* custom Picker */}
 
@@ -382,7 +382,7 @@ export default function ManualProductInfo({ route }) {
                 </View>
                 {/* custom Picker end */}
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.vipServFee')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
 
                 <Input
                     placeholder="$50.00"
@@ -394,7 +394,7 @@ export default function ManualProductInfo({ route }) {
                 />
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.enterDesc')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterDesc')}</TextBold>
 
                 <InputMultiline
                     placeholder="Description"
@@ -445,7 +445,7 @@ export default function ManualProductInfo({ route }) {
                 </View>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.uploadPic')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.uploadPic')}</TextBold>
 
                 <TouchableOpacity style={{marginLeft: '5%', width: 100}} onPress={() => chooseFile()}>
 
@@ -471,7 +471,7 @@ export default function ManualProductInfo({ route }) {
 
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.prefDelDate')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
 
 
                 <Pressable onPress={() => showMode('date', 'date')}>
@@ -490,7 +490,7 @@ export default function ManualProductInfo({ route }) {
                 </Pressable>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.prefDelTime')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
 
                 <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     {/* <View style={styles.timePickerVIew}> */}
@@ -499,7 +499,7 @@ export default function ManualProductInfo({ route }) {
                     </TouchableOpacity>
                     {/* </View> */}
 
-                    <TextMedium>to</TextMedium>
+                    <TextMedium>{t('travelHome.to')}</TextMedium>
 
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'to')}>
                         {/* <View style={[styles.timePickerVIew, {width: '100%', paddingHorizontal: 0}]}> */}
@@ -551,7 +551,7 @@ export default function ManualProductInfo({ route }) {
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
 
-                        <TextBold style={styles.loginInputHeading}>{t('buyerHome.doYouNeedBox')}?</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.doYouNeedBox')}?</TextBold>
                         <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
                     </View>
                     <View style={styles.rightQuantityStyle}>

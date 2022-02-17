@@ -71,7 +71,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={styles.orderNumberIst}>
-                        <TextBold style={styles.loginInputHeading}>{t('track.orderNo')}.</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderNo')}.</TextBold>
 
                     </View>
                     <View style={styles.orderNumberSecond}>
@@ -86,7 +86,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <TextBold style={styles.loginInputHeading}>{t('track.orderPrice')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderPrice')}</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
@@ -100,7 +100,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>{t('track.estimatedDelFee')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -115,7 +115,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>{t('track.vipServFee')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -129,7 +129,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Flighteno {t('track.cost')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>Flighteno {t('track.cost')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -144,7 +144,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>{t('track.tax')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -158,7 +158,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.textLarge}>{t('track.total')}</TextBold>
+                        <TextBold style={[styles.textLarge,{textAlign:'left'}]}>{t('track.total')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>

@@ -50,6 +50,7 @@
             "confirmPass": "Confirm password",
             "newPass": "New Password",
             "noNotifications":"There are no notifications",
+            "noMessages": "There are no messages",
             "updateOrder": "Update Order",
             "orderCompleted": "Order Completed",
             "uploadPicProd": "Upload picture of product",
@@ -62,7 +63,21 @@
             "good":"Good",
             "morning":"Morning",
             "afternoon":"Afternoon",
-            "evening":"Evening"
+            "evening":"Evening",
+            "thereAreNo":"There are no",
+            "subject":"Subject",
+            "yourMessage":"Your Message",
+            "uploadPictures":"Upload pictures",
+            "uploadVideos":"Upload Videos",
+            "verifyCode": "Verify Code",
+            "didntRecCode":"Didn’t receive code",
+            "resend": "Resend",
+            "verCodeSentTo":"Verification code sent to",
+            "createNewPass":"Create new password",
+            "confirmNewPass": "Confirm new password",
+            "yourPasswordMust":"Your password must be different from previous used password",
+            "verifyPhone":"Verify phone"
+            
         },
         "track": {
             "transactions": "Transactions",
@@ -88,7 +103,9 @@
             "cancelOrder":"Cancel Order",
             "rateTransaction":"Rate Transaction",
             "orderByFlight": "Orders By Flight",
-            "allOrders": "All Orders"
+            "allOrders": "All Orders",
+            "inProgress": "In Progress",
+            "datePlaced": "Date Placed"
         },
         "messages":{
             "inbox":"Inbox",
@@ -163,7 +180,9 @@
             "bdate":"Birthdate",
             "phoneNum":"Phone number",
             "submit":"Submit",
-            "acceptContinue":"Accept and Continue"
+            "acceptContinue":"Accept and Continue",
+            "writeSubject":"Write subject here",
+            "whatWouldYouLike": "What would you like to tell us"
         },
         "travelHome":{
             "myTravel":"My Travel",
@@ -186,7 +205,14 @@
             "delFee": "Delivery Fee",
             "recentAdded":"Recent added",
             "applyFilter": "Apply Filter",
-            "date": "Date"   
+            "date": "Date",
+            "offerDetails":"Offer details",
+            "yourDelFeeOffer":"Your Delivery Fee Offer",
+            "notes":"Notes",
+            "sendToBuyer": "Send to Buyer",
+            "editOffer":"Edit Offer",
+            "accept":"Accept",
+            "rejectDeal": "Reject Deal"
         }
     }
 }

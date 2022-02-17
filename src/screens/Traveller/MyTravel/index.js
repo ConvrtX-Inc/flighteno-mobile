@@ -222,7 +222,7 @@ export default function MyTravel({ route }) {
         <View style={styles.ScreenCss}>
 
             <ScrollView>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('travelHome.travelFrom')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelFrom')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -282,7 +282,7 @@ export default function MyTravel({ route }) {
 
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('travelHome.travelTo')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelTo')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -418,7 +418,7 @@ export default function MyTravel({ route }) {
                                 >
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.from')}</TextSemiBold>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white",textAlign:'left' }]}>{t('travelHome.from')}</TextSemiBold>
                                             <TextBold style={styles.travelListValue}>{item.city}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                         </View>
@@ -427,7 +427,7 @@ export default function MyTravel({ route }) {
                                             style={{ height: 60, width: 60 }}
                                         />
                                         <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.to')}</TextSemiBold>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.to')}</TextSemiBold>
                                             <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                         </View>
@@ -435,7 +435,7 @@ export default function MyTravel({ route }) {
                                     <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.date')}</TextSemiBold>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.date')}</TextSemiBold>
                                             <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                         </View>
                                     </View>

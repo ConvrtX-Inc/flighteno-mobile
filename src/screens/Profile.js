@@ -80,7 +80,7 @@ function Profile() {
                     {currentUser ?
                         <View style={Styles.topView}>
                             <View style={{ width: '85%' }}>
-                                <TextBold style={Styles.firstName}>{t('common.hello')}, {currentUser ? currentUser.full_name.split(" ")[0] : null}</TextBold>
+                                <TextBold style={[Styles.firstName, {textAlign:'left'}]}>{t('common.hello')}, {currentUser ? currentUser.full_name.split(" ")[0] : null}</TextBold>
                                 <TextBold style={Styles.fullName}>{currentUser ? currentUser.full_name : null}</TextBold>
                                 {currentProfile != "buyer" && currentUser ?
                                     <View style={{ flexDirection: 'row' }}>

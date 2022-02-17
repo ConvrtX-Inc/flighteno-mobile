@@ -47,6 +47,7 @@
             "save":"يحفظ",
             "oldPass":"كلمة سر قديمة",
             "enterNewPass": "أدخل كلمة مرور جديدة",
+            "noMessages": "لا توجد رسائل",
             "confirmPass": "تأكيد كلمة المرور",
             "newPass": "كلمة السر الجديدة",
             "noNotifications":"لا توجد إخطارات",
@@ -62,7 +63,20 @@
             "good":"حسن",
             "morning":"صباح",
             "afternoon":"بعد الظهر",
-            "evening":"المغرب"
+            "evening":"المغرب",
+            "thereAreNo":"لا يوجد",
+            "subject":"موضوع",
+            "yourMessage":"رسالتك",
+            "uploadPictures":"تحميل الصور",
+            "uploadVideos":"تحميل أشرطة الفيديو",
+            "verifyCode": "التحقق من كود",
+            "didntRecCode":"لم أتلق رمز",
+            "resend": "إعادة إرسال",
+            "verCodeSentTo":"تم إرسال رمز التحقق إلى",
+            "createNewPass":"أنشئ كلمة مرور جديدة",
+            "confirmNewPass": "تأكيد كلمة المرور الجديدة",
+            "yourPasswordMust":" يجب أن تكون كلمة المرور الخاصة بك مختلفة عن كلمة المرور السابقة المستخدمة",
+            "verifyPhone":"تحقق من الهاتف"
         },
         "track": {
             "transactions": "المعاملات",
@@ -88,7 +102,9 @@
             "cancelOrder":"الغاء الطلب",
             "rateTransaction":"معدل المعاملات",
             "orderByFlight": "الطلبات بالطائرة",
-            "allOrders": "جميع الطلبات"
+            "allOrders": "جميع الطلبات",
+            "inProgress": "في تقدم",
+            "datePlaced": "تاريخ التقديم"
         },
         "messages":{
             "inbox":"صندوق الوارد",
@@ -163,7 +179,9 @@
             "bdate":"تاريخ الولادة",
             "phoneNum":"رقم التليفون",
             "submit":"إرسال",
-            "acceptContinue":"بول ومتابعة"
+            "acceptContinue":"بول ومتابعة",
+            "writeSubject":"اكتب الموضوع هنا",
+            "whatWouldYouLike": "ماذا تريد أن تخبرنا"
         },
         "travelHome":{
             "myTravel":"رحلتي",
@@ -186,7 +204,14 @@
             "delFee": "رسوم التوصيل",
             "recentAdded":"المضافة مؤخرا",
             "applyFilter": "تطبيق عامل التصفية",
-            "date": "تاريخ"   
+            "date": "تاريخ",
+            "offerDetails":"تفاصيل العرض",
+            "yourDelFeeOffer":"عرض رسوم التوصيل الخاصة بك",
+            "notes":"ملحوظات",
+            "sendToBuyer": "أرسل إلى المشتري",
+            "editOffer":"تحرير العرض",
+            "accept":"قبول",
+            "rejectDeal": "رفض الصفقة"
         }
     }
 }

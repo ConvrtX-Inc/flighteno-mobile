@@ -32,7 +32,7 @@ export default function OrdersSpecificCountry({ route }) {
 
             <View style={Styles.header}>
 
-                <Text style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.orders')} - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
+                <Text style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.orders')} - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
 
             </View>
             <FlatList

@@ -70,6 +70,7 @@ export default function  KYCSelectIDScreen ({navigation,route}){
 
         }
 
+
         
     }
 
@@ -77,13 +78,13 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     return (
         <ScrollView  style={styles.container}>
             <View>
-                <TextBold style={styles.titleTxt}>{t('kyc.idVer')}</TextBold>
+                <TextBold style={[styles.titleTxt,{textAlign:'left'}]}>{t('kyc.idVer')}</TextBold>
 
                 <View style={styles.stepIndicator}>
                     <StepsIndicator currentPosition={1}/>
                 </View>
 
-                <TextBold style={[styles.inputLabel, styles.idTypeTxt]}>{t('kyc.idType')}</TextBold>
+                <TextBold style={[styles.inputLabel, styles.idTypeTxt, {textAlign:'left'}]}>{t('kyc.idType')}</TextBold>
             
                 <DropDownPicker
                     open={open}
@@ -97,19 +98,19 @@ export default function  KYCSelectIDScreen ({navigation,route}){
                     showTickIcon={false}
                 />
             
-                <TextBold style={[styles.inputLabel,styles.idNoField]}>{t('kyc.IdNo')}.</TextBold>
+                <TextBold style={[styles.inputLabel,styles.idNoField, {textAlign:'left'}]}>{t('kyc.IdNo')}.</TextBold>
 
                 <View style={styles.inputIdNo}>
                     <InputText placeholder='CADL-1231231233' maxLength={15} value={idNo} onChangeText={setIdNo} />
                 </View>
                 
 
-                <TextBold style={[ styles.inputLabel,styles.frontPicTxt]}>{t('kyc.uploadFront')}</TextBold>
+                <TextBold style={[ styles.inputLabel,styles.frontPicTxt, {textAlign:'left'}]}>{t('kyc.uploadFront')}</TextBold>
                 <TouchableOpacity style={styles.idContainer} onPress={onFrontPictureTap}> 
                     <Image source={frontPicture ? {uri: frontPicture} : require('../../../images/frontIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>
 
-                <TextBold style={[styles.inputLabel,styles.backPicTxt]}>{t('kyc.uploadBack')}</TextBold>
+                <TextBold style={[styles.inputLabel,styles.backPicTxt, {textAlign:'left'}]}>{t('kyc.uploadBack')}</TextBold>
                 <TouchableOpacity style={styles.idContainer} onPress={onBackPictureTap}>
                     <Image source={backPicture ? {uri : backPicture} : require('../../../images/backIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>

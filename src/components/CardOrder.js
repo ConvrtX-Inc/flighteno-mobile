@@ -8,11 +8,15 @@ import ViewImages from './ViewImages';
 import TextBold from './atoms/TextBold';
 import TextMedium from './atoms/TextMedium'
 import TextRegular from './atoms/TextMedium'
+import { useTranslation } from 'react-i18next';
 
 const CardOrder = ({ order }) => {
+
     const [showProductPic, setShowProductPic] = useState(false)
+    const {t} = useTranslation()
+
     function getOrderStatus() {
-        return order.status == "new" ? "Pending" : order.status == "complete" ? "Completed" : order.status == "accepted" ? "In Progress" : "Cancelled"
+        return order.status == "new" ?  t('track.pending') : order.status == "complete" ? t('track.completed') : order.status == "accepted" ? t('track.inProgress') : t('track.cancelled')
     }
     function getOrderStatusColor() {
         return order.status == "new" ? "#ECB22E" : order.status == "complete" ? "#36C5F0" : order.status == "accepted" ? "#36C5F0" : "#E01E82"
@@ -31,7 +35,7 @@ const CardOrder = ({ order }) => {
                 <View style={Styles.upperView}>
                     <View style={{ flexDirection: 'row', }}>
 
-                        <TextBold style={Styles.userName}>Order No.</TextBold>
+                        <TextBold style={Styles.userName}>{t('track.orderNo')}.</TextBold>
                         <TextMedium numberOfLines={1} style={[Styles.priceText, { marginLeft: '3%', width: '38%' }]}>
                             {order._id}
                         </TextMedium>
@@ -40,14 +44,14 @@ const CardOrder = ({ order }) => {
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
-                        <TextBold style={Styles.userName}>Date Placed</TextBold>
+                        <TextBold style={Styles.userName}>{t('track.datePlaced')}</TextBold>
                         <TextMedium style={[Styles.priceText, { marginLeft: '3%', width: '38%' }]}>
                             {moment(order.preferred_date.$date.$numberLong, 'x').format("DD/MM/YYYY")}
                         </TextMedium>
                     </View>
                     <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                         <View>
-                            <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</TextBold>
+                            <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</TextBold>
                             <TextBold style={[styles.travelListValue, { color: 'black' }]}>{order.product_buy_city_name}</TextBold>
                             <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_buy_country_name}</TextRegular>
                         </View>
@@ -56,7 +60,7 @@ const CardOrder = ({ order }) => {
                             style={{ height: 60, width: 60 }}
                         />
                         <View>
-                            <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</TextBold>
+                            <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left'}]}>{t('travelHome.to')}</TextBold>
                             <TextBold style={[styles.travelListValue, { color: 'black' }]}>{order.product_dilivery_city_name}</TextBold>
                             <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_country_name}</TextRegular>
                         </View>

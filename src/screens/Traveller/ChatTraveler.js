@@ -20,6 +20,7 @@ import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 import { RespondToOffer } from '../../redux/actions/Payment';
 import ScreenLoader from '../../components/ScreenLoader'
 import { IS_LOADING } from '../../redux/constants';
+import { useTranslation } from 'react-i18next';
 
 const LocationView = ({ location }) => {
     const openMaps = () => {
@@ -86,6 +87,7 @@ export default function Chattravelereler({ route }) {
     const [currentPerson, setCurrentPerson] = useState(currentProfile == "buyer" ? "traveler's" : "buyer's")
     const offerID = route.params.offerID
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
     //Payment
     var showBottomButton = route.params.offerStatus ? route.params.offerStatus : ""
@@ -644,18 +646,18 @@ export default function Chattravelereler({ route }) {
                         <View style={[Styles.bottomView, { height: showBottomButton == "" || showBottomButton == "new" ? 60 : 0 }]}>
                             {currentProfile == "traveler" && (showBottomButton == "" || showBottomButton == "new") ?
                                 <TouchableOpacity onPress={() => navigation.navigate("EditOffer", { ID: route.params.currentStatus == 'offer' ? route.params.orderDetail._id : route.params.orderID, CHATID: route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id })} style={Styles.bottomButton}>
-                                    <Text style={Styles.buttonText}>Edit Offer</Text>
+                                    <Text style={Styles.buttonText}>{t('travelHome.editOffer')}</Text>
                                 </TouchableOpacity>
                                 : null}
 
                             {currentProfile == "buyer" && (showBottomButton == "" || showBottomButton == "new") ?
                                 <TouchableOpacity onPress={() => { setModal(true), setOfferStatus("accept") }} style={Styles.bottomButton}>
-                                    <Text style={Styles.buttonText}>Accept</Text>
+                                    <Text style={Styles.buttonText}>{t('travelHome.accept')}</Text>
                                 </TouchableOpacity>
                                 : null}
                             {currentProfile == "buyer" && (showBottomButton == "" || showBottomButton == "new") ?
                                 <TouchableOpacity onPress={() => { setModal(true), setOfferStatus("reject") }} style={Styles.bottomButton}>
-                                    <Text style={Styles.buttonText}>Reject Deal</Text>
+                                    <Text style={Styles.buttonText}>{t('travelHome.rejectDeal')}</Text>
                                 </TouchableOpacity>
                                 : null}
                         </View>

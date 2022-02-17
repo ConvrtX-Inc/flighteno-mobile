@@ -76,7 +76,7 @@ export default function MyReviews({ route }) {
                     source={require('../../images/back.png')}
                 />
             </TouchableOpacity>
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.myReviews')}</TextBold>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.myReviews')}</TextBold>
             {showList ?
                 <FlatList
                     data={userRating.traveler_review}

@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         color: '#656F85',
         fontFamily: 'GilroyMedium',
         backgroundColor: color.inputBackColor,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        textAlign:'left'
     }
 })

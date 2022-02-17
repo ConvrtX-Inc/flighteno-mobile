@@ -52,15 +52,15 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
     return (
         <ScrollView style={styles.container}>
             <View>
-                <TextBold style={styles.titleTxt}>{t('kyc.selfieVer')}</TextBold>
+                <TextBold style={[styles.titleTxt, {textAlign:'left'}]}>{t('kyc.selfieVer')}</TextBold>
 
                 <View  style={styles.stepsIndicator}>
                     <StepsIndicator currentPosition={2}/>
                 </View>
 
                 <View style={styles.scanContainer}>
-                    <TextBold style={styles.scanTxt}>{t('kyc.scanFace')}</TextBold>
-                    <TextMedium style={styles.blinkTxt}>{t('kyc.pleaseBlink')}</TextMedium>
+                    <TextBold style={[styles.scanTxt, {textAlign:'center'}]}>{t('kyc.scanFace')}</TextBold>
+                    <TextMedium style={[styles.blinkTxt,  {textAlign:'center'}]}>{t('kyc.pleaseBlink')}</TextMedium>
 
                     <View style={styles.cameraView}>
                         <AnimatedCircularProgress

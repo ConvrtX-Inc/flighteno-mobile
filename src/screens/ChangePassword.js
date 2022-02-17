@@ -84,17 +84,18 @@ export default function ChangePassword() {
                     />
                 </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.changePass')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.changePass')}</TextBold>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.oldPass')}</Text>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</Text>
 
                 <Input
                     placeholder={t('common.oldPass')}
                     onChangeText={text => setOldPassword(text)}
                     value={oldPassword}
                     secureTextEntry={false}
+                    
                 />
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.enterNewPass')}</Text>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</Text>
 
                 <Input
                     placeholder={t('common.newPass')}
@@ -103,7 +104,7 @@ export default function ChangePassword() {
                     secureTextEntry={true}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('common.confirmPass')}</Text>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</Text>
 
                 <Input
                     placeholder={t('common.confirmPass')}

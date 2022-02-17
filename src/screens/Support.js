@@ -246,19 +246,19 @@ export default function Support({ route }) {
                         source={require('../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('support.support')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('support.support')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Subject</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.subject')}</TextBold>
 
                 <Input
-                    placeholder={"Write subject here..."}
+                    placeholder={t('kyc.writeSubject')+"..."}
                     onChangeText={text => setSubject(text)}
                     value={subject}
                     secureTextEntry={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Order No.</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('track.orderNo')}.</TextBold>
 
                 <Input
                     placeholder="ex. 00235421151"
@@ -268,16 +268,16 @@ export default function Support({ route }) {
                 />
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Your Message</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.yourMessage')}</TextBold>
 
                 <InputMultiline
-                    placeholder="What would you like to tell us?"
+                    placeholder={t('kyc.whatWouldYouLike') + "?"}
                     onChangeText={text => setMessage(text)}
                     value={message}
                 />
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload pictures</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.uploadPictures')}</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseImages()}>
                         <View style={styles.imgPickView}>
@@ -310,7 +310,7 @@ export default function Support({ route }) {
                     </View>
                 </View>
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload Videos</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.uploadVideos')}</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseVideos()}>
                         <View style={styles.imgPickView}>
@@ -344,7 +344,7 @@ export default function Support({ route }) {
                 </View>
                 <View style={{ marginVertical: 30 }}>
                     <ButtonLarge
-                        title="Submit"
+                        title={t('kyc.submit')}
                         loader={loading}
                         onPress={() => contactSupport()}
                     />

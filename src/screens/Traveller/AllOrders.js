@@ -26,19 +26,19 @@ var storeNamesList = [
 var ordersList = [
     {
         id: '1',
-        name: t('travel.allOrders'),
+        name: 'All Orders',
         value: 'all',
         checked: true
     },
     {
         id: '2',
-        name: t('track.completed'),
+        name: 'completed',
         value: 'complete',
         checked: false
     },
     {
         id: '3',
-        name: t('track.accepted'),
+        name:'accepted',
         value: 'accepted',
         checked: false
     },
@@ -123,7 +123,7 @@ export default function AllOrders() {
                             <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
                                 <Icon name="cross" size={35} style={{ margin: 0 }} />
                             </TouchableOpacity>
-                            <Text style={[styles.HeadingText, { marginTop: 10 }]}>Filter</Text>
+                            <Text style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.filter')}</Text>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
                         </View>
                         <SearchInput
@@ -147,6 +147,7 @@ export default function AllOrders() {
                                             checkedColor={color.blueColor}
                                             uncheckedColor={color.inputBackColor}
                                             containerStyle={{ padding: 0, margin: 0 }}
+                                            
                                             checked={item.checked}
                                             onPress={() => selectStore(index)}
                                         />

@@ -258,7 +258,7 @@ export default function PendingOrderDetailT({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
+                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',  textAlign:'left' }]}>
                     {currentOrder.status == "accepted" ? t('common.updateOrder') : t('common.orderCompleted')}
                 </Text>
 
@@ -277,13 +277,13 @@ export default function PendingOrderDetailT({ route }) {
                             </View>
                             <View style={[Styles.dateView, { backgroundColor: currentOrder.status == "accepted" ? '#F2BA39' : "#36C5F0" }]}>
                                 <Text style={Styles.dateText}>
-                                    {currentOrder.status == "accepted" ? "Pending" : "Completed"}
+                                    {currentOrder.status == "accepted" ? t('track.pending') : t('track.completed')}
                                 </Text>
                             </View>
                         </View>
                         <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.from')}</Text>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</Text>
                                 <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_buy_city_name}</Text>
                                 <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_buy_country_name}</Text>
                             </View>
@@ -292,7 +292,7 @@ export default function PendingOrderDetailT({ route }) {
                                 style={{ height: 60, width: 60 }}
                             />
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.to')}</Text>
+                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</Text>
                                 <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_dilivery_city_name}</Text>
                                 <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_dilivery_country_name}</Text>
                             </View>
@@ -346,7 +346,7 @@ export default function PendingOrderDetailT({ route }) {
                 </View>
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
                    {t('common.uploadPicProd')}
                 </Text>
                 <TouchableOpacity
@@ -365,7 +365,7 @@ export default function PendingOrderDetailT({ route }) {
                         />
                     }
                 </TouchableOpacity>
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
                     {t('common.uploadReceipt')}
                 </Text>
                 <TouchableOpacity
@@ -385,7 +385,7 @@ export default function PendingOrderDetailT({ route }) {
                     }
                 </TouchableOpacity>
                 {!showQrDetail && currentOrder.status == "accepted" ?
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
                         {t('common.scanQR')}
                     </Text>
                     : null}

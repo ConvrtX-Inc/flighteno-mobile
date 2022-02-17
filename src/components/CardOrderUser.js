@@ -5,11 +5,16 @@ import moment from 'moment'
 import { styles } from '../Utility/Styles';
 import { formatAmount } from '../Utility/Utils';
 import ViewImages from './ViewImages';
+import { useTranslation } from 'react-i18next';
 
 const CardOrderUser = ({ order }) => {
+    
     const [showProductPic, setShowProductPic] = useState(false)
+    const {t} = useTranslation()
+
+
     function getOrderStatus() {
-        return order.status == "new" ? "Pending" : order.status == "complete" ? "Completed" : order.status == "accepted" ? "In Progress" : "Cancelled"
+        return order.status == "new" ? t('track.pending') : order.status == "complete" ? t('track.completed'): order.status == "accepted" ? t('track.inProgress') : t('track.cancelled')
     }
     function getOrderStatusColor() {
         return order.status == "new" ? "#ECB22E" : order.status == "complete" ? "#36C5F0" : order.status == "accepted" ? "#36C5F0" : "#E01E82"
@@ -41,7 +46,7 @@ const CardOrderUser = ({ order }) => {
 
                 <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                     <View>
-                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>From</Text>
+                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</Text>
                         <Text style={[styles.travelListValue, { color: 'black' }]}>{order.product_buy_city_name}</Text>
                         <Text style={[styles.travelListTitle, { color: 'black' }]}>{order.product_buy_country_name}</Text>
                     </View>
@@ -50,7 +55,7 @@ const CardOrderUser = ({ order }) => {
                         style={{ height: 60, width: 60 }}
                     />
                     <View>
-                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>To</Text>
+                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</Text>
                         <Text style={[styles.travelListValue, { color: 'black' }]}>{order.product_dilivery_city_name}</Text>
                         <Text style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_country_name}</Text>
                     </View>

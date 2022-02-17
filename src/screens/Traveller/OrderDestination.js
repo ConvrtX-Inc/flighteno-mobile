@@ -311,9 +311,9 @@ export default function OrderDestination({ route }) {
                             <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
                                 <Icon name="cross" size={35} style={{ margin: 0 }} />
                             </TouchableOpacity>
-                            <TextBold style={[styles.HeadingText, { marginTop: 10 }]}>{t('travelHome.filter')}</TextBold>
+                            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.filter')}</TextBold>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
-                            <TextSemiBold style={[styles.loginInputHeading, { marginTop: 5 }]}>{t('buyerHome.productType')}</TextSemiBold>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginTop: 5, textAlign:'left' }]}>{t('buyerHome.productType')}</TextSemiBold>
                         </View>
                         <View style={{ marginTop: 10, }}>
                             <Pressable onPress={() => setPickerShow(!pickerShow)}>
@@ -357,7 +357,7 @@ export default function OrderDestination({ route }) {
                                 : null}
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20 }]}>{t('buyerHome.productName')}</TextSemiBold>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.productName')}</TextSemiBold>
                         </View>
                         <Input
                             placeholder="Enter product name"
@@ -366,7 +366,7 @@ export default function OrderDestination({ route }) {
                             secureTextEntry={false}
                         />
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20 }]}>{t('buyerHome.price')}</TextSemiBold>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.price')}</TextSemiBold>
                         </View>
 
                         <View style={{flex:1, flexDirection:'row'}}>
@@ -387,7 +387,7 @@ export default function OrderDestination({ route }) {
                                 />
                             </View>
                             <View style={{justifyContent:'center'}}>
-                                <TextMedium>to</TextMedium>
+                                <TextMedium>{t('travelHome.to')}</TextMedium>
                             </View>
                             <View style={{flex:1}}>
                                 <Input
@@ -459,7 +459,7 @@ export default function OrderDestination({ route }) {
 
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20 }]}>{t('travelHome.storeName')}</TextSemiBold>
+                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.storeName')}</TextSemiBold>
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%', flexDirection: 'row' }}>
                             <TextInput
@@ -498,47 +498,47 @@ export default function OrderDestination({ route }) {
                             />
                         </View>
                         <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextBold style={[styles.HeadingText, { marginTop: 10 }]}>{t('travelHome.sort')}</TextBold>
+                            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.sort')}</TextBold>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
                             <TouchableOpacity onPress={() => selectRange(1, 'vip_service_fee', 1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 1 ? color.blueColor : color.loginTextHeadingColor }]}>
+                                { fontSize: 18, color: selectedRange == 1 ? color.blueColor : color.loginTextHeadingColor, textAlign:'left' }]}>
                                     {t('track.vipServFee')} ({t('travelHome.high')} - {t('travelHome.low')})
                                 </TextSemiBold>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => selectRange(2, 'order_created_date', -1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 2 ? color.blueColor : color.loginTextHeadingColor }]}>
-                                    {t('buyerHome.recentAdded')}
+                                { fontSize: 18, color: selectedRange == 2 ? color.blueColor : color.loginTextHeadingColor, textAlign:'left' }]}>
+                                    {t('travelHome.recentAdded')}
                                 </TextSemiBold>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => selectRange(3, 'total_low_high', -1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 3 ? color.blueColor : color.loginTextHeadingColor }]}>
+                                { fontSize: 18, color: selectedRange == 3 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
                                    {t('buyerHome.price')} ({t('travelHome.low')} - {t('travelHome.high')})
                                 </TextSemiBold>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => selectRange(4, 'total_high_low', 1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 4 ? color.blueColor : color.loginTextHeadingColor }]}>
+                                { fontSize: 18, color: selectedRange == 4 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
                                     {t('buyerHome.price')} ({t('travelHome.high')} - {t('travelHome.low')})
                                 </TextSemiBold>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => selectRange(5, 'est_del_fee_low_high', -1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 5 ? color.blueColor : color.loginTextHeadingColor }]}>
+                                { fontSize: 18, color: selectedRange == 5 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
                                    {t('travelHome.delFee')} ({t('travelHome.low')} - {t('travelHome.high')})
                                 </TextSemiBold>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => selectRange(6, 'est_del_fee_high_low', +1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 6 ? color.blueColor : color.loginTextHeadingColor }]}>
+                                { fontSize: 18, color: selectedRange == 6 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
                                       {t('travelHome.delFee')} ({t('travelHome.high')} - {t('travelHome.low')})
                                 </TextSemiBold>
                             </TouchableOpacity>
@@ -583,7 +583,7 @@ export default function OrderDestination({ route }) {
                                 </View> */}
                                 <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                                     <View>
-                                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.from')}</TextBold>
+                                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</TextBold>
                                         <TextBold style={[styles.travelListValue, { color: 'black' }]}>{item.product_buy_city_name}</TextBold>
                                         <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{item.product_buy_country_name}</TextRegular>
                                     </View>
@@ -592,7 +592,7 @@ export default function OrderDestination({ route }) {
                                         style={{ height: 60, width: 60 }}
                                     />
                                     <View>
-                                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor }]}>{t('travelHome.to')}</TextBold>
+                                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</TextBold>
                                         <TextBold style={[styles.travelListValue, { color: 'black' }]}>{item.product_dilivery_city_name}</TextBold>
                                         <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{item.product_dilivery_country_name}</TextRegular>
                                     </View>
@@ -609,7 +609,7 @@ export default function OrderDestination({ route }) {
                                     <View style={{ marginLeft: '5%', flexGrow: 1, flex: 1 }}>
                                         <TextBold style={[Styles.userName, { marginLeft: 0, }]}>{item.name}</TextBold>
                                         <TextMedium style={Styles.priceText}>{formatAmount(item.product_price)}</TextMedium>
-                                        <TextBold style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{t('track.estimatedDelFee')}</TextBold>
+                                        <TextBold style={[Styles.userName, { marginLeft: 0, marginTop: 10, textAlign:'left' }]}>{t('track.estimatedDelFee')}</TextBold>
                                         <TextMedium style={Styles.priceText}>
                                             {formatAmount(Math.round((item.product_price / 100) * 10) < 50 ? 50 : Math.round((item.product_price / 100) * 10))}
                                         </TextMedium>
@@ -619,7 +619,7 @@ export default function OrderDestination({ route }) {
                             <View style={{ marginTop: 20 }}>
                                 <ButtonTraveller
                                     loader={loading}
-                                    title="View Details"
+                                    title={t('travelHome.viewDetails')}
                                     onPress={() => navigation.navigate("OrderDetailT", { orderDetail: item })}
                                 />
                             </View>

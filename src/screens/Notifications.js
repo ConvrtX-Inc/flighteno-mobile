@@ -41,7 +41,7 @@ export default function Notifications({ route }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('common.notifications')}</TextBold>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.notifications')}</TextBold>
             {showList ?
                 <FlatList
                     data={notificationsData}

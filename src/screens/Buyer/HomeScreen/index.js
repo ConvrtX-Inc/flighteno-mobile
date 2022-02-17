@@ -131,7 +131,7 @@ export default function HomeScreen() {
                                     resizeMode='stretch'
                                     source={require('../../../images/location.png')}
                                 />
-                                <TextMedium style={styles.dubaiTxt}> {currentCountry.city}, </TextMedium>
+                                <TextMedium style={styles.dubaiTxt}> {currentCountry?.city}, </TextMedium>
                                 <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentCountry.country_name}</TextMedium>
                             </View>
 
@@ -152,14 +152,14 @@ export default function HomeScreen() {
 
                     <View style={{ marginLeft: '5%' }}>
 
-                        <TextBold style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100 }]}>{t('common.hello')}, {currentUser.full_name}</TextBold>
-                        <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('buyerHome.createOrder')}</TextBold>
+                        <TextBold style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100, textAlign:'left' }]}>{t('common.hello')}, {currentUser.full_name}</TextBold>
+                        <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('buyerHome.createOrder')}</TextBold>
 
                     </View>
 
 
 
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.enterUrl')}</TextBold>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterUrl')}</TextBold>
 
                     <InputImag
                         placeholder="https://www.amazon.com/s?bbn"
@@ -170,7 +170,7 @@ export default function HomeScreen() {
                         loader={urlLoading}
                     />
 
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{t('buyerHome.enterManual')}</TextBold>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterManual')}</TextBold>
 
                     <InputImag
                         placeholder={t('buyerHome.productName')}
@@ -180,7 +180,7 @@ export default function HomeScreen() {
                         secureTextEntry={false}
                     />
 
-                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>{t('buyerHome.trendingOrders')}</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15, textAlign:'left' }]}>{t('buyerHome.trendingOrders')}</TextBold>
 
                     <FlatList
                         horizontal={true}
@@ -206,7 +206,7 @@ export default function HomeScreen() {
                     />
 
 
-                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>{t('buyerHome.recentOrders')}</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15, textAlign:'left' }]}>{t('buyerHome.recentOrders')}</TextBold>
 
                     <FlatList
                         horizontal={true}

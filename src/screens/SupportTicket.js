@@ -30,7 +30,7 @@ export default function SupportTicket({ navigation }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{t('support.support')}</TextBold>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('support.support')}</TextBold>
             <View style={[Styles.userDataPortion, { borderBottomWidth: 0, }]}>
                 <FlatList
                     data={supportTickets}

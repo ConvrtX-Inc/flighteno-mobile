@@ -25,14 +25,14 @@ export default function KYCSelfieVerificationScreen ({navigation, route}){
             
             <View style={styles.container}>
                 <View style={styles.content}>
-                    <TextBold style={styles.titleTxt}>{t('kyc.selfieVer')}</TextBold>
+                    <TextBold style={[styles.titleTxt, {textAlign:'left'}]}>{t('kyc.selfieVer')}</TextBold>
 
                     <View  style={styles.stepsIndicator}>
                         <StepsIndicator currentPosition={2}/>
                     </View>
 
-                    <TextBold style={styles.titleTxt}>{t('kyc.prepareToScan')}</TextBold>
-                    <TextMedium style={styles.desc}>{t('kyc.scanInstruct')}</TextMedium>
+                    <TextBold style={[styles.titleTxt,  {textAlign:'left'}]}>{t('kyc.prepareToScan')}</TextBold>
+                    <TextMedium style={[styles.desc,  {textAlign:'center'}]}>{t('kyc.scanInstruct')}</TextMedium>
 
                     <Image source={require('../../../images/selfieVerification.png')} style={styles.accountVerImg}/>  
                 </View>

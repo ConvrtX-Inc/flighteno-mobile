@@ -97,50 +97,50 @@ export default function KYCFillOutScreen ({navigation,route}){
     return(
         <ScrollView  style={styles.container}>
             <View>
-                <TextBold style={styles.titleTxt}>{t('kyc.fillOutInfo')}</TextBold>
+                <TextBold style={[styles.titleTxt,  {textAlign:'left'}]}>{t('kyc.fillOutInfo')}</TextBold>
                 <View style={styles.stepsIndicator}>
                     <StepsIndicator currentPosition={3}/>
                 </View>
                 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.firstName')}</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.firstName')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Yasmin' value={firstName} onChangeText={setFirstName}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.middleName')}</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.middleName')}</TextBold>
                     <InputText placeholder='Che' value={middleName} onChangeText={setMiddleName}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.lastName')}</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.lastName')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Latika' value={lastName} onChangeText={setLastName}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.suffix')}</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.suffix')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='eg.Jr.' value={suffix} onChangeText={setSuffix}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.addrsLine1')}</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.addrsLine1')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='500 Kingston Rd' value={addressLine1} onChangeText={setAddressLine1} />
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.addrsLine2')}</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.addrsLine2')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Toronto ON M4L 1V3(Toronto, Ontoario)' value={addressLine2} onChangeText={setAddressLine2} />
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.bdate')}</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.bdate')}</TextBold>
                     <DatePickerField onPress={() => {
                         onDatePickerTap()
                     }} date={birthDateValue}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>{t('kyc.phoneNum')}</TextBold>
+                    <TextBold style={[styles.inputLabel, {textAlign:'left'}]}>{t('kyc.phoneNum')}</TextBold>
                     <View>
                         <PhoneInput
                             ref={phoneInput}

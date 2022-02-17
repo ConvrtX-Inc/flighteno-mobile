@@ -51,7 +51,7 @@ export default function OrdersByFlight() {
 
             <View style={Styles.header}>
 
-                <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.orderByFlight')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.orderByFlight')}</TextBold>
                 <TouchableOpacity onPress={() => navigation.navigate("AllOrders")}>
                     <TextSemiBold style={Styles.viewAll}>{t('common.viewAll')}</TextSemiBold>
                 </TouchableOpacity>
@@ -72,7 +72,7 @@ export default function OrdersByFlight() {
                             >
                                 <View style={styles.travelerListInnerView}>
                                     <View>
-                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.from')}</TextSemiBold>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white",textAlign:'left' }]}>{t('travelHome.from')}</TextSemiBold>
                                         <TextBold style={styles.travelListValue}>{item.city}</TextBold>
                                         <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                     </View>
@@ -81,7 +81,7 @@ export default function OrdersByFlight() {
                                         style={{ height: 60, width: 60 }}
                                     />
                                     <View>
-                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.to')}</TextSemiBold>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.to')}</TextSemiBold>
                                         <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
                                         <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                     </View>
@@ -89,7 +89,7 @@ export default function OrdersByFlight() {
                                 <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
                                 <View style={styles.travelerListInnerView}>
                                     <View>
-                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{t('travelHome.date')}</TextSemiBold>
+                                        <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.date')}</TextSemiBold>
                                         <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                     </View>
                                 </View>
