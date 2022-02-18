@@ -16,6 +16,12 @@ import { IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 
+import storage from '@react-native-firebase/storage';
+
+import { getPathForFirebaseStorage } from '../Utility/Utils';
+import UploadProgressBar from '../../../components/UploadProgressBart';
+import Constants from '../../../Utility/Constants';
+
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetail() {
@@ -29,6 +35,7 @@ export default function OrderDetail() {
     const [filePath, setFilePath] = useState();
     const [checked, setChecked] = useState(false);
     const [useForTesting, setUseForTesting] = useState(false);
+    const [transferred, setTransferred] = useState(0);
 
     useEffect(() => {
         
@@ -38,36 +45,61 @@ export default function OrderDetail() {
         navigation.navigate(routeName, data);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         dispatch({ type: IS_LOADING, isloading: true })
         
         if (global.productImage.uri) {
-            const file = {
-                uri: global.productImage.uri,
-                name: generateUID() + ".jpg",
-                type: 'image/jpeg'
-            }
-            const options = {
-                keyPrefix: "flighteno/orders/",
-                bucket: "memee-bucket",
-                region: "eu-central-1",
-                accessKey: "AKIA2YJH3TLHCODGDKFV",
-                secretKey: "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",
-                successActionStatus: 201
-            }
-            RNS3.put(file, options).then(response => {
-                if (response.status !== 201)
-                    throw new Error("Failed to upload image to S3");
-
+            const uri = global.productImage.uri;
+            const filename = uri.substring(uri.lastIndexOf('/') + 1);
+            const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+            const task = storage()
+                .ref(`${filename}`)
+                .putFile(`${uploadUri}`);
+            // set progress state
+            task.on('state_changed', snapshot => {                    
+                setTransferred(
+                    Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+                );
+            });
+            try {
+                const resImg = await task;   
                 buyerOrderData["open_box_check_phisical_apperance"] = checked
                 buyerOrderData["use_item_for_testing"] = useForTesting
-                buyerOrderData["product_image"] = response.body.postResponse.location
-                dispatch({ type: CREATE_ORDER_DETAIL, data: buyerOrderData })
+                buyerOrderData["product_image"] = resImg.name;
+                // buyerOrderData["product_image"] = response.body.postResponse.location <---- this is the public image URL
+                dispatch({ type: CREATE_ORDER_DETAIL, data: buyerOrderData });               
+                dispatch(createOrder(buyerOrderData, navigate, token));
+            } catch (e) {
+                console.log('errooooorrrrr', e);
+            }
+
+            // const file = {
+            //     uri: global.productImage.uri,
+            //     name: generateUID() + ".jpg",
+            //     type: 'image/jpeg'
+            // }
+            // const options = {
+            //     keyPrefix: "flighteno/orders/",
+            //     bucket: "memee-bucket",
+            //     region: "eu-central-1",
+            //     accessKey: "AKIA2YJH3TLHCODGDKFV",
+            //     secretKey: "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",
+            //     successActionStatus: 201
+            // }
+            // RNS3.put(file, options).then(response => {
+            //     if (response.status !== 201)
+            //         throw new Error("Failed to upload image to S3");
+
+            //     buyerOrderData["open_box_check_phisical_apperance"] = checked
+            //     buyerOrderData["use_item_for_testing"] = useForTesting
+            //     buyerOrderData["product_image"] = response.body.postResponse.location
+            //     dispatch({ type: CREATE_ORDER_DETAIL, data: buyerOrderData })
 
                
-                dispatch(createOrder(buyerOrderData, navigate, token))
+            //     dispatch(createOrder(buyerOrderData, navigate, token))
 
-            });
+            // });
+
         }
         else {
             buyerOrderData["open_box_check_phisical_apperance"] = checked
@@ -167,8 +199,25 @@ export default function OrderDetail() {
                     <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</TextMedium>
                 </View>
 
+                <View style={{ marginVertical: 15 }}>                    
+                    {
+                        loading ? (
+                            global.productImage.uri ? (
+                                <UploadProgressBar
+                                    uploadedCount={1}
+                                    images={[{file: global.productImage.uri}]}
+                                    videos={[]}
+                                    containerStyle={{alignItems: 'center', marginTop: 20}}
+                                    textStyle={{marginBottom: 10}}
+                                    transferred={transferred}
+                                    progressBarWidth={Dimensions.get('window'). width - 50} />
+                            ) : null
+                        ) : null
+                    }  
+                </View> 
 
-                <View style={{ marginBottom: 30, marginTop: 26 }}>
+
+                <View style={{ marginBottom: 30}}>
                     <ButtonLarge
                         title="Continue"
                         loader={loading}
