@@ -1,4 +1,5 @@
-import RNFetchBlob from "rn-fetch-blob";
+import { Platform } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export function generateUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -14,4 +15,13 @@ export function formatAmount(amount){
 
 export function imgToBase64 (imgPath){
     return RNFetchBlob.fs.readFile(imgPath,'base64')
+}
+
+export const getPathForFirebaseStorage = async(uri) => {
+    if (Platform.OS === 'ios')
+    {
+        return uri
+    } 
+    const stat = await RNFetchBlob.fs.stat(uri)
+    return stat.path
 }

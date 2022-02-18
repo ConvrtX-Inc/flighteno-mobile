@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions, Pressable, Animated, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions, Pressable, Animated, FlatList, Platform, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,8 +17,15 @@ import { IS_LOADING } from '../redux/constants';
 import axios from 'axios'
 import { BASE_URL } from '../BASE_URL';
 import TextBold from '../components/atoms/TextBold';
+import storage from '@react-native-firebase/storage';
 
 var windowWidth = Dimensions.get('window').width;
+
+// Custom Imports
+import { getPathForFirebaseStorage } from '../Utility/Utils';
+import UploadProgressBar from '../components/UploadProgressBart';
+import Constants from '../Utility/Constants';
+
 
 {/* Fix for FLIGHT-46 */}
 export default function Support({ route }) {
@@ -33,7 +40,9 @@ export default function Support({ route }) {
     const [videos, setVideos] = useState([]);
     const [imagesUri, setImagesUri] = useState([])
     const [videosUri, setVideosUri] = useState([])
-
+    const [transferred, setTransferred] = useState(0);
+    const [uploadedCount, setUploadedCount] = useState(0);
+    
     const chooseImages = () => {
         let options = {
             selectionLimit: 0,
@@ -110,6 +119,7 @@ export default function Support({ route }) {
                     successActionStatus: 201
                 }
                 RNS3.put(file, options).then(response => {
+                    console.log('response', response)
                     if (response.status !== 201)
                         throw new Error("Failed to upload image to S3");
                     imagesUri.push(response.body.postResponse.location)
@@ -129,6 +139,77 @@ export default function Support({ route }) {
         else {
             uploadVideoToS3()
         }
+    }
+
+    const uploadFilesToFirebase = async () => {
+        let ctr = 0;
+        if (images.length != 0) {
+            dispatch({ type: IS_LOADING, isloading: true })
+            images.forEach(async(element) => {
+                // return;
+                const { uri } = element;
+                const filename = uri.substring(uri.lastIndexOf('/') + 1);
+                const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+                const task = storage()
+                    .ref(`${filename}`)
+                    .putFile(`${uploadUri}`);
+                // set progress state
+                task.on('state_changed', snapshot => {                    
+                    setTransferred(
+                        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+                    );
+                });
+                try {
+                    const resImg = await task;                    
+                    setUploadedCount(ctr + 1);
+                    // const resUrl = task.downloadUrl.toString();
+                    console.log('resImg', resImg);
+                    // imagesUri.push(resUrl)
+                    // setImagesUri([...imagesUri]);
+                    ctr++;
+                } catch (e) {
+                    console.log('errooooorrrrr', e);
+                }
+               
+                if (videos.length == 0) {
+                    dispatch({ type: IS_LOADING, isloading: false });
+                    sendSupport();
+                }            
+            });
+        }
+    
+        if (videos.length != 0) {
+            dispatch({ type: IS_LOADING, isloading: true })
+            videos.forEach(async(element) => {
+                // return;
+                const { uri } = element;
+                const filename = generateUID() + ".mp4";
+                const uploadUri= await getPathForFirebaseStorage(uri)    
+                const task = storage()
+                    .ref(`${filename}`)
+                    .putFile(`${uploadUri}`);
+                // set progress state
+                task.on('state_changed', snapshot => {                    
+                    setTransferred(
+                        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+                    );
+                });
+                try {
+                    await task;                    
+                    setUploadedCount(ctr + 1);
+                    // const resUrl = task.downloadUrl.toString();
+                    // videosUri.push(resUrl)
+                    setVideosUri([...videosUri]);
+                    ctr++;
+                } catch (e) {
+                    console.log('errooooorrrrr', e);
+                }
+                
+                dispatch({ type: IS_LOADING, isloading: false });
+                sendSupport()
+            });
+        }
+
     }
 
     const uploadVideoToS3 = async () => {
@@ -183,7 +264,8 @@ export default function Support({ route }) {
             sendSupport()
         }
         else {
-            uploadImageToS3()
+            // uploadImageToS3()
+            uploadFilesToFirebase();
         }
     }
 
@@ -225,6 +307,7 @@ export default function Support({ route }) {
                     admin_id: currentUser._id,
                     profile_status: response.data.profileStatus
                 }
+                console.log('SUUPORT -> data ->', data)
                 dispatch(customerSupport(data, token, () => {
                     navigation.navigate("CongratulationSupport")
                 }))
@@ -339,14 +422,31 @@ export default function Support({ route }) {
                             style={{ marginLeft: 10, marginRight: 110 }}
                         />
                     </View>
-                </View>
-                <View style={{ marginVertical: 30 }}>
+                </View>     
+
+                <View style={{ marginVertical: 15 }}>                    
+                    {
+                        loading ? (
+                            (images.length > 0 || videos.length > 0) ? (
+                                <UploadProgressBar
+                                    uploadedCount={uploadedCount}
+                                    images={images}
+                                    videos={videos}
+                                    containerStyle={{alignItems: 'center', marginTop: 20}}
+                                    textStyle={{marginBottom: 10}}
+                                    transferred={transferred}
+                                    progressBarWidth={Dimensions.get('window'). width - 50} />
+                            ) : null
+                        ) : null
+                    }  
+                </View> 
+
+                <View>                    
                     <ButtonLarge
                         title="Submit"
                         loader={loading}
-                        onPress={() => contactSupport()}
-                    />
-                </View>
+                        onPress={() => contactSupport()} />        
+                </View>                
             </ScrollView>
         </View>
     );

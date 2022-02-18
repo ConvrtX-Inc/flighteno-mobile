@@ -50,7 +50,7 @@ export default function MyTravel({ route }) {
     const [withCallingCode, setWithCallingCode] = useState(false)
     const [withCallingCodeDeliver, setWithCallingCodeDeliver] = useState(false)
     const [countryCodeDeliver, setCountryCodeDeliver] = useState(currentCountry.country_code)
-    const [countryCode, setCountryCode] = useState(currentCountry.country_code)
+    const [countryCode, setCountryCode] = useState(currentCountry?.country_code)
     const [date, setDate] = useState(new Date());
     const [depDate, setDepDate] = useState(moment().format("DD/MM/YY"));
     const [depDateApi, setDepDateApi] = useState(moment().format("MM/DD/YYYY"));
