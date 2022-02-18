@@ -20,7 +20,9 @@ export function registerUserFN(data, removeStates, saveToken) {
         email: data._parts[1][1],
         phone_number: data._parts[2][1],
         password: data._parts[3][1],
+        country_code: data._parts[4][1],
     }
+    console.log("request body register",obj)
     return async dispatch => {
         axios({
             method: 'post',
@@ -106,6 +108,7 @@ export function getDataAction(token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(response => {
+            console.log("CURRENT USER DATA",data)
             dispatch({ type: LOGIN_DATA, data: response.data });
 
         });
@@ -178,6 +181,7 @@ export function verifyOtpCodeAction(data, removeStates, navigate, verificationEr
 
 
 export function otpResetPasswordAction(data, removeStates, navigate, loginError) {
+    console.log("data dispatch:" ,data)
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({

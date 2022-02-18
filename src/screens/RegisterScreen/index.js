@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
-{/* Fix for FLIGHT-46 */}
+{/* Fix for FLIGHT-46 */ }
 export default function RegisterScreen() {
 
     const navigation = useNavigation();
@@ -35,11 +35,13 @@ export default function RegisterScreen() {
 
     const phoneInput = useRef()
     const [dialCode, setDialCode] = useState('');
+    const [countryCode, setCountryCode] = useState('');
+
 
     ///////////////////////////////////Get Code For Phone Verification/////////////////////////////
     const getVerificationCode = () => {
-         const formattedPhoneNo = `${dialCode}${cellno}`;
-        if(!phoneInput.current?.isValidNumber(formattedPhoneNo)){
+        const formattedPhoneNo = `${dialCode}${cellno}`;
+        if (!phoneInput.current?.isValidNumber(formattedPhoneNo)) {
             Toast.show({
                 type: 'info',
                 text2: "Invalid phone number",
@@ -92,8 +94,8 @@ export default function RegisterScreen() {
                 setPassword("")
             },
             () => {
-                console.log("cell no",formattedPhoneNo)
-                navigation.navigate("VerifyPhone", { name: name, password: password, formattedPhoneNo: formattedPhoneNo, cellno: cellno, email: email })
+                console.log("cell no", formattedPhoneNo)
+                navigation.navigate("VerifyPhone", { name: name, password: password, formattedPhoneNo: formattedPhoneNo, cellno: cellno, email: email, countryCode: countryCode })
             },
             () => {
                 Toast.show({
@@ -169,12 +171,14 @@ export default function RegisterScreen() {
                     ref={phoneInput}
                     defaultValue={cellno}
                     defaultCode="AU"
-                     
+
                     onChangeText={(text) => {
                         setCellNo(text)
                     }}
-                    onChangeCountry={(country) =>{
-                        setDialCode(`+${country.callingCode}`)   
+                    onChangeCountry={(country) => {
+                        setDialCode(`+${country.callingCode}`)
+                        setCountryCode(country.cca2)
+
                     }}
                     containerStyle={styles.phoneContainer}
                     textInputStyle={styles.phoneInput}
@@ -184,7 +188,7 @@ export default function RegisterScreen() {
                         placeholderTextColor: "#707070",
                         keyboardType: "phone-pad",
                         placeholder: "123-456-789",
-                        fontFamily:'GilroyRegular'
+                        fontFamily: 'GilroyRegular'
                     }}
                 />
 

@@ -214,21 +214,22 @@ export default function Chattravelereler({ route }) {
     }
 
     function getOfferBodyA(order) {
-        return `Preffered Delivery Date:\n\n${order.offer.deliveryDate} \n\nNotes:\n\n${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
+        return `Prefered Delivery Date:\n\n${order.offer.deliveryDate} \n\nNotes:\n\n${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
     }
 
     function getOfferBodyB(order) {
-        return addSpaces('Order No:', false) + order.orderDetail._id + '\n\n' +
+        return addSpaces('Order No: ', false) + order.orderDetail._id + '\n\n' +
             addSpaces('Order Price:') + order.orderDetail.product_price + '\n' +
-            addSpaces('Estimate Delivery Fee:') + order.offer.offerPrice + '\n' +
+            addSpaces('Estimated Delivery Fee:') + order.offer.offerPrice + '\n' +
             addSpaces('VIP Service Fee:') + order.orderDetail.vip_service_fee + '\n' +
             addSpaces('Flighteno cost:') + order.orderDetail.flighteno_cost + '\n' +
             addSpaces('Tax:') + order.orderDetail.tax + '\n\n' +
             addSpaces('Total:') + (parseInt(order.orderDetail.product_price) + parseInt(order.offer.offerPrice) + parseInt(route.params.orderDetail.vip_service_fee) + parseInt(route.params.orderDetail.flighteno_cost) + parseInt(route.params.orderDetail.tax))
     }
 
-    function addSpaces(text, addDollar=true) {
-        return text.padEnd(1, ' ') + addDollar ? '$' : '';
+    function addSpaces(text, showDollar=true) {
+        // return text.padEnd(1, ' ') + addDollar ? '$' : '';
+        return showDollar ? `${text} $` : text;
     }
 
     useEffect(() => {
@@ -259,8 +260,24 @@ export default function Chattravelereler({ route }) {
                 setMessages([...messages])
                 socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message1, sender_status: currentProfile, status: "offer", order_id: route.params.orderDetail._id });
                 socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message2, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id });
-            })
+            });
 
+            // Fix for https://team-1634092271346.atlassian.net/browse/FLIGHT-22
+            var message1 = {
+                _id: Math.floor(Math.random() * 1000000),
+                text: getOfferBodyA(route.params),
+                createdAt: new Date(),
+                user: currentChatUser,
+            }
+            var message2 = {
+                _id: Math.floor(Math.random() * 1000000),
+                text: getOfferBodyB(route.params),
+                createdAt: new Date(),
+                user: currentChatUser,
+            }
+            messages.push(message1)
+            messages.push(message2)
+            setMessages([...messages])
         }
         if (route.params.currentStatus == "message") {
             route.params.chatHistory.forEach(element => {

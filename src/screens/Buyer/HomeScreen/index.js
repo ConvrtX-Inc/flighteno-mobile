@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, ImageBackground, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, ImageBackground, FlatList, Platform, PermissionsAndroid } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { styles } from '../../../Utility/Styles';
 import InputImag from '../../../components/InputFieldWithImage';
@@ -17,7 +17,7 @@ import { GetLanguages } from '../../../redux/actions/Translation';
 import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
-{/* Fix for FLIGHT-46 */}
+{/* Fix for FLIGHT-46 */ }
 export default function HomeScreen() {
 
     const navigation = useNavigation();
@@ -28,7 +28,7 @@ export default function HomeScreen() {
     const [productName, setProductName] = useState('');
     const [urlLoading, setUrlLoading] = useState(false)
     const { myRecentOrders, trendingOrders } = useSelector(({ tripsRed }) => tripsRed)
-
+    const [currentAddress, setCurrentAddress] = useState();
     const goToDetails = (order) => {
         navigation.navigate("OrderDetails", { order: order })
     }
@@ -42,15 +42,55 @@ export default function HomeScreen() {
             var obj = {
                 admin_id: currentUser._id
             }
-
             dispatch(GetMyRecentOrders(obj, token))
 
             // dispatch(GetLanguages())
 
             return () => {
             };
+
+
         }, [])
     );
+
+
+    async function getCurrentAddress() {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+                console.log("granted", granted)
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+
+                    Geolocation.getCurrentPosition(
+                        (position) => {
+                            const coordinates = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            }
+                            console.log("COORS", coordinates)
+                            Geocoder.geocodePosition(coordinates).then(res => {
+                                setCurrentAddress(res[0]);
+                            })
+                        },
+                        (error) => {
+                            console.log("error:", error)
+                            Toast.show({
+                                type: 'error',
+                                text2: "Please enable your device's location",
+                            })
+                            return
+                        },
+                        {
+                            enableHighAccuracy: false,
+                            timeout: 2000,
+                        }
+                    )
+                }
+            } catch (err) {
+                console.warn(err)
+            }
+        }
+    }
 
     function getFlag(name) {
         return countriesFlags.find(element => element.name == name)?.flag
@@ -223,7 +263,7 @@ export default function HomeScreen() {
                                     </View>
                                     <View style={{ marginLeft: index == 0 ? '1%' : 0 }}>
 
-                                        <TextBold numberOfLines={3} style={{ fontSize: 15,  marginTop: 5, width: (windowWidth * 28) / 100 }}>{item.name}</TextBold>
+                                        <TextBold numberOfLines={3} style={{ fontSize: 15, marginTop: 5, width: (windowWidth * 28) / 100 }}>{item.name}</TextBold>
 
                                         <View style={{ flexDirection: 'row' }}>
                                             <TextMedium style={styles.countryFlag}>{getFlag(item.product_buy_country_name)}</TextMedium>

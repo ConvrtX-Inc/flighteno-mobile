@@ -24,7 +24,7 @@ export function createOrder(data, navigate, token) {
             dispatch({ type: IS_LOADING, isloading: false })
         }).then(Response => {
 
-            
+            // console.log(Response)
             navigate("Congratulation", { data: Response.data })
             dispatch({ type: IS_LOADING, isloading: false })
         })
