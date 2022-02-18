@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "274927645478",
-    "project_id": "flighteno-app",
-    "storage_bucket": "flighteno-app.appspot.com"
+    "project_number": "305249567843",
+    "project_id": "flighteno-e0abd",
+    "storage_bucket": "flighteno-e0abd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:274927645478:android:049845a3276c627574c7e7",
+        "mobilesdk_app_id": "1:305249567843:android:43b8605e4b489d2836a456",
         "android_client_info": {
           "package_name": "com.flighteno"
         }
       },
       "oauth_client": [
         {
-          "client_id": "274927645478-cmh97rucpbtdp2i5ivnr0aqudm0bdm8f.apps.googleusercontent.com",
+          "client_id": "305249567843-6n2dflav3lip19e30lqqnmtvl5o22l1h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCNsdkkfRAjZTiAcZWbRQYeQcctnrqw3VY"
+          "current_key": "AIzaSyAZR33RfKEdwwObUU7-Xax2bk632Pslc-g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "274927645478-cmh97rucpbtdp2i5ivnr0aqudm0bdm8f.apps.googleusercontent.com",
+              "client_id": "305249567843-6n2dflav3lip19e30lqqnmtvl5o22l1h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

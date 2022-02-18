@@ -35,7 +35,7 @@ export default function SupportTicket({ navigation }) {
                 <FlatList
                     data={supportTickets}
                     renderItem={({ item, index }) => (
-                        <View>
+                        <View key={item._id}>
                             <TouchableOpacity onPress={() => navigation.navigate("SupportReply", { ticket: item })}>
                                 <View style={{
                                     borderRadius: 20,
