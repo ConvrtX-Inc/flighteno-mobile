@@ -16,6 +16,7 @@ import moment from 'moment'
 import { CREATE_ORDER_DETAIL } from '../../redux/constants';
 import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -23,7 +24,8 @@ var windowWidth = Dimensions.get('window').width;
 export default function UrlData({ route }) {
 
     const navigation = useNavigation();
-    const { data } = route.params
+    const {t} = useTranslation()
+    const { data } = route.params   
     const { loading, currentUser } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
     const [filePath, setFilePath] = useState({});
@@ -229,10 +231,10 @@ export default function UrlData({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Data from url</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',textAlign:'left' }]}>{t('buyerHome.dataFromUrl')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Your URL</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.yourUrl')}</TextBold>
 
                 <Input
                     placeholder={data.url}
@@ -242,7 +244,7 @@ export default function UrlData({ route }) {
                     editable={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Product Type</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
 
                 {/* custom Picker */}
 
@@ -295,17 +297,17 @@ export default function UrlData({ route }) {
                 </TextMedium>
                 <View style={styles.productDesc}>
                     <View style={styles.productDescInerFirst}>
-                        <TextBold style={styles.productAtrributeHead}>Color</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>Weight</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>Condition</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.color')}</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.weight')}</TextBold>
+                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.condition')}</TextBold>
                     </View>
                     <View style={styles.productDescInerSecond}>
-                        <TextMedium style={styles.productAtrribute}>Not available</TextMedium>
-                        <TextMedium style={styles.productAtrribute}>Not available</TextMedium>
-                        <TextMedium style={styles.productAtrribute}>Not available</TextMedium>
+                        <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
+                        <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
+                        <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
                     </View>
                 </View>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Date </TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
                 <Pressable onPress={() => showMode('date', 'date')}>
                     <View style={styles.pickerVIew}>
                         <View style={styles.pickerLeftView}>
@@ -320,12 +322,12 @@ export default function UrlData({ route }) {
                         </View>
                     </View>
                 </Pressable>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Time</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
                 <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'from')}>
                         <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</TextMedium>
                     </TouchableOpacity>
-                    <TextMedium>to</TextMedium>
+                    <TextMedium>{t('travelHome.to')}</TextMedium>
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'to')}>
                         <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{toTime}</TextMedium>
                     </TouchableOpacity>
@@ -333,7 +335,7 @@ export default function UrlData({ route }) {
                 <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
-                        <TextBold style={styles.loginInputHeading}>Quantity</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
                         <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</TextMedium>
                     </View>
                     <View style={styles.rightQuantityStyle}>
@@ -361,7 +363,7 @@ export default function UrlData({ route }) {
                 <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
-                        <TextBold style={styles.loginInputHeading}>Do you need box?</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.doYouNeedBox')}?</TextBold>
                         <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
                     </View>
                     <View style={styles.rightQuantityStyle}>
@@ -396,13 +398,13 @@ export default function UrlData({ route }) {
                     </View>
                 </View>
 
-                <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
+                <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588' }}></View>
 
                 <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
 
                 <TextMedium style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextMedium>
 
-                <TextSemiBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Try our VIP Service</TextSemiBold>
+                <TextSemiBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextSemiBold>
 
                 {/* custom Picker */}
 
@@ -446,7 +448,7 @@ export default function UrlData({ route }) {
                 {
                     pickerValueSelectedVip == "Yes" ? (
                         <View>
-                            <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>VIP Service Fee</TextBold>
+                            <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
                                 <Input
                                     placeholder="$50.00"
                                     onChangeText={text => setVipServiceFee(text.replace(/[^0-9]/g, ''))}
@@ -462,7 +464,7 @@ export default function UrlData({ route }) {
                 <View style={{ height: 50 }} />
 
                 <ButtonLarge
-                    title="Continue"
+                    title={t('buyerHome.continue')}
                     loader={loading}
                     onPress={() => handleSubmit()}
                 />

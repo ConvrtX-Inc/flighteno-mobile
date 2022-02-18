@@ -14,6 +14,7 @@ import { AddTrip, UserTrips } from '../../../redux/actions/Trips';
 import TextBold from '../../../components/atoms/TextBold'
 import Toast from 'react-native-toast-message';
 import TextSemiBold from '../../../components/atoms/TextSemiBold';
+import { useTranslation } from 'react-i18next';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -27,6 +28,7 @@ export default function MyTravel({ route }) {
     const { loading, currentCountry, currentUser, token } = useSelector(({ authRed }) => authRed)
     const { tripsData } = useSelector(({ tripsRed }) => tripsRed)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
     const [mode, setMode] = useState('date');
 
@@ -220,7 +222,7 @@ export default function MyTravel({ route }) {
         <View style={styles.ScreenCss}>
 
             <ScrollView>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Traveling From</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelFrom')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -280,7 +282,7 @@ export default function MyTravel({ route }) {
 
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Traveling To</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelTo')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -343,7 +345,7 @@ export default function MyTravel({ route }) {
                 <View style={styles.travelDateContainer}>
 
                     <View style={[styles.travelDateInner, { alignItems: 'flex-start' }]}>
-                        <TextBold style={styles.travelDateTitle}>Depart</TextBold>
+                        <TextBold style={styles.travelDateTitle}>{t('travelHome.depart')}</TextBold>
 
                         <TouchableOpacity onPress={() => showMode('dep')}>
                             <View style={{
@@ -367,7 +369,7 @@ export default function MyTravel({ route }) {
 
 
                     <View style={[styles.travelDateInner, { alignItems: 'flex-end' }]}>
-                        <TextBold style={[styles.travelDateTitle, { marginRight: 37 }]}>Return</TextBold>
+                        <TextBold style={[styles.travelDateTitle, { marginRight: 37 }]}>{t('travelHome.return')}</TextBold>
                         <TouchableOpacity onPress={() => showMode('ret')}>
 
                             <View style={{
@@ -394,7 +396,7 @@ export default function MyTravel({ route }) {
 
                 <View style={{ marginBottom: 30, marginTop: 10 }}>
                     <ButtonTraveller
-                        title="Add trip"
+                        title={t('travelHome.addTrip')}
                         loader={loading}
                         onPress={() => addNewTrip()}
                     />
@@ -416,7 +418,7 @@ export default function MyTravel({ route }) {
                                 >
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>From</TextSemiBold>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white",textAlign:'left' }]}>{t('travelHome.from')}</TextSemiBold>
                                             <TextBold style={styles.travelListValue}>{item.city}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                         </View>
@@ -425,7 +427,7 @@ export default function MyTravel({ route }) {
                                             style={{ height: 60, width: 60 }}
                                         />
                                         <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>To</TextSemiBold>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.to')}</TextSemiBold>
                                             <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                         </View>
@@ -433,7 +435,7 @@ export default function MyTravel({ route }) {
                                     <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>Date</TextSemiBold>
+                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.date')}</TextSemiBold>
                                             <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                         </View>
                                     </View>

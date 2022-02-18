@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -29,6 +31,7 @@ export default function VerifyPhone({ route }) {
 
     const [code, setcode] = useState('')
     const [userCell, setUserCell] = useState('')
+    const {t} = useTranslation()
 
     useEffect(() => {
         nameParam = route.params.name
@@ -150,9 +153,9 @@ export default function VerifyPhone({ route }) {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Verify phone</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',textAlign:'left' }]}>{t('common.verifyPhone')}</TextBold>
 
-                <Text style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100, }]}>Verification code sent to</Text>
+                <Text style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100, textAlign:'left'}]}>{t('common.verCodeSentTo')}</Text>
                 <Text style={styles.verifyPhonTxt}>{userCell}</Text>
 
 
@@ -168,14 +171,14 @@ export default function VerifyPhone({ route }) {
                 />
 
 
-                <Text style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>Didn’t recieve code?</Text>
+                <Text style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100, textAlign:'center' }]}>{t('common.didntRecCode')}?</Text>
                 <TouchableOpacity onPress={() => resendOtp()}>
-                    <Text style={styles.resentPassTxt}>Resend OTP</Text>
+                    <Text style={styles.resentPassTxt}>{t('common.resend')} OTP</Text>
                 </TouchableOpacity>
 
                 <View style={{ marginTop: (windowWidth * 30) / 100, marginBottom: 20 }}>
                     <ButtonLarge
-                        title="Verify account"
+                        title={t('common.verifyAccount')}
                         loader={loading}
                         onPress={() => VeryfyPhoneFunction()}
                     />

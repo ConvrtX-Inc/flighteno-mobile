@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
     splashText: {
         color: color.splashTextColor,
         fontSize: (windowWidth * 8.5) / 100,
+        textAlign:'left'
     },
     splashTxtContainer: {
         marginLeft: '5%',

@@ -19,6 +19,7 @@ import {
 } from 'react-native-fbsdk-next';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import TextBold from '../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 // import { TextExtrabold } from '../../components/atoms/TextExtraBold';
 
 const clientID = "274927645478-6jq3vb9mph0j7kud7knkq5sciir7uv4c.apps.googleusercontent.com"
@@ -33,6 +34,9 @@ var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
 export default function LoginScreen() {
 
+    //i18n.changeLanguage()
+
+    const {t} = useTranslation()
     const navigation = useNavigation();
     const dispatch = useDispatch()
     const { loading, loadingFacebook, loadingGoogle } = useSelector(({ authRed }) => authRed)
@@ -181,13 +185,13 @@ export default function LoginScreen() {
                     />
                 </View>
 
-                <TextBold  style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Login</TextBold>
+                <TextBold  style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.login')}</TextBold>
                 {/* <TextExtrabold>Hello</TextExtrabold> */}
                 {/* Buton fb gmail Login */}
                 <View style={styles.fbBtnContainer}>
                     <ButtonWithImage
                         img={require("../../images/fb.png")}
-                        title="Log in with Facebook"
+                        title={t('common.loginWithFb')}
                         onPress={() => onFacebookButtonPress()}
                         loader={loadingFacebook}
                     />
@@ -196,7 +200,7 @@ export default function LoginScreen() {
                 <View style={styles.GmailBtnContainer}>
                     <ButtonWithImage
                         img={require("../../images/gmail.png")}
-                        title="Log in with Google"
+                        title={t('common.loginWithGoogle')}
                         onPress={() => signIn()}
                         loader={loadingGoogle}
                     />
@@ -204,7 +208,7 @@ export default function LoginScreen() {
 
 
                 {/* TextInputs For Login */}
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
                 <Input
                     placeholder="myemail@flighteno.com"
                     onChangeText={text => setEmail(text)}
@@ -212,7 +216,7 @@ export default function LoginScreen() {
                     secureTextEntry={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Password</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.password')}</TextBold>
                 <Input
                     placeholder="*********"
                     onChangeText={text => setPassword(text)}
@@ -221,11 +225,11 @@ export default function LoginScreen() {
                 />
 
                 <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
-                    <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', alignSelf: 'center', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 10) / 100 }]}>Forgot password?</TextBold>
+                    <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', alignSelf: 'center', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 10) / 100 }]}>{t('common.forgotPass')}</TextBold>
                 </TouchableOpacity>
 
                 <ButtonLarge
-                    title="Login"
+                    title={t('common.login')}
                     loader={loading}
                     onPress={() => loginFunction()}
                 />
@@ -233,12 +237,12 @@ export default function LoginScreen() {
 
                 <View style={styles.bottomTxt}>
                     <TextMedium style={styles.loginInputHeading}>
-                        Don’t have an account?
+                    {t('common.dontHaveAccount')}
                     </TextMedium>
 
 
                     <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-                        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> Signup</TextBold>
+                        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> {t('common.signup')}</TextBold>
                     </TouchableOpacity>
                 </View>
 

@@ -13,9 +13,8 @@ import { GetDataFromUrl } from '../../../redux/actions/BuyerOrder'
 import { UrlTile } from 'react-native-maps';
 import { IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold'
-import Geolocation from 'react-native-geolocation-service';
-import Geocoder from 'react-native-geocoder';
-
+import { GetLanguages } from '../../../redux/actions/Translation';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */ }
@@ -23,6 +22,7 @@ export default function HomeScreen() {
 
     const navigation = useNavigation();
     const dispatch = useDispatch()
+    const {t} = useTranslation()
     const { currentCountry, currentUser, token } = useSelector(({ authRed }) => authRed)
     const [url, setUrl] = useState('');
     const [productName, setProductName] = useState('');
@@ -35,13 +35,17 @@ export default function HomeScreen() {
 
     useFocusEffect(
         React.useCallback(() => {
-            dispatch({ type: IS_LOADING, isloading: false })
+        dispatch({type: IS_LOADING, isloading: false})
+
             dispatch(GetTrendingOrders(token))
+
             var obj = {
                 admin_id: currentUser._id
             }
-            getCurrentAddress();
             dispatch(GetMyRecentOrders(obj, token))
+
+            // dispatch(GetLanguages())
+
             return () => {
             };
 
@@ -161,18 +165,15 @@ export default function HomeScreen() {
                                 />
                             </TouchableOpacity>
 
-                            {
-                                currentAddress ?
-                                    <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginLeft: (windowWidth * 15) / 100, }}>
-                                        <Image
-                                            style={styles.locationImg}
-                                            resizeMode='stretch'
-                                            source={require('../../../images/location.png')}
-                                        />
-                                        <TextMedium style={styles.dubaiTxt}> {currentAddress?.locality}, </TextMedium>
-                                        <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentAddress?.country}</TextMedium>
-                                    </View> : null
-                            }
+                            <View style={{ flexDirection: 'row', alignSelf: 'center', justifyContent: 'center', alignItems: 'center', marginLeft: (windowWidth * 15) / 100, }}>
+                                <Image
+                                    style={styles.locationImg}
+                                    resizeMode='stretch'
+                                    source={require('../../../images/location.png')}
+                                />
+                                <TextMedium style={styles.dubaiTxt}> {currentCountry?.city}, </TextMedium>
+                                <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentCountry.country_name}</TextMedium>
+                            </View>
 
                         </View>
 
@@ -191,14 +192,14 @@ export default function HomeScreen() {
 
                     <View style={{ marginLeft: '5%' }}>
 
-                        <TextBold style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100 }]}>Hello, {currentUser.full_name}</TextBold>
-                        <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>Create order</TextBold>
+                        <TextBold style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100, textAlign:'left' }]}>{t('common.hello')}, {currentUser.full_name}</TextBold>
+                        <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('buyerHome.createOrder')}</TextBold>
 
                     </View>
 
 
 
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter URL</TextBold>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterUrl')}</TextBold>
 
                     <InputImag
                         placeholder="https://www.amazon.com/s?bbn"
@@ -209,17 +210,17 @@ export default function HomeScreen() {
                         loader={urlLoading}
                     />
 
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter manual info</TextBold>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterManual')}</TextBold>
 
                     <InputImag
-                        placeholder="Product name"
+                        placeholder={t('buyerHome.productName')}
                         onChangeText={text => setProductName(text)}
                         value={productName}
                         onPress={() => goToManual()}
                         secureTextEntry={false}
                     />
 
-                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>Trending orders</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15, textAlign:'left' }]}>{t('buyerHome.trendingOrders')}</TextBold>
 
                     <FlatList
                         horizontal={true}
@@ -245,7 +246,7 @@ export default function HomeScreen() {
                     />
 
 
-                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15 }]}>Recent orders</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginLeft: '5%', marginTop: 10, marginBottom: 15, textAlign:'left' }]}>{t('buyerHome.recentOrders')}</TextBold>
 
                     <FlatList
                         horizontal={true}

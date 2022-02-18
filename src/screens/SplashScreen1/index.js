@@ -5,12 +5,13 @@ import { styles } from '../../Utility/Styles';
 import countries from '../../Utility/countries.json';
 import TextExtraBold from '../../components/atoms/TextExtraBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
-var countryName = 'Pakistan'
 // const customData = require('../../Utility/countries.json');
 export default function SplashScreen1() {
 
   const navigation = useNavigation();
+  const {t} = useTranslation()
 
   return (
     <View style={styles.ScreenCss}>
@@ -25,7 +26,7 @@ export default function SplashScreen1() {
           />
 
           <TouchableOpacity onPress={() => navigation.navigate("TermsandCondition")} style={styles.skipText}>
-            <TextMedium style={styles.skipText}>Skip</TextMedium>
+            <TextMedium style={styles.skipText}>{t('common.skip')}</TextMedium>
           </TouchableOpacity>
         </View>
 
@@ -33,7 +34,7 @@ export default function SplashScreen1() {
 
         <View style={styles.splashTxtContainer}>
           {/* <Text style={styles.splashText}>Shop anything</Text> */}
-        <TextExtraBold  style={styles.splashText}>Shop anything {"\n"}all over the{"\n"}world</TextExtraBold>
+        <TextExtraBold  style={styles.splashText}>{t('splash.welcomeText')}</TextExtraBold>
         </View>
 
         <View style={styles.nextImgContainer}>
@@ -45,7 +46,6 @@ export default function SplashScreen1() {
             />
           </TouchableOpacity>
         </View>
-
 
 
 

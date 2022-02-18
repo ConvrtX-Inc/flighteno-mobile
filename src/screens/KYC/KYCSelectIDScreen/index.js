@@ -9,11 +9,13 @@ import StepsIndicator from '../../../components/StepsIndicator';
 import TextBold from '../../../components/atoms/TextBold';
 import Toast from 'react-native-toast-message';
 import { imgToBase64 } from '../../../Utility/Utils';
+import { useTranslation } from 'react-i18next';
 
 
 export default function  KYCSelectIDScreen ({navigation,route}){
 
     const [open, setOpen] = useState(false);
+    const {t} = useTranslation()
     
     const [items, setItems] = useState([
         {label: 'Permanent Resident Card', value: 'permanent resident card'},
@@ -68,6 +70,7 @@ export default function  KYCSelectIDScreen ({navigation,route}){
 
         }
 
+
         
     }
 
@@ -75,13 +78,13 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     return (
         <ScrollView  style={styles.container}>
             <View>
-                <TextBold style={styles.titleTxt}>Id Verification</TextBold>
+                <TextBold style={[styles.titleTxt,{textAlign:'left'}]}>{t('kyc.idVer')}</TextBold>
 
                 <View style={styles.stepIndicator}>
                     <StepsIndicator currentPosition={1}/>
                 </View>
 
-                <TextBold style={[styles.inputLabel, styles.idTypeTxt]}>ID Type</TextBold>
+                <TextBold style={[styles.inputLabel, styles.idTypeTxt, {textAlign:'left'}]}>{t('kyc.idType')}</TextBold>
             
                 <DropDownPicker
                     open={open}
@@ -95,25 +98,25 @@ export default function  KYCSelectIDScreen ({navigation,route}){
                     showTickIcon={false}
                 />
             
-                <TextBold style={[styles.inputLabel,styles.idNoField]}>ID No.</TextBold>
+                <TextBold style={[styles.inputLabel,styles.idNoField, {textAlign:'left'}]}>{t('kyc.IdNo')}.</TextBold>
 
                 <View style={styles.inputIdNo}>
-                    <InputText placeholder='CADL-1231231233' value={idNo} onChangeText={setIdNo} />
+                    <InputText placeholder='CADL-1231231233' maxLength={15} value={idNo} onChangeText={setIdNo} />
                 </View>
                 
 
-                <TextBold style={[ styles.inputLabel,styles.frontPicTxt]}>Upload front picture of ID</TextBold>
+                <TextBold style={[ styles.inputLabel,styles.frontPicTxt, {textAlign:'left'}]}>{t('kyc.uploadFront')}</TextBold>
                 <TouchableOpacity style={styles.idContainer} onPress={onFrontPictureTap}> 
                     <Image source={frontPicture ? {uri: frontPicture} : require('../../../images/frontIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>
 
-                <TextBold style={[styles.inputLabel,styles.backPicTxt]}>Upload back picture of ID</TextBold>
+                <TextBold style={[styles.inputLabel,styles.backPicTxt, {textAlign:'left'}]}>{t('kyc.uploadBack')}</TextBold>
                 <TouchableOpacity style={styles.idContainer} onPress={onBackPictureTap}>
                     <Image source={backPicture ? {uri : backPicture} : require('../../../images/backIdPicture.png')} style={[styles.idPicture]} />
                 </TouchableOpacity>
 
                 <View style={styles.btnNext}>
-                    <ButtonLarge loader={false} title="Next" onPress={onNextTap} />
+                    <ButtonLarge loader={false} title={t('kyc.next')} onPress={onNextTap} />
                 </View>
             
             </View>

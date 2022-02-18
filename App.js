@@ -9,10 +9,11 @@ import { color } from './src/Utility/Color.js';
 import { Provider } from 'react-redux';
 import configureStore from './src/redux/store/index'
 import { PersistGate } from 'redux-persist/integration/react'
-import { I18nextProvider } from 'react-i18next'
+import { I18nextProvider, useTranslation } from 'react-i18next'
 import i18next from 'i18next'
 import common_en from './src/translation/en/common.json'
 import { lightTheme } from './src/lightTheme.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 LogBox.ignoreLogs(['Reanimated 2', 'VirtualizedLists should never be nested']);
 // i18next.init({
 //   lng: 'en', // if you're using a language detector, do not define the lng option
@@ -41,9 +42,27 @@ const { store, persistor } = configureStore();
 //   // any_custom_type: () => { }
 // };
 
-
-
 function App() {
+
+  const {i18n} = useTranslation()
+
+  React.useEffect(() => {
+    getCurrentLang()
+  },[])
+
+  const getCurrentLang = async () => {
+    try {
+      const value = await AsyncStorage.getItem('language')
+      if(value !== null) {
+        // value previously stored
+       i18n.changeLanguage(value)
+
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
+
   return (
     <Provider store={store} >
       <I18nextProvider i18n={i18next}>

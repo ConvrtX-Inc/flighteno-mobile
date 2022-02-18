@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
         color: '#656F85',
         fontFamily: 'GilroyMedium',
         backgroundColor: '#F6F9FF',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        textAlign:'left'
     },
     urlNavigateImg: {
         height: 57,

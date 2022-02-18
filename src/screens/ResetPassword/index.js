@@ -12,6 +12,7 @@ import { otpResetPasswordAction } from '../../redux/actions/Auth';
 import { IS_LOADING } from '../../redux/constants';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -19,11 +20,9 @@ export default function ResetPassword() {
 
     const navigation = useNavigation();
     const dispatch = useDispatch()
-    // useEffect(() => {
-    //     dispatch({type: IS_LOADING, isloading: false})
-    // })
+  
     const { loading } = useSelector(({ authRed }) => authRed)
-
+    const {t} = useTranslation()
 
 
     const [email, setEmail] = useState('');
@@ -103,17 +102,17 @@ export default function ResetPassword() {
                     />
                 </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Reset password</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.resetPassword')}</TextBold>
 
-                <TextMedium style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                    Enter your email ID  or phone number associated with your account and we’ll send an verification code for reset your password
+                <TextMedium style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                    {t('common.enterEmailAd')}
                 </TextMedium>
 
 
-                {/* TextInputs For Reset Password */}
+                    {/* TextInputs For Reset Password */}
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
 
                 <Input
                     placeholder="myemail@flighteno.com"
@@ -122,7 +121,7 @@ export default function ResetPassword() {
                     secureTextEntry={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
 
                 <PhoneInput
                     ref={phoneInput}
@@ -151,7 +150,7 @@ export default function ResetPassword() {
 
                 <View style={{ marginTop: (windowWidth * 20) / 100, marginBottom: 35 }}>
                     <ButtonLarge
-                        title="Verify Account"
+                        title={t('common.verifyAccount')}
                         loader={loading}
                         onPress={() => resetPasswordFN()}
                     />

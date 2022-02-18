@@ -9,12 +9,14 @@ var windowWidth = Dimensions.get('window').width;
 import moment from 'moment'
 import CardOrder from '../../components/CardOrder';
 import TextBold from '../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 
 {/* Fix for FLIGHT-46 */}
 export default function MyOrdersList({ route }) {
     const { orderStatus, orders } = route.params
     const navigation = useNavigation()
     const [searchedOrders, setSearchedOrders] = useState(orders)
+    const {t} = useTranslation()
 
     const handleSearch = (text) => {
         var res = orders.filter(function (element) {
@@ -38,8 +40,8 @@ export default function MyOrdersList({ route }) {
                 />
             </TouchableOpacity>
           
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>
-                My {orderStatus == "Pending" ? "Pending" : orderStatus == "Completed" ? "Completed" : "Cancelled"} Orders
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>
+                {t('track.my')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')} {t('track.orders')}
             </TextBold>
             <SearchInput
                 placeholder="Search Product Name, Order No."
@@ -56,7 +58,7 @@ export default function MyOrdersList({ route }) {
                 }
                 keyExtractor={item => item.id}
                 ListEmptyComponent={<TextBold style={styles.emptyListText}>
-                    There are no {orderStatus == "Pending" ? "Pending" : orderStatus == "Completed" ? "Completed" : "Cancelled"} orders!
+                    {t('common.thereAreNo')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')}  {t('track.orders').toLowerCase()}!
                 </TextBold>}
             />
         </View>

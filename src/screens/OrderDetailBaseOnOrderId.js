@@ -25,6 +25,9 @@ export default function OrderDetailBaseOnOrderId({ route }) {
             order_id: route.params.orderId
         }
         dispatch(getCurrentOrder(data, token, (data) => setCurrentOrder(data)))
+
+        console.log(currentOrder)
+
     }, [])
 
     const viewImage = (type) => {

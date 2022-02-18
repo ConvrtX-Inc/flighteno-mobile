@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         fontFamily: 'GilroyRegular',
         backgroundColor: '#F6F9FF',
         paddingHorizontal: 20,
-        textAlignVertical: 'top'
+        textAlignVertical: 'top',
+        textAlign:'left'
     }
 })

@@ -4,12 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
 
 var windowWidth = Dimensions.get('window').width;
 export default function SplashScreen2() {
 
   const navigation = useNavigation();
+  const {t} = useTranslation()
 
   return (
     <View style={styles.ScreenCss}>
@@ -24,14 +26,14 @@ export default function SplashScreen2() {
           />
 
           <TouchableOpacity onPress={() => navigation.navigate("TermsandCondition")} style={styles.skipText}>
-            <TextMedium  style={styles.skipText}>Skip</TextMedium>
+            <TextMedium  style={styles.skipText}>{t('common.skip')}</TextMedium>
           </TouchableOpacity>
         </View>
 
         {/* Splash Text */}
 
         <View style={styles.splashTxtContainer}>
-          <TextBold style={styles.splashText}>Travel with{"\n"}Flighteno{"\n"}and Earn</TextBold>
+          <TextBold style={styles.splashText}>{t('splash.travelText')}</TextBold>
         </View>
 
         <View style={styles.nextImgContainer}>
@@ -43,7 +45,6 @@ export default function SplashScreen2() {
             />
           </TouchableOpacity>
         </View>
-
 
 
 

@@ -17,6 +17,8 @@ import { CREATE_ORDER_DETAIL, IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold';
 import TextRegular from '../../../components/atoms/TextRegular';
 import TextMedium from '../../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
+
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
@@ -93,6 +95,7 @@ export default function ManualProductInfo({ route }) {
     ]);
 
     const [pickerShowVip, setPickerShowVip] = useState(false);
+    const {t} = useTranslation()
     const [pickerValueSelectedVip, setPickerValueSelectedVip] = useState(false);
     const [pickerValuesVip, setPickerValuesVip] = useState([
         {
@@ -255,10 +258,10 @@ export default function ManualProductInfo({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Manual information</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.manualInfo')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Product name</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productName')}</TextBold>
 
                 <Input
                     placeholder={name}
@@ -268,7 +271,7 @@ export default function ManualProductInfo({ route }) {
                     editable={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Product Type</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
 
                 {/* custom Picker */}
 
@@ -298,7 +301,7 @@ export default function ManualProductInfo({ route }) {
                                 data={pickerValues}
                                 nestedScrollEnabled={true}
                                 renderItem={({ item, index }) =>
-                                    <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
+                                    <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1 }}>
                                         <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueFN(index)}>
                                             <View>
                                                 <Text style={styles.textSelected}>{item.option}</Text>
@@ -317,7 +320,7 @@ export default function ManualProductInfo({ route }) {
                 </View>
                 {/* custom Picker end */}
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Price</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.price')}</TextBold>
 
                 <Input
                     placeholder="Enter price (for eg: $10.00)"
@@ -331,7 +334,7 @@ export default function ManualProductInfo({ route }) {
 
                 <TextRegular style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextRegular>
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Try our VIP Service</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextBold>
 
                 {/* custom Picker */}
 
@@ -379,7 +382,7 @@ export default function ManualProductInfo({ route }) {
                 </View>
                 {/* custom Picker end */}
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>VIP Service Fee</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
 
                 <Input
                     placeholder="$50.00"
@@ -391,7 +394,7 @@ export default function ManualProductInfo({ route }) {
                 />
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter Description</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterDesc')}</TextBold>
 
                 <InputMultiline
                     placeholder="Description"
@@ -442,7 +445,7 @@ export default function ManualProductInfo({ route }) {
                 </View>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload picture</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.uploadPic')}</TextBold>
 
                 <TouchableOpacity style={{marginLeft: '5%', width: 100}} onPress={() => chooseFile()}>
 
@@ -468,7 +471,7 @@ export default function ManualProductInfo({ route }) {
 
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Date </TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
 
 
                 <Pressable onPress={() => showMode('date', 'date')}>
@@ -487,7 +490,7 @@ export default function ManualProductInfo({ route }) {
                 </Pressable>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Time</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
 
                 <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     {/* <View style={styles.timePickerVIew}> */}
@@ -496,7 +499,7 @@ export default function ManualProductInfo({ route }) {
                     </TouchableOpacity>
                     {/* </View> */}
 
-                    <TextMedium>to</TextMedium>
+                    <TextMedium>{t('travelHome.to')}</TextMedium>
 
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'to')}>
                         {/* <View style={[styles.timePickerVIew, {width: '100%', paddingHorizontal: 0}]}> */}
@@ -512,7 +515,7 @@ export default function ManualProductInfo({ route }) {
 
                     <View style={styles.leftQuantityStyle}>
 
-                        <TextBold style={styles.loginInputHeading}>Quantity</TextBold>
+                        <TextBold style={styles.loginInputHeading}>{t('buyerHome.quantity')}</TextBold>
                         <Text style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</Text>
 
                     </View>
@@ -548,7 +551,7 @@ export default function ManualProductInfo({ route }) {
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
 
-                        <TextBold style={styles.loginInputHeading}>Do you need a box?</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.doYouNeedBox')}?</TextBold>
                         <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
                     </View>
                     <View style={styles.rightQuantityStyle}>
@@ -604,7 +607,7 @@ export default function ManualProductInfo({ route }) {
                 <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
 
                 <ButtonLarge
-                    title="Continue"
+                    title={t('buyerHome.continue')}
                     loader={loading}
                     onPress={() => handleSubmit()}
                 />

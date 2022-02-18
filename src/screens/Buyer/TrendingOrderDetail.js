@@ -8,6 +8,7 @@ import ViewImages from '../../components/ViewImages'
 import ButtonLarge from "../../components/ButtonLarge";
 import { useSelector } from 'react-redux'
 import TextBold from '../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -16,6 +17,7 @@ const TrendingOrderDetail = ({ route }) => {
     const { order } = route.params
     const navigation = useNavigation()
     const { loading } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
     const [showProductPic, setShowProductPic] = useState(false)
 
     const imageProduct = [{
@@ -49,7 +51,7 @@ const TrendingOrderDetail = ({ route }) => {
                 </View>
                 <View style={{ marginVertical: 20 }}>
                     <ButtonLarge
-                        title="Create Order"
+                        title={t('buyerHome.createOrder')}
                         loader={loading}
                         onPress={() => navigation.navigate("UrlData", { data: order })}
                     />

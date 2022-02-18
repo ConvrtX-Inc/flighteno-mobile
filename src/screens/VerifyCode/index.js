@@ -8,6 +8,7 @@ import Toast from 'react-native-toast-message';
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
 import { verificationCodeAction, verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -19,6 +20,7 @@ export default function VerifyCode({ route }) {
     const navigation = useNavigation();
     const { loading } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
 
 
@@ -79,8 +81,6 @@ export default function VerifyCode({ route }) {
         const form_data = new FormData()
         form_data.append("phoneNumber", cellNoParam)
 
-        console.log(cellNoParam)
-
         dispatch(verificationCodeAction(
             form_data,
             () => {
@@ -113,9 +113,9 @@ export default function VerifyCode({ route }) {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Verify code</Text>
+                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.verifyCode')}</Text>
 
-                <Text style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100, }]}>Verification code sent to</Text>
+                <Text style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100,textAlign:'left' }]}>{t('common.verCodeSentTo')}</Text>
                 <Text style={styles.verifyPhonTxt}>{userCell}</Text>
 
 
@@ -130,9 +130,9 @@ export default function VerifyCode({ route }) {
                     })}
                 />
                 {/* Fix for FLIGHT-6 */}
-                <Text style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>Didn’t receive code?</Text>
+                <Text style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>{t('common.didntRecCode')}?</Text>
                 <TouchableOpacity onPress={() => resendOtp()}>
-                    <Text style={styles.resentPassTxt}>Resend OTP</Text>
+                    <Text style={styles.resentPassTxt}>{t('common.resend')} OTP</Text>
                 </TouchableOpacity>
 
             </ScrollView>
@@ -140,7 +140,7 @@ export default function VerifyCode({ route }) {
 
             <View style={{ marginTop: (windowWidth * 30) / 100, marginBottom: 20 }}>
                 <ButtonLarge
-                    title="Verify account"
+                    title={t('common.verifyAccount')}
                     loader={loading}
                     onPress={() => verifyCodeFN()}
                 />

@@ -9,6 +9,7 @@ import QRCode from 'react-native-qrcode-svg';
 import { formatAmount } from '../../../Utility/Utils';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -18,6 +19,7 @@ export default function Congratulation({ route }) {
     const navigation = useNavigation();
     const { data } = route.params
     const { loading } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
 
     useEffect(() => {
         const backAction = () => {
@@ -69,13 +71,13 @@ export default function Congratulation({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={styles.orderNumberIst}>
-                        <TextBold style={styles.loginInputHeading}>Order No.</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderNo')}.</TextBold>
 
                     </View>
                     <View style={styles.orderNumberSecond}>
 
                         <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
-                            {data.order_number}
+                            {data.order_number}``
                         </TextMedium>
                     </View>
 
@@ -84,7 +86,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderPrice')}</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
@@ -98,7 +100,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -113,7 +115,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -127,7 +129,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Flighteno cost</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>Flighteno {t('track.cost')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -142,7 +144,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -156,7 +158,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.textLarge}>Total</TextBold>
+                        <TextBold style={[styles.textLarge,{textAlign:'left'}]}>{t('track.total')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -175,7 +177,7 @@ export default function Congratulation({ route }) {
 
                 <View style={{ marginBottom: 35, marginTop: 26 }}>
                     <ButtonLarge
-                        title="Place a new order"
+                        title={t('buyerHome.placeNewOrder')}
                         loader={loading}
                         onPress={() => navigation.navigate("BottomTab", {screen: "Home"})}
                     />

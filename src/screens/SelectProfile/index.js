@@ -10,6 +10,7 @@ import { CURRENT_PROFILE } from '../../redux/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -20,17 +21,18 @@ export default function SelectProfile() {
     const dispatch = useDispatch()
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const [greetings, setGreetings] = useState("")
+    const {t} = useTranslation()
 
     useEffect(() => {
         var hours = moment().format('HH')
         if (hours >= 12 && hours <= 17) {
-            setGreetings("Afternoon")
+            setGreetings(t('common.afternoon'))
         }
         else if (hours >= 17) {
-            setGreetings("Evening")
+            setGreetings(t('common.evening'))
         }
         else {
-            setGreetings("Morning")
+            setGreetings(t('common.morning'))
         }
     }, []);
 
@@ -64,9 +66,9 @@ export default function SelectProfile() {
                                     resizeMode='stretch'
                                     source={require('../../images/clap.png')}
                                 />
-                                <TextBold style={styles.goodMorningTxt}> Good {greetings}</TextBold>
+                                <TextBold style={styles.goodMorningTxt}> {t('common.good')} {greetings}</TextBold>
                             </View>
-                            <TextBold style={styles.selectProfileH}>Select your profile</TextBold>
+                            <TextBold style={styles.selectProfileH}>{t('common.selectProfile')}</TextBold>
                         </View>
 
                         <View style={styles.SelectProfileHeaderSecond}>
@@ -88,8 +90,8 @@ export default function SelectProfile() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <TextBold style={styles.buyerTxtTop}>Buyer</TextBold>
-                            <TextSemiBold style={styles.buyerTxtBottom}>Get what you want</TextSemiBold>
+                            <TextBold style={styles.buyerTxtTop}>{t('common.buyer')}</TextBold>
+                            <TextSemiBold style={styles.buyerTxtBottom}>{t('common.buyerDesc')}</TextSemiBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
@@ -115,8 +117,8 @@ export default function SelectProfile() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, marginBottom: 30, elevation: 0, }]}
                         >
 
-                            <TextBold style={styles.buyerTxtTop}>Traveller</TextBold>
-                            <TextSemiBold style={styles.buyerTxtBottom}>Save your travel expense</TextSemiBold>
+                            <TextBold style={styles.buyerTxtTop}>{t('common.traveller')}</TextBold>
+                            <TextSemiBold style={styles.buyerTxtBottom}>{t('common.travellerDesc')}</TextSemiBold>
 
                             <Image
                                 style={styles.treeImg}

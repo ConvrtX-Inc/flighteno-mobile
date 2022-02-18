@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { NotificationsList } from '../redux/actions/Auth';
 import moment from 'moment';
 import ScreenLoader from '../components/ScreenLoader';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -16,6 +18,7 @@ export default function Notifications({ route }) {
     const dispatch = useDispatch()
     const { token, currentUser, notificationsData, loading } = useSelector(({ authRed }) => authRed)
     const [showList, setShowList] = useState(false)
+    const {t} = useTranslation()
 
     useEffect(() => {
         var data = {
@@ -38,7 +41,7 @@ export default function Notifications({ route }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Notifications</Text>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.notifications')}</TextBold>
             {showList ?
                 <FlatList
                     data={notificationsData}
@@ -57,7 +60,7 @@ export default function Notifications({ route }) {
                         </TouchableOpacity>
                     }
                     keyExtractor={item => item.id}
-                    ListEmptyComponent={<Text style={styles.emptyListText}>There are no notifications!</Text>}
+                    ListEmptyComponent={<Text style={styles.emptyListText}>{t('common.noNotifications')}!</Text>}
                 />
                 : null}
         </View>

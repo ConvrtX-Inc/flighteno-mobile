@@ -8,6 +8,7 @@ import { getChatMessages } from '../../redux/actions/Chat';
 import moment from 'moment'
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -17,6 +18,7 @@ export default function ChatScreen() {
     const { loading, token, currentUser, currentProfile } = useSelector(({ authRed }) => authRed)
     const { chatMessages } = useSelector(({ chatRed }) => chatRed)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
     useFocusEffect(
         React.useCallback(() => {
@@ -35,7 +37,7 @@ export default function ChatScreen() {
                 <FlatList
                     data={chatMessages}
                     nestedScrollEnabled
-                    ListEmptyComponent={<TextBold style={[styles.emptyListText, {marginTop: -20}]}>There are no messages!</TextBold>}
+                    ListEmptyComponent={<TextBold style={[styles.emptyListText, {marginTop: -20}]}>{t('common.noMessages')}!</TextBold>}
                     ListHeaderComponent={<View>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
                             <Image
@@ -44,7 +46,7 @@ export default function ChatScreen() {
                                 source={require('../../images/back.png')}
                             />
                         </TouchableOpacity>
-                        <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Inbox</TextBold>
+                        <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('messages.inbox')}</TextBold>
                         <View style={{ marginVertical: 30 }}>
                             <FlatList
                                 data={chatMessages}
@@ -72,7 +74,7 @@ export default function ChatScreen() {
                     renderItem={({ item, index }) =>
                         <View>
                             {index == 0 ?
-                                <TextBold style={[styles.HeadingText, { marginLeft: '5%' }]}>Messages</TextBold>
+                                <TextBold style={[styles.HeadingText, { marginLeft: '5%', textAlign:'left' }]}>{t('messages.messages')}</TextBold>
                                 : null}
                             <TouchableOpacity onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], receiverId: item.reciver_id, chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                 style={[Styles.itemView, {}]}>

@@ -7,6 +7,7 @@ import { color } from '../../Utility/Color';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetMyOrders } from '../../redux/actions/Trips';
 import TextBold from '../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
@@ -17,6 +18,7 @@ export default function Transactions() {
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const { myOrders } = useSelector(({ tripsRed }) => tripsRed)
 
+    const {t} = useTranslation()
 
     useFocusEffect(
         React.useCallback(() => {
@@ -68,7 +70,7 @@ export default function Transactions() {
 
                     <View style={{ marginLeft: '5%' }}>
 
-                        <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>Transactions</TextBold>
+                        <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.transactions')}</TextBold>
 
                     </View>
 
@@ -80,7 +82,7 @@ export default function Transactions() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <TextBold style={styles.buyerTxtTop}>Pending Order</TextBold>
+                            <TextBold style={styles.buyerTxtTop}>{t('track.pendingOrder')}</TextBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
@@ -101,7 +103,7 @@ export default function Transactions() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <TextBold style={styles.buyerTxtTop}>Completed</TextBold>
+                            <TextBold style={styles.buyerTxtTop}>{t('track.completed')}</TextBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
@@ -122,7 +124,7 @@ export default function Transactions() {
                             style={[styles.buyerBGImg, { marginTop: (windowWidth * 10) / 100, }]}
                         >
 
-                            <TextBold style={styles.buyerTxtTop}>Cancelled</TextBold>
+                            <TextBold style={styles.buyerTxtTop}>{t('track.cancelled')}</TextBold>
 
                             <View style={{ flexDirection: 'row' }}>
                                 <Image
