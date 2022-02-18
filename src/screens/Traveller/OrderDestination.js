@@ -60,48 +60,52 @@ export default function OrderDestination({ route }) {
     const [pickerValues, setPickerValues] = useState([
         {
             id: '0',
-            option: 'Cell phones'
+            option: 'Please select'
         },
         {
             id: '1',
-            option: 'Cell phones accessories'
+            option: 'Cell phones'
         },
         {
             id: '2',
-            option: 'Computers'
+            option: 'Cell phones accessories'
         },
         {
             id: '3',
-            option: 'Cameras'
+            option: 'Computers'
         },
         {
             id: '4',
-            option: 'Clothings'
+            option: 'Cameras'
         },
         {
             id: '5',
-            option: 'Electronics'
+            option: 'Clothings'
         },
         {
             id: '6',
-            option: 'Toys'
+            option: 'Electronics'
         },
         {
             id: '7',
-            option: 'Beauty and personal care'
+            option: 'Toys'
         },
         {
             id: '8',
-            option: 'Novelty Items'
+            option: 'Beauty and personal care'
         },
         {
             id: '9',
+            option: 'Novelty Items'
+        },
+        {
+            id: '10',
             option: 'Retro or Vintage Items'
         }, {
-            id: '10',
+            id: '11',
             option: 'Perishable / Edible'
         }, {
-            id: '11',
+            id: '12',
             option: 'Others'
         },
     ]);
@@ -198,7 +202,10 @@ export default function OrderDestination({ route }) {
         // filteredArr.push('hello')
     
         //for product type
-        if(pickerValueSelected){
+
+     
+
+        if(pName){
 
             filteredArray = filterOrderData.filter((item) => {
 
@@ -206,14 +213,49 @@ export default function OrderDestination({ route }) {
                 const itemName = item?.name.toLowerCase()
                 const itemPrice = item?.product_price
 
-                const pickerData = pickerValueSelected.toLowerCase();
+                const pickerData = pickerValueSelected?.toLowerCase();
  
-                return itemType.indexOf(pickerData) > -1  && itemName.indexOf(pName.toLowerCase()) > -1
+
+                if (pickerData === 'please select'){
+                    return itemType.indexOf(pickerData ?? "") >= -1   && itemName.indexOf(pName.toLowerCase()) > -1
+                    && itemPrice >= minPrice
+                }
+
+                
+                return itemType.indexOf(pickerData ?? "") > -1  && itemName.indexOf(pName.toLowerCase()) > -1
                 && itemPrice >= minPrice
 
-            });
-    
+               
+
+            })
+        }else{
+
+            filteredArray = ordersToDestination.filter((item) => {
+
+                const itemType = item?.product_type.toLowerCase();
+                const itemName = item?.name.toLowerCase()
+                const itemPrice = item?.product_price
+
+                const pickerData = pickerValueSelected?.toLowerCase();
+ 
+
+                if (pickerData === 'please select'){
+                    return itemType.indexOf(pickerData ?? "") >= -1  && itemPrice >= minPrice && itemName.indexOf(pName.toLowerCase()) >= -1
+                }
+
+                
+                return itemType.indexOf(pickerData ?? "") > -1  &&  itemPrice >= minPrice && itemName.indexOf(pName.toLowerCase()) >= -1
+
+               
+
+            })
+
         }
+
+
+
+    
+        
 
 
         function compare(a,b){
@@ -281,9 +323,7 @@ export default function OrderDestination({ route }) {
             filteredArray.sort(compare)
         }
 
-        filteredArray.forEach(item => {
-            console.log(item?.name + '' + item?.product_price)
-        });
+
 
 
         setFilterOrderData(filteredArray)
@@ -458,45 +498,8 @@ export default function OrderDestination({ route }) {
                             </View>
 
                         </View>
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.storeName')}</TextSemiBold>
-                        </View>
-                        <View style={{ alignSelf: 'center', width: '90%', flexDirection: 'row' }}>
-                            <TextInput
-                                style={Styles.searchInput}
-                                placeholder="Search Store Name"
-                                value={storeValue}
-                                onChangeText={(text) => searchStore(text)}
-                            />
-                            <View style={Styles.searchIcon}>
-                                <Icon1 name="search" size={26} color={color.skipTextColor} />
-                            </View>
-                        </View>
-
-                        <View>
-                            <FlatList
-                                data={storeNames}
-                                style={Styles.storeNamesList}
-                                nestedScrollEnabled
-                                renderItem={({ item, index }) =>
-
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-                                        <TextMedium style={Styles.storeNameListText}>{item.name}</TextMedium>
-                                        <CheckBox
-                                            checkedIcon='dot-circle-o'
-                                            uncheckedIcon='circle'
-                                            checkedColor={color.blueColor}
-                                            uncheckedColor={color.inputBackColor}
-                                            containerStyle={{ padding: 0, margin: 0 }}
-                                            checked={item.checked}
-                                            onPress={() => selectStore(index)}
-                                        />
-                                    </View>
-
-                                }
-                                keyExtractor={item => item.id}
-                            />
-                        </View>
+                      
+                       
                         <View style={{ alignSelf: 'center', width: '90%' }}>
                             <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.sort')}</TextBold>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
