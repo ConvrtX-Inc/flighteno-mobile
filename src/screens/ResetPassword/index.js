@@ -29,6 +29,8 @@ export default function ResetPassword() {
     const [cellno, setCellNo] = useState('');
     const [cellnoShow, setCellNoShow] = useState('');
 
+    const [isPhoneEnabled, setPhoneEnabled] = useState(true)
+    const [isEmailEnabled, setEmailEnabled] = useState(true)
 
     const phoneInput = useRef();
 
@@ -66,7 +68,6 @@ export default function ResetPassword() {
         }
 
         
-        console.log("DATA", form_data)
         dispatch(otpResetPasswordAction(
             form_data,
             () => {
@@ -116,9 +117,19 @@ export default function ResetPassword() {
 
                 <Input
                     placeholder="myemail@flighteno.com"
-                    onChangeText={text => { setEmail(text) }}
+                    onChangeText={text => {
+                        setEmail(text)
+                        
+                        if(text === ""){
+                            setPhoneEnabled(true)
+                        }else{
+                            setPhoneEnabled(false)
+                        }
+                     }}
                     value={email}
                     secureTextEntry={false}
+                    // editable={isEmailEnabled}
+                    editable={cellnoShow ? false : true}
                 />
 
                 <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
@@ -130,20 +141,29 @@ export default function ResetPassword() {
                     onChangeFormattedText={(text) => {
                         setCellNo(text)
 
+                        if(text === ""){
+                            setEmailEnabled(true)
+                        }else{
+                            setEmailEnabled(false)
+                        }
+
                     }}
                     onChangeText={(text) => {
-                            setCellNoShow(text)
+                        setCellNoShow(text)
                     }}
+                    
+                    
                     // onChangeCountry={(country) => setCellNo("+" + country.callingCode)}
                     containerStyle={styles.phoneContainer}
                     textInputStyle={styles.phoneInput}
                     textContainerStyle={styles.phoneTextContainer}
                     codeTextStyle={styles.phoneCodeText}
                     textInputProps={{
-                        placeholderTextColor: "#707070",
+                        placeholderTextColor: email ? "#CDCDCD" : "#707070",
                         keyboardType: "phone-pad",
                         value: cellnoShow,
-                        placeholder: "123-456-789"
+                        placeholder: "123-456-789",
+                        editable:email ? false : true
                     }}
                 />
 

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UpdatePassword } from '../redux/actions/Auth';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
+import TextRegular from '../components/atoms/TextRegular';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -86,7 +87,7 @@ export default function ChangePassword() {
 
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.changePass')}</TextBold>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</Text>
+                <TextRegular style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextRegular>
 
                 <Input
                     placeholder={t('common.oldPass')}

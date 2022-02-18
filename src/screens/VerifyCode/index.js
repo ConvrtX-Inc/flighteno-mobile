@@ -9,6 +9,9 @@ import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
 import { verificationCodeAction, verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
 import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
+import TextRegular from '../../components/atoms/TextRegular';
+import moment from 'moment';
 
 
 
@@ -23,21 +26,63 @@ export default function VerifyCode({ route }) {
     const {t} = useTranslation()
 
 
-
-    const [email, setEmail] = useState('');
-    const [cellno, setCellNo] = useState('');
     const [code, setcode] = useState('')
     const [userCell, setUserCell] = useState('')
+    // const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
 
+    const startingMins = 10
+    let time = startingMins * 60
+
+    // const [seconds, setSeconds] = useState(0)
+    // const [minutes, setMinutes] = useState(0)
+
+    const [counter, setCounter] = useState(60)
 
     useEffect(() => {
 
         cellNoParam = route.params.cellNo
         setUserCell(cellNoParam)
 
+        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
 
-    }, []);
 
+    }, [counter]);
+
+    const calculateTimeLeft = (duration) => {
+        
+        let timeLeft = {
+            mins: Math.floor((duration % 3600) / 60),
+            secs: duration % 60
+        }
+
+        return timeLeft
+
+    }
+
+
+    const secondsToTime = (secs) => {
+        
+        let hours = Math.floor(secs/(60*60))
+
+        let divisorForMinutes = secs % (60*60)
+        let minutes = Math.floor(divisorForMinutes/60)
+
+        let divisorForSeconds = divisorForMinutes * 60
+        let seconds = Math.ceil(divisorForSeconds)
+
+        let obj = {
+            "h":hours,
+            "m":minutes,
+            "s":seconds
+        }
+
+        return obj
+
+    }
+
+    const startTimer = () => {
+
+    }
 
     const verifyCodeFN = () => {
 
@@ -78,6 +123,7 @@ export default function VerifyCode({ route }) {
     /*Fix for FLIGHT-6*/
     const resendOtp = () => {
        
+
         const form_data = new FormData()
         form_data.append("phoneNumber", cellNoParam)
 
@@ -97,6 +143,8 @@ export default function VerifyCode({ route }) {
                 })
             }
         ))
+
+        setCounter(60)
     }
 
 
@@ -113,10 +161,10 @@ export default function VerifyCode({ route }) {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.verifyCode')}</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.verifyCode')}</TextBold>
 
-                <Text style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100,textAlign:'left' }]}>{t('common.verCodeSentTo')}</Text>
-                <Text style={styles.verifyPhonTxt}>{userCell}</Text>
+                <TextRegular style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100,textAlign:'left' }]}>{t('common.verCodeSentTo')}</TextRegular>
+                <TextRegular style={styles.verifyPhonTxt}>{userCell}</TextRegular>
 
 
                 <OTPInputView
@@ -130,15 +178,21 @@ export default function VerifyCode({ route }) {
                     })}
                 />
                 {/* Fix for FLIGHT-6 */}
-                <Text style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>{t('common.didntRecCode')}?</Text>
+                
+                {counter == 0 ?    
+                <>
+                <TextRegular style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>{t('common.didntRecCode')}?</TextRegular>
                 <TouchableOpacity onPress={() => resendOtp()}>
-                    <Text style={styles.resentPassTxt}>{t('common.resend')} OTP</Text>
+                    <TextBold style={styles.resentPassTxt}>{t('common.resend')} OTP</TextBold>
                 </TouchableOpacity>
+                </> : <TextRegular style={{textAlign:'center', marginBottom:16, fontSize:18}}>{counter}</TextRegular>}
+             
 
             </ScrollView>
 
 
             <View style={{ marginTop: (windowWidth * 30) / 100, marginBottom: 20 }}>
+              
                 <ButtonLarge
                     title={t('common.verifyAccount')}
                     loader={loading}
