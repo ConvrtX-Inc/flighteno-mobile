@@ -15,6 +15,8 @@ import { sendEditOffer } from '../../redux/actions/Chat';
 import { formatAmount } from '../../Utility/Utils';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
+import TextRegular from '../../components/atoms/TextRegular';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -85,11 +87,11 @@ export default function OfferPrice({ route }) {
                 </TouchableOpacity>
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',textAlign:'left' }]}>{t('travelHome.offerDetails')}</TextBold>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '5%', marginTop: 20 }}>
-                    <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>{t('track.estimatedDelFee')}</Text>
-                    <Text style={Styles.priceText}>{formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}</Text>
+                    <TextBold style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>{t('track.estimatedDelFee')}</TextBold>
+                    <TextMedium style={Styles.priceText}>{formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}</TextMedium>
                 </View>
                 <View style={{ alignSelf: 'center', width: '90%' }}>
-                    <Text style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.yourDelFeeOffer')}</Text>
+                    <TextBold style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.yourDelFeeOffer')}</TextBold>
                 </View>
                 <Input
                     placeholder="$90.00"
@@ -101,14 +103,14 @@ export default function OfferPrice({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={[styles.orderNumberIst, { paddingLeft: '5%' }]}>
-                        <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderNo')}.</Text>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderNo')}.</TextBold>
 
                     </View>
                     <View style={styles.orderNumberSecond}>
 
-                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                             {orderDetail._id}
-                        </Text>
+                        </TextMedium>
                     </View>
 
                 </View>
@@ -117,13 +119,13 @@ export default function OfferPrice({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={styles.billLeft}>
-                            <Text style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderPrice')}</Text>
+                            <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderPrice')}</TextBold>
                         </View>
 
                         <View style={styles.billRight}>
-                            <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                            <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                 {formatAmount(orderDetail.product_price)}
-                            </Text>
+                            </TextMedium>
                         </View>
 
                     </View>
@@ -131,13 +133,13 @@ export default function OfferPrice({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</Text>
+                            <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
-                            <Text style={[styles.termText, { color: 'white', opacity: 10, marginHorizontal: '5%', textAlign: 'justify', backgroundColor: color.lightBlue, width: '50%' }]}>
+                            <TextMedium style={[styles.termText, { color: 'white', opacity: 10, marginHorizontal: '5%', textAlign: 'justify', backgroundColor: color.lightBlue, width: '50%' }]}>
                                 {formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}
-                            </Text>
+                            </TextMedium>
                         </View>
 
                     </View>
@@ -146,13 +148,13 @@ export default function OfferPrice({ route }) {
                         <View style={styles.orderBillStyle}>
 
                             <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</Text>
+                                <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                             </View>
 
                             <View style={[styles.billRight, { marginTop: 2 }]}>
-                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                     {formatAmount(orderDetail.vip_service_fee)}
-                                </Text>
+                                </TextMedium>
                             </View>
 
                         </View>
@@ -161,13 +163,13 @@ export default function OfferPrice({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>Flightneno {t('track.cost')}</Text>
+                            <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>Flightneno {t('track.cost')}</TextBold>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
-                            <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                            <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                 {formatAmount(Math.round((orderDetail.product_price / 100) * 7))}
-                            </Text>
+                            </TextMedium>
                         </View>
 
                     </View>
@@ -176,13 +178,13 @@ export default function OfferPrice({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</Text>
+                            <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
-                            <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                            <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                 {formatAmount(orderDetail.tax)}
-                            </Text>
+                            </TextMedium>
                         </View>
 
                     </View>
@@ -190,18 +192,18 @@ export default function OfferPrice({ route }) {
                     <View style={[styles.orderBillStyle, { marginTop: 20 }]}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <Text style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</Text>
+                            <TextBold style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</TextBold>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
-                            <Text style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                            <TextMedium style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                 {formatAmount(parseInt(orderDetail.product_price) + parseInt(orderDetail.tax) + parseInt(orderDetail.vip_service_fee) + parseInt(Math.round((orderDetail.product_price / 100) * 7)) + parseInt(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10)))}
-                            </Text>
+                            </TextMedium>
                         </View>
 
                     </View>
                     <View style={{ alignSelf: 'center', width: '90%', marginTop: 30 }}>
-                        <Text style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</Text>
+                        <TextBold style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
                     </View>
                     <Pressable style={{ marginTop: 5 }} onPress={() => setShow(!show)}>
                         <View style={styles.pickerVIew}>
@@ -219,7 +221,7 @@ export default function OfferPrice({ route }) {
                         </View>
                     </Pressable>
                     <View style={{ alignSelf: 'center', width: '90%', }}>
-                        <Text style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('travelHome.notes')}</Text>
+                        <TextBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('travelHome.notes')}</TextBold>
                     </View>
                     <InputMulti
                         placeholder="Let's meet in the morning"
@@ -256,13 +258,13 @@ const Styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         marginLeft: '5%',
         color: 'black'
     },
     priceText: {
         fontSize: 16,
-        fontWeight: '900',
+        // fontWeight: '900',
         color: color.skipTextColor
     },
 })

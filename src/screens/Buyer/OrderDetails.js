@@ -123,7 +123,7 @@ export default function OrderDetails({ route }) {
                 {order?.admin_id?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
-                            source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
+                            source={traveler?.profile_image ? { uri: 'data:image/png;base64,'+traveler?.profile_image } : require('../../images/manProfile.png')}
                             style={styles.profileImage}
                         />
                         <View style={{alignItems:'flex-start', paddingLeft:16}}>

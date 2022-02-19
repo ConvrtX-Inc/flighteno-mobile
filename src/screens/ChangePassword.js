@@ -87,7 +87,7 @@ export default function ChangePassword() {
 
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.changePass')}</TextBold>
 
-                <TextRegular style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextRegular>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextBold>
 
                 <Input
                     placeholder={t('common.oldPass')}
@@ -96,7 +96,7 @@ export default function ChangePassword() {
                     secureTextEntry={false}
                     
                 />
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
 
                 <Input
                     placeholder={t('common.newPass')}
@@ -105,7 +105,7 @@ export default function ChangePassword() {
                     secureTextEntry={true}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</TextBold>
 
                 <Input
                     placeholder={t('common.confirmPass')}

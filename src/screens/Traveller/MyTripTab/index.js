@@ -41,7 +41,7 @@ export default function MyTripTab() {
                     <TouchableOpacity onPress={() => { navigation.navigate('Profile') }}>
                         <Image
                             style={[styles.homeProfileImg, { margin: 15 }]}
-                            source={!currentUser.profile_image ? require('../../../images/manProfile.png') : { uri: currentUser.profile_image }}
+                            source={!currentUser.profile_image ? require('../../../images/manProfile.png') : { uri: 'data:image/png;base64,'+currentUser.profile_image }}
                         />
                     </TouchableOpacity>
                     : null}

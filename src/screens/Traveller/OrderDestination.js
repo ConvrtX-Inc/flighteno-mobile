@@ -254,9 +254,6 @@ export default function OrderDestination({ route }) {
 
 
 
-    
-        
-
 
         function compare(a,b){
 
@@ -325,9 +322,6 @@ export default function OrderDestination({ route }) {
                 filteredArray.sort(compare)
                 break;
         }
-
-
-
 
         setFilterOrderData(filteredArray)
         setShowFilter(!showFilter)

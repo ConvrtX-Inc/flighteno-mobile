@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
-import { verificationCodeAction, verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
+import { otpResetPasswordAction, verificationCodeAction, verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
 import TextRegular from '../../components/atoms/TextRegular';
@@ -27,7 +27,7 @@ export default function VerifyCode({ route }) {
 
 
     const [code, setcode] = useState('')
-    const [userCell, setUserCell] = useState('')
+    const [userCell, setUserCell] = useState(route.params?.cellNo)
     // const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
 
     const startingMins = 10
@@ -36,53 +36,22 @@ export default function VerifyCode({ route }) {
     // const [seconds, setSeconds] = useState(0)
     // const [minutes, setMinutes] = useState(0)
 
-    const [counter, setCounter] = useState(60)
+    const [counter, setCounter] = useState(120)
 
     useEffect(() => {
 
-        cellNoParam = route.params.cellNo
-        setUserCell(cellNoParam)
+        // cellNoParam =
+        // setUserCell(cellNoParam)
+
+        // console.log(userCell)
 
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
 
 
+
     }, [counter]);
 
-    const calculateTimeLeft = (duration) => {
-        
-        let timeLeft = {
-            mins: Math.floor((duration % 3600) / 60),
-            secs: duration % 60
-        }
 
-        return timeLeft
-
-    }
-
-
-    const secondsToTime = (secs) => {
-        
-        let hours = Math.floor(secs/(60*60))
-
-        let divisorForMinutes = secs % (60*60)
-        let minutes = Math.floor(divisorForMinutes/60)
-
-        let divisorForSeconds = divisorForMinutes * 60
-        let seconds = Math.ceil(divisorForSeconds)
-
-        let obj = {
-            "h":hours,
-            "m":minutes,
-            "s":seconds
-        }
-
-        return obj
-
-    }
-
-    const startTimer = () => {
-
-    }
 
     const verifyCodeFN = () => {
 
@@ -125,26 +94,49 @@ export default function VerifyCode({ route }) {
        
 
         const form_data = new FormData()
-        form_data.append("phoneNumber", cellNoParam)
+        form_data.append("type", 'phone')
+        form_data.append("data", userCell)
 
-        dispatch(verificationCodeAction(
+
+        // dispatch(verificationCodeAction(
+        //     form_data,
+        //     () => {
+        //         setcode("")
+        //     },
+        //     () => {
+        //         console.log("")
+        //     },
+        //     () => {
+        //         Toast.show({
+        //             type: 'error',
+        //             text1: 'Alert!',
+        //             text2: "Invalid OTP",
+        //         })
+        //     }
+        // ))
+
+        dispatch(otpResetPasswordAction(
             form_data,
             () => {
-                setcode("")
+                // setCellNo("")
+                // setCellNoShow("")
+                // setEmail("")
             },
-            () => {
-                console.log("")
+            (cellNo) => {
+                console.log('success:'+cellNo)
+                // navigation.navigate("VerifyCode", { cellNo: cellno.length >= 6 ? cellno : cellNo })
             },
             () => {
                 Toast.show({
                     type: 'error',
                     text1: 'Alert!',
-                    text2: "Invalid OTP",
+                    text2: "Invalid Credentials",
                 })
-            }
+            },
+
         ))
 
-        setCounter(60)
+        setCounter(120)
     }
 
 
@@ -179,14 +171,13 @@ export default function VerifyCode({ route }) {
                 />
                 {/* Fix for FLIGHT-6 */}
                 
-                {counter == 0 ?    
+             {counter == 0 ?    
                 <>
                 <TextRegular style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>{t('common.didntRecCode')}?</TextRegular>
                 <TouchableOpacity onPress={() => resendOtp()}>
                     <TextBold style={styles.resentPassTxt}>{t('common.resend')} OTP</TextBold>
                 </TouchableOpacity>
-                </> : <TextRegular style={{textAlign:'center', marginBottom:16, fontSize:18}}>{counter}</TextRegular>}
-             
+                </> :  <TextRegular style={{textAlign:'center', marginBottom:16, fontSize:16, marginTop:24}}>{counter} seconds left</TextRegular>} 
 
             </ScrollView>
 

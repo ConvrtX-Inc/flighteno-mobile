@@ -6,6 +6,7 @@ import { color } from '../../Utility/Color';
 import moment from 'moment';
 import CardOrderUser from '../../components/CardOrderUser';
 import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
 
 var storeNamesList = [
     {
@@ -32,7 +33,7 @@ export default function OrdersSpecificCountry({ route }) {
 
             <View style={Styles.header}>
 
-                <Text style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.orders')} - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.orders')} - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
 
             </View>
             <FlatList

@@ -6,6 +6,8 @@ import { styles } from '../Utility/Styles';
 import { formatAmount } from '../Utility/Utils';
 import ViewImages from './ViewImages';
 import { useTranslation } from 'react-i18next';
+import TextBold from './atoms/TextBold';
+import TextRegular from './atoms/TextRegular';
 
 const CardOrderUser = ({ order }) => {
     
@@ -33,31 +35,31 @@ const CardOrderUser = ({ order }) => {
                         <Image source={order.buyer_details[0].profile_image == "" ? require("../images/manProfile.png") : { uri: order.buyer_details[0].profile_image }}
                             style={Styles.userImage}
                         />
-                        <Text style={[Styles.userName, { marginLeft: '3%', flexWrap: 'wrap' }]}>
+                        <TextBold style={[Styles.userName, { marginLeft: '3%', flexWrap: 'wrap' }]}>
                             {order.buyer_details[0].full_name}
-                        </Text>
+                        </TextBold>
                     </View>
                     <View style={[Styles.dateView, { backgroundColor: getOrderStatusColor() }]}>
-                        <Text style={Styles.dateText}>
+                        <TextBold style={Styles.dateText}>
                             {getOrderStatus()}
-                        </Text>
+                        </TextBold>
                     </View>
                 </View>
 
                 <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                     <View>
-                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</Text>
-                        <Text style={[styles.travelListValue, { color: 'black' }]}>{order.product_buy_city_name}</Text>
-                        <Text style={[styles.travelListTitle, { color: 'black' }]}>{order.product_buy_country_name}</Text>
+                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</TextBold>
+                        <TextBold style={[styles.travelListValue, { color: 'black' }]}>{order.product_buy_city_name}</TextBold>
+                        <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_buy_country_name}</TextRegular>
                     </View>
                     <Image source={require("../images/travel1.png")}
                         resizeMode="contain"
                         style={{ height: 60, width: 60 }}
                     />
                     <View>
-                        <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</Text>
-                        <Text style={[styles.travelListValue, { color: 'black' }]}>{order.product_dilivery_city_name}</Text>
-                        <Text style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_country_name}</Text>
+                        <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</TextBold>
+                        <TextBold style={[styles.travelListValue, { color: 'black' }]}>{order.product_dilivery_city_name}</TextBold>
+                        <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_country_name}</TextRegular>
                     </View>
                 </View>
             </View>
@@ -68,10 +70,10 @@ const CardOrderUser = ({ order }) => {
                         style={Styles.productImage}
                     />
                 </TouchableOpacity>
-                <Text style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{order.name}</Text>
-                <Text style={Styles.priceText}>
+                <TextBold style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{order.name}</TextBold>
+                <TextBold style={Styles.priceText}>
                     {formatAmount(order.Total)}
-                </Text>
+                </TextBold>
             </View>
         </View>
     );
@@ -88,7 +90,7 @@ const Styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
     },
     bottomView: {
         paddingHorizontal: '5%',
@@ -102,7 +104,7 @@ const Styles = StyleSheet.create({
     },
     priceText: {
         fontSize: 16,
-        fontWeight: '900',
+        // fontWeight: '900',
         color: color.skipTextColor
     },
     dateView: {
