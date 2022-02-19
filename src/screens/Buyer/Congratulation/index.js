@@ -77,7 +77,7 @@ export default function Congratulation({ route }) {
                     <View style={styles.orderNumberSecond}>
 
                         <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
-                            {data.order_number}``
+                            {data.order_number}
                         </TextMedium>
                     </View>
 

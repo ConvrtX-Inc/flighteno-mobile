@@ -243,6 +243,7 @@ const Styles = StyleSheet.create({
     suportTxt: {
         color: '#8E8E8E',
         marginTop: (windowWidth * 1) / 100,
+        marginBottom: 20,
         width: (windowWidth * 60) / 100,
         textAlign: 'justify'
     },

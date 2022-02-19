@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 
 import storage from '@react-native-firebase/storage';
 
-import { getPathForFirebaseStorage } from '../Utility/Utils';
+import { generateImagePublicURLFirebase } from '../../../Utility/Utils';
 import UploadProgressBar from '../../../components/UploadProgressBart';
 import Constants from '../../../Utility/Constants';
 
@@ -67,8 +67,8 @@ export default function OrderDetail() {
                 const resImg = await task;   
                 buyerOrderData["open_box_check_phisical_apperance"] = checked
                 buyerOrderData["use_item_for_testing"] = useForTesting
-                buyerOrderData["product_image"] = resImg.name;
-                // buyerOrderData["product_image"] = response.body.postResponse.location <---- this is the public image URL
+                buyerOrderData["product_image"] = generateImagePublicURLFirebase(resImg.metadata.name);
+                // buyerOrderData["product_image"] = response.body.postResponse.location <---- this is the public image URL                
                 dispatch({ type: CREATE_ORDER_DETAIL, data: buyerOrderData });               
                 dispatch(createOrder(buyerOrderData, navigate, token));
             } catch (e) {
