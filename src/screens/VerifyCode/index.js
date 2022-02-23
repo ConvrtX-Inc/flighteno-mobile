@@ -36,7 +36,7 @@ export default function VerifyCode({ route }) {
     // const [seconds, setSeconds] = useState(0)
     // const [minutes, setMinutes] = useState(0)
 
-    const [counter, setCounter] = useState(120)
+    const [counter, setCounter] = useState(300)
 
     useEffect(() => {
 
@@ -55,6 +55,7 @@ export default function VerifyCode({ route }) {
 
     const verifyCodeFN = () => {
 
+     
         if (code.length < 4) {
             Toast.show({
                 type: 'info',
@@ -66,8 +67,9 @@ export default function VerifyCode({ route }) {
 
         const form_data = new FormData()
         form_data.append("code", code)
-        form_data.append("phoneNumber", cellNoParam)
+        form_data.append("phoneNumber", userCell)
 
+     
 
         dispatch(verifyOtpCodeResetPasswordAction(
             form_data,
@@ -75,7 +77,7 @@ export default function VerifyCode({ route }) {
                 setcode("")
             },
             () => {
-                navigation.navigate('NewPassword', { cellno: cellNoParam })
+                navigation.navigate('NewPassword', { cellno: userCell })
             },
             () => {
                 Toast.show({
@@ -94,49 +96,28 @@ export default function VerifyCode({ route }) {
        
 
         const form_data = new FormData()
-        form_data.append("type", 'phone')
-        form_data.append("data", userCell)
+        form_data.append("phoneNumber", userCell)
 
-
-        // dispatch(verificationCodeAction(
-        //     form_data,
-        //     () => {
-        //         setcode("")
-        //     },
-        //     () => {
-        //         console.log("")
-        //     },
-        //     () => {
-        //         Toast.show({
-        //             type: 'error',
-        //             text1: 'Alert!',
-        //             text2: "Invalid OTP",
-        //         })
-        //     }
-        // ))
-
-        dispatch(otpResetPasswordAction(
+        dispatch(verificationCodeAction(
             form_data,
             () => {
-                // setCellNo("")
-                // setCellNoShow("")
-                // setEmail("")
+                setcode("")
             },
-            (cellNo) => {
-                console.log('success:'+cellNo)
-                // navigation.navigate("VerifyCode", { cellNo: cellno.length >= 6 ? cellno : cellNo })
+            () => {
+                console.log("")
             },
             () => {
                 Toast.show({
                     type: 'error',
                     text1: 'Alert!',
-                    text2: "Invalid Credentials",
+                    text2: "Invalid OTP",
                 })
-            },
-
+            }
         ))
 
-        setCounter(120)
+   
+
+        setCounter(300)
     }
 
 
@@ -177,7 +158,7 @@ export default function VerifyCode({ route }) {
                 <TouchableOpacity onPress={() => resendOtp()}>
                     <TextBold style={styles.resentPassTxt}>{t('common.resend')} OTP</TextBold>
                 </TouchableOpacity>
-                </> :  <TextRegular style={{textAlign:'center', marginBottom:16, fontSize:16, marginTop:24}}>{counter} seconds left</TextRegular>} 
+                </> :  <TextRegular style={{textAlign:'center', marginBottom:16, fontSize:16, marginTop:24}}>{counter} seconds left remaining</TextRegular>} 
 
             </ScrollView>
 

@@ -62,6 +62,8 @@ export function registerUserFN(data, removeStates, saveToken) {
 }
 
 
+
+
 export function LoginAction(data, removeStates, loginError, saveToken) {
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
@@ -115,6 +117,36 @@ export function getDataAction(token) {
     }
 }
 
+export function CheckSamePasswordAction(data, message) {
+    return async dispatch => {
+        dispatch({ type: IS_LOADING, isloading: true })
+        axios({
+            method: 'post',
+            url: `${BASE_URL}Api/CompareOldAndNewPasswordPhone`,
+            data: data,
+            headers: { "Authorization": "Basic ZmxpZ2h0ZW5vMzE6QXNpbTEyISEhfmFzYQ==" },
+            validateStatus: (status) => {
+                return true;
+            },
+        }).catch(error => {
+            console.log("Error", error)
+            dispatch({ type: IS_LOADING, isloading: false })
+        }).then(response => {
+            
+            // if(response?.data?.isOldPassword){
+            //     dispatch({ type: IS_LOADING, isloading: false })
+            // }
+            message(response?.data) 
+            // dispatch({ type: IS_LOADING, isloading: false })
+            // if (response.data.Status == 200) {
+            //     // dispatch({ type: IS_LOADING, isloading: false })
+            // } else {
+            //     verificationError()
+            //     dispatch({ type: IS_LOADING, isloading: false })
+            // }
+        });
+    }
+}
 
 export function verificationCodeAction(data, removeStates, navigate, verificationError) {
     return async dispatch => {

@@ -6,7 +6,7 @@ import Input from '../components/InputField';
 import ButtonLarge from '../components/ButtonLarge';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdatePassword } from '../redux/actions/Auth';
+import { CheckSamePasswordAction, UpdatePassword } from '../redux/actions/Auth';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
 import TextRegular from '../components/atoms/TextRegular';
@@ -56,6 +56,12 @@ export default function ChangePassword() {
             password: password,
             confirmed_password: cPassword
         }
+
+        // var samePassObj = {
+        //     phone_number: 
+        // }
+
+        // dispatch(CheckSamePasswordAction())
 
         dispatch(UpdatePassword(
             obj, token,

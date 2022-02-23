@@ -36,7 +36,19 @@ export default function ResetPassword() {
 
     const resetPasswordFN = () => {
 
+      
+
         if (email == "" && cellno == "") {
+
+            if(cellno.length <= 10){
+                Toast.show({
+                    type: 'info',
+                    text1: 'Alert!',
+                    text2: "Phone number not valid",
+                })
+                return 
+            }
+
             Toast.show({
                 type: 'info',
                 text1: 'Alert!',
@@ -44,6 +56,8 @@ export default function ResetPassword() {
             })
             return
         }
+
+
 
         const form_data = new FormData()
 
@@ -76,6 +90,7 @@ export default function ResetPassword() {
                 setEmail("")
             },
             (cellNo) => {
+                console.log(cellNo)
                 navigation.navigate("VerifyCode", { cellNo: cellno.length >= 6 ? cellno : cellNo })
             },
             () => {

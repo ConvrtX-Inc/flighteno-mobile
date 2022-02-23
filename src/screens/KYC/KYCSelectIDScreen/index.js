@@ -19,7 +19,7 @@ export default function  KYCSelectIDScreen ({navigation,route}){
     
     const [items, setItems] = useState([
         {label: 'Permanent Resident Card', value: 'permanent resident card'},
-        {label: 'SSS', value: 'sss'}
+        {label: 'Passport', value: 'passport'}
     ]);
 
     //form fields
@@ -101,7 +101,7 @@ export default function  KYCSelectIDScreen ({navigation,route}){
                 <TextBold style={[styles.inputLabel,styles.idNoField, {textAlign:'left'}]}>{t('kyc.IdNo')}.</TextBold>
 
                 <View style={styles.inputIdNo}>
-                    <InputText placeholder='CADL-1231231233' maxLength={15} value={idNo} onChangeText={setIdNo} />
+                    <InputText placeholder='CADL-1231231233' value={idNo} onChangeText={setIdNo} />
                 </View>
                 
 
