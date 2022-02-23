@@ -214,7 +214,7 @@ export default function Chattravelereler({ route }) {
     }
 
     function getOfferBodyA(order) {
-        return `Prefered Delivery Date:\n\n${order.offer.deliveryDate} \n\nNotes:\n\n${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
+        return `Preferred Delivery Date:\n\n${order.offer.deliveryDate} \n\nNotes:\n\n${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
     }
 
     function getOfferBodyB(order) {
