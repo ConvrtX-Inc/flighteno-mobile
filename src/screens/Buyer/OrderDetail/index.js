@@ -39,9 +39,9 @@ export default function OrderDetail() {
     const [useForTesting, setUseForTesting] = useState(false);
     const [transferred, setTransferred] = useState(0);
 
-    useEffect(() => {
-        
-    },[])
+    // useEffect(() => {
+    //     console.log(buyerOrderData)
+    // },[])
 
     const navigate = (routeName, data) => {
         navigation.navigate(routeName, data);

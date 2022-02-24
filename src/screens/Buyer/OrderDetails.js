@@ -35,6 +35,8 @@ export default function OrderDetails({ route }) {
     let isComplete = order.status == 'complete'
     const {t} = useTranslation()
 
+
+
     function check(id) {
         return id == currentUser._id
     }
@@ -56,7 +58,7 @@ export default function OrderDetails({ route }) {
             setTraveler(data)
         }))
 
-       
+     
 
     }, [])
 

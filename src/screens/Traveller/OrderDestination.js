@@ -208,8 +208,7 @@ export default function OrderDestination({ route }) {
         var filteredArr = []
         setFiltered(true)
 
-        
-
+         
         // console.log(ordersToDestination)
         // dispatch({ type: FILTERED_ORDERS_DATA, data: ordersToDestination })
 

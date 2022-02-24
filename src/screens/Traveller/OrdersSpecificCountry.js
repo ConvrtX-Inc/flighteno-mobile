@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
@@ -20,6 +20,10 @@ export default function OrdersSpecificCountry({ route }) {
     const { flightBaseOrders, date } = route.params
     const navigation = useNavigation();
     const {t} = useTranslation()
+
+    useEffect(() => {
+        console.log(flightBaseOrders)
+    },[])
 
     return (
         <View style={styles.ScreenCss}>

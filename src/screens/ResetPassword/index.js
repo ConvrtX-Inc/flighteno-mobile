@@ -36,7 +36,6 @@ export default function ResetPassword() {
 
     const resetPasswordFN = () => {
 
-      
 
         if (email == "" && cellno == "") {
 
