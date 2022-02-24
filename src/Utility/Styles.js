@@ -162,7 +162,7 @@ export const styles = StyleSheet.create({
         color: '#000',
         textDecorationLine: 'underline',
         fontSize: 17,
-        fontWeight: 'bold',
+      
         alignSelf: 'center'
     },
     otpInputSyle: {

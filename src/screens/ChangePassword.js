@@ -6,9 +6,10 @@ import Input from '../components/InputField';
 import ButtonLarge from '../components/ButtonLarge';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdatePassword } from '../redux/actions/Auth';
+import { CheckSamePasswordAction, UpdatePassword } from '../redux/actions/Auth';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
+import TextRegular from '../components/atoms/TextRegular';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -56,6 +57,12 @@ export default function ChangePassword() {
             confirmed_password: cPassword
         }
 
+        // var samePassObj = {
+        //     phone_number: 
+        // }
+
+        // dispatch(CheckSamePasswordAction())
+
         dispatch(UpdatePassword(
             obj, token,
             () => {
@@ -86,7 +93,7 @@ export default function ChangePassword() {
 
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.changePass')}</TextBold>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextBold>
 
                 <Input
                     placeholder={t('common.oldPass')}
@@ -95,7 +102,7 @@ export default function ChangePassword() {
                     secureTextEntry={false}
                     
                 />
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
 
                 <Input
                     placeholder={t('common.newPass')}
@@ -104,7 +111,7 @@ export default function ChangePassword() {
                     secureTextEntry={true}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</TextBold>
 
                 <Input
                     placeholder={t('common.confirmPass')}

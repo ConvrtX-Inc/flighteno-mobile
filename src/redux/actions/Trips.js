@@ -3,7 +3,8 @@ import { BASE_URL } from '../../BASE_URL/index'
 import {
     IS_LOADING, TRIPS_DATA, MY_ORDERS, MY_RECENT_ORDERS,
     ORDERS_TO_DESTINATION, TRAVLER_ORDERS, LATEST_TRIP_ID,
-    TRENDING_ORDERS
+    TRENDING_ORDERS,
+    FILTERED_ORDERS_DATA
 } from '../constants';
 import Toast from 'react-native-toast-message';
 
@@ -61,6 +62,7 @@ export function UserTrips(token, data) {
 
 export function UserOrders(token, data) {
     return async dispatch => {
+        dispatch({ type: IS_LOADING, isloading: true })
         axios({
             method: 'post',
             url: `${BASE_URL}Rest_calls/getUserOrdersOnTheBasisOnCountry`,
@@ -72,10 +74,12 @@ export function UserOrders(token, data) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
+            dispatch({ type: IS_LOADING, isloading: false })
             if (Response.data.type == 200) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
                         dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+                        dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
                     }
                 }
                 else dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
@@ -104,6 +108,7 @@ export function FilterOrders(data, token, hideFilter) {
             hideFilter()
             if (Response.data.status == "Data Fetched!") {
                 dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+             
             }
         })
     }

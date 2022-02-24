@@ -60,7 +60,7 @@ export default function Transactions() {
                             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                                 <Image
                                     style={styles.homeProfileImg}
-                                    source={currentUser.profile_image ? { uri: currentUser.profile_image } : require('../../images/manProfile.png')}
+                                    source={currentUser.profile_image ? { uri: 'data:image/png;base64,'+currentUser.profile_image } : require('../../images/manProfile.png')}
                                 />
                             </TouchableOpacity>
 

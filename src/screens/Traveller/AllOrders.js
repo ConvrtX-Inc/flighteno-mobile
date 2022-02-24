@@ -12,6 +12,7 @@ import { GetTravelerOrders } from '../../redux/actions/Trips';
 import CardOrderUser from '../../components/CardOrderUser';
 import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
+import TextBold from '../../components/atoms/TextBold';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -123,7 +124,7 @@ export default function AllOrders() {
                             <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
                                 <Icon name="cross" size={35} style={{ margin: 0 }} />
                             </TouchableOpacity>
-                            <Text style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.filter')}</Text>
+                            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.filter')}</TextBold>
                             <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
                         </View>
                         <SearchInput
@@ -162,13 +163,13 @@ export default function AllOrders() {
 
                 <View style={Styles.header}>
 
-                    <Text style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</Text>
+                    <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</TextBold>
                     {!showFilter ?
                         <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
                             <Image source={require('../../images/filter.png')}
                                 style={styles.filterImage}
                             />
-                            <Text style={{ fontWeight: 'bold', fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</Text>
+                            <TextBold style={{  fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</TextBold>
                         </TouchableOpacity>
                         : null}
 

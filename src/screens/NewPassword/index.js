@@ -8,9 +8,10 @@ import Toast from 'react-native-toast-message';
 
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
-import { newPaswordCreationAction } from '../../redux/actions/Auth';
+import { CheckSamePasswordAction, newPaswordCreationAction } from '../../redux/actions/Auth';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
+import { IS_LOADING } from '../../redux/constants';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -20,6 +21,7 @@ export default function NewPassword({ route }) {
     const { loading } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
     const {t} = useTranslation()
+    const {cellno} = route?.params
 
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
@@ -27,7 +29,7 @@ export default function NewPassword({ route }) {
     const phoneInput = useRef()
 
     useEffect(() => {
-        cellNoParam = route.params.cellno
+        // cellNoParam = route.params.cellno
     }, []);
 
 
@@ -62,22 +64,51 @@ export default function NewPassword({ route }) {
         }
 
         var obj = {
-            phone_number: cellNoParam,
+            phone_number: cellno,
             password: password,
             confirmed_password: confirmPass
         }
 
-        dispatch(newPaswordCreationAction(
-            obj,
-            () => {
-                setPassword("")
-                setConfirmPass("")
-            },
-            () => {
-                navigation.navigate('LoginScreen')
-            },
 
-        ))
+        const samePassObj = new FormData()
+        samePassObj.append('phone_number', cellno)
+        samePassObj.append('password', password)
+
+        dispatch(CheckSamePasswordAction(samePassObj,(data) => {
+           console.log(data)
+            if(data?.isOldPassword){
+                dispatch({ type: IS_LOADING, isloading: false })
+                Toast.show({
+                    type: 'error',
+                    text1: 'Alert!',
+                    text2: data?.Message,
+                })
+            }else{
+               dispatch(newPaswordCreationAction(
+                    obj,
+                    () => {
+                        setPassword("")
+                        setConfirmPass("")
+                    },
+                    () => {
+                        navigation.navigate('LoginScreen')
+                    },
+
+                ))  
+            }
+        }))
+
+        // dispatch(newPaswordCreationAction(
+        //     obj,
+        //     () => {
+        //         setPassword("")
+        //         setConfirmPass("")
+        //     },
+        //     () => {
+        //         navigation.navigate('LoginScreen')
+        //     },
+
+        // ))
 
     }
     return (

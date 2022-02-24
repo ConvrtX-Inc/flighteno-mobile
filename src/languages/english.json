@@ -107,7 +107,8 @@
             "orderByFlight": "Orders By Flight",
             "allOrders": "All Orders",
             "inProgress": "In Progress",
-            "datePlaced": "Date Placed"
+            "datePlaced": "Date Placed",
+            "attachment":"Attachment"
         },
         "messages":{
             "inbox":"Inbox",
