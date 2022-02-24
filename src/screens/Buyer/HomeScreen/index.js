@@ -172,7 +172,7 @@ export default function HomeScreen() {
                                     source={require('../../../images/location.png')}
                                 />
                                 <TextMedium style={styles.dubaiTxt}> {currentCountry?.city}, </TextMedium>
-                                <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentCountry.country_name}</TextMedium>
+                                <TextMedium style={[styles.dubaiTxt, { opacity: 0.3 }]}>{currentCountry?.country_name}</TextMedium>
                             </View>
 
                         </View>

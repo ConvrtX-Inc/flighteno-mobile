@@ -78,7 +78,7 @@
             "createNewPass":"Create new password",
             "confirmNewPass": "Confirm new password",
             "yourPasswordMust":"Your password must be different from previous used password",
-            "verifyPhone":"Verify phone"
+            "verifyPhone":"Verify phone",
             
         },
         "track": {
@@ -216,6 +216,12 @@
             "editOffer":"Edit Offer",
             "accept":"Accept",
             "rejectDeal": "Reject Deal"
+        },
+        "payment": {
+            "addCard": "Add Card",
+            "addNewCard": "Add new card",
+            "latestTransactions": "Latest transactions",
+            "paymentMethod": "Payment Method"
         }
     }
 }

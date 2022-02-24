@@ -22,7 +22,7 @@ import storage from '@react-native-firebase/storage';
 var windowWidth = Dimensions.get('window').width;
 
 // Custom Imports
-import { getPathForFirebaseStorage } from '../Utility/Utils';
+import { getPathForFirebaseStorage, generateImagePublicURLFirebase } from '../Utility/Utils';
 import UploadProgressBar from '../components/UploadProgressBart';
 import Constants from '../Utility/Constants';
 
@@ -165,10 +165,9 @@ export default function Support({ route }) {
                 try {
                     const resImg = await task;                    
                     setUploadedCount(ctr + 1);
-                    // const resUrl = task.downloadUrl.toString();
-                    console.log('resImg', resImg);
-                    // imagesUri.push(resUrl)
-                    // setImagesUri([...imagesUri]);
+                    const resImgPublicUrl = generateImagePublicURLFirebase(resImg.metadata.name);
+                    imagesUri.push(resImgPublicUrl);
+                    setImagesUri([...imagesUri]);
                     ctr++;
                 } catch (e) {
                     console.log('errooooorrrrr', e);
@@ -198,10 +197,10 @@ export default function Support({ route }) {
                     );
                 });
                 try {
-                    await task;                    
+                    const resVid = await task;                   
                     setUploadedCount(ctr + 1);
-                    // const resUrl = task.downloadUrl.toString();
-                    // videosUri.push(resUrl)
+                    const resVidPublicUrl = generateImagePublicURLFirebase(resVid.metadata.name);
+                    videosUri.push(resVidPublicUrl);
                     setVideosUri([...videosUri]);
                     ctr++;
                 } catch (e) {
@@ -312,6 +311,7 @@ export default function Support({ route }) {
                 }
                 console.log('SUUPORT -> data ->', data)
                 dispatch(customerSupport(data, token, () => {
+                    console.log('customerSupport RESULT -> data ->', data)
                     navigation.navigate("CongratulationSupport")
                 }))
             }
