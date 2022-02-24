@@ -8,6 +8,8 @@ import moment from 'moment';
 import {getTickets} from '../redux/actions/Auth'
 import TextBold from '../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
+import TextMedium from '../components/atoms/TextMedium';
+import TextRegular from '../components/atoms/TextRegular';
 const windowWidth = Dimensions.get('window').width;
 
 export default function SupportTicket({ navigation }) {
@@ -57,18 +59,18 @@ export default function SupportTicket({ navigation }) {
                                     </View>
                                     <View style={Styles.suportFlattxtView}>
                                         <View style={{ flexDirection: 'row', }}>
-                                            <Text style={[Styles.suportno, { width: '65%' }]}>
+                                            <TextMedium style={[Styles.suportno, { width: '65%' }]}>
                                                 {item._id}
-                                            </Text>
-                                            <Text style={[Styles.suportno, {
+                                            </TextMedium>
+                                            <TextMedium style={[Styles.suportno, {
                                                 color: item.status == "pending" ? '#FFA800' : "#10CF73", marginLeft: 'auto',
                                                 marginRight: (windowWidth * 5.3) / 100, textTransform: "capitalize"
-                                            }]}>{item.status}</Text>
+                                            }]}>{item.status}</TextMedium>
                                         </View>
-                                        <Text numberOfLines={2} style={Styles.suportTxt}>{item.message}</Text>
-                                        <Text style={Styles.suportTxtDate}>
+                                        <TextMedium numberOfLines={2} style={Styles.suportTxt}>{item.message}</TextMedium>
+                                        <TextMedium style={Styles.suportTxtDate}>
                                             {moment(item.created_date.$date.$numberLong, 'x').format("MM/DD/YYYY")}
-                                        </Text>
+                                        </TextMedium>
                                     </View>
                                 </View>
                             </TouchableOpacity>

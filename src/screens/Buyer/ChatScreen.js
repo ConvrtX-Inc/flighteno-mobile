@@ -59,7 +59,7 @@ export default function ChatScreen() {
                                         <TouchableOpacity style={{ alignItems: 'center' }}
                                             onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                         >
-                                            <Image source={item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                            <Image source={item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: 'data:image/png;base64,'+item.reciverImageName[0].profile_image }}
                                                 style={styles.profileImage}
                                                 resizeMode="cover"
                                             />
@@ -79,7 +79,7 @@ export default function ChatScreen() {
                             <TouchableOpacity onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], receiverId: item.reciver_id, chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                 style={[Styles.itemView, {}]}>
                                 <View>
-                                    <Image source={item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                    <Image source={item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: 'data:image/png;base64,'+item.reciverImageName[0].profile_image }}
                                         style={styles.profileImage}
                                         resizeMode="cover"
                                     />

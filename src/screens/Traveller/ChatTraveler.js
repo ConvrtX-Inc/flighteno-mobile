@@ -22,6 +22,8 @@ import ScreenLoader from '../../components/ScreenLoader'
 import { IS_LOADING } from '../../redux/constants';
 import { useTranslation } from 'react-i18next';
 import { SOCKET_URL } from '../../BASE_URL';
+import TextRegular from '../../components/atoms/TextRegular';
+import TextBold from '../../components/atoms/TextBold';
 
 const LocationView = ({ location }) => {
     const openMaps = () => {
@@ -541,11 +543,13 @@ export default function Chattravelereler({ route }) {
                 {...props}
                 textStyle={{
                     right: {
-                        color: "white"
+                        color: "white",
+                        fontFamily:'GilroyRegular'
                     },
                     left: {
-                        color: "white"
-                    }
+                        color: "white",
+                        fontFamily:'GilroyRegular'
+                    },
                 }}
                 wrapperStyle={{
                     left: {
@@ -554,6 +558,7 @@ export default function Chattravelereler({ route }) {
                         borderTopRightRadius: 10,
                         borderTopLeftRadius: 10,
                         borderBottomLeftRadius: 0,
+                        
                     },
                     right: {
                         backgroundColor: color.travelerelerButtonColor,
@@ -575,9 +580,11 @@ export default function Chattravelereler({ route }) {
                 timeTextStyle={{
                     left: {
                         color: 'white',
+                        fontFamily:'GilroyRegular'
                     },
                     right: {
                         color: 'white',
+                        fontFamily:'GilroyRegular'
                     },
                 }}
             />
@@ -657,7 +664,7 @@ export default function Chattravelereler({ route }) {
                         <View style={Styles.modelView}>
                             <View style={Styles.modalInnerView}>
                                 <ActivityIndicator color={color.blueColor} size="large" />
-                                <Text style={[Styles.userName, { marginLeft: 0, marginTop: 0 }]}>Uploading...</Text>
+                                <TextRegular style={[Styles.userName, { marginLeft: 0, marginTop: 0 }]}>Uploading...</TextRegular>
                             </View>
                         </View>
                     </Modal>
@@ -677,15 +684,15 @@ export default function Chattravelereler({ route }) {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: '5%', marginTop: 20, marginBottom: 10 }}>
                         {route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ?
-                            <Image source={route.params.orderDetail.profile_data[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: route.params.orderDetail.profile_data[0].profile_image }}
+                            <Image source={route.params.orderDetail.profile_data[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: 'data:image/png;base64,'+route.params.orderDetail.profile_data[0].profile_image }}
                                 style={Styles.userImage}
                             />
                             :
-                            <Image source={route.params.userDetail.profile_image == "" ? require("../../images/manProfile.png") : { uri: route.params.userDetail.profile_image }}
+                            <Image source={route.params.userDetail.profile_image == "" ? require("../../images/manProfile.png") : { uri:'data:image/png;base64,'+ route.params.userDetail.profile_image }}
                                 style={Styles.userImage}
                             />
                         }
-                        <Text style={Styles.userName}>{route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ? route.params.orderDetail.profile_data[0].full_name : route.params.userDetail.full_name}</Text>
+                        <TextBold style={Styles.userName}>{route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ? route.params.orderDetail.profile_data[0].full_name : route.params.userDetail.full_name}</TextBold>
 
                     </View>
                     <GiftedChat
@@ -715,6 +722,7 @@ export default function Chattravelereler({ route }) {
                             borderRadius: 20,
                             paddingLeft: 20,
                             paddingRight: 30,
+                        
                         }}
                         renderActions={messages => micBtn(messages)}
                     />
@@ -790,7 +798,7 @@ const Styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         marginLeft: '5%'
     },
     modelView: {

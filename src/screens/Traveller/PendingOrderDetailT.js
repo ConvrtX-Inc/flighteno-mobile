@@ -19,6 +19,8 @@ import { IS_LOADING } from '../../redux/constants';
 import ViewImages from '../../components/ViewImages'
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
+import TextRegular from '../../components/atoms/TextRegular';
 var windowWidth = Dimensions.get('window').width;
 
 var productUri = ""
@@ -258,9 +260,9 @@ export default function PendingOrderDetailT({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',  textAlign:'left' }]}>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',  textAlign:'left' }]}>
                     {currentOrder.status == "accepted" ? t('common.updateOrder') : t('common.orderCompleted')}
-                </Text>
+                </TextBold>
 
                 <View style={Styles.listView}>
                     <View style={Styles.upperView}>
@@ -271,30 +273,30 @@ export default function PendingOrderDetailT({ route }) {
                                     style={Styles.userImage}
                                 // resizeMode="contain"
                                 />
-                                <Text style={[Styles.userName, { marginLeft: '3%', flexWrap: 'wrap' }]}>
+                                <TextBold style={[Styles.userName, { marginLeft: '3%', flexWrap: 'wrap' }]}>
                                     {currentOrder.buyer_details[0].full_name}
-                                </Text>
+                                </TextBold>
                             </View>
                             <View style={[Styles.dateView, { backgroundColor: currentOrder.status == "accepted" ? '#F2BA39' : "#36C5F0" }]}>
-                                <Text style={Styles.dateText}>
+                                <TextBold style={Styles.dateText}>
                                     {currentOrder.status == "accepted" ? t('track.pending') : t('track.completed')}
-                                </Text>
+                                </TextBold>
                             </View>
                         </View>
                         <View style={[styles.travelerListInnerView, { paddingLeft: 0, paddingRight: 0, marginTop: 5 }]}>
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</Text>
-                                <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_buy_city_name}</Text>
-                                <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_buy_country_name}</Text>
+                                <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.from')}</TextBold>
+                                <TextBold style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_buy_city_name}</TextBold>
+                                <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_buy_country_name}</TextRegular>
                             </View>
                             <Image source={require("../../images/travel1.png")}
                                 resizeMode="contain"
                                 style={{ height: 60, width: 60 }}
                             />
                             <View>
-                                <Text style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</Text>
-                                <Text style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_dilivery_city_name}</Text>
-                                <Text style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_dilivery_country_name}</Text>
+                                <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left' }]}>{t('travelHome.to')}</TextBold>
+                                <TextBold style={[styles.travelListValue, { color: 'black' }]}>{currentOrder.product_dilivery_city_name}</TextBold>
+                                <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{currentOrder.product_dilivery_country_name}</TextRegular>
                             </View>
                         </View>
                     </View>
@@ -305,50 +307,50 @@ export default function PendingOrderDetailT({ route }) {
                             style={Styles.productImage}
                         />
                         </TouchableOpacity>
-                        <Text style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{currentOrder.name}</Text>
-                        <Text style={Styles.priceText}>
+                        <TextBold style={[Styles.userName, { marginLeft: 0, marginTop: 10 }]}>{currentOrder.name}</TextBold>
+                        <TextRegular style={Styles.priceText}>
                             $ {currentOrder.Total}
-                        </Text>
+                        </TextRegular>
                     </View>
                     {currentOrder.url != "" ?
                         <View style={styles.productDesc}>
                             <View style={styles.productDescInerFirst}>
-                                <Text style={styles.productAtrributeHead}>{t('buyerHome.color')}</Text>
-                                <Text style={styles.productAtrributeHead}>{t('buyerHome.weight')}</Text>
-                                <Text style={styles.productAtrributeHead}>{t('buyerHome.condition')}</Text>
+                                <TextBold style={styles.productAtrributeHead}>{t('buyerHome.color')}</TextBold>
+                                <TextBold style={styles.productAtrributeHead}>{t('buyerHome.weight')}</TextBold>
+                                <TextBold style={styles.productAtrributeHead}>{t('buyerHome.condition')}</TextBold>
                             </View>
                             <View style={styles.productDescInerSecond}>
-                                <Text style={styles.productAtrribute}>Black/ Gray</Text>
-                                <Text style={styles.productAtrribute}>1.5 Kg</Text>
-                                <Text style={styles.productAtrribute}>Original, Brand New</Text>
+                                <TextRegular style={styles.productAtrribute}>Black/ Gray</TextRegular>
+                                <TextRegular style={styles.productAtrribute}>1.5 Kg</TextRegular>
+                                <TextRegular style={styles.productAtrribute}>Original, Brand New</TextRegular>
                             </View>
                         </View>
                         : null}
                     <View style={Styles.bottomView}>
                         {currentOrder.open_box_check_phisical_apperance == true && currentOrder.use_item_for_testing == true ?
-                            <Text style={styles.productAtrributeHead}>Traveler were allowed to:</Text>
+                            <TextRegular style={styles.productAtrributeHead}>Traveler were allowed to:</TextRegular>
                             : null}
                         {currentOrder.open_box_check_phisical_apperance == true ?
-                            <Text style={Styles.priceText}>
+                            <TextRegular style={Styles.priceText}>
                                 Open box and check physical Apperance
-                            </Text>
+                            </TextRegular>
                             : null}
                         {currentOrder.use_item_for_testing == true ?
-                            <Text style={Styles.priceText}>
+                            <TextRegular style={Styles.priceText}>
                                 Use item for testing
-                            </Text>
+                            </TextRegular>
                             : null}
-                        <Text style={[Styles.priceText, { marginTop: 10 }]}>
+                        <TextBold style={[Styles.priceText, { marginTop: 10 }]}>
                             {currentOrder.product_discription}
-                        </Text>
+                        </TextBold>
                     </View>
 
                 </View>
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
                    {t('common.uploadPicProd')}
-                </Text>
+                </TextBold>
                 <TouchableOpacity
                     activeOpacity={currentOrder.status == "accepted" ? 0 : 1}
                     onPress={() => checkUploadedFile('product')} style={Styles.productImageContainer}>
@@ -365,9 +367,9 @@ export default function PendingOrderDetailT({ route }) {
                         />
                     }
                 </TouchableOpacity>
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
                     {t('common.uploadReceipt')}
-                </Text>
+                </TextBold>
                 <TouchableOpacity
                     activeOpacity={currentOrder.status == "accepted" ? 0 : 1}
                     onPress={() => checkUploadedFile('receipt')} style={Styles.productImageContainer}>
@@ -385,9 +387,9 @@ export default function PendingOrderDetailT({ route }) {
                     }
                 </TouchableOpacity>
                 {!showQrDetail && currentOrder.status == "accepted" ?
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
+                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
                         {t('common.scanQR')}
-                    </Text>
+                    </TextBold>
                     : null}
                 {!showQrDetail && currentOrder.status == "accepted" ?
                     <TouchableOpacity disabled={currentOrder.status == "accepted" ? false : true} onPress={() => setShowQr(true)} style={Styles.productImageContainer}>
@@ -566,7 +568,7 @@ const Styles = StyleSheet.create({
     },
     userName: {
         fontSize: 16,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
     },
     bottomView: {
         paddingHorizontal: '5%',
@@ -580,7 +582,7 @@ const Styles = StyleSheet.create({
     },
     priceText: {
         fontSize: 16,
-        fontWeight: '900',
+        // fontWeight: '900',
         color: color.skipTextColor
     },
     dateView: {

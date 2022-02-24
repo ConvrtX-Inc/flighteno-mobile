@@ -7,7 +7,8 @@ const Input = ({ placeholder, value, onChangeText, secureTextEntry, editable, ke
     return (
         <TextInput style={styles.input}
             placeholder={placeholder}
-            placeholderTextColor = "#656F85"
+            // placeholderTextColor = {editable ? "#656F85" : '#CDCDCD'}
+            placeholderTextColor = {"#656F85"}
             value={value}
             onChangeText={onChangeText}
             secureTextEntry={secureTextEntry}

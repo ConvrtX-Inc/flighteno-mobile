@@ -78,7 +78,8 @@
             "createNewPass":"أنشئ كلمة مرور جديدة",
             "confirmNewPass": "تأكيد كلمة المرور الجديدة",
             "yourPasswordMust":" يجب أن تكون كلمة المرور الخاصة بك مختلفة عن كلمة المرور السابقة المستخدمة",
-            "verifyPhone":"تحقق من الهاتف"
+            "verifyPhone":"تحقق من الهاتف",
+            "attachment":"مرفق"
         },
         "track": {
             "transactions": "المعاملات",

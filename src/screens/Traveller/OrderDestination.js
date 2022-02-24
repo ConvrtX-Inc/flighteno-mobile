@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Pressable, FlatList, TouchableHighlight, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Pressable, FlatList, TouchableHighlight, ScrollView, RefreshControl } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
@@ -17,6 +17,8 @@ import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 import { useTranslation } from 'react-i18next';
+import ButtonLarge from '../../components/ButtonLarge';
+import { FILTERED_ORDERS_DATA } from '../../redux/constants';
 
 var storeNamesList = [
     {
@@ -46,7 +48,7 @@ export default function OrderDestination({ route }) {
     const dispatch = useDispatch()
     const {t} = useTranslation()
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
-    const { ordersToDestination } = useSelector(({ tripsRed }) => tripsRed)
+    const { ordersToDestination, filteredOrdersToDestination } = useSelector(({ tripsRed }) => tripsRed)
     const [showFilter, setShowFilter] = useState(false)
     const [pickerShow, setPickerShow] = useState(false);
     const [showImageView, setShowImageView] = useState(false)
@@ -56,6 +58,7 @@ export default function OrderDestination({ route }) {
     const [maxPrice, setMaxPrice] = useState(500000)
     const [selectedRange, setSelectedRange] = useState(0)
     const [filterOrderData, setFilterOrderData] = useState(ordersToDestination)
+    const [isFiltered, setFiltered] = useState(false)
     const [rangeValue, setRangeValue] = useState("order_created_date")
     const [pickerValues, setPickerValues] = useState([
         {
@@ -113,6 +116,7 @@ export default function OrderDestination({ route }) {
     const [storeValue, setStoreValue] = useState("")
     const [storeName, setNameOfStore] = useState("")
     const [sortMethod, setSortMethod] = useState(-1)
+    // var filteredArray = ordersToDestination
 
     const [storeNames, setStoreName] = useState([
         {
@@ -141,11 +145,14 @@ export default function OrderDestination({ route }) {
 
     useFocusEffect(
         React.useCallback(() => {
-            setShowFilter(false)
+
+
+            // setFilterOrderData(ordersToDestination)
             var obj = {
                 admin_id: currentUser._id
             }
             dispatch(UserOrders(token, obj))
+            // filteredArray = ordersToDestination
 
             return
         }, [])
@@ -156,12 +163,13 @@ export default function OrderDestination({ route }) {
             admin_id: currentUser._id
         }
         dispatch(UserOrders(token, obj))
+      
+
+        // setFilterOrderData(ordersToDestination)
+        
     }, []);
 
-    useEffect(() => {
-        setFilterOrderData(ordersToDestination)
-     
-    }, [ordersToDestination]);
+ 
 
     const selectPickerValueFN = (index) => {
         setPickerShow(!pickerShow)
@@ -195,68 +203,56 @@ export default function OrderDestination({ route }) {
         setRangeValue(value)
         setSortMethod(sort)
     }
-
+   
     const applyFilter = () => {
+        var filteredArr = []
+        setFiltered(true)
 
-        var filteredArray = []
-        // filteredArr.push('hello')
+         
+        // console.log(ordersToDestination)
+        // dispatch({ type: FILTERED_ORDERS_DATA, data: ordersToDestination })
+
+        // console.log(filteredOrdersToDestination)
+
+        // filteredArray = ordersToDestination
+
+        filteredArr = filteredOrdersToDestination.filter((item) => {
+
+            const itemType = item?.product_type.toLowerCase();
+            const itemName = item?.name.toLowerCase()
+            const pickerData = pickerValueSelected?.toLowerCase();
+
+            if (pickerData === 'please select'){
+                return  parseInt(item?.product_price) >= parseInt(minPrice) &&  itemType.indexOf(pickerData) > -1 &&
+                itemName.indexOf(pName.toLowerCase()) >= -1
+            }
+
+            return  parseInt(item?.product_price) >= parseInt(minPrice) &&  itemType.indexOf(pickerData) > -1 &&
+            itemName.indexOf(pName.toLowerCase()) > -1
+        })
     
-        //for product type
+        // setFilterOrderData(filteredArray)
+        // dispatch({ type: FILTERED_ORDERS_DATA, data: filteredArray })
+        // console.log(filteredOrdersToDestination)
+        // filteredOrdersToDestination.forEach(item => {
+        //     console.log(item?.product_price)
+        // });
 
-     
+        // setShowFilter(!showFilter)
+        console.log(filteredArr)
 
-        if(pName){
-
-            filteredArray = filterOrderData.filter((item) => {
-
-                const itemType = item?.product_type.toLowerCase();
-                const itemName = item?.name.toLowerCase()
-                const itemPrice = item?.product_price
-
-                const pickerData = pickerValueSelected?.toLowerCase();
- 
-
-                if (pickerData === 'please select'){
-                    return itemType.indexOf(pickerData ?? "") >= -1   && itemName.indexOf(pName.toLowerCase()) > -1
-                    && itemPrice >= minPrice
-                }
-
-                
-                return itemType.indexOf(pickerData ?? "") > -1  && itemName.indexOf(pName.toLowerCase()) > -1
-                && itemPrice >= minPrice
-
-               
-
-            })
-        }else{
-
-            filteredArray = ordersToDestination.filter((item) => {
-
-                const itemType = item?.product_type.toLowerCase();
-                const itemName = item?.name.toLowerCase()
-                const itemPrice = item?.product_price
-
-                const pickerData = pickerValueSelected?.toLowerCase();
- 
-
-                if (pickerData === 'please select'){
-                    return itemType.indexOf(pickerData ?? "") >= -1  && itemPrice >= minPrice && itemName.indexOf(pName.toLowerCase()) >= -1
-                }
-
-                
-                return itemType.indexOf(pickerData ?? "") > -1  &&  itemPrice >= minPrice && itemName.indexOf(pName.toLowerCase()) >= -1
-
-               
-
-            })
-
+        switch (rangeValue.toLowerCase()) {
+            case 'order_created_date':
+               const currDate = new Date().getTime().toFixed(0)
+                filteredArray = filteredOrdersToDestination.filter(function (item) {
+                    return currDate >= item.order_created_date?.$date?.$numberLong
+                });
+                setFilterOrderData(filteredArray)
+                break;
+            default:
+                filteredArray = filteredArray.sort(compare)
+                break;
         }
-
-
-
-    
-        
-
 
         function compare(a,b){
 
@@ -312,27 +308,13 @@ export default function OrderDestination({ route }) {
             }
 
         }
-
-        switch (rangeValue.toLowerCase()) {
-            case 'order_created_date':
-               const currDate = new Date().getTime().toFixed(0)
-                filteredArray = filterOrderData.filter(function (item) {
-                    return currDate >= item.order_created_date?.$date?.$numberLong
-                });
-                setFilterOrderData(filteredArray)
-                break;
-            default:
-                filteredArray.sort(compare)
-                break;
-        }
-
-
-
-
-        setFilterOrderData(filteredArray)
-        setShowFilter(!showFilter)
-
         
+        
+    }
+
+    const resetFilter = () => {
+        setFiltered(false)
+        setShowFilter(!showFilter)
     }
 
     const showGallery = (data) => {
@@ -436,7 +418,6 @@ export default function OrderDestination({ route }) {
                             <View style={{flex:1}}>
                                 <Input
                                     placeholder="500000"
-                                 
                                     secureTextEntry={false}
                                     editable={false}
                                 />
@@ -551,11 +532,15 @@ export default function OrderDestination({ route }) {
                             </TouchableOpacity>
                         </View>
                         <View style={{ marginVertical: 20 }}>
-                            <ButtonTraveller
-                                onPress={() => applyFilter()}
-                                loader={loading}
-                                title= {t('travelHome.applyFilter')}
-                            />
+                            <ButtonLarge loader={false} title='Reset Filter' onPress={resetFilter} />
+                            <View style={{marginTop:16}}>
+                                <ButtonTraveller
+                                    onPress={applyFilter}
+                                    loader={false}
+                                    title= {t('travelHome.applyFilter')}
+                                />
+                            </View>
+                            
                         </View>
                     </View>
                 </ScrollView>
@@ -570,9 +555,17 @@ export default function OrderDestination({ route }) {
                     </TouchableOpacity>
                 </View>
                 : null}
-            {filterOrderData && filterOrderData.length > 0 && !showFilter ?
+            { !showFilter && !loading ?
                 <FlatList
-                    data={filterOrderData}
+                    // data={filterOrderData.length >0 ? filterOrderData : ordersToDestination}
+                    data={isFiltered ? filterOrderData : ordersToDestination}
+                //    extraData={loading}
+                    // refreshControl={<RefreshControl refreshing={loading} onRefresh={() => {
+                    //     var obj = {
+                    //         admin_id: currentUser._id
+                    //     }
+                    //     dispatch(UserOrders(token, obj))
+                    // }}/>}
                     renderItem={({ item }) =>
                         <View style={Styles.listView}>
                             <View style={Styles.upperView}>
@@ -633,7 +626,8 @@ export default function OrderDestination({ route }) {
                         </View>
                     }
                     keyExtractor={item => item._id}
-                /> : null}
+                />
+                 : null}
         </View>
     );
 }
