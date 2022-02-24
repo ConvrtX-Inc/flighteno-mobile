@@ -21,6 +21,7 @@ import { RespondToOffer } from '../../redux/actions/Payment';
 import ScreenLoader from '../../components/ScreenLoader'
 import { IS_LOADING } from '../../redux/constants';
 import { useTranslation } from 'react-i18next';
+import { SOCKET_URL } from '../../BASE_URL';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextBold from '../../components/atoms/TextBold';
 
@@ -89,7 +90,7 @@ export default function Chattravelereler({ route }) {
     const [currentPerson, setCurrentPerson] = useState(currentProfile == "buyer" ? "traveler's" : "buyer's")
     const offerID = route.params.offerID
     const dispatch = useDispatch()
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     //Payment
     var showBottomButton = route.params.offerStatus ? route.params.offerStatus : ""
@@ -98,6 +99,7 @@ export default function Chattravelereler({ route }) {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
     const fetchPaymentSheetParams = async () => {
+        console.log("token", token)
         let url = `http://3.124.117.144:3000/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}`
         const response = await fetch(url, {
             method: 'get',
@@ -179,8 +181,14 @@ export default function Chattravelereler({ route }) {
             }
             dispatch(RespondToOffer(data, token,
                 () => {
-                    socket = io.connect('http://3.124.117.144:3000/');
+                    socket = io.connect(SOCKET_URL);
                     socket.emit('addUser', currentUser._id);
+                    const roomDetails = {
+                        userID: currentUser._id,
+                        chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
+                    }
+                    socket.emit('addRoom', roomDetails)
+
                     socket.on("getUsers", async msg => {
                         console.log("GET USERS ACEPTED", await msg)
                     })
@@ -216,27 +224,34 @@ export default function Chattravelereler({ route }) {
     }
 
     function getOfferBodyA(order) {
-        return `Preferred Delivery Date:\n\n${order.offer.deliveryDate} \n\nNotes:\n\n${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
+        return `Preferred Delivery Date:<br>${order.offer.deliveryDate} <br>Notes:<br>${order.offer.notes.length > 0 ? order.offer.notes : 'No Notes'}`
     }
 
     function getOfferBodyB(order) {
-        return addSpaces('Order No: ', false) + order.orderDetail._id + '\n\n' +
-            addSpaces('Order Price:') + order.orderDetail.product_price + '\n' +
-            addSpaces('Estimated Delivery Fee:') + order.offer.offerPrice + '\n' +
-            addSpaces('VIP Service Fee:') + order.orderDetail.vip_service_fee + '\n' +
-            addSpaces('Flighteno cost:') + order.orderDetail.flighteno_cost + '\n' +
-            addSpaces('Tax:') + order.orderDetail.tax + '\n\n' +
+        return addSpaces('Order No: ', false) + order.orderDetail._id + '<br>' +
+            addSpaces('Order Price:') + order.orderDetail.product_price + '<br>' +
+            addSpaces('Estimated Delivery Fee:') + order.offer.offerPrice + '<br>' +
+            addSpaces('VIP Service Fee:') + order.orderDetail.vip_service_fee + '<br>' +
+            addSpaces('Flighteno cost:') + order.orderDetail.flighteno_cost + '<br>' +
+            addSpaces('Tax:') + order.orderDetail.tax + '<br>' +
             addSpaces('Total:') + (parseInt(order.orderDetail.product_price) + parseInt(order.offer.offerPrice) + parseInt(route.params.orderDetail.vip_service_fee) + parseInt(route.params.orderDetail.flighteno_cost) + parseInt(route.params.orderDetail.tax))
     }
 
-    function addSpaces(text, showDollar=true) {
+    function addSpaces(text, showDollar = true) {
         // return text.padEnd(1, ' ') + addDollar ? '$' : '';
         return showDollar ? `${text} $` : text;
     }
 
     useEffect(() => {
-        socket = io.connect('http://3.124.117.144:3000/');
+
+        socket = io.connect(SOCKET_URL);
         socket.emit('addUser', currentUser._id);
+        const roomDetails = {
+            userID: currentUser._id,
+            chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
+        }
+        socket.emit('addRoom', roomDetails)
+
         socket.on("getUsers", async msg => {
             console.log("GET USERS", await msg)
         })
@@ -257,52 +272,67 @@ export default function Chattravelereler({ route }) {
                     createdAt: new Date(),
                     user: currentChatUser,
                 }
+
+
+                socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message1, sender_status: currentProfile, status: "offer", order_id: route.params.orderDetail._id });
+                socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message2, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id });
+
+                message1.text = message1.text.replace(new RegExp("<br>", "g"), '\n\n');
+                message2.text = message2.text.replace(new RegExp("<br>", "g"), '\n');
+
+                console.log("TEXTS", message1.text)
                 messages.push(message1)
                 messages.push(message2)
                 setMessages([...messages])
-                socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message1, sender_status: currentProfile, status: "offer", order_id: route.params.orderDetail._id });
-                socket.emit('sendMessage', { chat_id: msg, admin_id: currentUser._id, text: message2, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id });
+
+
+                console.log("body 1", { chat_id: msg, admin_id: currentUser._id, text: message1, sender_status: currentProfile, status: "offer", order_id: route.params.orderDetail._id })
+                console.log("body 2", { chat_id: msg, admin_id: currentUser._id, text: message2, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id })
             });
 
             // Fix for https://team-1634092271346.atlassian.net/browse/FLIGHT-22
-            var message1 = {
-                _id: Math.floor(Math.random() * 1000000),
-                text: getOfferBodyA(route.params),
-                createdAt: new Date(),
-                user: currentChatUser,
-            }
-            var message2 = {
-                _id: Math.floor(Math.random() * 1000000),
-                text: getOfferBodyB(route.params),
-                createdAt: new Date(),
-                user: currentChatUser,
-            }
-            messages.push(message1)
-            messages.push(message2)
-            setMessages([...messages])
+            // var message1 = {
+            //     _id: Math.floor(Math.random() * 1000000),
+            //     text: getOfferBodyA(route.params),
+            //     createdAt: new Date(),
+            //     user: currentChatUser,
+            // }
+            // var message2 = {
+            //     _id: Math.floor(Math.random() * 1000000),
+            //     text: getOfferBodyB(route.params),
+            //     createdAt: new Date(),
+            //     user: currentChatUser,
+            // }
+            // messages.push(message1)
+            // messages.push(message2)
+            // setMessages([...messages])
         }
         if (route.params.currentStatus == "message") {
+            console.log("history", route.params.chatHistory)
             route.params.chatHistory.forEach(element => {
-                if (typeof (element.currentMessage.user.avatar) == "number") {
-                    element.currentMessage.user.avatar = require("../../images/manProfile.png")
-                    messages.push(element.currentMessage)
-                    setMessages([...messages])
+                if (element.currentMessage != null) {
+                    if (typeof (element.currentMessage.user.avatar) == "number") {
+                        element.currentMessage.user.avatar = require("../../images/manProfile.png")
+                        messages.push(element.currentMessage)
+                        setMessages([...messages])
+                    }
+                    else {
+                        messages.push(element.currentMessage)
+                        setMessages([...messages])
+                    }
                 }
-                else {
-                    messages.push(element.currentMessage)
-                    setMessages([...messages])
-                }
+
             });
         }
 
         socket.on("getMessage", async msg => {
-            console.log("GET MESSAGE UPDATED", await msg)
+            console.log("GET MESSAGE UPDATED: USER " + currentUser.full_name, await msg)
             var mess = {
-                _id: msg.message._id,
-                text: msg.message.text,
-                image: msg.message.image ? msg.message.image : "",
-                createdAt: msg.message.createdAt,
-                user: msg.message.user,
+                _id: msg.text._id,
+                text: msg.text.text,
+                image: msg.text.image ? msg.text.image : "",
+                createdAt: msg.text.createdAt,
+                user: msg.text.user,
             };
 
             setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
@@ -319,8 +349,16 @@ export default function Chattravelereler({ route }) {
     }, [navigation]);
 
     if (route.params.currentStatus == "edit" && checkCondition == false) {
-        socket = io.connect('http://3.124.117.144:3000/');
+        socket = io.connect(SOCKET_URL);
         socket.emit('addUser', currentUser._id);
+        const roomDetails = {
+            userID: currentUser._id,
+            chat_id: route.params.chatID
+        }
+        socket.emit('addRoom', roomDetails)
+
+
+
         socket.on("getUsers", async msg => {
             console.log("GET USERS INSIDE EDIT", await msg)
         })
@@ -336,11 +374,16 @@ export default function Chattravelereler({ route }) {
             createdAt: new Date(),
             user: currentChatUser
         }
-        setMessages(previousMessages => GiftedChat.append(previousMessages, message1))
-        setMessages(previousMessages => GiftedChat.append(previousMessages, message2))
+
         socket.emit('sendMessage', { chat_id: route.params.chatID, admin_id: currentUser._id, text: message1, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id });
         socket.emit('sendMessage', { chat_id: route.params.chatID, admin_id: currentUser._id, text: message2, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id });
         checkCondition = true
+
+        message1.text = message1.text.replace(new RegExp("<br>", "g"), '\n\n');
+        message2.text = message2.text.replace(new RegExp("<br>", "g"), '\n');
+        setMessages(previousMessages => GiftedChat.append(previousMessages, message1))
+        setMessages(previousMessages => GiftedChat.append(previousMessages, message2))
+
     }
 
     useEffect(() => {
@@ -394,6 +437,7 @@ export default function Chattravelereler({ route }) {
     }, []);
 
     const onSend = useCallback((messages = []) => {
+
         var mess = {
             _id: messages[0]._id,
             text: messages[0].text,
@@ -404,9 +448,22 @@ export default function Chattravelereler({ route }) {
                 avatar: currentUser.profile_image ? currentUser.profile_image : require("../../images/manProfile.png"),
             },
         };
-        setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
-        socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: mess, sender_status: currentProfile, status: "message" });
 
+        var tempText = mess.text;
+
+        var match = /\n/g.exec(tempText);
+        if (match) {
+            console.log(tempText, 'TEXT');
+            tempText = tempText.replace(/\n/g, '<br>')
+
+            console.log("new text:", tempText)
+        }
+
+        mess.text = tempText;
+
+        socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: mess, sender_status: currentProfile, status: "message" });
+        mess.text = messages[0].text;
+        setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
     }, [])
 
     const user = {
@@ -588,6 +645,8 @@ export default function Chattravelereler({ route }) {
                     setChatModal(false)
 
                     socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: valueToPush, sender_status: currentProfile, status: 'message' });
+
+                    console.log("Image upload", { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: valueToPush, sender_status: currentProfile, status: 'message' })
                 });
             }
         });
@@ -614,7 +673,7 @@ export default function Chattravelereler({ route }) {
                         onPressYes={() => offerConfirmation(offerStatus)}
                         onPressNo={() => setModal(false)}
                         title={`Would you like to ${offerStatus}${'\n'}the ${currentPerson} offer?`}
-                    />  
+                    />
 
                     <TouchableOpacity onPress={() => backAction1()}>
                         <Image
@@ -641,7 +700,7 @@ export default function Chattravelereler({ route }) {
                         onSend={messages => onSend(messages)}
                         user={user}
                         // scrollToBottom
-                        
+
                         showUserAvatar
                         // renderAvatar={props => customtAvatar(props)}
                         onPressAvatar={() => console.log(user)}
