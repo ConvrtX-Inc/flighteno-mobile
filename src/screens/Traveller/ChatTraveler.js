@@ -181,6 +181,12 @@ export default function Chattravelereler({ route }) {
                 () => {
                     socket = io.connect(SOCKET_URL);
                     socket.emit('addUser', currentUser._id);
+                    const roomDetails = {
+                        userID: currentUser._id,
+                        chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
+                    }
+                    socket.emit('addRoom', roomDetails)
+
                     socket.on("getUsers", async msg => {
                         console.log("GET USERS ACEPTED", await msg)
                     })
@@ -238,6 +244,12 @@ export default function Chattravelereler({ route }) {
 
         socket = io.connect(SOCKET_URL);
         socket.emit('addUser', currentUser._id);
+        const roomDetails = {
+            userID: currentUser._id,
+            chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
+        }
+        socket.emit('addRoom', roomDetails)
+
         socket.on("getUsers", async msg => {
             console.log("GET USERS", await msg)
         })
@@ -312,13 +324,13 @@ export default function Chattravelereler({ route }) {
         }
 
         socket.on("getMessage", async msg => {
-            console.log("GET MESSAGE UPDATED", await msg)
+            console.log("GET MESSAGE UPDATED: USER " + currentUser.full_name, await msg)
             var mess = {
-                _id: msg.message._id,
-                text: msg.message.text,
-                image: msg.message.image ? msg.message.image : "",
-                createdAt: msg.message.createdAt,
-                user: msg.message.user,
+                _id: msg.text._id,
+                text: msg.text.text,
+                image: msg.text.image ? msg.text.image : "",
+                createdAt: msg.text.createdAt,
+                user: msg.text.user,
             };
 
             setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
@@ -337,6 +349,14 @@ export default function Chattravelereler({ route }) {
     if (route.params.currentStatus == "edit" && checkCondition == false) {
         socket = io.connect(SOCKET_URL);
         socket.emit('addUser', currentUser._id);
+        const roomDetails = {
+            userID: currentUser._id,
+            chat_id: route.params.chatID
+        }
+        socket.emit('addRoom', roomDetails)
+
+
+
         socket.on("getUsers", async msg => {
             console.log("GET USERS INSIDE EDIT", await msg)
         })
@@ -416,9 +436,6 @@ export default function Chattravelereler({ route }) {
 
     const onSend = useCallback((messages = []) => {
 
-        // let url = `http://3.124.117.144:3000/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}`
-        // alert('send'+url)
-        // console.log('url',url)
         var mess = {
             _id: messages[0]._id,
             text: messages[0].text,
@@ -431,11 +448,11 @@ export default function Chattravelereler({ route }) {
         };
 
         var tempText = mess.text;
-       
+
         var match = /\n/g.exec(tempText);
         if (match) {
             console.log(tempText, 'TEXT');
-            tempText =  tempText.replace(/\n/g, '<br>')
+            tempText = tempText.replace(/\n/g, '<br>')
 
             console.log("new text:", tempText)
         }
