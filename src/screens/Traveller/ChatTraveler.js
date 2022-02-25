@@ -21,7 +21,7 @@ import { RespondToOffer } from '../../redux/actions/Payment';
 import ScreenLoader from '../../components/ScreenLoader'
 import { IS_LOADING } from '../../redux/constants';
 import { useTranslation } from 'react-i18next';
-import { SOCKET_URL } from '../../BASE_URL';
+import { SOCKET_URL, PAYMENT_BASE_URL } from '../../BASE_URL';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextBold from '../../components/atoms/TextBold';
 
@@ -99,8 +99,7 @@ export default function Chattravelereler({ route }) {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
     const fetchPaymentSheetParams = async () => {
-        console.log("token", token)
-        let url = `http://3.124.117.144:3000/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}`
+        let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}`
         const response = await fetch(url, {
             method: 'get',
             headers: {
@@ -109,7 +108,7 @@ export default function Chattravelereler({ route }) {
             },
         });
         const res = await response.json();
-        let data = {
+         let data = {
             customer: res.customer,
             ephemeralKey: res.ephemeralKey,
             paymentIntent: res.paymentIntent
@@ -189,9 +188,6 @@ export default function Chattravelereler({ route }) {
                     }
                     socket.emit('addRoom', roomDetails)
 
-                    socket.on("getUsers", async msg => {
-                        console.log("GET USERS ACEPTED", await msg)
-                    })
                     var mess = {
                         _id: Math.floor(Math.random() * 1000000),
                         text: "This offer has been accepted!",
@@ -252,13 +248,9 @@ export default function Chattravelereler({ route }) {
         }
         socket.emit('addRoom', roomDetails)
 
-        socket.on("getUsers", async msg => {
-            console.log("GET USERS", await msg)
-        })
         if (route.params.currentStatus == "offer") {
             socket.emit('sendOffer', { orderId: route.params.orderDetail._id, senderId: currentUser._id, receiverId: route.params.orderDetail.admin_id });
             socket.on("createChat", async msg => {
-                console.log("CHAT ID UPDATED", await msg)
                 chatId = msg
                 var message1 = {
                     _id: Math.floor(Math.random() * 1000000),
@@ -280,35 +272,14 @@ export default function Chattravelereler({ route }) {
                 message1.text = message1.text.replace(new RegExp("<br>", "g"), '\n\n');
                 message2.text = message2.text.replace(new RegExp("<br>", "g"), '\n');
 
-                console.log("TEXTS", message1.text)
                 messages.push(message1)
                 messages.push(message2)
                 setMessages([...messages])
-
-
-                console.log("body 1", { chat_id: msg, admin_id: currentUser._id, text: message1, sender_status: currentProfile, status: "offer", order_id: route.params.orderDetail._id })
-                console.log("body 2", { chat_id: msg, admin_id: currentUser._id, text: message2, sender_status: currentProfile, status: 'offer', order_id: route.params.orderDetail._id })
             });
 
-            // Fix for https://team-1634092271346.atlassian.net/browse/FLIGHT-22
-            // var message1 = {
-            //     _id: Math.floor(Math.random() * 1000000),
-            //     text: getOfferBodyA(route.params),
-            //     createdAt: new Date(),
-            //     user: currentChatUser,
-            // }
-            // var message2 = {
-            //     _id: Math.floor(Math.random() * 1000000),
-            //     text: getOfferBodyB(route.params),
-            //     createdAt: new Date(),
-            //     user: currentChatUser,
-            // }
-            // messages.push(message1)
-            // messages.push(message2)
-            // setMessages([...messages])
+        
         }
         if (route.params.currentStatus == "message") {
-            console.log("history", route.params.chatHistory)
             route.params.chatHistory.forEach(element => {
                 if (element.currentMessage != null) {
                     if (typeof (element.currentMessage.user.avatar) == "number") {
@@ -326,7 +297,6 @@ export default function Chattravelereler({ route }) {
         }
 
         socket.on("getMessage", async msg => {
-            console.log("GET MESSAGE UPDATED: USER " + currentUser.full_name, await msg)
             var mess = {
                 _id: msg.text._id,
                 text: msg.text.text,
@@ -357,11 +327,6 @@ export default function Chattravelereler({ route }) {
         }
         socket.emit('addRoom', roomDetails)
 
-
-
-        socket.on("getUsers", async msg => {
-            console.log("GET USERS INSIDE EDIT", await msg)
-        })
         var message1 = {
             _id: Math.floor(Math.random() * 1000000),
             text: getOfferBodyB(route.params),
@@ -453,10 +418,7 @@ export default function Chattravelereler({ route }) {
 
         var match = /\n/g.exec(tempText);
         if (match) {
-            console.log(tempText, 'TEXT');
             tempText = tempText.replace(/\n/g, '<br>')
-
-            console.log("new text:", tempText)
         }
 
         mess.text = tempText;
@@ -646,7 +608,6 @@ export default function Chattravelereler({ route }) {
 
                     socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: valueToPush, sender_status: currentProfile, status: 'message' });
 
-                    console.log("Image upload", { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: valueToPush, sender_status: currentProfile, status: 'message' })
                 });
             }
         });

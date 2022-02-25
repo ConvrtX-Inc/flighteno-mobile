@@ -17,11 +17,8 @@ export function getChatMessages(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
-            console.log("MESSAGES \n\n", Response.data.messagesData.length)
-
-            var messages = Response.data.messagesData.filter((chat) => chat.messages && chat.messages.length > 0 );
-
         
+            var messages = Response.data.messagesData.filter((chat) => chat.messages && chat.messages.length > 0 );
 
             messages.forEach(chat =>{
                 chat.messages = chat.messages.filter(message => message.currentMessage != null);
@@ -30,7 +27,6 @@ export function getChatMessages(data, token) {
                 })
             })
 
-            console.log('messages',messages)
             var sortedData = messages.sort(function (a, b) {
                 return new Date(b.messages[0]?.currentMessage.createdAt) - new Date(a.messages[0]?.currentMessage.createdAt);
             });
