@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, Modal, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, Modal, ScrollView, Platform } from 'react-native';
+import { useNavigation, SwitchActions  } from '@react-navigation/native';
 import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
 import { useSelector, useDispatch } from 'react-redux'
@@ -21,12 +21,20 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
 import TextRegular from '../../components/atoms/TextRegular';
+
+import storage from '@react-native-firebase/storage';
+
+// Custom Imports
+import { generateImagePublicURLFirebase } from '../../Utility/Utils';
+import UploadProgressBar from '../../components/UploadProgressBart';
+
 var windowWidth = Dimensions.get('window').width;
 
 var productUri = ""
 var receiptUri = ""
 export default function PendingOrderDetailT({ route }) {
-    const { currentOrder } = route.params
+    const { currentOrder } = route.params;
+    // console.log('currentOrder', currentOrder)
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
@@ -40,6 +48,9 @@ export default function PendingOrderDetailT({ route }) {
     const [showProductPic, setShowProductPic] = useState(false)
     const [showReceiptPic, setShowReceiptPic] = useState(false)
     const [showProduct, setSHowProduct] = useState(false) 
+    const [transferred, setTransferred] = useState(0);
+    const [uploadedCount, setUploadedCount] = useState(0);
+    const [images, setImages] = useState([]);
     const {t} = useTranslation()
 
     const chooseFile = (type) => {
@@ -64,13 +75,15 @@ export default function PendingOrderDetailT({ route }) {
                 alert(response.customButton);
             } else {
                 if (type == "product") {
-                    setProductPic(response.assets[0].uri)
-                    setUploadProductPic(1)
+                    setProductPic(response.assets[0].uri);
+                    setUploadProductPic(1);
                 }
                 else {
-                    setReceiptPic(response.assets[0].uri)
-                    setUploadReceiptPic(1)
+                    setReceiptPic(response.assets[0].uri);
+                    setUploadReceiptPic(1);
                 }
+                images.push(response.assets[0].uri);
+                setImages([...images]);
             }
         });
     };
@@ -90,58 +103,102 @@ export default function PendingOrderDetailT({ route }) {
         }
 
     };
-    const uploadProductImage = () => {
-        const file = {
-            uri: productPic,
-            name: generateUID() + ".jpg",
-            type: 'image/jpeg'
-        }
-        const options = {
-            keyPrefix: "flighteno/orders/",
-            bucket: "memee-bucket",
-            region: "eu-central-1",
-            accessKey: "AKIA2YJH3TLHCODGDKFV",
-            secretKey: "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",
-            successActionStatus: 201
-        }
-        RNS3.put(file, options).then(response => {
-            if (response.status !== 201)
-                throw new Error("Failed to upload image to S3");
-            productUri = response.body.postResponse.location
-            if (uploadReceiptPic == 1) {
-                uploadReceiptImage()
-            }
-            else {
-                updateUserOrder()
-            }
-        });
+    const uploadProductImage = async () => {
+        // const file = {
+        //     uri: productPic,
+        //     name: generateUID() + ".jpg",
+        //     type: 'image/jpeg'
+        // }
+        // const options = {
+        //     keyPrefix: "flighteno/orders/",
+        //     bucket: "memee-bucket",
+        //     region: "eu-central-1",
+        //     accessKey: "AKIA2YJH3TLHCODGDKFV",
+        //     secretKey: "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",
+        //     successActionStatus: 201
+        // }
+        // RNS3.put(file, options).then(response => {
+        //     if (response.status !== 201)
+        //         throw new Error("Failed to upload image to S3");
+        //     productUri = response.body.postResponse.location
+        //     if (uploadReceiptPic == 1) {
+        //         uploadReceiptImage()
+        //     }
+        //     else {
+        //         updateUserOrder()
+        //     }
+        // });
+
+         // return;
+         const uri = productPic;
+         const filename = uri.substring(uri.lastIndexOf('/') + 1);
+         const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+         const task = storage()
+             .ref(`${filename}`)
+             .putFile(`${uploadUri}`);
+         // set progress state
+         task.on('state_changed', snapshot => {                    
+             setTransferred(
+                 Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+             );
+         });
+         try {
+            const resImg = await task;
+            const resImgPublicUrl = generateImagePublicURLFirebase(resImg.metadata.name);
+            productUri = resImgPublicUrl;
+            setUploadedCount(uploadedCount + 1);
+         } catch (e) {
+             console.log('errooooorrrrr -> penderOrderDetailT.js -> uploadProductImage ->', e);
+         }
+         return;
     }
 
-    const uploadReceiptImage = () => {
-        const file = {
-            uri: receiptPic,
-            name: generateUID() + ".jpg",
-            type: 'image/jpeg'
-        }
-        const options = {
-            keyPrefix: "flighteno/orders/",
-            bucket: "memee-bucket",
-            region: "eu-central-1",
-            accessKey: "AKIA2YJH3TLHCODGDKFV",
-            secretKey: "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",
-            successActionStatus: 201
-        }
-        RNS3.put(file, options).then(response => {
-            if (response.status !== 201)
-                throw new Error("Failed to upload image to S3");
+    const uploadReceiptImage = async() => {
+        // const file = {
+        //     uri: receiptPic,
+        //     name: generateUID() + ".jpg",
+        //     type: 'image/jpeg'
+        // }
+        // const options = {
+        //     keyPrefix: "flighteno/orders/",
+        //     bucket: "memee-bucket",
+        //     region: "eu-central-1",
+        //     accessKey: "AKIA2YJH3TLHCODGDKFV",
+        //     secretKey: "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",
+        //     successActionStatus: 201
+        // }
+        // RNS3.put(file, options).then(response => {
+        //     if (response.status !== 201)
+        //         throw new Error("Failed to upload image to S3");
 
-            receiptUri = response.body.postResponse.location
-            updateUserOrder()
+        //     receiptUri = response.body.postResponse.location
+        //     updateUserOrder()
 
+        // });
+        const uri = receiptPic;
+        const filename = uri.substring(uri.lastIndexOf('/') + 1);
+        const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+        const task = storage()
+            .ref(`${filename}`)
+            .putFile(`${uploadUri}`);
+        // set progress state
+        task.on('state_changed', snapshot => {                    
+            setTransferred(
+                Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+            );
         });
+        try {
+            const resImg = await task;
+            const resImgPublicUrl = generateImagePublicURLFirebase(resImg.metadata.name);
+            receiptUri = resImgPublicUrl;
+            setUploadedCount(uploadedCount + 1);
+        } catch (e) {
+            console.log('errooooorrrrr -> penderOrderDetailT.js -> uploadReceiptImage ->', e);
+        }
+        return;
     }
     // dispatch({ type: IS_LOADING, isloading: false })
-    const uploadImages = () => {
+    const uploadImages = async() => {
         if (uploadProductPic == 0 && uploadReceiptPic == 0) {
             Toast.show({
                 type: 'error',
@@ -153,16 +210,12 @@ export default function PendingOrderDetailT({ route }) {
         else {
             dispatch({ type: IS_LOADING, isloading: true })
             if (uploadProductPic == 1) {
-                uploadProductImage()
+                await uploadProductImage();
             }
-            else {
-                if (uploadReceiptPic == 1) {
-                    uploadReceiptImage()
-                }
-                else {
-                    updateUserOrder()
-                }
+            if (uploadReceiptPic == 1) {
+                await uploadReceiptImage();        
             }
+            updateUserOrder();
         }
     }
 
@@ -173,8 +226,16 @@ export default function PendingOrderDetailT({ route }) {
             recipt: receiptUri == "" ? receiptPic : receiptUri
         }
         dispatch(UpdateOrder(data, token, () => {
-            navigation.goBack()
-        }))
+            setTimeout(async() => {
+                dispatch({ type: IS_LOADING, isloading: false })
+                Toast.show({
+                    type: 'success',
+                    text2: "Order has been updated!",
+                });                
+                // console.log('navigation', navigation)
+                navigation.pop(2);
+            }, 3000);
+        }));
     }
 
     const orderCompletion = () => {
@@ -187,7 +248,7 @@ export default function PendingOrderDetailT({ route }) {
     }
 
     const checkUploadedFile = (type) => {
-        if (type == 'product') {
+        if (currentOrder.status == 'complete' && type == 'product') {
             if (currentOrder.new_image) {
                 setShowProductPic(true)
             }
@@ -196,7 +257,7 @@ export default function PendingOrderDetailT({ route }) {
             }
         }
         else {
-            if (currentOrder.recipt) {
+            if (currentOrder.status == 'complete') {
                 setShowReceiptPic(true)
             }
             else {
@@ -527,6 +588,21 @@ export default function PendingOrderDetailT({ route }) {
                         }
                     />
                     : null}
+                    
+                    <View style={{ marginVertical: 15 }}>                    
+                        {
+                            loading ? (
+                                <UploadProgressBar
+                                    uploadedCount={uploadedCount}
+                                    images={images}
+                                    videos={[]}
+                                    containerStyle={{alignItems: 'center', marginTop: 20}}
+                                    textStyle={{marginBottom: 10}}
+                                    transferred={transferred}
+                                    progressBarWidth={Dimensions.get('window'). width - 50} />
+                            ) : null
+                        }  
+                    </View> 
                 {currentOrder.status == "accepted" ?
                     <View style={{ marginVertical: 20 }}>
                         {!showQrDetail ?

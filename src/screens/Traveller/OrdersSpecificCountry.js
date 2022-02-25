@@ -22,7 +22,7 @@ export default function OrdersSpecificCountry({ route }) {
     const {t} = useTranslation()
 
     useEffect(() => {
-        console.log(flightBaseOrders)
+        console.log('OrdersSpecificCountry', flightBaseOrders)
     },[])
 
     return (
@@ -47,7 +47,7 @@ export default function OrdersSpecificCountry({ route }) {
                         <CardOrderUser order={item.traveler_orders[0]} />
                     </TouchableOpacity>
                 }
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
             />
         </View>
     );
