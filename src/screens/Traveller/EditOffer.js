@@ -171,7 +171,7 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>Flightneno {t('track.cost')}</TextBold>
+                                    <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>Flighteno {t('track.cost')}</TextBold>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
