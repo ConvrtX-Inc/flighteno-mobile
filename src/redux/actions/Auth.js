@@ -294,6 +294,12 @@ export function newPaswordCreationAction(data, removeStates, navigate) {
         }).then(response => {
             dispatch({ type: IS_LOADING, isloading: false })
             if (response.data.type == 200) {
+               
+                Toast.show({
+                    type: 'success',
+                    text1: 'Success!',
+                    text2: response.data.status,
+                })
                 navigate()
                 removeStates()
                 dispatch({ type: IS_LOADING, isloading: false })
