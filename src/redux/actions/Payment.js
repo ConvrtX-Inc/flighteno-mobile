@@ -19,7 +19,7 @@ export function ConfigureStripeAccount(data, token, navigation) {
             dispatch({ type: IS_LOADING, isloading: false })
             console.log(error)
         }).then(Response => {
-            
+            console.log("RES:",Response.data)
             dispatch({ type: IS_LOADING, isloading: false })
             navigation.navigate('StripeWebView', { url: Response.data.conected_account_id })
         })

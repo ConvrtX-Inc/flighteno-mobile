@@ -100,6 +100,8 @@ export default function Chattravelereler({ route }) {
 
     const fetchPaymentSheetParams = async () => {
         let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}`
+        console.log('payment url:',url,token)
+        
         const response = await fetch(url, {
             method: 'get',
             headers: {
@@ -108,6 +110,7 @@ export default function Chattravelereler({ route }) {
             },
         });
         const res = await response.json();
+     
          let data = {
             customer: res.customer,
             ephemeralKey: res.ephemeralKey,
