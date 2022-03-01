@@ -165,7 +165,7 @@ export function UpdateOrder(data, token, navigation) {
             dispatch({ type: IS_LOADING, isloading: false })
             console.log("Error", error)
         }).then(Response => {
-            dispatch({ type: IS_LOADING, isloading: false })
+            // dispatch({ type: IS_LOADING, isloading: false })
             navigation()
         })
     }
