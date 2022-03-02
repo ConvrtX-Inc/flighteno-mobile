@@ -8,8 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "android:build-debug":"react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug && cd app/build/outputs/apk/debug && open .",
-    "android:build-release":"react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* && cd android && ./gradlew assembleRelease && cd app/build/outputs/apk/release && open ."
+    "android:build-debug": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug && cd app/build/outputs/apk/debug && open .",
+    "android:build-release": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/ && rm -rf android/app/src/main/res/drawable-* && rm -rf android/app/src/main/res/raw/* && cd android && ./gradlew assembleRelease && cd app/build/outputs/apk/release && open ."
   },
   "dependencies": {
     "@nartc/react-native-barcode-mask": "^1.2.0",
@@ -23,6 +23,7 @@
     "@react-native-firebase/messaging": "^14.5.0",
     "@react-native-firebase/storage": "^14.5.0",
     "@react-native-google-signin/google-signin": "^6.0.1",
+    "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-native-picker/picker": "^1.16.3",
     "@react-navigation/bottom-tabs": "5.x",
     "@react-navigation/material-top-tabs": "^5.3.15",
@@ -72,6 +73,7 @@
     "react-native-reanimated": "^2.3.1",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",
+    "react-native-skeleton-placeholder": "^5.0.0",
     "react-native-slider": "^0.11.0",
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "^12.1.1",

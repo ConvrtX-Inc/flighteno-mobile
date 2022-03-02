@@ -9,7 +9,8 @@ import {
     IS_LOADING_FACEBOOK,
     IS_LOADING_GOOGLE,
     NOTIFICATION_LIST,
-    SUPPORT_TICKETS
+    SUPPORT_TICKETS,
+    CHAT_MESSAGES
 } from '../constants/index';
 import Toast from 'react-native-toast-message';
 
@@ -22,7 +23,7 @@ export function registerUserFN(data, removeStates, saveToken) {
         password: data._parts[3][1],
         country_code: data._parts[4][1],
     }
-    console.log("request body register",obj)
+    console.log("request body register", obj)
     return async dispatch => {
         axios({
             method: 'post',
@@ -111,7 +112,7 @@ export function getDataAction(token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(response => {
-            console.log("CURRENT USER DATA",data)
+            console.log("CURRENT USER DATA", data)
             dispatch({ type: LOGIN_DATA, data: response.data });
 
         });
@@ -133,11 +134,11 @@ export function CheckSamePasswordAction(data, message) {
             console.log("Error", error)
             dispatch({ type: IS_LOADING, isloading: false })
         }).then(response => {
-            
+
             // if(response?.data?.isOldPassword){
             //     dispatch({ type: IS_LOADING, isloading: false })
             // }
-            message(response?.data) 
+            message(response?.data)
             // dispatch({ type: IS_LOADING, isloading: false })
             // if (response.data.Status == 200) {
             //     // dispatch({ type: IS_LOADING, isloading: false })
@@ -214,7 +215,7 @@ export function verifyOtpCodeAction(data, removeStates, navigate, verificationEr
 
 
 export function otpResetPasswordAction(data, removeStates, navigate, loginError) {
-    console.log("data dispatch:" ,data)
+    console.log("data dispatch:", data)
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -295,7 +296,7 @@ export function newPaswordCreationAction(data, removeStates, navigate) {
         }).then(response => {
             dispatch({ type: IS_LOADING, isloading: false })
             if (response.data.type == 200) {
-               
+
                 Toast.show({
                     type: 'success',
                     text1: 'Success!',
@@ -322,6 +323,8 @@ export function Logout() {
         dispatch({
             type: LOGOUT, data: null
         });
+        dispatch({ type: CHAT_MESSAGES, data: null })
+
     }
 }
 

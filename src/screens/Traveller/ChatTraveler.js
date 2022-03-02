@@ -19,7 +19,7 @@ var io = require('socket.io-client');
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 import { RespondToOffer } from '../../redux/actions/Payment';
 import ScreenLoader from '../../components/ScreenLoader'
-import { IS_LOADING } from '../../redux/constants';
+import {  IS_LOADING,UPDATE_CHATS } from '../../redux/constants';
 import { useTranslation } from 'react-i18next';
 import { SOCKET_URL, PAYMENT_BASE_URL } from '../../BASE_URL';
 import TextRegular from '../../components/atoms/TextRegular';
@@ -100,6 +100,8 @@ export default function Chattravelereler({ route }) {
 
     const fetchPaymentSheetParams = async () => {
         let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}`
+        console.log('payment url:',url,token)
+        
         const response = await fetch(url, {
             method: 'get',
             headers: {
@@ -108,6 +110,7 @@ export default function Chattravelereler({ route }) {
             },
         });
         const res = await response.json();
+     
          let data = {
             customer: res.customer,
             ephemeralKey: res.ephemeralKey,
@@ -272,9 +275,14 @@ export default function Chattravelereler({ route }) {
                 message1.text = message1.text.replace(new RegExp("<br>", "g"), '\n\n');
                 message2.text = message2.text.replace(new RegExp("<br>", "g"), '\n');
 
+                
+
                 messages.push(message1)
                 messages.push(message2)
                 setMessages([...messages])
+
+                pushNewMessageToCurrentInbox(message1)
+                pushNewMessageToCurrentInbox(message2)
             });
 
         
@@ -305,7 +313,10 @@ export default function Chattravelereler({ route }) {
                 user: msg.text.user,
             };
 
+
             setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
+
+            pushNewMessageToCurrentInbox(mess);
         })
 
     }, [])
@@ -377,6 +388,7 @@ export default function Chattravelereler({ route }) {
             return true
         }
         else {
+           
             navigation.goBack()
             return true
         }
@@ -414,6 +426,7 @@ export default function Chattravelereler({ route }) {
             },
         };
 
+
         var tempText = mess.text;
 
         var match = /\n/g.exec(tempText);
@@ -426,6 +439,7 @@ export default function Chattravelereler({ route }) {
         socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: mess, sender_status: currentProfile, status: "message" });
         mess.text = messages[0].text;
         setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
+        pushNewMessageToCurrentInbox(mess)
     }, [])
 
     const user = {
@@ -612,6 +626,20 @@ export default function Chattravelereler({ route }) {
             }
         });
     };
+
+  
+
+    const pushNewMessageToCurrentInbox = (message) =>{
+        const chatID =route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id;
+        const newMessage = {
+            chat_id: chatID,
+            currentMessage: message
+        }
+
+       
+        dispatch({ type: UPDATE_CHATS, data: newMessage })
+
+    }   
 
     return (
         <StripeProvider
