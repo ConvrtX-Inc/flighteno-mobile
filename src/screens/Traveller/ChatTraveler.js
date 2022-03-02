@@ -426,6 +426,7 @@ export default function Chattravelereler({ route }) {
             },
         };
 
+
         var tempText = mess.text;
 
         var match = /\n/g.exec(tempText);
