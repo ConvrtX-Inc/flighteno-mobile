@@ -66,6 +66,7 @@ export function registerUserFN(data, removeStates, saveToken) {
 
 
 export function LoginAction(data, removeStates, loginError, saveToken) {
+    console.log(`${BASE_URL}Rest_calls/loginMobile`);
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({

@@ -103,7 +103,7 @@ export default function LatestTransactionsScreen ({navigation}) {
                             )
                         }                        
 
-                        <View style={styles.withMargin}>
+                        <View style={[styles.withMargin, commonStyles.flex1]}>
                             <ScrollView>
                                 <View style={[commonStyles.marginTop30]}>
                                     <TextBold style={[commonStyles.fs26]}>{t('payment.latestTransactions')}</TextBold>
@@ -137,6 +137,66 @@ export default function LatestTransactionsScreen ({navigation}) {
                                         </View>  
                                     </View>                                                              
                                 </View>   
+
+                                <View style={commonStyles.flex1}>    
+                                    <View style={commonStyles.padding6}>
+                                        <View
+                                            style={
+                                                [
+                                                    commonStyles.padding10,
+                                                    commonStyles.borerRadius12,
+                                                    commonStyles.marginTop20,
+                                                    commonStyles.shadow,
+                                                    commonStyles.bcWhite,
+                                                ]
+                                            }>
+                                            <View style={[styles.transaction]}>
+                                                <View>
+                                                    <Image 
+                                                        source={require('../../images/manProfile.png')}  
+                                                        style={{width: 50, height: 50, borderRadius: 50/2}}/>
+                                                </View>
+                                                <View style={[commonStyles.marginHorizontal20, {flex: 1}]}>
+                                                    <TextBold style={commonStyles.fs20}>Travis</TextBold>
+                                                    <TextMedium style={[commonStyles.fs16, commonStyles.cMountainMist]}>2 hr ago</TextMedium>
+                                                </View>
+                                                <View>
+                                                    <TextMedium style={[commonStyles.fs20, commonStyles.cMediumGreen]}>+$600.00</TextMedium>
+                                                </View>
+                                            </View>
+                                        </View>  
+                                    </View>                                                              
+                                </View> 
+
+                                <View style={commonStyles.flex1}>    
+                                    <View style={commonStyles.padding6}>
+                                        <View
+                                            style={
+                                                [
+                                                    commonStyles.padding10,
+                                                    commonStyles.borerRadius12,
+                                                    commonStyles.marginTop20,
+                                                    commonStyles.shadow,
+                                                    commonStyles.bcWhite,
+                                                ]
+                                            }>
+                                            <View style={[styles.transaction]}>
+                                                <View>
+                                                    <Image 
+                                                        source={require('../../images/manProfile.png')}  
+                                                        style={{width: 50, height: 50, borderRadius: 50/2}}/>
+                                                </View>
+                                                <View style={[commonStyles.marginHorizontal20, {flex: 1}]}>
+                                                    <TextBold style={commonStyles.fs20}>Travis</TextBold>
+                                                    <TextMedium style={[commonStyles.fs16, commonStyles.cMountainMist]}>2 hr ago</TextMedium>
+                                                </View>
+                                                <View>
+                                                    <TextMedium style={[commonStyles.fs20, commonStyles.cMediumGreen]}>+$600.00</TextMedium>
+                                                </View>
+                                            </View>
+                                        </View>  
+                                    </View>                                                              
+                                </View>                                 
                             </ScrollView>  
                         </View>                        
                     </>
@@ -149,7 +209,7 @@ export default function LatestTransactionsScreen ({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,        
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
     },
     backButton: {
         marginStart: -10,
