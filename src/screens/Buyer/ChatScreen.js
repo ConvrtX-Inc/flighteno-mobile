@@ -63,7 +63,7 @@ export default function ChatScreen() {
                                                 style={styles.profileImage}
                                                 resizeMode="cover"
                                             />
-                                            <TextMedium numberOfLines={1} style={{ textAlign: 'left' }}>{item.reciverImageName[0].full_name.split(" ")[0]}</TextMedium>
+                                            <TextMedium numberOfLines={1} style={{ textAlign: 'left' }}>{item?.reciverImageName[0].full_name?.split(" ")[0]}</TextMedium>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -85,7 +85,7 @@ export default function ChatScreen() {
                                     />
                                 </View>
                                 <View style={{ width: '55%', marginLeft: '3%', }}>
-                                    <TextBold numberOfLines={1} style={[Styles.addText, { textAlign: 'left' }]}>{item.reciverImageName[0].full_name.split(" ")[0] + (item.order_name.length > 0 ? ', ' + item.order_name[0].order_name : "")}</TextBold>
+                                    <TextBold numberOfLines={1} style={[Styles.addText, { textAlign: 'left' }]}>{item?.reciverImageName[0]?.full_name?.split(" ")[0] + (item.order_name.length > 0 ? ', ' + item.order_name[0].order_name : "")}</TextBold>
                                     <TextMedium numberOfLines={1} style={[Styles.dateText, {}]}>{item.messages[0]?.currentMessage.text}</TextMedium>
                                 </View>
                                 <TextMedium style={[Styles.dateText, { marginLeft: 'auto', width: '20%' }]}>{moment(item.messages[0]?.currentMessage.createdAt).format("DD MMM")}</TextMedium>

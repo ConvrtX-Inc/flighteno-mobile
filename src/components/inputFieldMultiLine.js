@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, Platform } from 'react-native';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 
 const Input = ({ placeholder, value, onChangeText, secureTextEntry}) => {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'GilroyRegular',
+        fontFamily: Platform.OS =='ios' ? 'Gilroy-Regular' : 'GilroyRegular',
         backgroundColor: '#F6F9FF',
         paddingHorizontal: 20,
         textAlignVertical: 'top',

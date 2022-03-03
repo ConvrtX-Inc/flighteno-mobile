@@ -232,6 +232,9 @@ export function otpResetPasswordAction(data, removeStates, navigate, loginError)
             dispatch({ type: IS_LOADING, isloading: false })
             console.log("DATA", response.data)
             if (response.data.Status == 200) {
+
+                console.log(response.data)
+
                 navigate(response.data.phoneNumber)
                 dispatch({ type: IS_LOADING, isloading: false })
                 removeStates()

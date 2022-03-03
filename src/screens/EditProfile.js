@@ -22,7 +22,7 @@ export default function EditProfile() {
     const navigation = useNavigation();
     const dispatch = useDispatch()
     const { currentUser, loading, token } = useSelector(({ authRed }) => authRed)
-    const [fullName, setFullName] = useState(currentUser.full_name);
+    const [fullName, setFullName] = useState(currentUser?.full_name);
     const [image, setImage] = useState(null)
     const[phone,setPhone] = useState("")
     const phoneInput = useRef()

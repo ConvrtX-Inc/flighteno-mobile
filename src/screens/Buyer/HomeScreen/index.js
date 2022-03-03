@@ -192,7 +192,7 @@ export default function HomeScreen() {
 
                     <View style={{ marginLeft: '5%' }}>
 
-                        <TextBold style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100, textAlign:'left' }]}>{t('common.hello')}, {currentUser.full_name}</TextBold>
+                        <TextBold style={[styles.dubaiTxt, { color: color.userNameHomeColor, marginTop: (windowWidth * 10) / 100, textAlign:'left' }]}>{t('common.hello')}, {currentUser?.full_name}</TextBold>
                         <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('buyerHome.createOrder')}</TextBold>
 
                     </View>

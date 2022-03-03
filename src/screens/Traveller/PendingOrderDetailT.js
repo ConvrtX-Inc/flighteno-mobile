@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, Modal, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, Modal, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
@@ -21,6 +21,11 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
 import TextRegular from '../../components/atoms/TextRegular';
+import storage from '@react-native-firebase/storage';
+
+//custom imports
+
+
 var windowWidth = Dimensions.get('window').width;
 
 var productUri = ""
@@ -40,6 +45,7 @@ export default function PendingOrderDetailT({ route }) {
     const [showProductPic, setShowProductPic] = useState(false)
     const [showReceiptPic, setShowReceiptPic] = useState(false)
     const [showProduct, setSHowProduct] = useState(false) 
+    const [transferred, setTransferred] = useState(0);
     const {t} = useTranslation()
 
     const chooseFile = (type) => {
@@ -90,31 +96,58 @@ export default function PendingOrderDetailT({ route }) {
         }
 
     };
-    const uploadProductImage = () => {
-        const file = {
-            uri: productPic,
-            name: generateUID() + ".jpg",
-            type: 'image/jpeg'
+    const uploadProductImage = async () => {
+        let ctr = 0;
+        const uri = productPic
+        const filename = uri.substring(uri.lastIndexOf('/') + 1);
+        const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+        const task = storage()
+                    .ref(`${filename}`)
+                    .putFile(`${uploadUri}`)
+
+        //set progress state
+        task.on('state_changed',snapshot => {
+            setTransferred(
+                Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+            )
+        })
+
+        try{
+            const resImg = await task;                    
+            // setUploadedCount(ctr + 1);
+            const resImgPublicUrl = generateImagePublicURLFirebase(resImg.metadata.name);
+            console.log(resImgPublicUrl)
+            ctr++;
+        } catch(e) {
+            console.log('errooooorrrrr', e);
         }
-        const options = {
-            keyPrefix: "flighteno/orders/",
-            bucket: "memee-bucket",
-            region: "eu-central-1",
-            accessKey: "AKIA2YJH3TLHCODGDKFV",
-            secretKey: "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",
-            successActionStatus: 201
-        }
-        RNS3.put(file, options).then(response => {
-            if (response.status !== 201)
-                throw new Error("Failed to upload image to S3");
-            productUri = response.body.postResponse.location
-            if (uploadReceiptPic == 1) {
-                uploadReceiptImage()
-            }
-            else {
-                updateUserOrder()
-            }
-        });
+
+
+
+        // const file = {
+        //     uri: productPic,
+        //     name: generateUID() + ".jpg",
+        //     type: 'image/jpeg'
+        // }
+        // const options = {
+        //     keyPrefix: "flighteno/orders/",
+        //     bucket: "memee-bucket",
+        //     region: "eu-central-1",
+        //     accessKey: "AKIA2YJH3TLHCODGDKFV",
+        //     secretKey: "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",
+        //     successActionStatus: 201
+        // }
+        // RNS3.put(file, options).then(response => {
+        //     if (response.status !== 201)
+        //         throw new Error("Failed to upload image to S3");
+        //     productUri = response.body.postResponse.location
+        //     if (uploadReceiptPic == 1) {
+        //         uploadReceiptImage()
+        //     }
+        //     else {
+        //         updateUserOrder()
+        //     }
+        // });
     }
 
     const uploadReceiptImage = () => {

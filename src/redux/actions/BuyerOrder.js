@@ -59,7 +59,7 @@ export function GetDataFromUrl(data, token, loading, errorMessage, navigate, inv
     }
 }
 
-export function getCurrentOrder(data, token, callback) {
+export function getCurrentOrder(data, token, callback, orderHistory) {
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -75,6 +75,8 @@ export function getCurrentOrder(data, token, callback) {
             dispatch({ type: IS_LOADING, isloading: false })
         }).then(Response => {
             callback(Response.data.data)
+            console.log(Response.data)
+            orderHistory(Response.data?.order_history)
             dispatch({ type: IS_LOADING, isloading: false })
         })
     }

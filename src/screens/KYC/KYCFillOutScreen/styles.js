@@ -1,5 +1,6 @@
 
 import {
+    Platform,
     StyleSheet
 } from "react-native";
 
@@ -23,7 +24,7 @@ export const styles = StyleSheet.create({
     },
     inputTxt: {
         marginTop: 8,
-        fontFamily:'GilroyMedium'
+        fontFamily:Platform.OS == 'ios' ? 'Gilroy-Medium' : 'GilroyMedium'
     },
     btnSubmit: {
         marginTop: 24,

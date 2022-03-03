@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
-import PhoneInput from "react-native-phone-number-input";
+// import PhoneInput from "react-native-phone-number-input";
+import CountryPicker from 'react-native-country-picker-modal';
+import PhoneInput from 'react-native-phone-input'
 
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
@@ -20,6 +22,8 @@ export default function ResetPassword() {
 
     const navigation = useNavigation();
     const dispatch = useDispatch()
+
+    const countryPicker = useRef()
   
     const { loading } = useSelector(({ authRed }) => authRed)
     const {t} = useTranslation()
@@ -31,15 +35,35 @@ export default function ResetPassword() {
 
     const [isPhoneEnabled, setPhoneEnabled] = useState(true)
     const [isEmailEnabled, setEmailEnabled] = useState(true)
+    const [isPickerOpen, setPickerOpen] = useState(false)
+
+    const [initialCountry, setInitialCountry] = useState('us')
 
     const phoneInput = useRef();
+    const [phoneInputVal, setPhoneInputVal] = useState('') 
+
+    useEffect(() => {
+
+       
+
+    },[])
 
     const resetPasswordFN = () => {
 
+       
+        if(isPhoneEnabled && isEmailEnabled){
+            Toast.show({
+                type: 'info',
+                text1: 'Alert!',
+                text2: "Please, enter your email address or phone number",
+           })
 
-        if (email == "" && cellno == "") {
+           return 
+        }
 
-            if(cellno.length <= 10){
+
+        if(isPhoneEnabled){
+            if(phoneInputVal.length <= 10){
                 Toast.show({
                     type: 'info',
                     text1: 'Alert!',
@@ -47,16 +71,7 @@ export default function ResetPassword() {
                 })
                 return 
             }
-
-            Toast.show({
-                type: 'info',
-                text1: 'Alert!',
-                text2: "Please, enter your email address or phone number",
-            })
-            return
         }
-
-
 
         const form_data = new FormData()
 
@@ -77,10 +92,10 @@ export default function ResetPassword() {
         }
         else {
             form_data.append("type", "phone")
-            form_data.append("data", cellno)
+            form_data.append("data", phoneInputVal)
         }
 
-        
+    
         dispatch(otpResetPasswordAction(
             form_data,
             () => {
@@ -90,7 +105,7 @@ export default function ResetPassword() {
             },
             (cellNo) => {
                 console.log(cellNo)
-                navigation.navigate("VerifyCode", { cellNo: cellno.length >= 6 ? cellno : cellNo })
+                // navigation.navigate("VerifyCode", { cellNo: cellno.length >= 6 ? cellno : cellNo })
             },
             () => {
                 Toast.show({
@@ -142,16 +157,50 @@ export default function ResetPassword() {
                      }}
                     value={email}
                     secureTextEntry={false}
-                    // editable={isEmailEnabled}
-                    editable={cellnoShow ? false : true}
+                    editable={isEmailEnabled}
+                    // editable={cellnoShow ? false : true}
                 />
 
                 <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
-
-                <PhoneInput
+                     <PhoneInput
+                        ref={phoneInput}
+                        onPressFlag={() => {
+                            // countryPicker.current?.open()
+                            setPickerOpen(!isPickerOpen)
+                        }}
+                        textProps={{
+                            placeholder:'123-456-789'
+                        }}
+                        onChangePhoneNumber={(displayValue) => {
+                        if(displayValue.length >1){
+                            setEmailEnabled(false)
+                        }else{
+                            setEmailEnabled(true)
+                        }
+                         setPhoneInputVal(displayValue)
+                        }}
+                        
+                        // disabled={email ? true : false}
+                        disabled={!isPhoneEnabled}
+                        style={[styles.phoneContainer, {padding:16}]}
+                     />
+                {/* <PhoneInput
                     ref={phoneInput}
                     defaultValue={cellno}
                     defaultCode="AU"
+                    // disableArrowIcon={email ? true : false}
+                   
+                    autoFocus
+                    // disabled={email ? true : false}
+                    countryPickerProps={{
+                    //    withFilt  er:false,
+                    //    withCallingCodeButton:false,
+                    //    withFilter:false,
+                    //    withCurrency:false,
+                    //    withCallingCode:false,
+                    //    withAlphaFilter:false
+                    }}
+                    
                     onChangeFormattedText={(text) => {
                         setCellNo(text)
 
@@ -160,13 +209,10 @@ export default function ResetPassword() {
                         }else{
                             setEmailEnabled(false)
                         }
-
                     }}
                     onChangeText={(text) => {
                         setCellNoShow(text)
                     }}
-                    
-                    
                     // onChangeCountry={(country) => setCellNo("+" + country.callingCode)}
                     containerStyle={styles.phoneContainer}
                     textInputStyle={styles.phoneInput}
@@ -177,9 +223,9 @@ export default function ResetPassword() {
                         keyboardType: "phone-pad",
                         value: cellnoShow,
                         placeholder: "123-456-789",
-                        editable:email ? false : true
+                        editable:email ? false : true,         
                     }}
-                />
+                /> */}
 
 
                 <View style={{ marginTop: (windowWidth * 20) / 100, marginBottom: 35 }}>
@@ -194,6 +240,25 @@ export default function ResetPassword() {
 
 
             </ScrollView>
+                
+
+            {isPickerOpen &&
+            (
+            <CountryPicker 
+            // ref={countryPicker}
+            // ref={countryPicker}
+            visible={true}
+            onClose={() => {
+                setPickerOpen(!isPickerOpen)
+            }}
+            onSelect={(country) => {
+                // console.log(country?.cca2)
+                // setInitialCountry(country?.cca2.toLowerCase())
+                setInitialCountry(country)
+                phoneInput.current?.selectCountry(country?.cca2.toLowerCase())
+            }}
+        
+            />)}
 
         </View>
     );
