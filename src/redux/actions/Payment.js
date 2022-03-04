@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { BASE_URL } from '../../BASE_URL/index'
+import { BASE_URL ,PAYMENT_BASE_URL} from '../../BASE_URL/index'
 import { IS_LOADING, LOGIN_DATA } from '../constants';
 
 export function ConfigureStripeAccount(data, token, navigation) {
+
+    console.log("TOKEN",token)
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
             method: 'post',
-            url: `http://3.124.117.144:3000/create-connected-account`,
+            url: `${PAYMENT_BASE_URL}/create-connected-account`,
             data: data,
             headers: { "Authorization": token },
             validateStatus: (status) => {
@@ -17,6 +19,7 @@ export function ConfigureStripeAccount(data, token, navigation) {
             dispatch({ type: IS_LOADING, isloading: false })
             console.log(error)
         }).then(Response => {
+            console.log("RES:",Response.data)
             dispatch({ type: IS_LOADING, isloading: false })
             navigation.navigate('StripeWebView', { url: Response.data.conected_account_id })
         })

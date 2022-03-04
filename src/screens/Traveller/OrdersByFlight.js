@@ -64,7 +64,7 @@ export default function OrdersByFlight() {
                     data={tripsData}
                     nestedScrollEnabled
                     renderItem={({ item, index }) =>
-                        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("OrdersSpecificCountry", { flightBaseOrders: item.offers, date: item.depart_date })}>
+                        <TouchableOpacity key={item._id.toString()} activeOpacity={0.7} onPress={() => navigation.navigate("OrdersSpecificCountry", { flightBaseOrders: item.offers, date: item.depart_date })}>
                             <LinearGradient
                                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                                 colors={index % 2 == 0 ? ['#36C5F0', '#368CF0'] : ['#2C5EBE', '#2C5EBE']}
@@ -98,7 +98,7 @@ export default function OrdersByFlight() {
                         </TouchableOpacity>
 
                     }
-                    keyExtractor={item => item._id.$oid}
+                    keyExtractor={item => item._id}
                     style={{ marginTop: 3 }}
                 />
                 : null}

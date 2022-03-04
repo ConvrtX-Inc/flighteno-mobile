@@ -91,7 +91,7 @@ export default function Settings() {
                         </TouchableOpacity>
                     </View>
                 
-               
+                    
                     <TouchableOpacity onPress={() => navigation.navigate("LatestTransactions")} style={styles.menuItem}>
                         <Image source={require('../images/payment.png')}
                             style={styles.menuIcon}
