@@ -39,6 +39,24 @@ export function AddTrip(token, data) {
     }
 }
 
+export function getStoreNames(token, data){
+    return async dispatch => {
+        axios({
+            method:'post',
+            url: `${BASE_URL}Rest_calls/getStoreName`,
+            data: data,
+            headers:{'Authorization': token },
+            validateStatus: (status) => {
+                return true
+            }
+        }).catch(error => {
+            console.log('Error', error)
+        }).then(Response => {
+            console.log(Response.data)
+        } )
+    }
+}
+
 export function UserTrips(token, data) {
     return async dispatch => {
         axios({

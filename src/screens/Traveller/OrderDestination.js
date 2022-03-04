@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Icon from 'react-native-vector-icons/Entypo'
 import Input from '../../components/InputField';
 import { Slider, CheckBox } from 'react-native-elements';
-import { UserOrders, FilterOrders } from '../../redux/actions/Trips';
+import { UserOrders, FilterOrders, getStoreNames } from '../../redux/actions/Trips';
 import { formatAmount } from '../../Utility/Utils';
 import ViewImages from '../../components/ViewImages';
 import TextBold from '../../components/atoms/TextBold';
@@ -126,11 +126,14 @@ export default function OrderDestination({ route }) {
     // );
 
     useEffect(() => {
+
         var obj = {
             admin_id: currentUser._id
         }
+        
         dispatch(UserOrders(token, obj))
-      
+
+        dispatch(getStoreNames(token,obj))
 
         // setFilterOrderData(ordersToDestination)
         
