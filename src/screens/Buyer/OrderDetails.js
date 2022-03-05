@@ -36,7 +36,7 @@ export default function OrderDetails({ route }) {
     let isStarted = order.status == 'accepted'
     let isComplete = order.status == 'complete'
     const {t} = useTranslation()
-    const orderHistory = ["3/5 Order has been placed"]
+    const [orderHistory, setOrderHistory] = useState([])
 
 
     function check(id) {
@@ -70,7 +70,7 @@ export default function OrderDetails({ route }) {
         dispatch(getCurrentOrder(orderRequest,userToken,(data) => {
             // console.log(data)
         },(orderHistory) => {
-            console.log(orderHistory)
+            setOrderHistory(orderHistory)
         }))
       
      
@@ -308,7 +308,9 @@ export default function OrderDetails({ route }) {
                             keyExtractor={(item,index) => item + index}
                             renderItem={({item}) => {
                                 return (
-                                    <TextMedium  style={{color:color.countrtTextColor}}>{item}</TextMedium>
+                                    <TextMedium style={{color:color.countrtTextColor}}>
+                                        {/* {item?.created_date?.$date} */}
+                                         order is {item?.status}</TextMedium>
                                 )
                             }}
                         />

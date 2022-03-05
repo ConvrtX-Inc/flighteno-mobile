@@ -39,12 +39,12 @@ export function AddTrip(token, data) {
     }
 }
 
-export function getStoreNames(token, data){
+export function getStoreNames(token, storeData){
     return async dispatch => {
         axios({
-            method:'post',
-            url: `${BASE_URL}Rest_calls/getStoreName`,
-            data: data,
+            method:'get',
+            url: `${BASE_URL}Rest_calls/getStoreNames`,
+         
             headers:{'Authorization': token },
             validateStatus: (status) => {
                 return true
@@ -52,8 +52,14 @@ export function getStoreNames(token, data){
         }).catch(error => {
             console.log('Error', error)
         }).then(Response => {
-            console.log(Response.data)
-        } )
+            // console.log(Response.data)
+            
+            storeData(Response.data)
+            // if(Response.data.type == 200){
+            //     storeData(Response.data)
+            // }
+
+        })
     }
 }
 
@@ -93,11 +99,13 @@ export function UserOrders(token, data) {
             console.log("Error", error)
         }).then(Response => {
             dispatch({ type: IS_LOADING, isloading: false })
+            // hideFilter()
             if (Response.data.type == 200) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
                         dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-                        dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
+                        console.log(Response.data.orders)
+                        // dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
                     }
                 }
                 else dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
@@ -126,7 +134,6 @@ export function FilterOrders(data, token, hideFilter) {
             hideFilter()
             if (Response.data.status == "Data Fetched!") {
                 dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-             
             }
         })
     }
