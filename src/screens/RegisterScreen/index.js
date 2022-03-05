@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
 import PhoneInput from "react-native-phone-number-input";
@@ -188,7 +188,7 @@ export default function RegisterScreen() {
                         placeholderTextColor: "#707070",
                         keyboardType: "phone-pad",
                         placeholder: "123-456-789",
-                        fontFamily: 'GilroyRegular'
+                        fontFamily: Platform.OS == 'ios' ? 'Gilroy-Regular':'GilroyRegular'
                     }}
                 />
 

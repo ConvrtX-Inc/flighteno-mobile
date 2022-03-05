@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, View } from 'react-native';
+import { TextInput, StyleSheet, View, Platform } from 'react-native';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { color } from '../Utility/Color';
 import Icon1 from 'react-native-vector-icons/Feather'
@@ -33,7 +33,7 @@ const Styles = StyleSheet.create({
         paddingLeft: 20,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'GilroyRegular',
+        fontFamily: Platform.OS ? 'Gilroy-Regular' : 'GilroyRegular',
         backgroundColor: color.inputBackColor,
         borderRightWidth: 0
     },

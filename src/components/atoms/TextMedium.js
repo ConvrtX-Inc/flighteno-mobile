@@ -1,5 +1,6 @@
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 export default TextMedium = styled.Text`
-    fontFamily:'GilroyMedium'
+    fontFamily:${Platform.OS == 'ios' ? 'Gilroy-Medium' : 'GilroyMedium'} 
 `

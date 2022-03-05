@@ -80,8 +80,8 @@ function Profile() {
                     {currentUser ?
                         <View style={Styles.topView}>
                             <View style={{ width: '85%' }}>
-                                <TextBold style={[Styles.firstName, {textAlign:'left'}]}>{t('common.hello')}, {currentUser ? currentUser.full_name.split(" ")[0] : null}</TextBold>
-                                <TextBold style={Styles.fullName}>{currentUser ? currentUser.full_name : null}</TextBold>
+                                <TextBold style={[Styles.firstName, {textAlign:'left'}]}>{t('common.hello')}, {currentUser ? currentUser?.full_name?.split(" ")[0] : null}</TextBold>
+                                <TextBold style={Styles.fullName}>{currentUser ? currentUser?.full_name : null}</TextBold>
                                 {currentProfile != "buyer" && currentUser ?
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextBold style={styles.ratingText}>{currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0} out of 5</TextBold>

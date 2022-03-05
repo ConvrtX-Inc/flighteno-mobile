@@ -155,9 +155,9 @@ export default function Chattravelereler({ route }) {
                         text: "This offer has been rejected!",
                         createdAt: new Date(),
                         user: {
-                            _id: currentUser._id,
-                            name: currentUser.full_name,
-                            avatar: currentUser.profile_image ? currentUser.profile_image : require("../../images/manProfile.png"),
+                            _id: currentUser?._id,
+                            name: currentUser?.full_name,
+                            avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
                         },
                     };
                     setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
@@ -196,9 +196,9 @@ export default function Chattravelereler({ route }) {
                         text: "This offer has been accepted!",
                         createdAt: new Date(),
                         user: {
-                            _id: currentUser._id,
-                            name: currentUser.full_name,
-                            avatar: currentUser.profile_image ? currentUser.profile_image : require("../../images/manProfile.png"),
+                            _id: currentUser?._id,
+                            name: currentUser?.full_name,
+                            avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
                         },
                     };
                     setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
@@ -217,9 +217,9 @@ export default function Chattravelereler({ route }) {
 
     const order = route.params
     const currentChatUser = {
-        _id: currentUser._id,
-        name: currentUser.full_name,
-        avatar: currentUser.profile_image ? currentUser.profile_image : require("../../images/manProfile.png"),
+        _id: currentUser?._id,
+        name: currentUser?.full_name,
+        avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
     }
 
     function getOfferBodyA(order) {
@@ -420,9 +420,9 @@ export default function Chattravelereler({ route }) {
             text: messages[0].text,
             createdAt: new Date(),
             user: {
-                _id: currentUser._id,
-                name: currentUser.full_name,
-                avatar: currentUser.profile_image ? currentUser.profile_image : require("../../images/manProfile.png"),
+                _id: currentUser?._id,
+                name: currentUser?.full_name,
+                avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
             },
         };
 
@@ -443,9 +443,9 @@ export default function Chattravelereler({ route }) {
     }, [])
 
     const user = {
-        _id: currentUser._id,
-        name: currentUser.full_name,
-        avatar: currentUser.profile_image ? currentUser.profile_image : require("../../images/manProfile.png"),
+        _id: currentUser?._id,
+        name: currentUser?.full_name,
+        avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
     }
 
     const customtInputToolbar = props => {
@@ -520,11 +520,11 @@ export default function Chattravelereler({ route }) {
                 textStyle={{
                     right: {
                         color: "white",
-                        fontFamily:'GilroyRegular'
+                        fontFamily: Platform.OS == 'ios' ? 'Gilroy-Regular' : 'GilroyRegular'
                     },
                     left: {
                         color: "white",
-                        fontFamily:'GilroyRegular'
+                        fontFamily:Platform.OS == 'ios' ? 'Gilroy-Regular' : 'GilroyRegular'
                     },
                 }}
                 wrapperStyle={{
@@ -556,11 +556,11 @@ export default function Chattravelereler({ route }) {
                 timeTextStyle={{
                     left: {
                         color: 'white',
-                        fontFamily:'GilroyRegular'
+                        fontFamily:Platform.OS =='ios' ?  'Gilroy-Regular' :'GilroyRegular'
                     },
                     right: {
                         color: 'white',
-                        fontFamily:'GilroyRegular'
+                        fontFamily: Platform.OS == 'ios' ? 'Gilroy-Regular' : 'GilroyRegular'
                     },
                 }}
             />
@@ -612,9 +612,9 @@ export default function Chattravelereler({ route }) {
                     valueToPush["text"] = ""
                     valueToPush["createdAt"] = new Date()
                     valueToPush["user"] = {
-                        _id: currentUser._id,
-                        name: currentUser.full_name,
-                        avatar: currentUser.profile_image ? currentUser.profile_image : require("../../images/manProfile.png")
+                        _id: currentUser?._id,
+                        name: currentUser?.full_name,
+                        avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png")
                     }
                     valueToPush["image"] = response.body.postResponse.location
                     setMessages(previousMessages => GiftedChat.append(previousMessages, valueToPush))

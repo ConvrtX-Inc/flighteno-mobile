@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
@@ -18,9 +18,11 @@ import Toast from 'react-native-toast-message';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
+import { getCurrentOrder } from '../../redux/actions/BuyerOrder';
 
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
+
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
@@ -34,7 +36,7 @@ export default function OrderDetails({ route }) {
     let isStarted = order.status == 'accepted'
     let isComplete = order.status == 'complete'
     const {t} = useTranslation()
-
+    const orderHistory = ["3/5 Order has been placed"]
 
 
     function check(id) {
@@ -58,6 +60,19 @@ export default function OrderDetails({ route }) {
             setTraveler(data)
         }))
 
+        // console.log(order)
+
+        const orderRequest = {
+            admin_id:order?.admin_id,
+            order_id:order?._id 
+        }
+
+        dispatch(getCurrentOrder(orderRequest,userToken,(data) => {
+            // console.log(data)
+        },(orderHistory) => {
+            console.log(orderHistory)
+        }))
+      
      
 
     }, [])
@@ -136,8 +151,7 @@ export default function OrderDetails({ route }) {
                                 ratingCount={5}
                                 size={15}
                                 showRating={false}
-                                isDisabled={true}
-                            
+                                isDisabled={true}   
                             />
                             <TextBold style={styles.ratingText}>{traveler?.traveler_ratting?.length != 0 ? traveler?.traveler_ratting[0].avg_rating : 0} Out of 5.0</TextBold>
                         </View>
@@ -286,6 +300,21 @@ export default function OrderDetails({ route }) {
                             />
                         }
                     </TouchableOpacity>
+
+                    {/* Order history */}
+                    <View style={{marginLeft:16, marginRight:16, marginTop:16}}>
+                        <FlatList
+                            data={orderHistory}
+                            keyExtractor={(item,index) => item + index}
+                            renderItem={({item}) => {
+                                return (
+                                    <TextMedium  style={{color:color.countrtTextColor}}>{item}</TextMedium>
+                                )
+                            }}
+                        />
+                    </View>
+
+
                     {/* {!isComplete && order.status == "accepted" ? */}
                         <TextMedium style={Styles.bottomText}>
                         {t('track.pleaseCoord')}

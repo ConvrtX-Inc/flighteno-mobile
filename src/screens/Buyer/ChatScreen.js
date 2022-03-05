@@ -80,7 +80,7 @@ export default function ChatScreen() {
                                                 style={styles.profileImage}
                                                 resizeMode="cover"
                                             />
-                                            <TextMedium numberOfLines={1} style={{ textAlign: 'left' }}>{item.reciverImageName[0].full_name.split(" ")[0]}</TextMedium>
+                                            <TextMedium numberOfLines={1} style={{ textAlign: 'left' }}>{item?.reciverImageName[0].full_name?.split(" ")[0]}</TextMedium>
                                         </TouchableOpacity>
                                     </View>
                                 }
