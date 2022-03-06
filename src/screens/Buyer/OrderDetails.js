@@ -19,6 +19,7 @@ import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
 import { getCurrentOrder } from '../../redux/actions/BuyerOrder';
+import moment from 'moment';
 
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
@@ -71,6 +72,8 @@ export default function OrderDetails({ route }) {
             // console.log(data)
         },(orderHistory) => {
             setOrderHistory(orderHistory)
+            // console.log()
+          
         }))
       
      
@@ -308,9 +311,7 @@ export default function OrderDetails({ route }) {
                             keyExtractor={(item,index) => item + index}
                             renderItem={({item}) => {
                                 return (
-                                    <TextMedium style={{color:color.countrtTextColor}}>
-                                        {/* {item?.created_date?.$date} */}
-                                         order is {item?.status}</TextMedium>
+                                    <TextMedium style={{color:color.countrtTextColor}}>{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
                                 )
                             }}
                         />

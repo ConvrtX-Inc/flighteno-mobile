@@ -75,7 +75,6 @@ export function getCurrentOrder(data, token, callback, orderHistory) {
             dispatch({ type: IS_LOADING, isloading: false })
         }).then(Response => {
             callback(Response.data.data)
-            console.log(Response.data)
             orderHistory(Response.data?.order_history)
             dispatch({ type: IS_LOADING, isloading: false })
         })
