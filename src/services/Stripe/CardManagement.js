@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { STRIPE_BASE_URL } from '../../BASE_URL';
 import { STRIPE_SECRET_KEY } from '@env'
-import { useDispatch } from 'react-redux';
-import { ADD_CARD, GET_CARDS } from '../../redux/constants';
+ import { GET_CARDS } from '../../redux/constants';
 
 
 
@@ -109,4 +108,6 @@ export function removeCard() {
     console.log('remove card')
 }
 
-
+export function getCustomerDefaultCard() {
+    
+}

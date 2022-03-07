@@ -1,48 +1,27 @@
-// Core packages
-import React, { Component, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import React, { useEffect, } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity,  ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
-
-
-// Packages
 import IconEntypo from 'react-native-vector-icons/Entypo';
-import { CreditCardInput, LiteCreditCardInput } from "../../components/react-native-credit-card-input-plus";
 import { useDispatch, useSelector } from 'react-redux';
-
-// Custom Imports
 import TextBold from '../../components/atoms/TextBold';
-import TextMedium from '../../components/atoms/TextMedium';
-import TextRegular from '../../components/atoms/TextMedium';
 import { commonStyles } from '../../Utility/CommonStyles';
 import Constants from '../../Utility/Constants';
-import ButtonLarge from '../../components/ButtonLarge';
-import { IS_LOADING } from '../../redux/constants';
-
-import { createCard } from '../../services/Stripe/CardManagement'
+import { getCards } from '../../services/Stripe/CardManagement'
+import PaymentCardItem from '../../components/PaymentCardItem';
 
 export default function ManageCards({ navigation }) {
     const { t } = useTranslation();
-    const { currentUser,   token } = useSelector(({ authRed }) => authRed)
-
-    const [cardDetails, setCardDetails] = useState();
-    const [loading,setLoading] = useState(false);
+    const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch();
-    
-    function _onChange(form) {
-        console.log(currentUser.customer_id);
-        setCardDetails(form);
-    }
+    const { myCards } = useSelector(({ myCardsRed }) => myCardsRed)
 
-    async function addCard() {
-        setLoading(true)
-        try{
-            dispatch(await createCard(cardDetails, 'cus_LG42PyqfYTpuh0'));
-             
-            setLoading(false);
-            navigation.pop();
-        }catch(err){
-            console.log("error",err)
-        }
+
+    useEffect(() => {
+        getMyCards()
+    }, [])
+
+    async function getMyCards() {
+        dispatch(await getCards('cus_LG42PyqfYTpuh0'))
     }
 
     return (
@@ -55,8 +34,23 @@ export default function ManageCards({ navigation }) {
                     <View style={[commonStyles.marginTop30]}>
                         <TextBold style={[commonStyles.fs26]}> Manage Cards </TextBold>
                     </View>
+                    <View style={{ height: 22 }}></View>
+                    {
+                        myCards.map(card => <PaymentCardItem card={card} key={card.id} />)
+                    }
 
-                     
+
+                    <TouchableOpacity style={styles.addCardBtn} onPress={() =>{
+                        navigation.navigate("PaymentAddNewCard")
+                    }}>
+                        <View style={{ flexDirection: 'row',justifyContent:'center', }}>
+                            <IconEntypo name="plus" size={25} color="#36C5F0" />
+                            <TextBold style={{ fontSize: 20 , color:'#36C5F0' ,marginLeft: 14}}>
+                                Add New Card
+                            </TextBold>
+                        </View>
+                    </TouchableOpacity>
+
                 </>
             </View>
         </ScrollView>
@@ -73,5 +67,12 @@ const styles = StyleSheet.create({
     backButton: {
         marginStart: -10,
         width: 30,
+    }, 
+    addCardBtn:{
+        borderStyle:'dashed',
+        borderWidth:1,
+        borderColor: '#A7A7A7',
+        padding: 14,
+        borderRadius:16
     }
 });

@@ -9,7 +9,7 @@ import { commonStyles } from '../Utility/CommonStyles';
 import Constants from '../Utility/Constants';
 
 export default function PaymentCard({ card }) {
-    console.log("CARD:", card)
+ 
 
     function getCardLogo(brand) {
         switch (brand.toLowerCase()) {
