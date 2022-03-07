@@ -24,6 +24,8 @@ import { useTranslation } from 'react-i18next';
 import { SOCKET_URL, PAYMENT_BASE_URL } from '../../BASE_URL';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextBold from '../../components/atoms/TextBold';
+import { STRIPE_SECRET_KEY,STRIPE_PUBLISHABLE_KEY } from '@env'
+
 
 const LocationView = ({ location }) => {
     const openMaps = () => {
@@ -94,8 +96,7 @@ export default function Chattravelereler({ route }) {
 
     //Payment
     var showBottomButton = route.params.offerStatus ? route.params.offerStatus : ""
-    let stripePK = 'pk_test_51Jbh0xES5y6t2EWhnY11t3iXBtBVg6s2WAGf54mhZx4qifm1k9XuIHm3LQs9jXioST6pDhlky2C65Mw06ptjmfAy006FWtezGr'
-    let stripeSK = 'sk_test_51Jbh0xES5y6t2EWhBXW6uiNciYBvFwBa1P6j0kVMODnPdljX5FSVgdFZIVBLNuTo93dKf7G7fexdWgfI6FlIUs8n00f4ZwlI63'
+   
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
     const fetchPaymentSheetParams = async () => {
@@ -172,7 +173,7 @@ export default function Chattravelereler({ route }) {
     }
 
     const openPaymentSheet = async (status) => {
-        const { error } = await presentPaymentSheet({ stripeSK });
+        const { error } = await presentPaymentSheet({ STRIPE_SECRET_KEY });
         if (error) {
             console.log(`Error code: ${error.code}`, error.message);
         } else {
@@ -242,6 +243,8 @@ export default function Chattravelereler({ route }) {
     }
 
     useEffect(() => {
+
+        console.log("STRTIPE KEY",STRIPE_SECRET_KEY,STRIPE_PUBLISHABLE_KEY)
 
         socket = io.connect(SOCKET_URL);
         socket.emit('addUser', currentUser._id);
@@ -643,7 +646,7 @@ export default function Chattravelereler({ route }) {
 
     return (
         <StripeProvider
-            publishableKey={stripePK}>
+            publishableKey={STRIPE_PUBLISHABLE_KEY}>
             {currentUser ?
                 <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
                     <ScreenLoader loader={loading} />

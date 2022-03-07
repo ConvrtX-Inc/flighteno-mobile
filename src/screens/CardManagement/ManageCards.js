@@ -16,19 +16,18 @@ import TextRegular from '../../components/atoms/TextMedium';
 import { commonStyles } from '../../Utility/CommonStyles';
 import Constants from '../../Utility/Constants';
 import ButtonLarge from '../../components/ButtonLarge';
-import { ADD_CARD, IS_LOADING } from '../../redux/constants';
+import { IS_LOADING } from '../../redux/constants';
 
 import { createCard } from '../../services/Stripe/CardManagement'
-import Toast from 'react-native-toast-message';
 
-export default function PaymentAddNewCard({ navigation }) {
+export default function ManageCards({ navigation }) {
     const { t } = useTranslation();
-    const { currentUser, token } = useSelector(({ authRed }) => authRed)
+    const { currentUser,   token } = useSelector(({ authRed }) => authRed)
 
     const [cardDetails, setCardDetails] = useState();
-    const [loading, setLoading] = useState(false);
+    const [loading,setLoading] = useState(false);
     const dispatch = useDispatch();
-
+    
     function _onChange(form) {
         console.log(currentUser.customer_id);
         setCardDetails(form);
@@ -36,17 +35,13 @@ export default function PaymentAddNewCard({ navigation }) {
 
     async function addCard() {
         setLoading(true)
-        const data = await createCard(cardDetails, 'cus_LG42PyqfYTpuh0');
-        if (data.id) {
-            dispatch({ type: ADD_CARD, data: data })
+        try{
+            dispatch(await createCard(cardDetails, 'cus_LG42PyqfYTpuh0'));
+             
             setLoading(false);
             navigation.pop();
-        } else {
-            setLoading(false)
-            Toast.show({
-                type: 'error',
-                text1: data.error.message
-            })
+        }catch(err){
+            console.log("error",err)
         }
     }
 
@@ -58,25 +53,10 @@ export default function PaymentAddNewCard({ navigation }) {
                 </TouchableOpacity>
                 <>
                     <View style={[commonStyles.marginTop30]}>
-                        <TextBold style={[commonStyles.fs26]}>{t('payment.addNewCard')}</TextBold>
+                        <TextBold style={[commonStyles.fs26]}> Manage Cards </TextBold>
                     </View>
 
-                    <View style={[commonStyles.marginTop30]}>
-                        <CreditCardInput
-                            horizontal={false}
-                            requiresName
-                            onChange={(form) => _onChange(form)} />
-                    </View>
-                    <View style={[commonStyles.marginTop30]}>
-                        <ButtonLarge
-                            title={t('payment.addCard')}
-                            loader={loading}
-                            onPress={() => {
-
-                                addCard()
-                            }}
-                        />
-                    </View>
+                     
                 </>
             </View>
         </ScrollView>

@@ -58,6 +58,7 @@ import { colors } from 'react-native-elements';
 import KYCTestScreen from '../screens/KYC/KYCTestScreen';
 import LatestTransactionsScreen from '../screens/Payment/LatestTransactions';
 import PaymentAddNewCard from '../screens/Payment/AddNewCard';
+import ManageCards from '../screens/CardManagement/ManageCards';
 // https://extreme-ip-lookup.com/json/
 // https://geolocation-db.com/json/
 
@@ -187,6 +188,8 @@ function Navigation() {
                 <Stack.Screen name="OrderDetailBaseOnOrderId" component={OrderDetailBaseOnOrderId} />
                 <Stack.Screen name="SupportReply" component={SupportReply} />
                 <Stack.Screen name="LatestTransactions" component={LatestTransactionsScreen} />
+                <Stack.Screen name="ManageCards" component={ManageCards} />
+
                 <Stack.Screen name="PaymentAddNewCard" component={PaymentAddNewCard} />
                 <Stack.Screen 
                     name="KYCIntro" 

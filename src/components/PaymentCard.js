@@ -8,7 +8,24 @@ import TextRegular from './atoms/TextMedium';
 import { commonStyles } from '../Utility/CommonStyles';
 import Constants from '../Utility/Constants';
 
-export default function PaymentCard ({card}) {
+export default function PaymentCard({ card }) {
+    console.log("CARD:", card)
+
+    function getCardLogo(brand) {
+        switch (brand.toLowerCase()) {
+            case "visa":
+                return require("../assets/images/card_logos/visa.png")
+            case "mastercard":
+                return require("../assets/images/card_logos/mastercard.png")
+            case "discover":
+                return require("../assets/images/card_logos/discover.png")
+            case "jcb":
+                return require("../assets/images/card_logos/jcb.png")
+            default:
+                return require("../assets/images/card_logos/visa.png")
+        }
+    }
+
     return (
         <View
             key={card.card_no}
@@ -21,32 +38,32 @@ export default function PaymentCard ({card}) {
                     commonStyles.borerRadius10,
                     styles.card,
                     {
-                        backgroundColor: card.background_color,                                                                    
+                        backgroundColor: card.metadata.color,
                     }
-                ]                                                            
+                ]
             }>
-                <View>                                                                
-                    <View style={[
-                            commonStyles.flexDirectionRow,
-                            commonStyles.justifyContentSpaceBetween,
-                            commonStyles.alignItemsCenter
-                        ]}>
-                        <Image 
-                            resizeMode='contain'
-                            source={{uri: card.card_logo}}
-                            style={styles.tinyLogo} />
-                        <TextMedium style={[commonStyles.cWhite]}>{card.expiration}</TextMedium> 
-                    </View>
+            <View>
+                <View style={[
+                    commonStyles.flexDirectionRow,
+                    commonStyles.justifyContentSpaceBetween,
+                    commonStyles.alignItemsCenter
+                ]}>
+                    <Image
+                        resizeMode='contain'
+                        source={ getCardLogo(card.brand)}
+                        style={styles.tinyLogo} />
+                    <TextMedium style={[commonStyles.cWhite]}>{card.metadata.expiry}</TextMedium>
                 </View>
-                <View style={[commonStyles.flex1]}>
-                    <TextBold style={[commonStyles.cWhite]}>{card.card_no}</TextBold> 
+            </View>
+            <View style={[commonStyles.flex1]}>
+                <TextBold style={[commonStyles.cWhite]}>{card.metadata.number}</TextBold>
+            </View>
+            <View>
+                <View style={[commonStyles.flexDirectionRow, commonStyles.justifyContentSpaceBetween]}>
+                    <TextBold style={[commonStyles.cWhite]}>{card.name}</TextBold>
+                    <TextMedium style={[commonStyles.cWhite]}>{card.funding.charAt(0).toUpperCase() +  card.funding.slice(1)} Card</TextMedium>
                 </View>
-                <View>
-                    <View style={[commonStyles.flexDirectionRow, commonStyles.justifyContentSpaceBetween]}>
-                        <TextBold style={[commonStyles.cWhite]}>{card.cardholder_name}</TextBold> 
-                        <TextMedium style={[commonStyles.cWhite]}>{card.type}</TextMedium> 
-                    </View>
-                </View>                                                        
+            </View>
         </View>
     )
 }
@@ -60,5 +77,5 @@ const styles = StyleSheet.create({
     tinyLogo: {
         width: 50,
         height: 50,
-    }    
+    }
 });

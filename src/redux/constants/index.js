@@ -25,3 +25,8 @@ export const TRENDING_ORDERS = "TRENDING_ORDERS"
 export const SUPPORT_TICKETS = "SUPPORT_TICKETS"
 export const VERIFY_KYC = "VERIFY_KYC"
 export const UPDATE_CHATS ="UPDATE_CHATS"
+export const ADD_CARD="ADD_CARD";
+export const GET_CARDS="GET_CARDS";
+export const UPDATE_CARD="UPDATE_CARD";
+export const REMOVE_CARD="REMOVE_CARD";
+
