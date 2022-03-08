@@ -23,6 +23,8 @@ export default function LatestTransactionsScreen({ navigation }) {
     const [isLoading, setIsLoading] = useState(false);
     const [hasCard, setHasCard] = useState(true);
     const { myCards } = useSelector(({ myCardsRed }) => myCardsRed)
+    const { currentUser } = useSelector(({ authRed }) => authRed)
+
     const dispatch = useDispatch()
 
 
@@ -31,7 +33,7 @@ export default function LatestTransactionsScreen({ navigation }) {
     }, [])
 
     async function getMyCards() {
-        dispatch(await getCards('cus_LG42PyqfYTpuh0'))
+        dispatch(await getCards(currentUser.customer_id))
     }
     return (
         <View style={styles.container}>

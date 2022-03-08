@@ -14,7 +14,7 @@ export default function ManageCards({ navigation }) {
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch();
     const { myCards , defaultCard} = useSelector(({ myCardsRed }) => myCardsRed)
-    const tempCustomerID  = 'cus_LG42PyqfYTpuh0';
+     
 
     useEffect(() => {
         getMyCards()
@@ -22,10 +22,10 @@ export default function ManageCards({ navigation }) {
 
     async function getMyCards() {
         console.log("DEFAULT CARD",defaultCard)
-        dispatch(await getCards(tempCustomerID))
+        dispatch(await getCards(currentUser.customer_id))
 
         //get default card
-        dispatch(await getCustomerDefaultCard(tempCustomerID))
+        dispatch(await getCustomerDefaultCard(currentUser.customer_id))
     }
 
  

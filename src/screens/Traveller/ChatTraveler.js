@@ -19,12 +19,13 @@ var io = require('socket.io-client');
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 import { RespondToOffer } from '../../redux/actions/Payment';
 import ScreenLoader from '../../components/ScreenLoader'
-import {  IS_LOADING,UPDATE_CHATS } from '../../redux/constants';
+import { IS_LOADING, UPDATE_CHATS } from '../../redux/constants';
 import { useTranslation } from 'react-i18next';
 import { SOCKET_URL, PAYMENT_BASE_URL } from '../../BASE_URL';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextBold from '../../components/atoms/TextBold';
-import { STRIPE_SECRET_KEY,STRIPE_PUBLISHABLE_KEY } from '@env'
+import { STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY } from '@env'
+import PaymentMethodModal from '../../components/PaymentMethodModal';
 
 
 const LocationView = ({ location }) => {
@@ -93,17 +94,17 @@ export default function Chattravelereler({ route }) {
     const offerID = route.params.offerID
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const [isPaymentModalVisible,setPaymentModalVisible] = useState(false)
+    const [isPaymentModalVisible, setPaymentModalVisible] = useState(false)
 
     //Payment
     var showBottomButton = route.params.offerStatus ? route.params.offerStatus : ""
-   
+
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
     const fetchPaymentSheetParams = async () => {
         let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}`
-        console.log('payment url:',url,token)
-        
+        console.log('payment url:', url, token)
+
         const response = await fetch(url, {
             method: 'get',
             headers: {
@@ -112,8 +113,30 @@ export default function Chattravelereler({ route }) {
             },
         });
         const res = await response.json();
-     
-         let data = {
+
+        let data = {
+            customer: res.customer,
+            ephemeralKey: res.ephemeralKey,
+            paymentIntent: res.paymentIntent
+        }
+
+        return data;
+    };
+
+    const createStripePaymentIntent = async () => {
+        let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}&cardId=${cardId}`
+        console.log('payment url:', url, token)
+
+        const response = await fetch(url, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth_token': token
+            },
+        });
+        const res = await response.json();
+
+        let data = {
             customer: res.customer,
             ephemeralKey: res.ephemeralKey,
             paymentIntent: res.paymentIntent
@@ -138,12 +161,14 @@ export default function Chattravelereler({ route }) {
         });
         dispatch({ type: IS_LOADING, isloading: false })
         openPaymentSheet(status)
+        // setPaymentModalVisible(true);
     };
 
     const offerConfirmation = (status) => {
         setModal(false)
         if (status == 'accept') {
-            initializePaymentSheet(status)
+            // initializePaymentSheet(status)
+            setPaymentModalVisible(true);
         }
         else {
             let data = {
@@ -215,6 +240,49 @@ export default function Chattravelereler({ route }) {
         }
     };
 
+
+    function respondToOffer() {
+        let data = {
+            offer_id: offerID,
+            status: 'accept'
+        }
+        dispatch(RespondToOffer(data, token,
+            () => {
+                socket = io.connect(SOCKET_URL);
+                socket.emit('addUser', currentUser._id);
+                const roomDetails = {
+                    userID: currentUser._id,
+                    chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
+                }
+                socket.emit('addRoom', roomDetails)
+
+                var mess = {
+                    _id: Math.floor(Math.random() * 1000000),
+                    text: "This offer has been accepted!",
+                    createdAt: new Date(),
+                    user: {
+                        _id: currentUser?._id,
+                        name: currentUser?.full_name,
+                        avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
+                    },
+                };
+                setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
+                socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: mess, sender_status: currentProfile, status: "message" });
+            },
+            (order) => {
+                navigation.replace('OrderDetails', { order: order })
+            },
+
+        )
+        )
+    }
+    async function onPaymentSubmitted(paymentDetails) {
+        setPaymentModalVisible(false)
+        console.log("PAYMENT SUBMITTED", paymentDetails);
+        respondToOffer();
+
+    }
+
     //Payment end
 
     const order = route.params
@@ -244,9 +312,6 @@ export default function Chattravelereler({ route }) {
     }
 
     useEffect(() => {
-
-        console.log("STRTIPE KEY",STRIPE_SECRET_KEY,STRIPE_PUBLISHABLE_KEY)
-
         socket = io.connect(SOCKET_URL);
         socket.emit('addUser', currentUser._id);
         const roomDetails = {
@@ -279,7 +344,7 @@ export default function Chattravelereler({ route }) {
                 message1.text = message1.text.replace(new RegExp("<br>", "g"), '\n\n');
                 message2.text = message2.text.replace(new RegExp("<br>", "g"), '\n');
 
-                
+
 
                 messages.push(message1)
                 messages.push(message2)
@@ -289,7 +354,7 @@ export default function Chattravelereler({ route }) {
                 pushNewMessageToCurrentInbox(message2)
             });
 
-        
+
         }
         if (route.params.currentStatus == "message") {
             route.params.chatHistory.forEach(element => {
@@ -392,7 +457,7 @@ export default function Chattravelereler({ route }) {
             return true
         }
         else {
-           
+
             navigation.goBack()
             return true
         }
@@ -528,7 +593,7 @@ export default function Chattravelereler({ route }) {
                     },
                     left: {
                         color: "white",
-                        fontFamily:Platform.OS == 'ios' ? 'Gilroy-Regular' : 'GilroyRegular'
+                        fontFamily: Platform.OS == 'ios' ? 'Gilroy-Regular' : 'GilroyRegular'
                     },
                 }}
                 wrapperStyle={{
@@ -538,7 +603,7 @@ export default function Chattravelereler({ route }) {
                         borderTopRightRadius: 10,
                         borderTopLeftRadius: 10,
                         borderBottomLeftRadius: 0,
-                        
+
                     },
                     right: {
                         backgroundColor: color.travelerelerButtonColor,
@@ -560,7 +625,7 @@ export default function Chattravelereler({ route }) {
                 timeTextStyle={{
                     left: {
                         color: 'white',
-                        fontFamily:Platform.OS =='ios' ?  'Gilroy-Regular' :'GilroyRegular'
+                        fontFamily: Platform.OS == 'ios' ? 'Gilroy-Regular' : 'GilroyRegular'
                     },
                     right: {
                         color: 'white',
@@ -631,19 +696,19 @@ export default function Chattravelereler({ route }) {
         });
     };
 
-  
 
-    const pushNewMessageToCurrentInbox = (message) =>{
-        const chatID =route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id;
+
+    const pushNewMessageToCurrentInbox = (message) => {
+        const chatID = route.params.currentStatus == "offer" ? chatId : route.params.chatHistory[0].chat_id;
         const newMessage = {
             chat_id: chatID,
             currentMessage: message
         }
 
-       
+
         dispatch({ type: UPDATE_CHATS, data: newMessage })
 
-    }   
+    }
 
     return (
         <StripeProvider
@@ -677,11 +742,11 @@ export default function Chattravelereler({ route }) {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: '5%', marginTop: 20, marginBottom: 10 }}>
                         {route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ?
-                            <Image source={route.params.orderDetail.profile_data[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: 'data:image/png;base64,'+route.params.orderDetail.profile_data[0].profile_image }}
+                            <Image source={route.params.orderDetail.profile_data[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: 'data:image/png;base64,' + route.params.orderDetail.profile_data[0].profile_image }}
                                 style={Styles.userImage}
                             />
                             :
-                            <Image source={route.params.userDetail.profile_image == "" ? require("../../images/manProfile.png") : { uri:'data:image/png;base64,'+ route.params.userDetail.profile_image }}
+                            <Image source={route.params.userDetail.profile_image == "" ? require("../../images/manProfile.png") : { uri: 'data:image/png;base64,' + route.params.userDetail.profile_image }}
                                 style={Styles.userImage}
                             />
                         }
@@ -715,7 +780,7 @@ export default function Chattravelereler({ route }) {
                             borderRadius: 20,
                             paddingLeft: 20,
                             paddingRight: 30,
-                        
+
                         }}
                         renderActions={messages => micBtn(messages)}
                     />
@@ -740,7 +805,14 @@ export default function Chattravelereler({ route }) {
                         </View>
                         : null}
 
-                
+                    {/* Payment Method Modal */}
+                    <Modal
+                        visible={isPaymentModalVisible}
+                    >
+                        <PaymentMethodModal onPaymentSubmit={(paymentDetails) => {
+                            onPaymentSubmitted(paymentDetails)
+                        }} closeModal={() => { setPaymentModalVisible(false) }} offerID={offerID}  />
+                    </Modal>
                 </View>
                 : null}
         </StripeProvider>

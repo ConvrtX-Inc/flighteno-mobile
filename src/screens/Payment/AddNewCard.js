@@ -36,7 +36,7 @@ export default function PaymentAddNewCard({ navigation }) {
 
     async function addCard() {
         setLoading(true)
-        const data = await createCard(cardDetails, 'cus_LG42PyqfYTpuh0');
+        const data = await createCard(cardDetails,currentUser.customer_id);
         if (data.id) {
             dispatch({ type: ADD_CARD, data: data })
             setLoading(false);

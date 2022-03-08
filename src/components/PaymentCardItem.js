@@ -7,19 +7,19 @@ import TextRegular from './atoms/TextMedium';
 import { commonStyles } from '../Utility/CommonStyles';
 import ButtonPlain from './ButtonPlain';
 import ButtonLarge from './ButtonLarge';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeCard, setDefaultCard } from '../services/Stripe/CardManagement';
 import { REMOVE_CARD, SET_DEFAULT_CARD } from '../redux/constants';
 import Toast from 'react-native-toast-message';
 
-
 export default function PaymentCardItem({ card, defaultCard }) {
-    const tempCustomerID = 'cus_LG42PyqfYTpuh0';
     const dispatch = useDispatch();
+    const { currentUser, token } = useSelector(({ authRed }) => authRed)
+
     const [isModalVisible, setModalVisible] = useState(false);
     async function setDefault() {
         console.log("CARD ID", card.id)
-        const res = await setDefaultCard(card.id, tempCustomerID);
+        const res = await setDefaultCard(card.id, currentUser.customer_id);
 
         if (res.default_source) {
             dispatch({ type: SET_DEFAULT_CARD, data: res.default_source })

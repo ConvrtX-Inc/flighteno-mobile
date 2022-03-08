@@ -78,8 +78,7 @@ export async function createCard(cardDetails, customerID) {
 
 // Get the list of cards
 export async function getCards(customerID) {
-    console.log("customer id", customerID)
-
+    
     try {
         return async dispatch => {
             const response = await axios({
