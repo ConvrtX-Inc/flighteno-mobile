@@ -122,7 +122,7 @@ export default function OrderDestination({ route }) {
         // dispatch(UserOrders(token, obj,() => {
 
         // }))
-        dispatch(UserOrders(token, obj))
+        dispatch(UserOrders(token, obj,()=>{}))
 
         dispatch(getStoreNames(token,(data) => {
             // console.log(data)
@@ -203,9 +203,20 @@ export default function OrderDestination({ route }) {
         var obj = {
             admin_id: currentUser._id
         }
-        // dispatch(UserOrders(token, obj,() => {
-        //     setShowFilter(!showFilter)
-        // }))
+
+        dispatch(UserOrders(token, obj,() => {
+            setPName('')
+            setMinPrice(0)  
+            setShowFilter(false)
+
+            setNameOfStore('')
+            storeData.forEach(item => {
+                item.checked = false
+            });
+            selectPickerValueFN(0)
+            setPickerShow(false)
+           
+        }))
        
     }
 
@@ -458,9 +469,7 @@ export default function OrderDestination({ route }) {
                             <ButtonLarge loader={loading} title='Reset Filter' onPress={resetFilter} />
                             <View style={{marginTop:16}}>
                                 <ButtonTraveller
-                                    onPress={() => {
-                                        applyFilter()
-                                    }}
+                                    onPress={applyFilter}
                                     loader={loading}
                                     title= {t('travelHome.applyFilter')}
                                 />

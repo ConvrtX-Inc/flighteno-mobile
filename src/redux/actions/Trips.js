@@ -84,7 +84,7 @@ export function UserTrips(token, data) {
     }
 }
 
-export function UserOrders(token, data) {
+export function UserOrders(token, data, hideFilter) {
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -99,7 +99,7 @@ export function UserOrders(token, data) {
             console.log("Error", error)
         }).then(Response => {
             dispatch({ type: IS_LOADING, isloading: false })
-            // hideFilter()
+            hideFilter()
             if (Response.data.type == 200) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
