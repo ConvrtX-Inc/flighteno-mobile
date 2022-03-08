@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { STRIPE_BASE_URL } from '../../BASE_URL';
 import { STRIPE_SECRET_KEY } from '@env'
- import { GET_CARDS } from '../../redux/constants';
+import { GET_CARDS, SET_DEFAULT_CARD } from '../../redux/constants';
 
 
 
@@ -41,39 +41,39 @@ export async function createToken(cardDetails) {
 
 // Save card to stripe
 export async function createCard(cardDetails, customerID) {
-        const token_source = await createToken(cardDetails);
-        if(token_source.id){
-            console.log("customer id", customerID)
-            var cardColor = Math.floor(Math.random() * 16777215).toString(16);
-            const { number, expiry, cvc } = cardDetails.values;
-            const formData = new URLSearchParams();
-            formData.append("source", token_source.id);
-            formData.append("metadata[color]", '#' + cardColor)
-            formData.append("metadata[expiry]", expiry)
-            formData.append("metadata[number]", number)
-            formData.append("metadata[cvc]", cvc)
-    
-            try {
-    
-                const response = await axios({
-                    method: 'post',
-                    url: `${STRIPE_BASE_URL}/customers/${customerID}/sources`,
-                    data: formData,
-                    headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
-                    validateStatus: (status) => {
-                        return true;
-                    },
-                });
-             
-    
-                return response.data;
-            } catch (err) {
-                console.log('ERR ====>', err,)
-            }
-        }else{
-            return token_source;
+    const token_source = await createToken(cardDetails);
+    if (token_source.id) {
+        console.log("customer id", customerID)
+        var cardColor = Math.floor(Math.random() * 16777215).toString(16);
+        const { number, expiry, cvc } = cardDetails.values;
+        const formData = new URLSearchParams();
+        formData.append("source", token_source.id);
+        formData.append("metadata[color]", '#' + cardColor)
+        formData.append("metadata[expiry]", expiry)
+        formData.append("metadata[number]", number)
+        formData.append("metadata[cvc]", cvc)
+
+        try {
+
+            const response = await axios({
+                method: 'post',
+                url: `${STRIPE_BASE_URL}/customers/${customerID}/sources`,
+                data: formData,
+                headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+                validateStatus: (status) => {
+                    return true;
+                },
+            });
+
+
+            return response.data;
+        } catch (err) {
+            console.log('ERR ====>', err,)
         }
-     
+    } else {
+        return token_source;
+    }
+
 }
 
 // Get the list of cards
@@ -104,10 +104,59 @@ export function updateCard() {
 }
 
 //Remove Card
-export function removeCard() {
-    console.log('remove card')
+export async function removeCard(cardId,customerID) {
+    try {
+        const response = await axios({
+            method: 'delete',
+            url: `${STRIPE_BASE_URL}/customers/${customerID}/sources/${cardId}`,
+            headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
 }
 
-export function getCustomerDefaultCard() {
-    
+// Set customer's default card/source
+export async function setDefaultCard(cardId,customerID){
+    const formData = new URLSearchParams();
+    formData.append("default_source", cardId)
+    try {
+        const response = await axios({
+            method: 'post',
+            url: `${STRIPE_BASE_URL}/customers/${customerID}`,
+            data: formData,
+            headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+export async function getCustomerDefaultCard(customerID) {
+    try {
+        return async dispatch => {
+            const response = await axios({
+                method: 'get',
+                url: `${STRIPE_BASE_URL}/customers/${customerID}`,
+                headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}` },
+                validateStatus: (status) => {
+                    return true;
+                },
+            });
+
+            console.log("data::",response.data.default_source)
+            dispatch({ type: SET_DEFAULT_CARD, data: response.data.default_source })
+        }
+        
+    } catch (err) {
+        console.log('ERR ====>', err,)
+    }
 }

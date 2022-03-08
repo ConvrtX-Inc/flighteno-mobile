@@ -93,6 +93,7 @@ export default function Chattravelereler({ route }) {
     const offerID = route.params.offerID
     const dispatch = useDispatch()
     const { t } = useTranslation()
+    const [isPaymentModalVisible,setPaymentModalVisible] = useState(false)
 
     //Payment
     var showBottomButton = route.params.offerStatus ? route.params.offerStatus : ""
@@ -738,6 +739,8 @@ export default function Chattravelereler({ route }) {
                                 : null}
                         </View>
                         : null}
+
+                
                 </View>
                 : null}
         </StripeProvider>

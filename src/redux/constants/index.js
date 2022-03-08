@@ -29,4 +29,6 @@ export const ADD_CARD="ADD_CARD";
 export const GET_CARDS="GET_CARDS";
 export const UPDATE_CARD="UPDATE_CARD";
 export const REMOVE_CARD="REMOVE_CARD";
+export const DEFAULT_CARD="DEFAULT_CARD";
+export const SET_DEFAULT_CARD="SET_DEFAULT_CARD";
 

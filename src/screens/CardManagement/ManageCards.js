@@ -6,23 +6,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import TextBold from '../../components/atoms/TextBold';
 import { commonStyles } from '../../Utility/CommonStyles';
 import Constants from '../../Utility/Constants';
-import { getCards } from '../../services/Stripe/CardManagement'
+import { getCards, getCustomerDefaultCard } from '../../services/Stripe/CardManagement'
 import PaymentCardItem from '../../components/PaymentCardItem';
 
 export default function ManageCards({ navigation }) {
     const { t } = useTranslation();
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch();
-    const { myCards } = useSelector(({ myCardsRed }) => myCardsRed)
-
+    const { myCards , defaultCard} = useSelector(({ myCardsRed }) => myCardsRed)
+    const tempCustomerID  = 'cus_LG42PyqfYTpuh0';
 
     useEffect(() => {
         getMyCards()
     }, [])
 
     async function getMyCards() {
-        dispatch(await getCards('cus_LG42PyqfYTpuh0'))
+        console.log("DEFAULT CARD",defaultCard)
+        dispatch(await getCards(tempCustomerID))
+
+        //get default card
+        dispatch(await getCustomerDefaultCard(tempCustomerID))
     }
+
+ 
 
     return (
         <ScrollView>
@@ -36,7 +42,7 @@ export default function ManageCards({ navigation }) {
                     </View>
                     <View style={{ height: 22 }}></View>
                     {
-                        myCards.map(card => <PaymentCardItem card={card} key={card.id} />)
+                        myCards.map(card => <PaymentCardItem card={card} defaultCard={defaultCard} key={card.id}    />)
                     }
 
 

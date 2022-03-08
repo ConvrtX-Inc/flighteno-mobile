@@ -72,7 +72,6 @@ export default function PaymentAddNewCard({ navigation }) {
                             title={t('payment.addCard')}
                             loader={loading}
                             onPress={() => {
-
                                 addCard()
                             }}
                         />
