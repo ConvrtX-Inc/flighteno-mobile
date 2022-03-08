@@ -43,16 +43,17 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
             const data = await cameraRef.current.takePictureAsync(options)
             const source = data?.uri
 
+            setPhoto(source)
 
-            Image.getSize(source,(width, height) => {
-                ImageEditor.cropImage(source, {
-                    offset: {x:960, y:0},
-                    size: {width: width/1.1  , height: height/1.4  },
-                    resizeMode:'contain',
-                }).then((url) => {
-                     setPhoto(url) 
-                 })
-             })
+            // Image.getSize(source,(width, height) => {
+            //     ImageEditor.cropImage(source, {
+            //         offset: {x:960, y:0},
+            //         size: {width: width/1.1  , height: height/1.4  },
+            //         resizeMode:'contain',
+            //     }).then((url) => {
+            //          setPhoto(url) 
+            //      })
+            // })
         }
 
         setRetake(false)
