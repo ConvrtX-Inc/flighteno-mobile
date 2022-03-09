@@ -39,6 +39,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
             selectCard(myCards[0])
         }
         console.log("selectedCArd",selectedCard)
+        const cardId = selectedCard.id !='' ? selectedCard.id : defaultCard;
         setLoading(true)
         let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}&cardId=${selectedCard.id}`
         const res = await createStripePaymentIntent(url);

@@ -94,7 +94,7 @@ export default function Chattravelereler({ route }) {
     const offerID = route.params.offerID
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const [isPaymentModalVisible, setPaymentModalVisible] = useState(true)
+    const [isPaymentModalVisible, setPaymentModalVisible] = useState(false)
 
     //Payment
     var showBottomButton = route.params.offerStatus ? route.params.offerStatus : ""
