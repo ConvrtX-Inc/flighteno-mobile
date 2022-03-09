@@ -33,7 +33,7 @@ export default function PaymentCardItem({ card, defaultCard }) {
     }
 
     async function remove() {
-        const res = await removeCard(card.id, tempCustomerID)
+        const res = await removeCard(card.id, currentUser.customer_id)
         if (res.id) {
             dispatch({ type: REMOVE_CARD, data: res.id })
         } else {

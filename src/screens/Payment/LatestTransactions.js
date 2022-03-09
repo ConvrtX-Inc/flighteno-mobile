@@ -14,7 +14,7 @@ import TextRegular from '../../components/atoms/TextMedium';
 import { commonStyles } from '../../Utility/CommonStyles';
 import Constants from '../../Utility/Constants';
 import PaymentCard from '../../components/PaymentCard';
-import { getCards } from '../../services/Stripe/CardManagement'
+import { getCards,getCustomerDefaultCard } from '../../services/Stripe/CardManagement'
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -34,6 +34,10 @@ export default function LatestTransactionsScreen({ navigation }) {
 
     async function getMyCards() {
         dispatch(await getCards(currentUser.customer_id))
+
+        //get default card
+        dispatch(await getCustomerDefaultCard(currentUser.customer_id, currentUser));
+
     }
     return (
         <View style={styles.container}>

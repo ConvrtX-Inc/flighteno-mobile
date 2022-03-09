@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { STRIPE_BASE_URL } from '../../BASE_URL';
 import { STRIPE_SECRET_KEY } from '@env'
-import { GET_CARDS, SET_DEFAULT_CARD } from '../../redux/constants';
-
+import { GET_CARDS, SET_DEFAULT_CARD, UPDATE_CUSTOMER_ID } from '../../redux/constants';
+import { addCustomerDetails } from './Customer';
 
 
 export async function createToken(cardDetails) {
@@ -78,7 +78,7 @@ export async function createCard(cardDetails, customerID) {
 
 // Get the list of cards
 export async function getCards(customerID) {
-    
+
     try {
         return async dispatch => {
             const response = await axios({
@@ -103,7 +103,7 @@ export function updateCard() {
 }
 
 //Remove Card
-export async function removeCard(cardId,customerID) {
+export async function removeCard(cardId, customerID) {
     try {
         const response = await axios({
             method: 'delete',
@@ -120,7 +120,7 @@ export async function removeCard(cardId,customerID) {
 }
 
 // Set customer's default card/source
-export async function setDefaultCard(cardId,customerID){
+export async function setDefaultCard(cardId, customerID) {
     const formData = new URLSearchParams();
     formData.append("default_source", cardId)
     try {
@@ -139,7 +139,7 @@ export async function setDefaultCard(cardId,customerID){
     }
 }
 
-export async function getCustomerDefaultCard(customerID) {
+export async function getCustomerDefaultCard(customerID,currentUser) {
     try {
         return async dispatch => {
             const response = await axios({
@@ -151,11 +151,24 @@ export async function getCustomerDefaultCard(customerID) {
                 },
             });
 
-            console.log("data::",response.data.default_source)
-            dispatch({ type: SET_DEFAULT_CARD, data: response.data.default_source })
+            console.log("default card",response.data.default_source)
+            if (response.data.default_source) {
+                dispatch({ type: SET_DEFAULT_CARD, data: response.data.default_source });
+
+            } else if (response.data.error && response.data.error.code == "resource_missing") {
+                //create customer if no customer found on stripe
+                const addCustomerDetailsRes = await addCustomerDetails(currentUser._id);
+
+                if (addCustomerDetailsRes.customer) {
+                    const user = currentUser;
+                    user.customer_id = addCustomerDetailsRes.customer
+
+                    dispatch({ type: UPDATE_CUSTOMER_ID, data: user });
+                }
+            }
         }
-        
     } catch (err) {
         console.log('ERR ====>', err,)
     }
 }
+

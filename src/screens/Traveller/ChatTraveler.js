@@ -94,7 +94,7 @@ export default function Chattravelereler({ route }) {
     const offerID = route.params.offerID
     const dispatch = useDispatch()
     const { t } = useTranslation()
-    const [isPaymentModalVisible, setPaymentModalVisible] = useState(false)
+    const [isPaymentModalVisible, setPaymentModalVisible] = useState(true)
 
     //Payment
     var showBottomButton = route.params.offerStatus ? route.params.offerStatus : ""
@@ -811,7 +811,10 @@ export default function Chattravelereler({ route }) {
                     >
                         <PaymentMethodModal onPaymentSubmit={(paymentDetails) => {
                             onPaymentSubmitted(paymentDetails)
-                        }} closeModal={() => { setPaymentModalVisible(false) }} offerID={offerID}  />
+                        }} closeModal={() => { setPaymentModalVisible(false) }} offerID={offerID} addPaymentMethod={() => {
+                            setPaymentModalVisible(false);
+                            navigation.navigate("PaymentAddNewCard")
+                        }}  />
                     </Modal>
                 </View>
                 : null}

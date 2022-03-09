@@ -12,30 +12,33 @@ import { PAYMENT_BASE_URL } from '../BASE_URL';
 import { createStripePaymentIntent } from '../services/Stripe/Payment';
 import Toast from 'react-native-toast-message';
 import { getCards, getCustomerDefaultCard } from '../services/Stripe/CardManagement'
-export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerID, navigation }) {
+import TextRegular from './atoms/TextRegular';
+
+export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerID, navigation ,addPaymentMethod }) {
     const { t } = useTranslation();
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch();
     const { myCards, defaultCard } = useSelector(({ myCardsRed }) => myCardsRed)
     const [selectedCard, selectCard] = useState()
     const [isLoading, setLoading] = useState(false);
+
     useEffect(() => {
-        console.log("CUSTOMER ID", currentUser.customer_id)
         getMyCards()
     }, [])
 
     async function getMyCards() {
-        console.log("DEFAULT CARD", defaultCard)
         dispatch(await getCards(currentUser.customer_id))
 
-
-
         //get default card
-        dispatch(await getCustomerDefaultCard(currentUser.customer_id))
+        dispatch(await getCustomerDefaultCard(currentUser.customer_id, currentUser));
+
     }
 
-
     async function submitPayment() {
+        if(!selectedCard){
+            selectCard(myCards[0])
+        }
+        console.log("selectedCArd",selectedCard)
         setLoading(true)
         let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}&cardId=${selectedCard.id}`
         const res = await createStripePaymentIntent(url);
@@ -101,16 +104,24 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
                             </View>) : null
                     }
-
-                    <View style={{ marginTop: 20 }}>
-                        <ButtonLarge
-                            title="Submit"
-                            loader={isLoading}
-                            onPress={() => submitPayment()}
-                        ></ButtonLarge>
-                    </View>
-
-
+                    {
+                        myCards.length > 0 ? <View style={{ marginTop: 20 }}>
+                            <ButtonLarge
+                                title="Submit"
+                                loader={isLoading}
+                                onPress={() => submitPayment()}
+                            ></ButtonLarge>
+                        </View> : <TouchableOpacity style={styles.addCardBtn} onPress={() => {
+                           addPaymentMethod()
+                        }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
+                                <IconEntypo name="plus" size={25} color="#36C5F0" />
+                                <TextBold style={{ fontSize: 20, color: '#36C5F0', marginLeft: 14 }}>
+                                    Add Payment Method
+                                </TextBold>
+                            </View>
+                        </TouchableOpacity>
+                    }
                 </>
             </View>
         </ScrollView>
@@ -142,4 +153,11 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         fontSize: 14
     },
+    addCardBtn: {
+        borderStyle: 'dashed',
+        borderWidth: 1,
+        borderColor: '#A7A7A7',
+        padding: 14,
+        borderRadius: 16
+    }
 });
