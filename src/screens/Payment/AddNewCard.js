@@ -1,5 +1,5 @@
 // Core packages
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
@@ -16,23 +16,47 @@ import TextRegular from '../../components/atoms/TextMedium';
 import { commonStyles } from '../../Utility/CommonStyles';
 import Constants from '../../Utility/Constants';
 import ButtonLarge from '../../components/ButtonLarge';
-import { IS_LOADING } from '../../redux/constants';
+import { ADD_CARD, IS_LOADING } from '../../redux/constants';
 
-export default function PaymentAddNewCard ({navigation}) {
-    const {t} = useTranslation();
-    const { currentUser, loading, token } = useSelector(({ authRed }) => authRed)
+import { createCard } from '../../services/Stripe/CardManagement'
+import Toast from 'react-native-toast-message';
 
-    function _onChange (form) {
-        console.log(form);
+export default function PaymentAddNewCard({ navigation }) {
+    const { t } = useTranslation();
+    const { currentUser, token } = useSelector(({ authRed }) => authRed)
+
+    const [cardDetails, setCardDetails] = useState();
+    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+
+    function _onChange(form) {
+        console.log(currentUser.customer_id);
+        setCardDetails(form);
+    }
+
+    async function addCard() {
+        setLoading(true)
+        const data = await createCard(cardDetails,currentUser.customer_id);
+        if (data.id) {
+            dispatch({ type: ADD_CARD, data: data })
+            setLoading(false);
+            navigation.pop();
+        } else {
+            setLoading(false)
+            Toast.show({
+                type: 'error',
+                text1: data.error.message
+            })
+        }
     }
 
     return (
         <ScrollView>
-            <View style={[styles.container, commonStyles.marginTop10]}>                          
+            <View style={[styles.container, commonStyles.marginTop10]}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <IconEntypo name="chevron-left" size={34} color="#000" />                
+                    <IconEntypo name="chevron-left" size={34} color="#000" />
                 </TouchableOpacity>
-                <> 
+                <>
                     <View style={[commonStyles.marginTop30]}>
                         <TextBold style={[commonStyles.fs26]}>{t('payment.addNewCard')}</TextBold>
                     </View>
@@ -47,12 +71,14 @@ export default function PaymentAddNewCard ({navigation}) {
                         <ButtonLarge
                             title={t('payment.addCard')}
                             loader={loading}
-                            onPress={() =>{}}
+                            onPress={() => {
+                                addCard()
+                            }}
                         />
                     </View>
                 </>
             </View>
-        </ScrollView> 
+        </ScrollView>
     )
 }
 
