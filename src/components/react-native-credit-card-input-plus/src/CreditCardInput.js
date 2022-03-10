@@ -9,6 +9,7 @@ import ReactNative, {
   Dimensions,
   TextInput,
   ViewPropTypes,
+  Platform,
 } from "react-native";
 
 import CreditCard from "./CardView";
@@ -26,7 +27,7 @@ const s = StyleSheet.create({
     marginVertical: 6,
   },
   inputLabel: {
-    fontFamily:'GilroyBold',
+    fontFamily:Platform.OS == 'ios' ? 'Gilroy-Bold' : 'GilroyBold',
   },
   input: {
     // height: 40,
