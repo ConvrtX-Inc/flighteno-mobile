@@ -13,6 +13,7 @@ import CardOrderUser from '../../components/CardOrderUser';
 import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
 import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -141,7 +142,7 @@ export default function AllOrders() {
                                 renderItem={({ item, index }) =>
 
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-                                        <Text style={Styles.storeNameListText}>{item.name}</Text>
+                                        <TextMedium style={Styles.storeNameListText}>{item.name}</TextMedium>
                                         <CheckBox
                                             checkedIcon='dot-circle-o'
                                             uncheckedIcon='circle'

@@ -18,9 +18,9 @@ import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */ }
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
 
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
     const dispatch = useDispatch()
     const {t} = useTranslation()
     const { currentCountry, currentUser, token } = useSelector(({ authRed }) => authRed)
@@ -157,7 +157,9 @@ export default function HomeScreen() {
 
                         <View style={[styles.SelectProfileHeaderFirst, { flexDirection: 'row' }]}>
 
-                            <TouchableOpacity disabled={true}>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('Profile')
+                            }}>
                                 <Image
                                     style={[styles.menueImg, { tintColor: null }]}
                                     resizeMode='stretch'
@@ -242,7 +244,7 @@ export default function HomeScreen() {
 
                         }
                         keyExtractor={item => item._id}
-                        style={{ borderRadius: 100, marginTop: 3, paddingLeft: '5%', }}
+                        style={{  marginTop: 3, paddingLeft: '5%', }}
                     />
 
 
@@ -278,7 +280,7 @@ export default function HomeScreen() {
 
                         }
                         keyExtractor={item => item._id}
-                        style={{ borderRadius: 100, marginTop: 3, marginBottom: 15, paddingLeft: '5%' }}
+                        style={{ marginTop: 3, marginBottom: 15, paddingLeft: '5%' }}
                     />
 
                 </ScrollView>
