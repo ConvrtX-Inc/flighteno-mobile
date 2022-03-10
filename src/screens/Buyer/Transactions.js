@@ -11,9 +11,9 @@ import { useTranslation } from 'react-i18next';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
-export default function Transactions() {
+export default function Transactions({navigation}) {
 
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
     const dispatch = useDispatch()
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const { myOrders } = useSelector(({ tripsRed }) => tripsRed)
@@ -45,7 +45,9 @@ export default function Transactions() {
 
                         <View style={[styles.SelectProfileHeaderFirst, { flexDirection: 'row' }]}>
 
-                            <TouchableOpacity disabled={true}>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('Profile')
+                            }}>
                                 <Image
                                     style={[styles.menueImg, { tintColor: null }]}
                                     resizeMode='stretch'
@@ -60,7 +62,8 @@ export default function Transactions() {
                             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                                 <Image
                                     style={styles.homeProfileImg}
-                                    source={currentUser.profile_image ? { uri: 'data:image/png;base64,'+currentUser.profile_image } : require('../../images/manProfile.png')}
+                                    // source={currentUser.profile_image ? { uri: 'data:image/png;base64,'+currentUser.profile_image } : require('../../images/manProfile.png')}
+                                    source={currentUser.profile_image ? { uri: currentUser.profile_image } : require('../../images/manProfile.png')}
                                 />
                             </TouchableOpacity>
 
