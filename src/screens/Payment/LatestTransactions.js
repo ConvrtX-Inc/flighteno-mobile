@@ -17,6 +17,32 @@ import PaymentCard from '../../components/PaymentCard';
 import { getCards,getCustomerDefaultCard } from '../../services/Stripe/CardManagement'
 import { useDispatch, useSelector } from 'react-redux';
 
+const transactions = [
+    {
+        name:"Travis",
+        amount:"+100",
+        date:"1 hr ago"
+    },
+    {
+        name:"Jane Doe",
+        amount:"+1500",
+        date:"5 hr ago"
+    },
+    {
+        name:"Jane Doe",
+        amount:"-300",
+        date:"2 days ago"
+    },
+    {
+        name:"Muhammad Zeeshan",
+        amount:"+1350",
+        date: "1 month ago"
+    },{
+        name:"John Doe",
+        amount:"-500",
+        date:"2 months ago"
+    }
+]
 
 export default function LatestTransactionsScreen({ navigation }) {
     const { t } = useTranslation();
@@ -24,6 +50,7 @@ export default function LatestTransactionsScreen({ navigation }) {
     const [hasCard, setHasCard] = useState(true);
     const { myCards } = useSelector(({ myCardsRed }) => myCardsRed)
     const { currentUser } = useSelector(({ authRed }) => authRed)
+    // const [transactions , setTransactions] = useState([]);
 
     const dispatch = useDispatch()
 
@@ -39,6 +66,8 @@ export default function LatestTransactionsScreen({ navigation }) {
         dispatch(await getCustomerDefaultCard(currentUser.customer_id, currentUser));
 
     }
+
+
     return (
         <View style={styles.container}>
             <View style={[styles.withMargin, commonStyles.marginTop10]}>
@@ -94,95 +123,40 @@ export default function LatestTransactionsScreen({ navigation }) {
                                 <View style={[commonStyles.marginTop30]}>
                                     <TextBold style={[commonStyles.fs26]}>{t('payment.latestTransactions')}</TextBold>
                                 </View>
-                                <View style={commonStyles.flex1}>
-                                    <View style={commonStyles.padding6}>
-                                        <View
-                                            style={
-                                                [
-                                                    commonStyles.padding10,
-                                                    commonStyles.borerRadius12,
-                                                    commonStyles.marginTop20,
-                                                    commonStyles.shadow,
-                                                    commonStyles.bcWhite,
-                                                ]
-                                            }>
-                                            <View style={[styles.transaction]}>
-                                                <View>
-                                                    <Image
-                                                        source={require('../../images/manProfile.png')}
-                                                        style={{ width: 50, height: 50, borderRadius: 50 / 2 }} />
-                                                </View>
-                                                <View style={[commonStyles.marginHorizontal20, { flex: 1 }]}>
-                                                    <TextBold style={commonStyles.fs20}>Travis</TextBold>
-                                                    <TextMedium style={[commonStyles.fs16, commonStyles.cMountainMist]}>2 hr ago</TextMedium>
-                                                </View>
-                                                <View>
-                                                    <TextMedium style={[commonStyles.fs20, commonStyles.cMediumGreen]}>+$600.00</TextMedium>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-
-                                <View style={commonStyles.flex1}>
-                                    <View style={commonStyles.padding6}>
-                                        <View
-                                            style={
-                                                [
-                                                    commonStyles.padding10,
-                                                    commonStyles.borerRadius12,
-                                                    commonStyles.marginTop20,
-                                                    commonStyles.shadow,
-                                                    commonStyles.bcWhite,
-                                                ]
-                                            }>
-                                            <View style={[styles.transaction]}>
-                                                <View>
-                                                    <Image
-                                                        source={require('../../images/manProfile.png')}
-                                                        style={{ width: 50, height: 50, borderRadius: 50 / 2 }} />
-                                                </View>
-                                                <View style={[commonStyles.marginHorizontal20, { flex: 1 }]}>
-                                                    <TextBold style={commonStyles.fs20}>Travis</TextBold>
-                                                    <TextMedium style={[commonStyles.fs16, commonStyles.cMountainMist]}>2 hr ago</TextMedium>
-                                                </View>
-                                                <View>
-                                                    <TextMedium style={[commonStyles.fs20, commonStyles.cMediumGreen]}>+$600.00</TextMedium>
+                                {
+                                    transactions.map(transaction =>(
+                                        <View style={commonStyles.flex1}>
+                                        <View style={commonStyles.padding6}>
+                                            <View
+                                                style={
+                                                    [
+                                                        commonStyles.padding10,
+                                                        commonStyles.borerRadius12,
+                                                        commonStyles.marginTop20,
+                                                        commonStyles.shadow,
+                                                        commonStyles.bcWhite,
+                                                    ]
+                                                }>
+                                                <View style={[styles.transaction]}>
+                                                    <View>
+                                                        <Image
+                                                            source={require('../../images/manProfile.png')}
+                                                            style={{ width: 50, height: 50, borderRadius: 50 / 2 }} />
+                                                    </View>
+                                                    <View style={[commonStyles.marginHorizontal20, { flex: 1 }]}>
+                                                        <TextBold style={commonStyles.fs20}>{transaction.name}</TextBold>
+                                                        <TextMedium style={[commonStyles.fs16, commonStyles.cMountainMist]}>{transaction.date}</TextMedium>
+                                                    </View>
+                                                    <View>
+                                                        <TextMedium style={[commonStyles.fs20, commonStyles.cMediumGreen]}>{transaction.amount}</TextMedium>
+                                                    </View>
                                                 </View>
                                             </View>
                                         </View>
                                     </View>
-                                </View>
-
-                                <View style={commonStyles.flex1}>
-                                    <View style={commonStyles.padding6}>
-                                        <View
-                                            style={
-                                                [
-                                                    commonStyles.padding10,
-                                                    commonStyles.borerRadius12,
-                                                    commonStyles.marginTop20,
-                                                    commonStyles.shadow,
-                                                    commonStyles.bcWhite,
-                                                ]
-                                            }>
-                                            <View style={[styles.transaction]}>
-                                                <View>
-                                                    <Image
-                                                        source={require('../../images/manProfile.png')}
-                                                        style={{ width: 50, height: 50, borderRadius: 50 / 2 }} />
-                                                </View>
-                                                <View style={[commonStyles.marginHorizontal20, { flex: 1 }]}>
-                                                    <TextBold style={commonStyles.fs20}>Travis</TextBold>
-                                                    <TextMedium style={[commonStyles.fs16, commonStyles.cMountainMist]}>2 hr ago</TextMedium>
-                                                </View>
-                                                <View>
-                                                    <TextMedium style={[commonStyles.fs20, commonStyles.cMediumGreen]}>+$600.00</TextMedium>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
+                                    ))
+                                }
+                               
                             </ScrollView>
                         </View>
                     </>
