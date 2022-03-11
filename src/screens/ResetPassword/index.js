@@ -105,7 +105,17 @@ export default function ResetPassword() {
             },
             (cellNo) => {
                 console.log(cellNo)
-                navigation.navigate("VerifyCode", { cellNo: cellno.length >= 6 ? cellno : cellNo })
+
+                if(isEmailEnabled){
+                    navigation.navigate("VerifyCode", { cellNo:  cellNo })
+                }
+
+                if(isPhoneEnabled){
+                    // console.log(phoneInputVal)
+                    navigation.navigate("VerifyCode", { cellNo:  phoneInputVal })
+                }
+
+                
             },
             () => {
                 Toast.show({
