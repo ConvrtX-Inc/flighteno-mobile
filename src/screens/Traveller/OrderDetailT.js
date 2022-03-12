@@ -6,7 +6,7 @@ import ButtonTraveller from '../../components/ButtonTraveller';
 import { useSelector } from 'react-redux'
 import ButtonDisable from '../../components/ButtonDisable';
 import ButtonVerifyT from '../../components/ButtonVerifyT';
-import BottomTab from '../../components/BottomTab';
+// import BottomTab from '../../components/BottomTab';
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import { formatAmount } from '../../Utility/Utils';
