@@ -4,7 +4,7 @@ import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
 import ButtonTraveller from '../../components/ButtonTraveller';
 import { useSelector, useDispatch } from 'react-redux'
-import BottomTab from '../../components/BottomTab';
+// import BottomTab from '../../components/BottomTab';
 import Input from '../../components/InputField';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';

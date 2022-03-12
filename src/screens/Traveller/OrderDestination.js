@@ -619,7 +619,7 @@ const Styles = StyleSheet.create({
         paddingLeft: 20,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: 'Gilroy-Regular',
         backgroundColor: color.inputBackColor,
         borderRightWidth: 0
     },

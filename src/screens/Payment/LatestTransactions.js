@@ -100,7 +100,7 @@ export default function LatestTransactionsScreen({ navigation }) {
                                             </TouchableOpacity>
                                         </View>
                                         {
-                                            myCards.map(card => <PaymentCard card={card} key={card.id} />)
+                                            myCards?.map(card => <PaymentCard card={card} key={card.id} />)
                                         }
                                     </ScrollView>
 

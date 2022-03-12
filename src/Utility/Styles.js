@@ -447,7 +447,7 @@ export const styles = StyleSheet.create({
         borderRadius: 35,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: 'Gilroy-Regular',
         backgroundColor: '#F6F9FF',
         paddingHorizontal: 20,
         flexDirection: 'row',
