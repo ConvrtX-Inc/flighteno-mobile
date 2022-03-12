@@ -104,8 +104,7 @@ export default function ResetPassword() {
                 setEmail("")
             },
             (cellNo) => {
-             
-
+            
                 if(isEmailEnabled){
                     navigation.navigate("VerifyCode", { cellNo:  cellNo })
                 }
