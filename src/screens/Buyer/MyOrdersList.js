@@ -10,6 +10,7 @@ import moment from 'moment'
 import CardOrder from '../../components/CardOrder';
 import TextBold from '../../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 {/* Fix for FLIGHT-46 */}
 export default function MyOrdersList({ route }) {
@@ -30,39 +31,42 @@ export default function MyOrdersList({ route }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <SafeAreaView style={{flex:1}}> 
+              <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
 
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image
-                    style={styles.backImg}
-                    resizeMode='stretch'
-                    source={require('../../images/back.png')}
-                />
-            </TouchableOpacity>
-          
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>
-                {t('track.my')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')} {t('track.orders')}
-            </TextBold>
-            <SearchInput
-                placeholder="Search Product Name, Order No."
-                onChangeText={(text) => handleSearch(text)}
-            />
+<TouchableOpacity onPress={() => navigation.goBack()}>
+    <Image
+        style={styles.backImg}
+        resizeMode='stretch'
+        source={require('../../images/back.png')}
+    />
+</TouchableOpacity>
 
-            <FlatList
-                data={searchedOrders}
-                renderItem={({ item, index }) =>
+<TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>
+    {t('track.my')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')} {t('track.orders')}
+</TextBold>
+<SearchInput
+    placeholder="Search Product Name, Order No."
+    onChangeText={(text) => handleSearch(text)}
+/>
 
-                    <TouchableOpacity onPress={() => goToDetails(item)} style={Styles.listView}>
-                        <CardOrder order={item}></CardOrder>
-                    </TouchableOpacity>
-                }
-                keyExtractor={item => item.id}
-                ListEmptyComponent={<TextBold style={styles.emptyListText}>
-                    {t('common.thereAreNo')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')}  {t('track.orders').toLowerCase()}!
-                </TextBold>}
-            />
-        </View>
-    );
+<FlatList
+    data={searchedOrders}
+    renderItem={({ item, index }) =>
+
+        <TouchableOpacity onPress={() => goToDetails(item)} style={Styles.listView}>
+            <CardOrder order={item}></CardOrder>
+        </TouchableOpacity>
+    }
+    keyExtractor={item => item.id}
+    ListEmptyComponent={<TextBold style={styles.emptyListText}>
+        {t('common.thereAreNo')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')}  {t('track.orders').toLowerCase()}!
+    </TextBold>}
+/>
+</View>
+
+        </SafeAreaView>
+          );
 }
 
 const Styles = StyleSheet.create({

@@ -15,6 +15,7 @@ import { IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold'
 import { GetLanguages } from '../../../redux/actions/Translation';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */ }
@@ -57,7 +58,7 @@ export default function HomeScreen({navigation}) {
     async function getCurrentAddress() {
         if (Platform.OS === 'android') {
             try {
-                const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+                 const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
                 console.log("granted", granted)
                 if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
@@ -148,6 +149,9 @@ export default function HomeScreen({navigation}) {
     }
 
     return (
+        <SafeAreaView style={{flex:1}}>
+
+       
         <View style={styles.ScreenCss}>
             {currentUser ?
                 <ScrollView>
@@ -286,6 +290,7 @@ export default function HomeScreen({navigation}) {
                 </ScrollView>
                 : null}
         </View>
+        </SafeAreaView>
     );
 
 }

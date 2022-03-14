@@ -226,6 +226,132 @@ export default function OrderDestination({ route }) {
         setShowImageView(true)
     }
 
+    const renderFilterHeader = () => (
+        <>
+            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.filter')}</TextBold>
+            <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
+            <TextSemiBold style={[styles.loginInputHeading, { marginTop: 5, textAlign:'left' }]}>{t('buyerHome.productType')}</TextSemiBold>
+
+            <Pressable onPress={() => setPickerShow(!pickerShow)}>
+                <View style={styles.pickerVIew}>
+
+                    <View style={styles.pickerLeftView}>
+                        <Text style={styles.textSelected}>{pickerValueSelected ? pickerValueSelected : "Please select"}</Text>
+                    </View>
+                    <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
+                    <Image
+                        style={styles.pickerIcon}
+                        resizeMode='stretch'
+                        source={require('../../images/pickerIcon.png')}
+                    />
+                    </View>
+
+                </View>
+            </Pressable>
+
+            {pickerShow == true ?
+                <View style={styles.pickerOptions}>
+                    <FlatList
+                        data={pickerValues}
+                        nestedScrollEnabled={true}
+                        renderItem={({ item, index }) =>
+                            <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
+                                <TouchableOpacity onPress={() => selectPickerValueFN(index)}>
+                                    <View>
+                                        <Text style={styles.textSelected}>{item.option}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                        keyExtractor={(item, index) => item + index}
+                        style={{ borderRadius: 100, marginTop: 3 }}
+                    />
+                </View>
+            : null}
+
+            <View style={{ alignSelf: 'center', width: '90%' }}>
+                <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.productName')}</TextSemiBold>
+            </View>
+
+            <Input
+                placeholder="Enter product name"
+                onChangeText={text => setPName(text)}
+                value={pName}
+                secureTextEntry={false}
+            />
+
+            <View style={{ alignSelf: 'center', width: '90%' }}>
+                <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.price')}</TextSemiBold>
+            </View>
+
+            <View style={{flex:1, flexDirection:'row'}}>
+                <View style={{flex:1}}>
+                    <Input
+                        placeholder="0"
+                        onChangeText={(value) =>{
+                            if(value == ''){
+                                setMinPrice(0)
+                            }else{
+                                setMinPrice(parseInt(value))
+                            }
+                        }}
+                        value={minPrice?.toString() ?? 0}
+                        keyboardType='numeric'
+                        secureTextEntry={false}
+                    />
+                </View>
+
+                <View style={{justifyContent:'center'}}>
+                    <TextMedium>{t('travelHome.to')}</TextMedium>
+                </View>
+
+                <View style={{flex:1}}>
+                    <Input
+                        placeholder="500000"
+                        secureTextEntry={false}
+                        editable={false}
+                    />
+                </View>
+            </View>
+
+            <Slider
+                value={minPrice}
+                onValueChange={(value) => setMinPrice(value)}
+                maximumValue={500000}
+                minimumValue={0}
+                style={[styles.sliderStyle, {}]}
+                step={10}
+                maximumTrackTintColor='#F6F9FF'
+                minimumTrackTintColor='#E76F51'
+                trackStyle={styles.sliderTrackStyle}
+                thumbStyle={styles.sliderThumbStyle}
+                thumbProps={{
+                    children: (
+                        <Image
+                            style={styles.sliderImg}
+                            resizeMode='stretch'
+                            source={require('../../images/sliderCircle.png')}
+                        />
+                    ),
+                }}
+            />
+
+            <View style={styles.sliderTxtContainer}>
+
+                <View style={styles.sliderTxtContainerFirst}>
+                    <TextMedium style={styles.sliderTxt}>0</TextMedium>
+                </View>
+
+                <View style={[styles.sliderTxtContainerOther, { marginLeft: 'auto' }]}>
+                    <TextMedium style={styles.sliderTxt}>500000</TextMedium>
+                </View>
+
+            </View>
+
+
+        </>
+    )
+
     return (
         <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
             <ViewImages
@@ -234,250 +360,14 @@ export default function OrderDestination({ route }) {
                 closeModal={() => setShowImageView(false)}
             />
             {showFilter ?
-                <ScrollView>
-                    <View style={{ marginTop: 20, }}>
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
-                                <Icon name="cross" size={35} style={{ margin: 0 }} />
-                            </TouchableOpacity>
-                            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.filter')}</TextBold>
-                            <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
-                            <TextSemiBold style={[styles.loginInputHeading, { marginTop: 5, textAlign:'left' }]}>{t('buyerHome.productType')}</TextSemiBold>
-                        </View>
-                        <View style={{ marginTop: 10, }}>
-                            <Pressable onPress={() => setPickerShow(!pickerShow)}>
-                                <View style={styles.pickerVIew}>
-
-                                    <View style={styles.pickerLeftView}>
-                                        <Text style={styles.textSelected}>{pickerValueSelected ? pickerValueSelected : "Please select"}</Text>
-                                    </View>
-                                    <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-                                        <Image
-                                            style={styles.pickerIcon}
-                                            resizeMode='stretch'
-                                            source={require('../../images/pickerIcon.png')}
-                                        />
-                                    </View>
-
-                                </View>
-                            </Pressable>
-
-                            {pickerShow == true ?
-                                <View style={styles.pickerOptions}>
-                                    <FlatList
-                                        data={pickerValues}
-                                        nestedScrollEnabled={true}
-                                        renderItem={({ item, index }) =>
-                                            <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                                                <TouchableOpacity onPress={() => selectPickerValueFN(index)}>
-                                                    <View>
-                                                        <Text style={styles.textSelected}>{item.option}</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                            </View>
-
-                                        }
-                                        keyExtractor={item => item._id}
-                                        style={{ borderRadius: 100, marginTop: 3 }}
-                                    />
-
-
-                                </View>
-                                : null}
-                        </View>
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.productName')}</TextSemiBold>
-                        </View>
-                        <Input
-                            placeholder="Enter product name"
-                            onChangeText={text => setPName(text)}
-                            value={pName}
-                            secureTextEntry={false}
-                        />
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextSemiBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.price')}</TextSemiBold>
-                        </View>
-
-                        <View style={{flex:1, flexDirection:'row'}}>
-                            <View style={{flex:1}}>
-                                <Input
-                                    placeholder="0"
-                                    onChangeText={(value) =>{
-                                      if(value == ''){
-                                        setMinPrice(0)
-                                      }else{
-                                        setMinPrice(parseInt(value))
-                                      }
-                                      
-                                    }}
-                                    value={minPrice?.toString() ?? 0}
-                                    keyboardType='numeric'
-                                    secureTextEntry={false}
-                                />
-                            </View>
-                            <View style={{justifyContent:'center'}}>
-                                <TextMedium>{t('travelHome.to')}</TextMedium>
-                            </View>
-                            <View style={{flex:1}}>
-                                <Input
-                                    placeholder="500000"
-                                    secureTextEntry={false}
-                                    editable={false}
-                                />
-                            </View>
-
-                        </View>
-
-                      
-                        
-                     
-                        {/* <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}> */}
-                            {/* <TouchableOpacity disabled={true} style={styles.timePickerVIew}>
-                                <Text style={{ color: color.verifyPhoneTextColor, }}>{minPrice} </Text>
-
-                            </TouchableOpacity> */}
-{/* 
-                            <Input
-                            placeholder="0"
-                            // onChangeText={text => setPName(text)}
-                            value={minPrice}
-                            secureTextEntry={false}
-                                />
-
-                            <Text>to</Text>
-
-                            <Input
-                            placeholder="6"
-                            // onChangeText={text => setPName(text)}
-                            value={minPrice}
-                            secureTextEntry={false}
-                            /> */}
-
-                            {/* <TouchableOpacity disabled={true} style={styles.timePickerVIew}>
-                                <Text style={{ color: color.verifyPhoneTextColor, }}>{maxPrice}</Text>
-                            </TouchableOpacity> */}
-                        {/* </View> */}
-
-
-                        <Slider
-                            value={minPrice}
-                            onValueChange={(value) => setMinPrice(value)}
-                            maximumValue={500000}
-                            minimumValue={0}
-                            style={[styles.sliderStyle, {}]}
-                            step={10}
-                            maximumTrackTintColor='#F6F9FF'
-                            minimumTrackTintColor='#E76F51'
-                            trackStyle={styles.sliderTrackStyle}
-                            thumbStyle={styles.sliderThumbStyle}
-                            thumbProps={{
-                                children: (
-                                    <Image
-                                        style={styles.sliderImg}
-                                        resizeMode='stretch'
-                                        source={require('../../images/sliderCircle.png')}
-                                    />
-                                ),
-                            }}
-                        />
-
-                        <View style={styles.sliderTxtContainer}>
-
-                            <View style={styles.sliderTxtContainerFirst}>
-                                <TextMedium style={styles.sliderTxt}>0</TextMedium>
-                            </View>
-
-                            <View style={[styles.sliderTxtContainerOther, { marginLeft: 'auto' }]}>
-                                <TextMedium style={styles.sliderTxt}>500000</TextMedium>
-                            </View>
-
-                        </View>
-
-                        <View style={{ alignSelf: 'center', width: '100%', paddingLeft:18 }}>
-                            <TextBold>Store name</TextBold>
-                            <FlatList
-                                data={storeData}
-                                style={Styles.storeNamesList}
-                                nestedScrollEnabled
-                                renderItem={({item,index}) => (
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop:20 }}>
-                                        <TextMedium>{item?.name}</TextMedium>
-                                      
-                                        <CheckBox
-                                            checkedIcon='dot-circle-o'
-                                            uncheckedIcon='circle'
-                                            checkedColor={color.blueColor}
-                                            containerStyle={{padding:0, margin:0}}
-                                            checked={item?.checked}
-                                            onPress={() => {
-                                                selectStore(index)}
-                                            }
-                                        />
-                                    </View>
-                                )}
-                            />
-                        </View>          
-                      
-                       
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.sort')}</TextBold>
-                            <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
-                            <TouchableOpacity onPress={() => selectRange(1, 'vip_service_fee', 1)}
-                                style={Styles.rangeButton}>
-                                <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 1 ? color.blueColor : color.loginTextHeadingColor, textAlign:'left' }]}>
-                                    {t('track.vipServFee')} ({t('travelHome.high')} - {t('travelHome.low')})
-                                </TextSemiBold>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(2, 'order_created_date', -1)}
-                                style={Styles.rangeButton}>
-                                <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 2 ? color.blueColor : color.loginTextHeadingColor, textAlign:'left' }]}>
-                                    {t('travelHome.recentAdded')}
-                                </TextSemiBold>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(3, 'product_price', -1)}
-                                style={Styles.rangeButton}>
-                                <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 3 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
-                                   {t('buyerHome.price')} ({t('travelHome.low')} - {t('travelHome.high')})
-                                </TextSemiBold>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(4, 'product_price', 1)}
-                                style={Styles.rangeButton}>
-                                <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 4 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
-                                    {t('buyerHome.price')} ({t('travelHome.high')} - {t('travelHome.low')})
-                                </TextSemiBold>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(5, 'estimated_dilivery_fee', -1)}
-                                style={Styles.rangeButton}>
-                                <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 5 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
-                                   {t('travelHome.delFee')} ({t('travelHome.low')} - {t('travelHome.high')})
-                                </TextSemiBold>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(6, 'estimated_dilivery_fee', +1)}
-                                style={Styles.rangeButton}>
-                                <TextSemiBold style={[styles.loginInputHeading,
-                                { fontSize: 18, color: selectedRange == 6 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
-                                      {t('travelHome.delFee')} ({t('travelHome.high')} - {t('travelHome.low')})
-                                </TextSemiBold>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{ marginVertical: 20 }}>
-                            <ButtonLarge loader={loading} title='Reset Filter' onPress={resetFilter} />
-                            <View style={{marginTop:16}}>
-                                <ButtonTraveller
-                                    onPress={applyFilter}
-                                    loader={loading}
-                                    title= {t('travelHome.applyFilter')}
-                                />
-                            </View>
-                            
-                        </View>
-                    </View>
-                </ScrollView>
+                <>
+                 <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
+        <Icon name="cross" size={35} style={{ margin: 0 }} />
+    </TouchableOpacity>
+                    <FlatList
+                    ListHeaderComponent={renderFilterHeader}
+                    />
+                </>
                 : null}
             {!showFilter ?
                 <View style={styles.orderDestinationHeader}>
@@ -499,6 +389,7 @@ export default function OrderDestination({ route }) {
                     //     }
                     //     dispatch(UserOrders(token, obj))
                     // }}/>}
+                    nestedScrollEnabled
                     ListEmptyComponent={() => (
                         <View style={{marginLeft:18}}>
                             <TextMedium>Order list is empty</TextMedium>

@@ -113,13 +113,13 @@ export const styles = StyleSheet.create({
         height: 20,
         width: 15,
         marginTop: (windowWidth * 8) / 100,
-        marginLeft: '5%',
+        // marginLeft: '5%',
     },
     //country number style
     phoneContainer: {
         height: 55,
         alignSelf: 'center',
-        width: '90%',
+        // width: '90%',
         borderColor: '#00000011',
         borderWidth: 1,
         // marginTop: 15,

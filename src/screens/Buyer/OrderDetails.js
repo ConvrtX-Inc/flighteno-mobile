@@ -20,6 +20,7 @@ import TextMedium from '../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
 import { getCurrentOrder } from '../../redux/actions/BuyerOrder';
 import moment from 'moment';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
@@ -120,6 +121,7 @@ export default function OrderDetails({ route }) {
     }
 
     return (
+        <SafeAreaView style={{flex:1}} >
         <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
             <ViewImages
                 showImageViewer={showProductPic}
@@ -309,6 +311,7 @@ export default function OrderDetails({ route }) {
                         <FlatList
                             data={orderHistory}
                             keyExtractor={(item,index) => item + index}
+                            nestedScrollEnabled={true}
                             renderItem={({item}) => {
                                 return (
                                     <TextMedium style={{color:color.countrtTextColor}}>{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
@@ -351,6 +354,7 @@ export default function OrderDetails({ route }) {
                 <View style={{ height: 20 }} />
             </ScrollView>
         </View>
+        </SafeAreaView>
     );
 }
 

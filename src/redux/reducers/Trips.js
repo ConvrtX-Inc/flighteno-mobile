@@ -6,7 +6,9 @@ import {
     TRAVLER_ORDERS,
     LATEST_TRIP_ID,
     TRENDING_ORDERS,
-    FILTERED_ORDERS_DATA
+    FILTERED_ORDERS_DATA,
+    IS_LOADING_FILTER,
+    IS_LOADING_RESET_FILTER
 } from '../constants'
 
 let initialState = {
@@ -17,7 +19,9 @@ let initialState = {
     filteredOrdersToDestination: [],
     travlerOrders: [],
     latestTripId: null,
-    trendingOrders: []
+    trendingOrders: [],
+    isFilterLoading:false,
+    isResetFilterLoading:false
 };
 
 
@@ -63,6 +67,16 @@ export default (state = initialState, action) => {
                 ...state,
                 trendingOrders: action.data,
             };
+        case IS_LOADING_FILTER:
+            return {
+                ...state,
+                isLoadingFilter:action.isLoading
+            }
+        case IS_LOADING_RESET_FILTER:
+            return {
+                ...state,
+                isLoadingReset:action.isLoading
+            }
         default:
             return state;
     }

@@ -43,12 +43,12 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
-  - FirebaseCoreDiagnostics (8.12.0):
+  - FirebaseCoreDiagnostics (8.13.0):
     - GoogleDataTransport (~> 9.1)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (8.12.0):
+  - FirebaseInstallations (8.13.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
@@ -172,6 +172,8 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.180)
+  - Permission-Camera (3.3.1):
+    - RNPermissions
   - PromisesObjC (2.0.0)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -518,7 +520,7 @@ PODS:
     - React-Core
   - RNLocalize (2.1.5):
     - React-Core
-  - RNPermissions (3.3.0):
+  - RNPermissions (3.3.1):
     - React-Core
   - RNReanimated (2.3.1):
     - DoubleConversion
@@ -606,6 +608,7 @@ DEPENDENCIES:
   - FlipperKit/FlipperKitUserDefaultsPlugin (= 0.99.0)
   - FlipperKit/SKIOSNetworkPlugin (= 0.99.0)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -719,6 +722,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  Permission-Camera:
+    :path: "../node_modules/react-native-permissions/ios/Camera"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -847,8 +852,8 @@ SPEC CHECKSUMS:
   FBSDKShareKit: 70889c97c62f0c6b3ccb8b999e73a85f19024001
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseCore: 8138de860a90ca7eec5e324da5788fb0ebf1d93c
-  FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
-  FirebaseInstallations: 25764cf322e77f99449395870a65b2bef88e1545
+  FirebaseCoreDiagnostics: c2836d254a8f0bbb4121ff18f2c2ea39d118fd08
+  FirebaseInstallations: 60edbf7e11d91ae4c751d26c200dfd037099abe0
   FirebaseMessaging: 23db8bf05585e929ada8af0f0968933c25252808
   FirebaseStorage: 4b75458c35d8b728e4c1fc1371942997456ab299
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -871,6 +876,7 @@ SPEC CHECKSUMS:
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
+  Permission-Camera: bae27a8503530770c35aadfecbb97ec71823382a
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
   RCTRequired: 4bf86c70714490bca4bf2696148638284622644b
@@ -922,7 +928,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: 233fdfa02522216c19bf02a1e6c60b60a75ffb4c
   RNLocalize: 74b82db20cc3895ccc25af992c644879bcec2815
-  RNPermissions: bcd846e8f5a7f39e921cc7ca7172e2de0e698b6f
+  RNPermissions: 34d678157c800b25b22a488e4d8babb57456e796
   RNReanimated: da3860204e5660c0dd66739936732197d359d753
   RNScreens: 21b73c94c9117e1110a79ee0ee80c93ccefed8ce
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
@@ -936,6 +942,6 @@ SPEC CHECKSUMS:
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: e35b080ac36afc48ce210b3c54cb8b3df2c0a69d
+PODFILE CHECKSUM: ecadc8e42704436ddf3c6f9353b86e07076b2d51
 
 COCOAPODS: 1.11.2

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import TopTabTraveller from '../TopTabTraveller';
 import TextBold from '../../../components/atoms/TextBold';
 import { color } from '../../../Utility/Color';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 {/* Fix for FLIGHT-46 */}
 export default function MyTripTab() {
@@ -14,7 +15,8 @@ export default function MyTripTab() {
     const navigation = useNavigation();
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+<View style={styles.ScreenCss}>
             {/* <ScrollView> */}
             {/* <View style={styles.selectProfileHeader}> */}
             {/* <View style={[styles.SelectProfileHeaderFirst, { flexDirection: 'row' }]}>
@@ -49,5 +51,6 @@ export default function MyTripTab() {
             <TopTabTraveller />
             {/* </ScrollView> */}
         </View>
+        </SafeAreaView>
     );
 }

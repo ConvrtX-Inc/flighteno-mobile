@@ -23,7 +23,7 @@ export default Input;
 const styles = StyleSheet.create({
     input: {
         height: 50,
-        width: '90%',
+        width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         borderRadius: 35,

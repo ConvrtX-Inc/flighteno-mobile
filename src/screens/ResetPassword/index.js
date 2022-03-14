@@ -15,6 +15,7 @@ import { IS_LOADING } from '../../redux/constants';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -43,8 +44,6 @@ export default function ResetPassword() {
     const [phoneInputVal, setPhoneInputVal] = useState('') 
 
     useEffect(() => {
-
-       
 
     },[])
 
@@ -129,147 +128,151 @@ export default function ResetPassword() {
     }
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView style={{marginLeft:18, marginRight: 18}}>
 
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image
-                        style={styles.backImg}
-                        resizeMode='stretch'
-                        source={require('../../images/back.png')}
-                    />
-                </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image
+            style={styles.backImg}
+            resizeMode='stretch'
+            source={require('../../images/back.png')}
+        />
+    </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.resetPassword')}</TextBold>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('common.resetPassword')}</TextBold>
 
-                <TextMedium style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
-                    {t('common.enterEmailAd')}
-                </TextMedium>
-
-
-                    {/* TextInputs For Reset Password */}
+    <TextMedium style={[styles.loginInputHeading, {  marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+        {t('common.enterEmailAd')}
+    </TextMedium>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
-
-                <Input
-                    placeholder="myemail@flighteno.com"
-                    onChangeText={text => {
-                        setEmail(text)
-                        
-                        if(text === ""){
-                            setPhoneEnabled(true)
-                        }else{
-                            setPhoneEnabled(false)
-                        }
-                     }}
-                    value={email}
-                    secureTextEntry={false}
-                    editable={isEmailEnabled}
-                    // editable={cellnoShow ? false : true}
-                />
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
-                     <PhoneInput
-                        ref={phoneInput}
-                        onPressFlag={() => {
-                            // countryPicker.current?.open()
-                            setPickerOpen(!isPickerOpen)
-                        }}
-                        textProps={{
-                            placeholder:'123-456-789'
-                        }}
-                        onChangePhoneNumber={(displayValue) => {
-                        if(displayValue.length >1){
-                            setEmailEnabled(false)
-                        }else{
-                            setEmailEnabled(true)
-                        }
-                         setPhoneInputVal(displayValue)
-                        }}
-                        
-                        // disabled={email ? true : false}
-                        disabled={!isPhoneEnabled}
-                        style={[styles.phoneContainer, {padding:16}]}
-                     />
-                {/* <PhoneInput
-                    ref={phoneInput}
-                    defaultValue={cellno}
-                    defaultCode="AU"
-                    // disableArrowIcon={email ? true : false}
-                   
-                    autoFocus
-                    // disabled={email ? true : false}
-                    countryPickerProps={{
-                    //    withFilt  er:false,
-                    //    withCallingCodeButton:false,
-                    //    withFilter:false,
-                    //    withCurrency:false,
-                    //    withCallingCode:false,
-                    //    withAlphaFilter:false
-                    }}
-                    
-                    onChangeFormattedText={(text) => {
-                        setCellNo(text)
-
-                        if(text === ""){
-                            setEmailEnabled(true)
-                        }else{
-                            setEmailEnabled(false)
-                        }
-                    }}
-                    onChangeText={(text) => {
-                        setCellNoShow(text)
-                    }}
-                    // onChangeCountry={(country) => setCellNo("+" + country.callingCode)}
-                    containerStyle={styles.phoneContainer}
-                    textInputStyle={styles.phoneInput}
-                    textContainerStyle={styles.phoneTextContainer}
-                    codeTextStyle={styles.phoneCodeText}
-                    textInputProps={{
-                        placeholderTextColor: email ? "#CDCDCD" : "#707070",
-                        keyboardType: "phone-pad",
-                        value: cellnoShow,
-                        placeholder: "123-456-789",
-                        editable:email ? false : true,         
-                    }}
-                /> */}
+        {/* TextInputs For Reset Password */}
 
 
-                <View style={{ marginTop: (windowWidth * 20) / 100, marginBottom: 35 }}>
-                    <ButtonLarge
-                        title={t('common.verifyAccount')}
-                        loader={loading}
-                        onPress={() => resetPasswordFN()}
-                    />
-                </View>
+    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
 
+    <Input
+        placeholder="myemail@flighteno.com"
+        onChangeText={text => {
+            setEmail(text)
+            
+            if(text === ""){
+                setPhoneEnabled(true)
+            }else{
+                setPhoneEnabled(false)
+            }
+         }}
+        value={email}
+        secureTextEntry={false}
+        editable={isEmailEnabled}
+        // editable={cellnoShow ? false : true}
+    />
 
-
-
-            </ScrollView>
-                
-
-            {isPickerOpen &&
-            (
-            <CountryPicker 
-            // ref={countryPicker}
-            // ref={countryPicker}
-            visible={true}
-            onClose={() => {
+    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
+         <PhoneInput
+            ref={phoneInput}
+            onPressFlag={() => {
+                // countryPicker.current?.open()
                 setPickerOpen(!isPickerOpen)
             }}
-            onSelect={(country) => {
-                // console.log(country?.cca2)
-                // setInitialCountry(country?.cca2.toLowerCase())
-                setInitialCountry(country)
-                phoneInput.current?.selectCountry(country?.cca2.toLowerCase())
+            textProps={{
+                placeholder:'123-456-789'
             }}
+            onChangePhoneNumber={(displayValue) => {
+            if(displayValue.length >1){
+                setEmailEnabled(false)
+            }else{
+                setEmailEnabled(true)
+            }
+             setPhoneInputVal(displayValue)
+            }}
+            
+            // disabled={email ? true : false}
+            disabled={!isPhoneEnabled}
+            style={[styles.phoneContainer, {padding:16}]}
+         />
+    {/* <PhoneInput
+        ref={phoneInput}
+        defaultValue={cellno}
+        defaultCode="AU"
+        // disableArrowIcon={email ? true : false}
+       
+        autoFocus
+        // disabled={email ? true : false}
+        countryPickerProps={{
+        //    withFilt  er:false,
+        //    withCallingCodeButton:false,
+        //    withFilter:false,
+        //    withCurrency:false,
+        //    withCallingCode:false,
+        //    withAlphaFilter:false
+        }}
         
-            />)}
+        onChangeFormattedText={(text) => {
+            setCellNo(text)
 
-        </View>
+            if(text === ""){
+                setEmailEnabled(true)
+            }else{
+                setEmailEnabled(false)
+            }
+        }}
+        onChangeText={(text) => {
+            setCellNoShow(text)
+        }}
+        // onChangeCountry={(country) => setCellNo("+" + country.callingCode)}
+        containerStyle={styles.phoneContainer}
+        textInputStyle={styles.phoneInput}
+        textContainerStyle={styles.phoneTextContainer}
+        codeTextStyle={styles.phoneCodeText}
+        textInputProps={{
+            placeholderTextColor: email ? "#CDCDCD" : "#707070",
+            keyboardType: "phone-pad",
+            value: cellnoShow,
+            placeholder: "123-456-789",
+            editable:email ? false : true,         
+        }}
+    /> */}
+
+
+    <View style={{ marginTop: (windowWidth * 20) / 100, marginBottom: 35 }}>
+        <ButtonLarge
+            title={t('common.verifyAccount')}
+            loader={loading}
+            onPress={() => resetPasswordFN()}
+        />
+    </View>
+
+
+
+
+</ScrollView>
+    
+
+{isPickerOpen &&
+(
+<CountryPicker 
+// ref={countryPicker}
+// ref={countryPicker}
+visible={true}
+onClose={() => {
+    setPickerOpen(!isPickerOpen)
+}}
+onSelect={(country) => {
+    // console.log(country?.cca2)
+    // setInitialCountry(country?.cca2.toLowerCase())
+    setInitialCountry(country)
+    phoneInput.current?.selectCountry(country?.cca2.toLowerCase())
+}}
+withFilter={true}
+
+/>)}
+
+</View>
+        </SafeAreaView>
+
     );
 
 }

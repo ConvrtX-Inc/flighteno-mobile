@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextMedium from '../../components/atoms/TextMedium';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -55,7 +56,8 @@ export default function OrderDetailT({ route }) {
         })
     }
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <SafeAreaView style={{flex:1}} >
+    <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
             <ViewImages
                 showImageViewer={showImageView}
                 images={images}
@@ -277,6 +279,7 @@ export default function OrderDetailT({ route }) {
                 </View>
             </ScrollView>
         </View>
+        </SafeAreaView>
     );
 }
 

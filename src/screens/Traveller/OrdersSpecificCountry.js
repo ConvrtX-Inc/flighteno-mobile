@@ -7,6 +7,7 @@ import moment from 'moment';
 import CardOrderUser from '../../components/CardOrderUser';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var storeNamesList = [
     {
@@ -26,6 +27,7 @@ export default function OrdersSpecificCountry({ route }) {
     },[])
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.ScreenCss}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -50,6 +52,8 @@ export default function OrdersSpecificCountry({ route }) {
                 keyExtractor={item => item._id}
             />
         </View>
+        </SafeAreaView>
+
     );
 
 }

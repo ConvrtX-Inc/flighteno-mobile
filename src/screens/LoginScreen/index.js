@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
 
@@ -20,6 +20,7 @@ import {
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import TextBold from '../../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 // import { TextExtrabold } from '../../components/atoms/TextExtraBold';
 
 const clientID = "274927645478-6jq3vb9mph0j7kud7knkq5sciir7uv4c.apps.googleusercontent.com"
@@ -173,82 +174,84 @@ export default function LoginScreen() {
     };
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+                 <View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView style={{marginLeft:18, marginRight:18}}>
 
-                <View style={[styles.monoBarSplash, { justifyContent: 'center', marginLeft: '0%', marginTop: (windowWidth * 7) / 100 }]}>
-                    <Image
-                        style={styles.monoImg}
-                        resizeMode='stretch'
-                        source={require('../../images/mono.png')}
-                    />
-                </View>
+    <View style={[styles.monoBarSplash, { justifyContent: 'center', marginLeft: '0%', marginTop: (windowWidth * 7) / 100 }]}>
+        <Image
+            style={styles.monoImg}
+            resizeMode='stretch'
+            source={require('../../images/mono.png')}
+        />
+    </View>
 
-                <TextBold  style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.login')}</TextBold>
-                {/* <TextExtrabold>Hello</TextExtrabold> */}
-                {/* Buton fb gmail Login */}
-                <View style={styles.fbBtnContainer}>
-                    <ButtonWithImage
-                        img={require("../../images/fb.png")}
-                        title={t('common.loginWithFb')}
-                        onPress={() => onFacebookButtonPress()}
-                        loader={loadingFacebook}
-                    />
-                </View>
+    <TextBold  style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('common.login')}</TextBold>
+    {/* <TextExtrabold>Hello</TextExtrabold> */}
+    {/* Buton fb gmail Login */}
+    <View style={styles.fbBtnContainer}>
+        <ButtonWithImage
+            img={require("../../images/fb.png")}
+            title={t('common.loginWithFb')}
+            onPress={() => onFacebookButtonPress()}
+            loader={loadingFacebook}
+        />
+    </View>
 
-                <View style={styles.GmailBtnContainer}>
-                    <ButtonWithImage
-                        img={require("../../images/gmail.png")}
-                        title={t('common.loginWithGoogle')}
-                        onPress={() => signIn()}
-                        loader={loadingGoogle}
-                    />
-                </View>
+    <View style={styles.GmailBtnContainer}>
+        <ButtonWithImage
+            img={require("../../images/gmail.png")}
+            title={t('common.loginWithGoogle')}
+            onPress={() => signIn()}
+            loader={loadingGoogle}
+        />
+    </View>
 
+    {/* TextInputs For Login */}
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
+    <Input
+        placeholder="myemail@flighteno.com"
+        onChangeText={text => setEmail(text)}
+        value={email}
+        secureTextEntry={false}
+    />
 
-                {/* TextInputs For Login */}
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
-                <Input
-                    placeholder="myemail@flighteno.com"
-                    onChangeText={text => setEmail(text)}
-                    value={email}
-                    secureTextEntry={false}
-                />
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.password')}</TextBold>
+    <Input
+        placeholder="*********"
+        onChangeText={text => setPassword(text)}
+        value={password}
+        secureTextEntry={true}
+    />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.password')}</TextBold>
-                <Input
-                    placeholder="*********"
-                    onChangeText={text => setPassword(text)}
-                    value={password}
-                    secureTextEntry={true}
-                />
+    <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
+        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', alignSelf: 'center', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 10) / 100 }]}>{t('common.forgotPass')}</TextBold>
+    </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
-                    <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', alignSelf: 'center', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 10) / 100 }]}>{t('common.forgotPass')}</TextBold>
-                </TouchableOpacity>
-
-                <ButtonLarge
-                    title={t('common.login')}
-                    loader={loading}
-                    onPress={() => loginFunction()}
-                />
-
-
-                <View style={styles.bottomTxt}>
-                    <TextMedium style={styles.loginInputHeading}>
-                    {t('common.dontHaveAccount')}
-                    </TextMedium>
+    <ButtonLarge
+        title={t('common.login')}
+        loader={loading}
+        onPress={() => loginFunction()}
+    />
 
 
-                    <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-                        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> {t('common.signup')}</TextBold>
-                    </TouchableOpacity>
-                </View>
+    <View style={styles.bottomTxt}>
+        <TextMedium style={styles.loginInputHeading}>
+        {t('common.dontHaveAccount')}
+        </TextMedium>
 
-            </ScrollView>
 
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+            <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> {t('common.signup')}</TextBold>
+        </TouchableOpacity>
+    </View>
+
+</ScrollView>
+
+</View>
+        </SafeAreaView>
+   
     );
 
 }
