@@ -124,8 +124,8 @@ export default function LatestTransactionsScreen({ navigation }) {
                                     <TextBold style={[commonStyles.fs26]}>{t('payment.latestTransactions')}</TextBold>
                                 </View>
                                 {
-                                    transactions.map(transaction =>(
-                                        <View style={commonStyles.flex1}>
+                                    transactions.map((transaction,index) =>(
+                                        <View style={commonStyles.flex1} key={index}>
                                         <View style={commonStyles.padding6}>
                                             <View
                                                 style={

@@ -70,14 +70,14 @@ export default function PaymentCardItem({ card, defaultCard }) {
                     <TextBold style={[commonStyles.fs18, styles.cardName]}> {card.name} </TextBold>
                     <TextRegular style={styles.cardDetails}>**** **** **** {card.last4} {card.brand}</TextRegular>
                     <View style={{ flexDirection: 'row' }}>
-                        <View style={{ width: 110, }}>
+                        {/* <View style={{ width: 110, }}>
                             <ButtonLarge
                                 title="Edit"
                                 onPress={() => { }}
 
                                 height={45}
                             />
-                        </View>
+                        </View> */}
 
                         <TouchableOpacity
                             activeOpacity={0.5}

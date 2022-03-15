@@ -24,30 +24,43 @@ import Toast from 'react-native-toast-message';
 export default function PaymentAddNewCard({ navigation }) {
     const { t } = useTranslation();
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
+    const { myCards, defaultCard } = useSelector(({ myCardsRed }) => myCardsRed)
+
 
     const [cardDetails, setCardDetails] = useState();
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
     function _onChange(form) {
-        console.log(currentUser.customer_id);
         setCardDetails(form);
     }
 
     async function addCard() {
         setLoading(true)
-        const data = await createCard(cardDetails,currentUser.customer_id);
-        if (data.id) {
-            dispatch({ type: ADD_CARD, data: data })
-            setLoading(false);
-            navigation.pop();
-        } else {
-            setLoading(false)
+        const existingCard = myCards.find((card) => card.metadata.number == cardDetails.values.number)
+        if (existingCard) {
             Toast.show({
                 type: 'error',
-                text1: data.error.message
+                text1: "Card Already Exists"
             })
+        } else {
+            const data = await createCard(cardDetails, currentUser.customer_id);
+            if (data.id) {
+                dispatch({ type: ADD_CARD, data: data })
+            
+                navigation.pop();
+            } else {
+                
+                Toast.show({
+                    type: 'error',
+                    text1: data.error.message
+                })
+            }
         }
+
+        setLoading(false);
+
+
     }
 
     return (
