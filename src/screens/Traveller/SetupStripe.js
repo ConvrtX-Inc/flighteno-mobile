@@ -10,6 +10,7 @@ function SetupStripe({ route }) {
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const navigation = useNavigation()
     const dispatch = useDispatch();
+    const [isLoading,setIsLoading] = useState(false);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -26,6 +27,7 @@ function SetupStripe({ route }) {
         var obj = {
             admin_id: currentUser._id,
         }
+        
         dispatch(ConfigureStripeAccount(obj, token, navigation))
     }
 
@@ -42,7 +44,7 @@ function SetupStripe({ route }) {
                     :
                     <ButtonLarge
                         title="Setup Now!"
-                        loader={loading}
+                        loader={isLoading}
                         onPress={() => configureStripeAccount()}
                     />
                 }

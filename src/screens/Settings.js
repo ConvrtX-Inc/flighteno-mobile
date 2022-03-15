@@ -17,7 +17,8 @@ export default function Settings() {
 
 
     const [selectedLanguage, setSelectedLanguage] = useState(null);
-    const [currentLang, setCurrentLang] = useState(i18n.language)
+    const [currentLang, setCurrentLang] = useState(i18n.language);
+    const [paymentScreen,setPaymentScreen] = useState('');
 
     const [items, setItems] = useState([
       {label: 'EN', value: 'en', key:'en',icon:() => <Image source={{uri:'https://flagcdn.com/h24/us.png'}} style={{width:24, height:24}}/>, countryUrl:'https://flagcdn.com/h24/us.png'},
@@ -27,6 +28,8 @@ export default function Settings() {
     const [isOpen, setOpen] = useState(false)
 
     useEffect(() => {
+        const paymentScreen = currentUser.customer_id && currentUser.customer_id !=null ? "LatestTransactions" : "SetupStripe";
+        setPaymentScreen(paymentScreen);
 
         items.forEach(item => {
             if(item?.value === currentLang){
@@ -35,7 +38,7 @@ export default function Settings() {
         });
 
         getData()
-      
+        
     },[])
 
     const storeCurrentLanguage = async (value) => {
@@ -91,8 +94,8 @@ export default function Settings() {
                         </TouchableOpacity>
                     </View>
                 
-                    
-                    <TouchableOpacity onPress={() => navigation.navigate("LatestTransactions")} style={styles.menuItem}>
+ 
+                    <TouchableOpacity onPress={() =>  navigation.navigate(paymentScreen)} style={styles.menuItem}>
                         <Image source={require('../images/payment.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
