@@ -19,6 +19,7 @@ import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
 import { getCurrentOrder } from '../../redux/actions/BuyerOrder';
+import moment from 'moment';
 
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
@@ -36,7 +37,7 @@ export default function OrderDetails({ route }) {
     let isStarted = order.status == 'accepted'
     let isComplete = order.status == 'complete'
     const {t} = useTranslation()
-    const orderHistory = ["3/5 Order has been placed"]
+    const [orderHistory, setOrderHistory] = useState([])
 
 
     function check(id) {
@@ -70,7 +71,9 @@ export default function OrderDetails({ route }) {
         dispatch(getCurrentOrder(orderRequest,userToken,(data) => {
             // console.log(data)
         },(orderHistory) => {
-            console.log(orderHistory)
+            setOrderHistory(orderHistory)
+            // console.log()
+          
         }))
       
      
@@ -308,7 +311,7 @@ export default function OrderDetails({ route }) {
                             keyExtractor={(item,index) => item + index}
                             renderItem={({item}) => {
                                 return (
-                                    <TextMedium  style={{color:color.countrtTextColor}}>{item}</TextMedium>
+                                    <TextMedium style={{color:color.countrtTextColor}}>{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
                                 )
                             }}
                         />

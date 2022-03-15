@@ -63,7 +63,7 @@ const CardOrderUser = ({ order }) => {
                     </View>
                 </View>
             </View>
-            <View style={{ height: 1, backgroundColor: 'gray' }} />
+            <View style={{ height: 1, backgroundColor: '#6A6585'}} />
             <View style={Styles.bottomView}>
                 <TouchableOpacity onPress={() => setShowProductPic(true)} activeOpacity={1}>
                     <Image source={{ uri: order.product_image }}

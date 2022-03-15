@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MyTravel from '../MyTravel';
@@ -16,7 +16,7 @@ export default function TopTabTraveller() {
     return (
         <Tab.Navigator
             tabBarOptions={{
-                labelStyle: { fontSize: 22, textAlign: 'left',textTransform: 'none', fontFamily:'GilroyBold' },
+                labelStyle: { fontSize: 22, textAlign: 'left',textTransform: 'none', fontFamily:Platform.OS == 'ios' ? 'Gilroy-Bold' : 'GilroyBold' },
                 style: { backgroundColor: '#fff',  },
                 indicatorStyle: {
                     backgroundColor: '#E12082',

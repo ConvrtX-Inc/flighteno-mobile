@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions} from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, Platform} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
 var windowWidth = Dimensions.get('window').width;
@@ -138,7 +138,7 @@ export default function Settings() {
                         style={{borderWidth:0}}
                         onPress={() => {setOpen(!isOpen)}}
                         onClose={() => {setOpen(!isOpen)}}
-                        textStyle={{fontFamily:'GilroyMedium', fontSize:16  }}
+                        textStyle={{fontFamily:Platform.OS == 'ios' ? 'Gilroy-Medium' : 'GilroyMedium', fontSize:16  }}
                     />
                 </TouchableOpacity>
             </ScrollView>

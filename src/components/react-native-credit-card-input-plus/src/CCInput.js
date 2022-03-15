@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ViewPropTypes,
+  Platform,
 } from "react-native";
 
 // Custom Imports
@@ -22,7 +23,7 @@ const s = StyleSheet.create({
     borderColor: 'rgba(158, 150, 150, .2)',
     borderRadius: 30,
     backgroundColor: '#F6F9FF',
-    fontFamily:'GilroyBold'
+    fontFamily:Platform.OS == 'ios' ? 'Gilroy-Bold' : 'GilroyBold'
   },
 });
 

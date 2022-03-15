@@ -37,6 +37,7 @@ export default function OrderDestination({ route }) {
     const [selectedRange, setSelectedRange] = useState(0)
     const [filterOrderData, setFilterOrderData] = useState(ordersToDestination)
     const [isFiltered, setFiltered] = useState(false)
+   
     const [rangeValue, setRangeValue] = useState("order_created_date")
     const [pickerValues, setPickerValues] = useState([
         {
@@ -107,35 +108,35 @@ export default function OrderDestination({ route }) {
     const [storeValue, setStoreValue] = useState("")
     const [storeName, setNameOfStore] = useState("")
     const [sortMethod, setSortMethod] = useState(-1)
-    // var filteredArray = ordersToDestination
+    const [storeData, setStoreData] = useState([])
 
-  
-
-    // useFocusEffect(
-    //     React.useCallback(() => {
-
-    //         // setFilterOrderData(ordersToDestination)
-    //         var obj = {
-    //             admin_id: currentUser._id
-    //         }
-    //         dispatch(UserOrders(token, obj))
-    //         // filteredArray = ordersToDestination
-
-    //         return
-    //     }, [])
-    // );
 
     useEffect(() => {
 
         var obj = {
             admin_id: currentUser._id
         }
+
+        var stores = []
         
-        dispatch(UserOrders(token, obj))
+        // dispatch(UserOrders(token, obj,() => {
 
-        dispatch(getStoreNames(token,obj))
+        // }))
+        dispatch(UserOrders(token, obj,()=>{}))
 
-        // setFilterOrderData(ordersToDestination)
+        dispatch(getStoreNames(token,(data) => {
+            // console.log(data)
+            // setSortData(data)
+            // setStoreData(data)
+            const storeNames = data?.store_names
+            // console.log(data?.store_names)
+            storeNames.forEach(item => {
+                stores.push({name: item, checked: false})
+            });
+
+           
+        }))
+        setStoreData(stores)
         
     }, []);
 
@@ -146,7 +147,17 @@ export default function OrderDestination({ route }) {
         setPickerValueSelected(pickerValues[index].value)
     }
 
+    const selectStore = (index) => {
+        // console.log(index)
+        // console.log(storeData)
+        storeData.forEach(item => {
+            item.checked = false
+        });
+        storeData[index].checked = true
 
+        setNameOfStore(storeData[index].name)
+        setStoreData([...storeData])
+    }
 
     const selectRange = (range, value, sort) => {
         setSelectedRange(range)
@@ -166,17 +177,17 @@ export default function OrderDestination({ route }) {
        const sort = sortMethod
 
        const filterData = {
+
            product_type: productType,
            product_name: productName,
            starting_price: startingPrice,
            ending_price: endingPrice,
            sorted_by: sortedBy,
-           sort: sort
+           sort: sort,
+           store_name:storeName
        }
 
        setFiltered(true)
-
-      
 
        if(productType === ''){
             Toast.show({ type: 'info', text1: 'Alert!', text2: 'Product type field is required' })    
@@ -192,9 +203,21 @@ export default function OrderDestination({ route }) {
         var obj = {
             admin_id: currentUser._id
         }
-        dispatch(UserOrders(token, obj))
-        setShowFilter(!showFilter)
-        setFiltered(false)
+
+        dispatch(UserOrders(token, obj,() => {
+            setPName('')
+            setMinPrice(0)  
+            setShowFilter(false)
+
+            setNameOfStore('')
+            storeData.forEach(item => {
+                item.checked = false
+            });
+            selectPickerValueFN(0)
+            setPickerShow(false)
+           
+        }))
+       
     }
 
     const showGallery = (data) => {
@@ -302,7 +325,12 @@ export default function OrderDestination({ route }) {
                                     editable={false}
                                 />
                             </View>
+
                         </View>
+
+                      
+                        
+                     
                         {/* <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}> */}
                             {/* <TouchableOpacity disabled={true} style={styles.timePickerVIew}>
                                 <Text style={{ color: color.verifyPhoneTextColor, }}>{minPrice} </Text>
@@ -352,6 +380,7 @@ export default function OrderDestination({ route }) {
                                 ),
                             }}
                         />
+
                         <View style={styles.sliderTxtContainer}>
 
                             <View style={styles.sliderTxtContainerFirst}>
@@ -363,6 +392,31 @@ export default function OrderDestination({ route }) {
                             </View>
 
                         </View>
+
+                        <View style={{ alignSelf: 'center', width: '100%', paddingLeft:18 }}>
+                            <TextBold>Store name</TextBold>
+                            <FlatList
+                                data={storeData}
+                                style={Styles.storeNamesList}
+                                nestedScrollEnabled
+                                renderItem={({item,index}) => (
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop:20 }}>
+                                        <TextMedium>{item?.name}</TextMedium>
+                                      
+                                        <CheckBox
+                                            checkedIcon='dot-circle-o'
+                                            uncheckedIcon='circle'
+                                            checkedColor={color.blueColor}
+                                            containerStyle={{padding:0, margin:0}}
+                                            checked={item?.checked}
+                                            onPress={() => {
+                                                selectStore(index)}
+                                            }
+                                        />
+                                    </View>
+                                )}
+                            />
+                        </View>          
                       
                        
                         <View style={{ alignSelf: 'center', width: '90%' }}>
@@ -412,7 +466,7 @@ export default function OrderDestination({ route }) {
                             </TouchableOpacity>
                         </View>
                         <View style={{ marginVertical: 20 }}>
-                            <ButtonLarge loader={false} title='Reset Filter' onPress={resetFilter} />
+                            <ButtonLarge loader={loading} title='Reset Filter' onPress={resetFilter} />
                             <View style={{marginTop:16}}>
                                 <ButtonTraveller
                                     onPress={applyFilter}
