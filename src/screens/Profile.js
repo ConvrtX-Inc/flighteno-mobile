@@ -135,13 +135,18 @@ function Profile() {
                         />
                         <TextMedium style={styles.menuItemText}>{t('common.inviteFriends')}</TextMedium>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate("SupportTicket")} style={styles.menuItem}>
+                    {
+                        currentProfile == "buyer" ? (
+                            <TouchableOpacity onPress={() => navigation.navigate("SupportTicket")} style={styles.menuItem}>
                         <Image source={require('../images/support.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
                         <TextMedium style={styles.menuItemText}>{t('common.support')}</TextMedium>
                     </TouchableOpacity>
+                        ) : null
+                    }
+                    
                 <TouchableOpacity style={styles.menuItem} onPress={() => {
                     navigation.navigate("KYCIntro")
                 }}>
