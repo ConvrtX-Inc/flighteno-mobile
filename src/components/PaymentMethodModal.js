@@ -78,7 +78,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
                     <View style={{ height: 22 }}></View>
                     {
-                        myCards.length > 0 ? myCards.map(card =>
+                        myCards?.length > 0 ? myCards?.map(card =>
                             <View
                                 style={styles.cardItem}
                                 key={card.id}
