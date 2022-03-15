@@ -5,13 +5,13 @@ import ButtonLarge from '../../components/ButtonLarge';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { ConfigureStripeAccount, GetUserStipeAccountDetail } from '../../redux/actions/Payment';
+import { addCustomerDetails } from '../../services/Stripe/Customer';
+import { UPDATE_CUSTOMER_ID } from '../../redux/constants';
 
 function SetupStripe({ route }) {
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const navigation = useNavigation()
     const dispatch = useDispatch();
-    const [isLoading,setIsLoading] = useState(false);
-
     useFocusEffect(
         React.useCallback(() => {
             var data = {
@@ -23,12 +23,25 @@ function SetupStripe({ route }) {
         }, [])
     );
 
-    function configureStripeAccount() {
+   async function configureStripeAccount() {
         var obj = {
             admin_id: currentUser._id,
         }
+
+         //create customer if no customer found on stripe
+         const addCustomerDetailsRes = await addCustomerDetails(currentUser._id);
+
+         if (addCustomerDetailsRes.customer) {
+             const user = currentUser;
+             user.customer_id = addCustomerDetailsRes.customer;
+
+            
+
+             dispatch({ type: UPDATE_CUSTOMER_ID, data: user });
+
+          }
         
-        dispatch(ConfigureStripeAccount(obj, token, navigation))
+        dispatch(ConfigureStripeAccount(obj, token, navigation,currentUser))
     }
 
     return (
@@ -44,7 +57,7 @@ function SetupStripe({ route }) {
                     :
                     <ButtonLarge
                         title="Setup Now!"
-                        loader={isLoading}
+                        loader={loading}
                         onPress={() => configureStripeAccount()}
                     />
                 }
