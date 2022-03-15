@@ -14,6 +14,7 @@ import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../redux/constants';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -118,6 +119,7 @@ export default function EditProfile() {
     }
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.ScreenCss}>
             {currentUser ?
                 <ScrollView>
@@ -185,6 +187,7 @@ export default function EditProfile() {
                 </ScrollView>
                 : null}
         </View>
+        </SafeAreaView>
     );
 
 }

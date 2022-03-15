@@ -26,8 +26,8 @@ export async function createToken(cardDetails) {
             method: 'post',
             url: `${STRIPE_BASE_URL}/tokens`,
             data: formData,
-            headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
-            validateStatus: (status) => {
+            // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+             validateStatus: (status) => {
                 return true;
             },
         });
@@ -59,7 +59,8 @@ export async function createCard(cardDetails, customerID) {
                 method: 'post',
                 url: `${STRIPE_BASE_URL}/customers/${customerID}/sources`,
                 data: formData,
-                headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+                // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+            
                 validateStatus: (status) => {
                     return true;
                 },
@@ -84,7 +85,8 @@ export async function getCards(customerID) {
             const response = await axios({
                 method: 'get',
                 url: `${STRIPE_BASE_URL}/customers/${customerID}/sources`,
-                headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}` },
+                // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}` },
+              
                 validateStatus: (status) => {
                     return true;
                 },
@@ -108,10 +110,11 @@ export async function removeCard(cardId, customerID) {
         const response = await axios({
             method: 'delete',
             url: `${STRIPE_BASE_URL}/customers/${customerID}/sources/${cardId}`,
-            headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+            // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+         
             validateStatus: (status) => {
                 return true;
-            },
+            },  
         });
         return response.data;
     } catch (err) {
@@ -128,7 +131,8 @@ export async function setDefaultCard(cardId, customerID) {
             method: 'post',
             url: `${STRIPE_BASE_URL}/customers/${customerID}`,
             data: formData,
-            headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+            // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+        
             validateStatus: (status) => {
                 return true;
             },
@@ -145,7 +149,8 @@ export async function getCustomerDefaultCard(customerID,currentUser) {
             const response = await axios({
                 method: 'get',
                 url: `${STRIPE_BASE_URL}/customers/${customerID}`,
-                headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}` },
+                // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}` },
+              
                 validateStatus: (status) => {
                     return true;
                 },

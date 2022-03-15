@@ -10,6 +10,7 @@ import { CheckSamePasswordAction, UpdatePassword } from '../redux/actions/Auth';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
 import TextRegular from '../components/atoms/TextRegular';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -79,56 +80,58 @@ export default function ChangePassword() {
     }
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+ <View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView>
 
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image
-                        style={styles.backImg}
-                        resizeMode='stretch'
-                        source={require('../images/back.png')}
-                    />
-                </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image
+            style={styles.backImg}
+            resizeMode='stretch'
+            source={require('../images/back.png')}
+        />
+    </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.changePass')}</TextBold>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.changePass')}</TextBold>
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextBold>
 
-                <Input
-                    placeholder={t('common.oldPass')}
-                    onChangeText={text => setOldPassword(text)}
-                    value={oldPassword}
-                    secureTextEntry={false}
-                    
-                />
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
+    <Input
+        placeholder={t('common.oldPass')}
+        onChangeText={text => setOldPassword(text)}
+        value={oldPassword}
+        secureTextEntry={false}
+        
+    />
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
 
-                <Input
-                    placeholder={t('common.newPass')}
-                    onChangeText={text => setPassword(text)}
-                    value={password}
-                    secureTextEntry={true}
-                />
+    <Input
+        placeholder={t('common.newPass')}
+        onChangeText={text => setPassword(text)}
+        value={password}
+        secureTextEntry={true}
+    />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</TextBold>
 
-                <Input
-                    placeholder={t('common.confirmPass')}
-                    onChangeText={text => setCPassword(text)}
-                    value={cPassword}
-                    secureTextEntry={true}
-                />
+    <Input
+        placeholder={t('common.confirmPass')}
+        onChangeText={text => setCPassword(text)}
+        value={cPassword}
+        secureTextEntry={true}
+    />
 
-                <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
-                    <ButtonLarge
-                        title={t('common.save')}
-                        loader={loading}
-                        onPress={passwordChange}
-                    />
-                </View>
-            </ScrollView>
-        </View>
+    <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
+        <ButtonLarge
+            title={t('common.save')}
+            loader={loading}
+            onPress={passwordChange}
+        />
+    </View>
+</ScrollView>
+</View>
+        </SafeAreaView>
     );
 
 }

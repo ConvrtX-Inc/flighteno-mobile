@@ -20,6 +20,7 @@ import { ADD_CARD, IS_LOADING } from '../../redux/constants';
 
 import { createCard } from '../../services/Stripe/CardManagement'
 import Toast from 'react-native-toast-message';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function PaymentAddNewCard({ navigation }) {
     const { t } = useTranslation();
@@ -51,7 +52,8 @@ export default function PaymentAddNewCard({ navigation }) {
     }
 
     return (
-        <ScrollView>
+        <SafeAreaView style={{flex:1}}>
+                <ScrollView>
             <View style={[styles.container, commonStyles.marginTop10]}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                     <IconEntypo name="chevron-left" size={34} color="#000" />
@@ -79,6 +81,7 @@ export default function PaymentAddNewCard({ navigation }) {
                 </>
             </View>
         </ScrollView>
+        </SafeAreaView>
     )
 }
 

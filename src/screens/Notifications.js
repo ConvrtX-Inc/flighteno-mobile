@@ -9,6 +9,7 @@ import moment from 'moment';
 import ScreenLoader from '../components/ScreenLoader';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -32,7 +33,8 @@ export default function Notifications({ route }) {
     }, [])
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+<View style={styles.ScreenCss}>
             <ScreenLoader loader={loading} />
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -64,6 +66,7 @@ export default function Notifications({ route }) {
                 />
                 : null}
         </View>
+        </SafeAreaView>
     );
 
 }

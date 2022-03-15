@@ -55,7 +55,7 @@ export default function OrderDetails({ route }) {
         var obj = {
             admin_id: order?.admin_id
         }
-    
+        
       
         const userToken = token.replace('Token: ','')
         dispatch(GetProfile(obj, userToken, (data) => {

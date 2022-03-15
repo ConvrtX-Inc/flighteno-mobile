@@ -16,6 +16,7 @@ import Constants from '../../Utility/Constants';
 import PaymentCard from '../../components/PaymentCard';
 import { getCards,getCustomerDefaultCard } from '../../services/Stripe/CardManagement'
 import { useDispatch, useSelector } from 'react-redux';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const transactions = [
     {
@@ -69,6 +70,7 @@ export default function LatestTransactionsScreen({ navigation }) {
 
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.container}>
             <View style={[styles.withMargin, commonStyles.marginTop10]}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -163,6 +165,7 @@ export default function LatestTransactionsScreen({ navigation }) {
                 )
             }
         </View>
+        </SafeAreaView>
     )
 }
 

@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { SOCKET_URL, PAYMENT_BASE_URL } from '../../BASE_URL';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextBold from '../../components/atoms/TextBold';
-import { STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY } from '@env'
+// import { STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY } from '@env'
 import PaymentMethodModal from '../../components/PaymentMethodModal';
 
 
@@ -199,45 +199,45 @@ export default function Chattravelereler({ route }) {
     }
 
     const openPaymentSheet = async (status) => {
-        const { error } = await presentPaymentSheet({ STRIPE_SECRET_KEY });
-        if (error) {
-            console.log(`Error code: ${error.code}`, error.message);
-        } else {
+        // const { error } = await presentPaymentSheet({ STRIPE_SECRET_KEY });
+        // if (error) {
+        //     console.log(`Error code: ${error.code}`, error.message);
+        // } else {
 
-            let data = {
-                offer_id: offerID,
-                status: status
-            }
-            dispatch(RespondToOffer(data, token,
-                () => {
-                    socket = io.connect(SOCKET_URL);
-                    socket.emit('addUser', currentUser._id);
-                    const roomDetails = {
-                        userID: currentUser._id,
-                        chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
-                    }
-                    socket.emit('addRoom', roomDetails)
+        //     let data = {
+        //         offer_id: offerID,
+        //         status: status
+        //     }
+        //     dispatch(RespondToOffer(data, token,
+        //         () => {
+        //             socket = io.connect(SOCKET_URL);
+        //             socket.emit('addUser', currentUser._id);
+        //             const roomDetails = {
+        //                 userID: currentUser._id,
+        //                 chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
+        //             }
+        //             socket.emit('addRoom', roomDetails)
 
-                    var mess = {
-                        _id: Math.floor(Math.random() * 1000000),
-                        text: "This offer has been accepted!",
-                        createdAt: new Date(),
-                        user: {
-                            _id: currentUser?._id,
-                            name: currentUser?.full_name,
-                            avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
-                        },
-                    };
-                    setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
-                    socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: mess, sender_status: currentProfile, status: "message" });
-                },
-                (order) => {
-                    navigation.replace('OrderDetails', { order: order })
-                },
+        //             var mess = {
+        //                 _id: Math.floor(Math.random() * 1000000),
+        //                 text: "This offer has been accepted!",
+        //                 createdAt: new Date(),
+        //                 user: {
+        //                     _id: currentUser?._id,
+        //                     name: currentUser?.full_name,
+        //                     avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png"),
+        //                 },
+        //             };
+        //             setMessages(previousMessages => GiftedChat.append(previousMessages, mess))
+        //             socket.emit('sendMessage', { chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id, admin_id: currentUser._id, text: mess, sender_status: currentProfile, status: "message" });
+        //         },
+        //         (order) => {
+        //             navigation.replace('OrderDetails', { order: order })
+        //         },
 
-            )
-            )
-        }
+        //     )
+        //     )
+        // }
     };
 
 

@@ -25,6 +25,7 @@ var windowWidth = Dimensions.get('window').width;
 import { getPathForFirebaseStorage, generateImagePublicURLFirebase } from '../Utility/Utils';
 import UploadProgressBar from '../components/UploadProgressBart';
 import Constants from '../Utility/Constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 {/* Fix for FLIGHT-46 */}
@@ -319,139 +320,141 @@ export default function Support({ route }) {
     }
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+  <View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView>
 
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image
-                        style={styles.backImg}
-                        resizeMode='stretch'
-                        source={require('../images/back.png')}
-                    />
-                </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('support.support')}</TextBold>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image
+            style={styles.backImg}
+            resizeMode='stretch'
+            source={require('../images/back.png')}
+        />
+    </TouchableOpacity>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('support.support')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.subject')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.subject')}</TextBold>
 
-                <Input
-                    placeholder={t('kyc.writeSubject')+"..."}
-                    onChangeText={text => setSubject(text)}
-                    value={subject}
-                    secureTextEntry={false}
+    <Input
+        placeholder={t('kyc.writeSubject')+"..."}
+        onChangeText={text => setSubject(text)}
+        value={subject}
+        secureTextEntry={false}
+    />
+
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('track.orderNo')}.</TextBold>
+
+    <Input
+        placeholder="ex. 00235421151"
+        onChangeText={text => setOrderNo(text)}
+        value={orderNo}
+        secureTextEntry={false}
+    />
+
+
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.yourMessage')}</TextBold>
+
+    <InputMultiline
+        placeholder={t('kyc.whatWouldYouLike') + "?"}
+        onChangeText={text => setMessage(text)}
+        value={message}
+    />
+
+
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.uploadPictures')}</TextBold>
+    <View style={Styles.boxView}>
+        <TouchableOpacity onPress={() => chooseImages()}>
+            <View style={styles.imgPickView}>
+                <Image
+                    style={styles.cameraImgStyle}
+                    resizeMode='stretch'
+                    source={require('../images/cameraImg.png')}
                 />
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('track.orderNo')}.</TextBold>
-
-                <Input
-                    placeholder="ex. 00235421151"
-                    onChangeText={text => setOrderNo(text)}
-                    value={orderNo}
-                    secureTextEntry={false}
-                />
-
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.yourMessage')}</TextBold>
-
-                <InputMultiline
-                    placeholder={t('kyc.whatWouldYouLike') + "?"}
-                    onChangeText={text => setMessage(text)}
-                    value={message}
-                />
-
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.uploadPictures')}</TextBold>
-                <View style={Styles.boxView}>
-                    <TouchableOpacity onPress={() => chooseImages()}>
-                        <View style={styles.imgPickView}>
-                            <Image
-                                style={styles.cameraImgStyle}
-                                resizeMode='stretch'
-                                source={require('../images/cameraImg.png')}
-                            />
+            </View>
+        </TouchableOpacity>
+        <View>
+            <FlatList
+                data={images}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item, index }) =>
+                    <View style={{ marginRight: 10, flexDirection: 'row' }}>
+                        <View style={styles.imgPickShowStyle}>
+                            <Image source={{ uri: item.uri }}
+                                style={styles.imgPickShowStyle} resizeMode="cover" />
                         </View>
-                    </TouchableOpacity>
-                    <View>
-                        <FlatList
-                            data={images}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            renderItem={({ item, index }) =>
-                                <View style={{ marginRight: 10, flexDirection: 'row' }}>
-                                    <View style={styles.imgPickShowStyle}>
-                                        <Image source={{ uri: item.uri }}
-                                            style={styles.imgPickShowStyle} resizeMode="cover" />
-                                    </View>
-                                    <TouchableOpacity onPress={() => removeImage(index)} style={Styles.crossButton}>
-                                        <Icon name="cross" color={color.blueColor} size={36} />
-                                    </TouchableOpacity>
-                                </View>
-                            }
-                            keyExtractor={item => item.fileName}
-                            style={{ marginLeft: 10, marginRight: 110 }}
-                        />
+                        <TouchableOpacity onPress={() => removeImage(index)} style={Styles.crossButton}>
+                            <Icon name="cross" color={color.blueColor} size={36} />
+                        </TouchableOpacity>
                     </View>
-                </View>
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.uploadVideos')}</TextBold>
-                <View style={Styles.boxView}>
-                    <TouchableOpacity onPress={() => chooseVideos()}>
-                        <View style={styles.imgPickView}>
-                            <Image
-                                style={styles.cameraImgStyle}
-                                resizeMode='stretch'
-                                source={require('../images/cameraImg.png')}
-                            />
-                        </View>
-                    </TouchableOpacity>
-                    <View>
-                        <FlatList
-                            data={videos}
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            renderItem={({ item, index }) =>
-                                <View style={{ marginRight: 10, flexDirection: 'row' }}>
-                                    <View style={styles.imgPickShowStyle}>
-                                        <Image source={{ uri: item.uri }}
-                                            style={styles.imgPickShowStyle} resizeMode="cover" />
-                                    </View>
-                                    <TouchableOpacity onPress={() => removeVideo(index)} style={Styles.crossButton}>
-                                        <Icon name="cross" color={color.blueColor} size={36} />
-                                    </TouchableOpacity>
-                                </View>
-                            }
-                            keyExtractor={item => item.fileName}
-                            style={{ marginLeft: 10, marginRight: 110 }}
-                        />
-                    </View>
-                </View>     
-
-                <View style={{ marginVertical: 15 }}>                    
-                    {
-                        loading ? (
-                            (images.length > 0 || videos.length > 0) ? (
-                                <UploadProgressBar
-                                    uploadedCount={uploadedCount}
-                                    images={images}
-                                    videos={videos}
-                                    containerStyle={{alignItems: 'center', marginTop: 20}}
-                                    textStyle={{marginBottom: 10}}
-                                    transferred={transferred}
-                                    progressBarWidth={Dimensions.get('window'). width - 50} />
-                            ) : null
-                        ) : null
-                    }  
-                </View> 
-
-                <View>                    
-                    <ButtonLarge
-                        title={t('kyc.submit')}
-                        loader={loading}
-                        onPress={() => contactSupport()} />        
-                </View>                
-            </ScrollView>
+                }
+                keyExtractor={item => item.fileName}
+                style={{ marginLeft: 10, marginRight: 110 }}
+            />
         </View>
+    </View>
+
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.uploadVideos')}</TextBold>
+    <View style={Styles.boxView}>
+        <TouchableOpacity onPress={() => chooseVideos()}>
+            <View style={styles.imgPickView}>
+                <Image
+                    style={styles.cameraImgStyle}
+                    resizeMode='stretch'
+                    source={require('../images/cameraImg.png')}
+                />
+            </View>
+        </TouchableOpacity>
+        <View>
+            <FlatList
+                data={videos}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item, index }) =>
+                    <View style={{ marginRight: 10, flexDirection: 'row' }}>
+                        <View style={styles.imgPickShowStyle}>
+                            <Image source={{ uri: item.uri }}
+                                style={styles.imgPickShowStyle} resizeMode="cover" />
+                        </View>
+                        <TouchableOpacity onPress={() => removeVideo(index)} style={Styles.crossButton}>
+                            <Icon name="cross" color={color.blueColor} size={36} />
+                        </TouchableOpacity>
+                    </View>
+                }
+                keyExtractor={item => item.fileName}
+                style={{ marginLeft: 10, marginRight: 110 }}
+            />
+        </View>
+    </View>     
+
+    <View style={{ marginVertical: 15 }}>                    
+        {
+            loading ? (
+                (images.length > 0 || videos.length > 0) ? (
+                    <UploadProgressBar
+                        uploadedCount={uploadedCount}
+                        images={images}
+                        videos={videos}
+                        containerStyle={{alignItems: 'center', marginTop: 20}}
+                        textStyle={{marginBottom: 10}}
+                        transferred={transferred}
+                        progressBarWidth={Dimensions.get('window'). width - 50} />
+                ) : null
+            ) : null
+        }  
+    </View> 
+
+    <View>                    
+        <ButtonLarge
+            title={t('kyc.submit')}
+            loader={loading}
+            onPress={() => contactSupport()} />        
+    </View>                
+</ScrollView>
+</View>
+        </SafeAreaView>
     );
 
 }

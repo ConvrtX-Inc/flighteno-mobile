@@ -8,7 +8,7 @@ import { initReactI18next } from 'react-i18next'
 i18next
 .use(initReactI18next).init({
     compatibilityJSON: 'v3',
-    lng:'ar',
+    lng:'en',
     resources:{
         en: english,
         it: italian,

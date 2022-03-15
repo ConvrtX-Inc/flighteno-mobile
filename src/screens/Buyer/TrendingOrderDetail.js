@@ -9,6 +9,7 @@ import ButtonLarge from "../../components/ButtonLarge";
 import { useSelector } from 'react-redux'
 import TextBold from '../../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -24,7 +25,8 @@ const TrendingOrderDetail = ({ route }) => {
         url: order.product_image,
     }]
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <SafeAreaView style={{flex:1}}>
+   <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
             <ViewImages
                 showImageViewer={showProductPic}
                 images={imageProduct}
@@ -58,6 +60,7 @@ const TrendingOrderDetail = ({ route }) => {
                 </View>
             </ScrollView>
         </View>
+        </SafeAreaView>
     );
 }
 
