@@ -317,7 +317,7 @@ export const styles = StyleSheet.create({
     //////////////////////////Picker Creation start///////////////////////
     pickerVIew: {
         height: 50,
-        width: '90%',
+        // width: '90%',
         borderColor: '#00000011',
         borderWidth: 1,
         borderRadius: 35,
@@ -367,7 +367,8 @@ export const styles = StyleSheet.create({
         width: 25,
     },
     sliderStyle: {
-        width: '90%',
+        // width: '90%',
+        width:'100%',
         alignSelf: 'center',
         marginTop: 15,
         padding: 20

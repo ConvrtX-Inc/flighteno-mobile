@@ -22,8 +22,10 @@ export default function TopTabTraveller() {
                     backgroundColor: '#E12082',
                 },
                 inactiveTintColor:color.grayText,
-                activeTintColor: '#E12082'
+                activeTintColor: '#E12082',
+                
             }}
+            swipeEnabled={false}
         >
             <Tab.Screen name={t('travelHome.myTravel')} component={MyTravel} />
             <Tab.Screen name={t('travelHome.ordersDestination')} component={OrderDestination} />
