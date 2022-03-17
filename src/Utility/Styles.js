@@ -316,7 +316,7 @@ export const styles = StyleSheet.create({
 
     //////////////////////////Picker Creation start///////////////////////
     pickerVIew: {
-        height: 50,
+        // height: 50,
         // width: '90%',
         borderColor: '#00000011',
         borderWidth: 1,
@@ -328,7 +328,8 @@ export const styles = StyleSheet.create({
         fontFamily: 'OpenSans-Regular',
         backgroundColor: '#F6F9FF',
         paddingHorizontal: 20,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        overflow:'hidden'
     },
     pickerLeftView: {
         width: '92%',

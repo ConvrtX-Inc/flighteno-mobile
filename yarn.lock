@@ -5617,7 +5617,7 @@ lodash@3.10.1:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
   integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
 
-lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.7.0:
+lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.21, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -7048,19 +7048,12 @@ react-native-modal-datetime-picker@^13.0.1:
   dependencies:
     prop-types "^15.7.2"
 
-react-native-modal-dropdown@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-1.0.2.tgz#3e1efae5a5eacc42f44ac96468ea2f1b5bb0d759"
-  integrity sha512-X13RbwoQdaOb9Ffi7fjRVwh9OXauXIJhum0uXGzYZLMyoCQ5yt5cxf27P/YZbdh80Fb7bdPx6vTA4PTpUK2WDQ==
-  dependencies:
-    prop-types "^15.6.0"
-
 react-native-modal-picker@^0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/react-native-modal-picker/-/react-native-modal-picker-0.0.16.tgz#c9324d880a3bb8f36b772f378164977e2f431cbc"
   integrity sha1-yTJNiAo7uPNrdy83gWSXfi9DHLw=
 
-react-native-modal@^11.5.6:
+react-native-modal@^11.10.0:
   version "11.10.0"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.10.0.tgz#94a6d3a2428ba5228cfb4dc174cacea79c871591"
   integrity sha512-syRYDJYSh16bR37R5EKU9T/wC+5bEOfF17IUqf5URdhbEDd+hxyMInC++l45E8oI+MtdOaEp9yAws5xDqk8dnA==
@@ -7248,6 +7241,13 @@ react-native-typing-animation@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/react-native-typing-animation/-/react-native-typing-animation-0.1.7.tgz#8f2cf08d9400ae543a110292eb7d71523dda5528"
   integrity sha512-4H3rF9M+I2yAZpYJcY0Mb29TXkn98QK12rrKSY6LZj1BQD9NNmRZuNXzwX4XHapsIz+N/J8M3p27FOQPbfzqeg==
+
+react-native-ultimate-modal-picker@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-ultimate-modal-picker/-/react-native-ultimate-modal-picker-1.1.0.tgz#de47200c17964f3decace6782e95c56ad5753e49"
+  integrity sha512-9nW7vR5OZFaATtZhe4GkH70xUNFP4EPAyWJyM85Q4MGP81o8YmvEcin5r/GE8REr2Vn9e0g247HEdWqCz4eTDA==
+  dependencies:
+    react-native-modal "^11.10.0"
 
 react-native-vector-icons@^8.1.0:
   version "8.1.0"
@@ -7802,14 +7802,6 @@ shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
-
-sharingan-rn-modal-dropdown@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/sharingan-rn-modal-dropdown/-/sharingan-rn-modal-dropdown-1.4.0.tgz#a5665e955c7dce2d2a86a77348a9cf1e60131d15"
-  integrity sha512-FaYAL13aGuX1albtNIbAABdyy3boXP8dZe55mMIHhp8OLpnfNpTJdHy9PrFU9Ka51ehAD7601lqLt3WoV9BLew==
-  dependencies:
-    lodash "^4.17.20"
-    react-native-modal "^11.5.6"
 
 shebang-command@^1.2.0:
   version "1.2.0"
