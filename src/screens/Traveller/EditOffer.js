@@ -48,7 +48,7 @@ export default function EditOffer({ route }) {
         setShow(false);
         setDateValue(moment(currentDate).format("MM/DD/YYYY"));
     };
-
+    
     const sendOffer = () => {
         if (offerPrice == "") {
             Toast.show({ type: 'error', text2: "Please enter a delivery fee", })

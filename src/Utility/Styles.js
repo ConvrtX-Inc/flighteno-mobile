@@ -666,7 +666,7 @@ export const styles = StyleSheet.create({
     travelDateContainer: {
         flexDirection: 'row',
         width: '100%',
-        paddingHorizontal: '5%',
+        // paddingHorizontal: '5%',
         marginTop: 30,
     },
     travelDateInner: {
@@ -687,7 +687,7 @@ export const styles = StyleSheet.create({
         // fontWeight: 'bold'
     },
     travelList: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 12,
         borderColor: color.travelerListBorderColor,
