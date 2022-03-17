@@ -22,6 +22,7 @@ import storage from '@react-native-firebase/storage';
 import { generateImagePublicURLFirebase } from '../../../Utility/Utils';
 import UploadProgressBar from '../../../components/UploadProgressBart';
 import Constants from '../../../Utility/Constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
@@ -114,141 +115,143 @@ export default function OrderDetail() {
     }
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+<View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView>
 
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image
-                        style={styles.backImg}
-                        resizeMode='stretch'
-                        source={require('../../../images/back.png')}
-                    />
-                </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.orderDetails')}</TextBold>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image
+            style={styles.backImg}
+            resizeMode='stretch'
+            source={require('../../../images/back.png')}
+        />
+    </TouchableOpacity>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.orderDetails')}</TextBold>
 
-                {global.productImage.url ?
-                    <Image
-                        style={styles.productImg}
-                        resizeMode='contain'
-                        source={{ uri: global.productImage.url }}
-                    />
-                    :
-                    <Image
-                        style={styles.productImg}
-                        resizeMode='contain'
-                        source={{ uri: global.productImage.uri }}
-                    />
+    {global.productImage.url ?
+        <Image
+            style={styles.productImg}
+            resizeMode='contain'
+            source={{ uri: global.productImage.url }}
+        />
+        :
+        <Image
+            style={styles.productImg}
+            resizeMode='contain'
+            source={{ uri: global.productImage.uri }}
+        />
 
-                }
+    }
 
-                <TextBold style={styles.subHeading}>{buyerOrderData.prodect_name}</TextBold>
+    <TextBold style={styles.subHeading}>{buyerOrderData.prodect_name}</TextBold>
 
-                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
-                    {buyerOrderData.product_discription}
-                </TextMedium>
-
-
-                <View style={styles.productDesc}>
-
-                    <View style={styles.productDescInerFirst}>
-
-                        <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.productType')}</TextBold>
-                        <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.weight')}</TextBold>
-                        <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
-
-                    </View>
-                    <View style={styles.productDescInerSecond}>
-                        <TextMedium style={styles.productAtrribute}>{buyerOrderData.product_type}</TextMedium>
-                        <TextMedium style={styles.productAtrribute}>{buyerOrderData.product_weight ? buyerOrderData.product_weight : "Not available"} {buyerOrderData.product_weight ? "kg" : ""}</TextMedium>
-                        <TextMedium style={styles.productAtrribute}>{buyerOrderData.quantity}</TextMedium>
-                    </View>
-
-                </View>
+    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+        {buyerOrderData.product_discription}
+    </TextMedium>
 
 
-                <TextBold style={[styles.productAtrributeHead, { alignSelf: 'center', marginTop: 20 }]}>{t('buyerHome.allowTravelerTo')}:</TextBold>
-                <TextMedium style={[styles.productAtrribute, { alignSelf: 'center' }]}>({t('buyerHome.ifApplicable')})</TextMedium>
+    <View style={styles.productDesc}>
 
+        <View style={styles.productDescInerFirst}>
 
-                <View style={styles.agreeTermContainer}>
-                    <CheckBox
-                        checkedIcon={<Image source={require('../../../images/checked.png')}
-                            style={{ height: 25, width: 25, tintColor: '#ECB22E', borderRadius: 7 }}
-                        />}
-                        uncheckedIcon={<Image source={require('../../../images/unchecked.png')}
-                            style={{ height: 25, width: 25, tintColor: '#EFF1F5' }}
-                        />}
-                        checked={checked}
-                        onPress={() => setChecked(!checked)}
-                    />
-
-                    <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Open box and check physical Apperance</TextMedium>
-                </View>
-
-                <View style={[styles.agreeTermContainer, { marginTop: -10 }]}>
-                    <CheckBox
-                        checkedIcon={<Image source={require('../../../images/checked.png')}
-                            style={{ height: 25, width: 25, tintColor: '#ECB22E', borderRadius: 7 }}
-                        />}
-                        uncheckedIcon={<Image source={require('../../../images/unchecked.png')}
-                            style={{ height: 25, width: 25, tintColor: '#EFF1F5' }}
-                        />}
-                        checked={useForTesting}
-                        onPress={() => setUseForTesting(!useForTesting)}
-                    />
-
-                    <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</TextMedium>
-                </View>
-
-                <View style={{ marginVertical: 15 }}>                    
-                    {
-                        loading ? (
-                            global.productImage.uri ? (
-                                <UploadProgressBar
-                                    uploadedCount={1}
-                                    images={[{file: global.productImage.uri}]}
-                                    videos={[]}
-                                    containerStyle={{alignItems: 'center', marginTop: 20}}
-                                    textStyle={{marginBottom: 10}}
-                                    transferred={transferred}
-                                    progressBarWidth={Dimensions.get('window'). width - 50} />
-                            ) : null
-                        ) : null
-                    }  
-                </View> 
-
-
-                <View style={{ marginBottom: 30}}>
-                    <ButtonLarge
-                        title={t('buyerHome.continue')}
-                        loader={loading}
-                        onPress={() => handleSubmit()}
-                    />
-                </View>
-
-                {/* <View style={{ marginBottom: 30, }}>
-                    <ButtonDisable
-                        title="Continue"
-                        loader={loading}
-                        onPress={() => navigation.navigate("OrderDetail")}
-                    />
-                </View>
-                <View style={{ marginBottom: 30, }}>
-                    <ButtonVerify
-                        title="Verify Account"
-                        loader={loading}
-                        onPress={() => navigation.navigate("OrderDetail")}
-                    />
-                </View> */}
-            </ScrollView>
-
-
-
-
-
+            <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.productType')}</TextBold>
+            <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.weight')}</TextBold>
+            <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
 
         </View>
+        <View style={styles.productDescInerSecond}>
+            <TextMedium style={styles.productAtrribute}>{buyerOrderData.product_type}</TextMedium>
+            <TextMedium style={styles.productAtrribute}>{buyerOrderData.product_weight ? buyerOrderData.product_weight : "Not available"} {buyerOrderData.product_weight ? "kg" : ""}</TextMedium>
+            <TextMedium style={styles.productAtrribute}>{buyerOrderData.quantity}</TextMedium>
+        </View>
+
+    </View>
+
+
+    <TextBold style={[styles.productAtrributeHead, { alignSelf: 'center', marginTop: 20 }]}>{t('buyerHome.allowTravelerTo')}:</TextBold>
+    <TextMedium style={[styles.productAtrribute, { alignSelf: 'center' }]}>({t('buyerHome.ifApplicable')})</TextMedium>
+
+
+    <View style={styles.agreeTermContainer}>
+        <CheckBox
+            checkedIcon={<Image source={require('../../../images/checked.png')}
+                style={{ height: 25, width: 25, tintColor: '#ECB22E', borderRadius: 7 }}
+            />}
+            uncheckedIcon={<Image source={require('../../../images/unchecked.png')}
+                style={{ height: 25, width: 25, tintColor: '#EFF1F5' }}
+            />}
+            checked={checked}
+            onPress={() => setChecked(!checked)}
+        />
+
+        <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Open box and check physical Apperance</TextMedium>
+    </View>
+
+    <View style={[styles.agreeTermContainer, { marginTop: -10 }]}>
+        <CheckBox
+            checkedIcon={<Image source={require('../../../images/checked.png')}
+                style={{ height: 25, width: 25, tintColor: '#ECB22E', borderRadius: 7 }}
+            />}
+            uncheckedIcon={<Image source={require('../../../images/unchecked.png')}
+                style={{ height: 25, width: 25, tintColor: '#EFF1F5' }}
+            />}
+            checked={useForTesting}
+            onPress={() => setUseForTesting(!useForTesting)}
+        />
+
+        <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</TextMedium>
+    </View>
+
+    <View style={{ marginVertical: 15 }}>                    
+        {
+            loading ? (
+                global.productImage.uri ? (
+                    <UploadProgressBar
+                        uploadedCount={1}
+                        images={[{file: global.productImage.uri}]}
+                        videos={[]}
+                        containerStyle={{alignItems: 'center', marginTop: 20}}
+                        textStyle={{marginBottom: 10}}
+                        transferred={transferred}
+                        progressBarWidth={Dimensions.get('window'). width - 50} />
+                ) : null
+            ) : null
+        }  
+    </View> 
+
+
+    <View style={{ marginBottom: 30}}>
+        <ButtonLarge
+            title={t('buyerHome.continue')}
+            loader={loading}
+            onPress={() => handleSubmit()}
+        />
+    </View>
+
+    {/* <View style={{ marginBottom: 30, }}>
+        <ButtonDisable
+            title="Continue"
+            loader={loading}
+            onPress={() => navigation.navigate("OrderDetail")}
+        />
+    </View>
+    <View style={{ marginBottom: 30, }}>
+        <ButtonVerify
+            title="Verify Account"
+            loader={loading}
+            onPress={() => navigation.navigate("OrderDetail")}
+        />
+    </View> */}
+</ScrollView>
+
+
+
+
+
+
+</View>
+        </SafeAreaView>
     );
 
 }

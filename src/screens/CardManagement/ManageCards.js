@@ -8,6 +8,7 @@ import { commonStyles } from '../../Utility/CommonStyles';
 import Constants from '../../Utility/Constants';
 import { getCards, getCustomerDefaultCard } from '../../services/Stripe/CardManagement'
 import PaymentCardItem from '../../components/PaymentCardItem';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function ManageCards({ navigation }) {
@@ -31,6 +32,7 @@ export default function ManageCards({ navigation }) {
     }
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <ScrollView>
             <View style={[styles.container, commonStyles.marginTop10]}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -60,6 +62,7 @@ export default function ManageCards({ navigation }) {
                 </>
             </View>
         </ScrollView>
+        </SafeAreaView>
     )
 }
 

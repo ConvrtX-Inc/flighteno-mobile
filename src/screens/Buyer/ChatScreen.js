@@ -11,6 +11,7 @@ import TextMedium from '../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
 import ChatsSkeleton from '../../components/ChatsSkeleton';
 import { CHAT_MESSAGES } from '../../redux/constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
 // import ChatsSkeleton from '../../components/ChatsSkeleton';
 
 var windowWidth = Dimensions.get('window').width;
@@ -41,7 +42,8 @@ export default function ChatScreen() {
     }
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+    <View style={styles.ScreenCss}>
             <View>
                 <FlatList
                     data={chatMessages}
@@ -127,6 +129,7 @@ export default function ChatScreen() {
                 />
             </View>
         </View>
+        </SafeAreaView>
     );
 
 }

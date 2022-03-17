@@ -17,6 +17,7 @@ import { CREATE_ORDER_DETAIL } from '../../redux/constants';
 import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -220,268 +221,271 @@ export default function UrlData({ route }) {
         navigation.navigate("SelectCountry")
     }
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+              <View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView>
 
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image
+            style={styles.backImg}
+            resizeMode='stretch'
+            source={require('../../images/back.png')}
+        />
+    </TouchableOpacity>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',textAlign:'left' }]}>{t('buyerHome.dataFromUrl')}</TextBold>
+
+
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.yourUrl')}</TextBold>
+
+    <Input
+        placeholder={data.url}
+        onChangeText={text => setPName(text)}
+        value={data.url}
+        secureTextEntry={false}
+        editable={false}
+        numLines={1}
+    />
+
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
+
+    {/* custom Picker */}
+
+    <View>
+        <Pressable onPress={() => setPickerShow(!pickerShow)}>
+            <View style={styles.pickerVIew}>
+
+                <View style={styles.pickerLeftView}>
+                    <TextMedium style={styles.textSelected}>{pickerValueSelected}</TextMedium>
+                </View>
+                <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
                     <Image
-                        style={styles.backImg}
+                        style={styles.pickerIcon}
                         resizeMode='stretch'
-                        source={require('../../images/back.png')}
+                        source={require('../../images/pickerIcon.png')}
                     />
-                </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',textAlign:'left' }]}>{t('buyerHome.dataFromUrl')}</TextBold>
+                </View>
+            </View>
+        </Pressable>
+        {pickerShow == true ?
+            <View style={styles.pickerOptions}>
+                <FlatList
+                    data={pickerValues}
+                    nestedScrollEnabled={true}
+                    renderItem={({ item, index }) =>
+                        <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
+                            <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueFN(index)}>
+                                <View>
+                                    <Text style={styles.textSelected}>{item.option}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
 
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.yourUrl')}</TextBold>
-
-                <Input
-                    placeholder={data.url}
-                    onChangeText={text => setPName(text)}
-                    value={data.url}
-                    secureTextEntry={false}
-                    editable={false}
+                    }
+                    keyExtractor={item => item.id}
+                    style={{ borderRadius: 100, marginTop: 3 }}
                 />
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
-
-                {/* custom Picker */}
-
-                <View>
-                    <Pressable onPress={() => setPickerShow(!pickerShow)}>
-                        <View style={styles.pickerVIew}>
-
-                            <View style={styles.pickerLeftView}>
-                                <TextMedium style={styles.textSelected}>{pickerValueSelected}</TextMedium>
-                            </View>
-                            <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Image
-                                    style={styles.pickerIcon}
-                                    resizeMode='stretch'
-                                    source={require('../../images/pickerIcon.png')}
-                                />
-                            </View>
-                        </View>
-                    </Pressable>
-                    {pickerShow == true ?
-                        <View style={styles.pickerOptions}>
-                            <FlatList
-                                data={pickerValues}
-                                nestedScrollEnabled={true}
-                                renderItem={({ item, index }) =>
-                                    <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                                        <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueFN(index)}>
-                                            <View>
-                                                <Text style={styles.textSelected}>{item.option}</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-
-                                }
-                                keyExtractor={item => item.id}
-                                style={{ borderRadius: 100, marginTop: 3 }}
-                            />
-                        </View>
-                        : null}
-                </View>
-                {/* custom Picker end */}
-                <Image
-                    style={styles.productImg}
-                    resizeMode='contain'
-                    source={{uri: data.product_image}}
-                />
-                <TextBold style={styles.subHeading}>{data.name}</TextBold>
-                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
-                {data.name}
-                </TextMedium>
-                <View style={styles.productDesc}>
-                    <View style={styles.productDescInerFirst}>
-                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.color')}</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.weight')}</TextBold>
-                        <TextBold style={styles.productAtrributeHead}>{t('buyerHome.condition')}</TextBold>
-                    </View>
-                    <View style={styles.productDescInerSecond}>
-                        <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
-                        <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
-                        <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
-                    </View>
-                </View>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
-                <Pressable onPress={() => showMode('date', 'date')}>
-                    <View style={styles.pickerVIew}>
-                        <View style={styles.pickerLeftView}>
-                            <TextMedium style={styles.textSelected}>{moment(dateValue).format('MM/DD/YYYY')}</TextMedium>
-                        </View>
-                        <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-                            <Image
-                                style={styles.datePickerIcon}
-                                resizeMode='stretch'
-                                source={require('../../images/calendar.png')}
-                            />
-                        </View>
-                    </View>
-                </Pressable>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
-                <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'from')}>
-                        <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</TextMedium>
-                    </TouchableOpacity>
-                    <TextMedium>{t('travelHome.to')}</TextMedium>
-                    <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'to')}>
-                        <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{toTime}</TextMedium>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
-                <View style={styles.quantityContainer}>
-                    <View style={styles.leftQuantityStyle}>
-                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
-                        <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</TextMedium>
-                    </View>
-                    <View style={styles.rightQuantityStyle}>
-                        <TouchableOpacity onPress={() => decreaseQuantity()}>
-                            <View style={styles.quantityChange}>
-                                <Image
-                                    style={{ height: 2, width: 12 }}
-                                    resizeMode='stretch'
-                                    source={require('../../images/minus.png')}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                        <TextBold style={[styles.loginInputHeading, { fontSize: 18, marginHorizontal: 10, }]}>{quantity}</TextBold>
-                        <TouchableOpacity onPress={() => increaseQuantity()}>
-                            <View style={styles.quantityChange}>
-                                <Image
-                                    style={{ height: 12, width: 12 }}
-                                    resizeMode='stretch'
-                                    source={require('../../images/plus.png')}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
-                <View style={styles.quantityContainer}>
-                    <View style={styles.leftQuantityStyle}>
-                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.doYouNeedBox')}?</TextBold>
-                        <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
-                    </View>
-                    <View style={styles.rightQuantityStyle}>
-                        <Switch
-                            value={switchBox}
-                            onValueChange={(val) => setSwitchBox(val)}
-                            disabled={false}
-                            activeText={'Yes'}
-                            inActiveText={'No'}
-                            circleSize={30}
-                            barHeight={40}
-                            circleBorderWidth={0}
-                            backgroundActive={'#fff'}
-                            backgroundInactive={'#fff'}
-                            circleActiveColor={'#36C5F0'}
-                            circleInActiveColor={'#36C5F0'}
-                            changeValueImmediately={true}
-                            renderInsideCircle={() => <Text></Text>} // custom component to render inside the Switch circle (Text, Image, etc.)
-                            changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
-                            innerCircleStyle={{ alignItems: "center", justifyContent: "center" }} // style for inner animated circle for what you (may) be rendering inside the circle
-                            outerCircleStyle={{ borderWidth: 2, backgroundColor: '#F6F9FF', borderColor: '#36C5F0', borderRadius: 30, width: 80 }} // style for outer animated circle
-                            renderActiveText={true}
-                            renderInActiveText={true}
-                            activeTextStyle={{ color: '#36C5F0' }}
-                            inactiveTextStyle={{ color: '#36C5F0' }}
-                            switchLeftPx={-90} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
-                            switchRightPx={-90} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
-                            switchWidthMultiplier={2} // multipled by the `circleSize` prop to calculate total width of the Switch
-                            switchBorderRadius={30} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
-                            style={{ marginLeft: 20 }}
-                        />
-                    </View>
-                </View>
-
-                <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588' }}></View>
-
-                <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
-
-                <TextMedium style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextMedium>
-
-                <TextSemiBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextSemiBold>
-
-                {/* custom Picker */}
-
-                <View>
-                    <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
-                        <View style={styles.pickerVIew}>
-                            <View style={styles.pickerLeftView}>
-                                <TextMedium style={styles.textSelected}>{pickerValueSelectedVip}</TextMedium>
-                            </View>
-                            <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Image
-                                    style={styles.pickerIcon}
-                                    resizeMode='stretch'
-                                    source={require('../../images/pickerIcon.png')}
-                                />
-                            </View>
-                        </View>
-                    </Pressable>
-                    {pickerShowVip == true ?
-                        <View style={styles.pickerOptions}>
-                            <FlatList
-                                data={pickerValuesVip}
-                                renderItem={({ item, index }) =>
-                                    <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                                        <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueVipFN(index)}>
-                                            <View>
-                                                <TextMedium style={styles.textSelected}>{item.option}</TextMedium>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-
-                                }
-                                keyExtractor={item => item.id}
-                                style={{ borderRadius: 100, marginTop: 3 }}
-                            />
-                        </View>
-                        : null}
-                </View>
-                {/* custom Picker end */}
-
-                {
-                    pickerValueSelectedVip == "Yes" ? (
-                        <View>
-                            <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
-                                <Input
-                                    placeholder="$50.00"
-                                    onChangeText={text => setVipServiceFee(text.replace(/[^0-9]/g, ''))}
-                                    value={vipServiceFee}
-                                    secureTextEntry={false}
-                                    editable={pickerValueSelectedVip == "No" ? false : true}
-                                    keyboardType="number"
-                                />
-                        </View>
-                    ) : null
-                }                
-
-                <View style={{ height: 50 }} />
-
-                <ButtonLarge
-                    title={t('buyerHome.continue')}
-                    loader={loading}
-                    onPress={() => handleSubmit()}
-                />
-                {show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                        minimumDate={new Date()}
-                    />
-                )}
-                <Text></Text>
-            </ScrollView>
+            </View>
+            : null}
+    </View>
+    {/* custom Picker end */}
+    <Image
+        style={styles.productImg}
+        resizeMode='contain'
+        source={{uri: data.product_image}}
+    />
+    <TextBold style={styles.subHeading}>{data.name}</TextBold>
+    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+    {data.name}
+    </TextMedium>
+    <View style={styles.productDesc}>
+        <View style={styles.productDescInerFirst}>
+            <TextBold style={styles.productAtrributeHead}>{t('buyerHome.color')}</TextBold>
+            <TextBold style={styles.productAtrributeHead}>{t('buyerHome.weight')}</TextBold>
+            <TextBold style={styles.productAtrributeHead}>{t('buyerHome.condition')}</TextBold>
         </View>
+        <View style={styles.productDescInerSecond}>
+            <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
+            <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
+            <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
+        </View>
+    </View>
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
+    <Pressable onPress={() => showMode('date', 'date')}>
+        <View style={styles.pickerVIew}>
+            <View style={styles.pickerLeftView}>
+                <TextMedium style={styles.textSelected}>{moment(dateValue).format('MM/DD/YYYY')}</TextMedium>
+            </View>
+            <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
+                <Image
+                    style={styles.datePickerIcon}
+                    resizeMode='stretch'
+                    source={require('../../images/calendar.png')}
+                />
+            </View>
+        </View>
+    </Pressable>
+    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
+    <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'from')}>
+            <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</TextMedium>
+        </TouchableOpacity>
+        <TextMedium>{t('travelHome.to')}</TextMedium>
+        <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'to')}>
+            <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{toTime}</TextMedium>
+        </TouchableOpacity>
+    </View>
+    <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
+    <View style={styles.quantityContainer}>
+        <View style={styles.leftQuantityStyle}>
+            <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
+            <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</TextMedium>
+        </View>
+        <View style={styles.rightQuantityStyle}>
+            <TouchableOpacity onPress={() => decreaseQuantity()}>
+                <View style={styles.quantityChange}>
+                    <Image
+                        style={{ height: 2, width: 12 }}
+                        resizeMode='stretch'
+                        source={require('../../images/minus.png')}
+                    />
+                </View>
+            </TouchableOpacity>
+            <TextBold style={[styles.loginInputHeading, { fontSize: 18, marginHorizontal: 10, }]}>{quantity}</TextBold>
+            <TouchableOpacity onPress={() => increaseQuantity()}>
+                <View style={styles.quantityChange}>
+                    <Image
+                        style={{ height: 12, width: 12 }}
+                        resizeMode='stretch'
+                        source={require('../../images/plus.png')}
+                    />
+                </View>
+            </TouchableOpacity>
+        </View>
+    </View>
+    <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
+    <View style={styles.quantityContainer}>
+        <View style={styles.leftQuantityStyle}>
+            <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.doYouNeedBox')}?</TextBold>
+            <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
+        </View>
+        <View style={styles.rightQuantityStyle}>
+            <Switch
+                value={switchBox}
+                onValueChange={(val) => setSwitchBox(val)}
+                disabled={false}
+                activeText={'Yes'}
+                inActiveText={'No'}
+                circleSize={30}
+                barHeight={40}
+                circleBorderWidth={0}
+                backgroundActive={'#fff'}
+                backgroundInactive={'#fff'}
+                circleActiveColor={'#36C5F0'}
+                circleInActiveColor={'#36C5F0'}
+                changeValueImmediately={true}
+                renderInsideCircle={() => <Text></Text>} // custom component to render inside the Switch circle (Text, Image, etc.)
+                changeValueImmediately={true} // if rendering inside circle, change state immediately or wait for animation to complete
+                innerCircleStyle={{ alignItems: "center", justifyContent: "center" }} // style for inner animated circle for what you (may) be rendering inside the circle
+                outerCircleStyle={{ borderWidth: 2, backgroundColor: '#F6F9FF', borderColor: '#36C5F0', borderRadius: 30, width: 80 }} // style for outer animated circle
+                renderActiveText={true}
+                renderInActiveText={true}
+                activeTextStyle={{ color: '#36C5F0' }}
+                inactiveTextStyle={{ color: '#36C5F0' }}
+                switchLeftPx={-90} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
+                switchRightPx={-90} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
+                switchWidthMultiplier={2} // multipled by the `circleSize` prop to calculate total width of the Switch
+                switchBorderRadius={30} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
+                style={{ marginLeft: 20 }}
+            />
+        </View>
+    </View>
+
+    <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588' }}></View>
+
+    <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
+
+    <TextMedium style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextMedium>
+
+    <TextSemiBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextSemiBold>
+
+    {/* custom Picker */}
+
+    <View>
+        <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
+            <View style={styles.pickerVIew}>
+                <View style={styles.pickerLeftView}>
+                    <TextMedium style={styles.textSelected}>{pickerValueSelectedVip}</TextMedium>
+                </View>
+                <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
+                    <Image
+                        style={styles.pickerIcon}
+                        resizeMode='stretch'
+                        source={require('../../images/pickerIcon.png')}
+                    />
+                </View>
+            </View>
+        </Pressable>
+        {pickerShowVip == true ?
+            <View style={styles.pickerOptions}>
+                <FlatList
+                    data={pickerValuesVip}
+                    renderItem={({ item, index }) =>
+                        <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
+                            <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueVipFN(index)}>
+                                <View>
+                                    <TextMedium style={styles.textSelected}>{item.option}</TextMedium>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
+                    }
+                    keyExtractor={item => item.id}
+                    style={{ borderRadius: 100, marginTop: 3 }}
+                />
+            </View>
+            : null}
+    </View>
+    {/* custom Picker end */}
+
+    {
+        pickerValueSelectedVip == "Yes" ? (
+            <View>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
+                    <Input
+                        placeholder="$50.00"
+                        onChangeText={text => setVipServiceFee(text.replace(/[^0-9]/g, ''))}
+                        value={vipServiceFee}
+                        secureTextEntry={false}
+                        editable={pickerValueSelectedVip == "No" ? false : true}
+                        keyboardType="number"
+                    />
+            </View>
+        ) : null
+    }                
+
+    <View style={{ height: 50 }} />
+
+    <ButtonLarge
+        title={t('buyerHome.continue')}
+        loader={loading}
+        onPress={() => handleSubmit()}
+    />
+    {show && (
+        <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+            minimumDate={new Date()}
+        />
+    )}
+    <Text></Text>
+</ScrollView>
+</View>
+        </SafeAreaView>
     );
 
 }

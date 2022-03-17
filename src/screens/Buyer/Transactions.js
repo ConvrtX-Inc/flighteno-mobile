@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { GetMyOrders } from '../../redux/actions/Trips';
 import TextBold from '../../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
@@ -37,6 +38,7 @@ export default function Transactions({navigation}) {
     }
 
     return (
+        <SafeAreaView style={{flex:1}} >
         <View style={styles.ScreenCss}>
             {currentUser ?
                 <ScrollView>
@@ -143,6 +145,8 @@ export default function Transactions({navigation}) {
                 </ScrollView>
                 : null}
         </View>
+        </SafeAreaView>
+
     );
 
 }

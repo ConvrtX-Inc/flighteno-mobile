@@ -3,7 +3,7 @@ import { TextInput, StyleSheet, Platform } from 'react-native';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { color } from '../Utility/Color';
 
-const Input = ({ placeholder, value, onChangeText, secureTextEntry, editable, keyboardType}) => {
+const Input = ({ placeholder, value, onChangeText, secureTextEntry, editable, keyboardType, numLines}) => {
     return (
         <TextInput style={styles.input}
             placeholder={placeholder}
@@ -14,6 +14,8 @@ const Input = ({ placeholder, value, onChangeText, secureTextEntry, editable, ke
             secureTextEntry={secureTextEntry}
             editable={editable}
             keyboardType={keyboardType ? "phone-pad" : "default"}
+            numberOfLines={numLines}
+            
         />
     );
 }
@@ -23,7 +25,7 @@ export default Input;
 const styles = StyleSheet.create({
     input: {
         height: 50,
-        width: '90%',
+        width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         borderRadius: 35,
@@ -34,6 +36,7 @@ const styles = StyleSheet.create({
         fontFamily: Platform.OS == 'ios' ? 'Gilroy-Medium': 'GilroyMedium',
         backgroundColor: color.inputBackColor,
         paddingHorizontal: 20,
-        textAlign:'left'
+        textAlign:'left',
+        overflow:'hidden'
     }
 })

@@ -10,6 +10,7 @@ import { CURRENT_PROFILE } from '../redux/constants'
 import TextBold from '../components/atoms/TextBold';
 import TextMedium from '../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Profile() {
     const navigation = useNavigation()
@@ -68,7 +69,8 @@ function Profile() {
         dispatch(Logout())
     }
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+  <View style={styles.ScreenCss}>
             {currentUser ?
                 <ScrollView>
                     {currentUser ?
@@ -182,6 +184,7 @@ function Profile() {
                 </ScrollView>
                 : null}
         </View>
+        </SafeAreaView>
     );
 }
 

@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -110,6 +111,7 @@ export default function AllOrders() {
     }
 
     return (
+      
         <View style={styles.ScreenCss}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -188,6 +190,8 @@ export default function AllOrders() {
                 />
             </ScrollView>
         </View>
+       
+
     );
 
 }

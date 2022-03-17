@@ -21,6 +21,7 @@ import PendingOrderDetailT from '../screens/Traveller/PendingOrderDetailT';
 import ChatScreen from '../screens/Buyer/ChatScreen';
 import { useTranslation } from 'react-i18next';
 import TextBold from './atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -150,7 +151,10 @@ const BottomTab = ({ route }) => {
                         />
                     ),
                     tabBarLabel: ({color}) => (
-                        <TextBold style={{fontSize:13,color:color}}>{ t('common.messages')}</TextBold>
+                      
+<TextBold style={{fontSize:13,color:color}}>{ t('common.messages')}</TextBold>
+                      
+                        
                     )
                 }}
             />

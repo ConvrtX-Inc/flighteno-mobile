@@ -10,6 +10,7 @@ import TextBold from '../../../components/atoms/TextBold';
 import Toast from 'react-native-toast-message';
 import { imgToBase64 } from '../../../Utility/Utils';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 export default function  KYCSelectIDScreen ({navigation,route}){
@@ -76,7 +77,8 @@ export default function  KYCSelectIDScreen ({navigation,route}){
 
 
     return (
-        <ScrollView  style={styles.container}>
+        <SafeAreaView style={{flex:1}}>
+ <ScrollView  style={styles.container}>
             <View>
                 <TextBold style={[styles.titleTxt,{textAlign:'left'}]}>{t('kyc.idVer')}</TextBold>
 
@@ -121,5 +123,7 @@ export default function  KYCSelectIDScreen ({navigation,route}){
             
             </View>
         </ScrollView>
+        </SafeAreaView>
+       
     )
 }

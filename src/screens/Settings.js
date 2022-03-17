@@ -9,6 +9,7 @@ import TextMedium from '../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Settings() {
     const navigation = useNavigation();
@@ -62,6 +63,9 @@ export default function Settings() {
       }
     
     return (
+        <SafeAreaView style={{flex:1}}>
+
+       
         <View style={styles.ScreenCss}>
 
             <ScrollView>
@@ -147,6 +151,7 @@ export default function Settings() {
             </ScrollView>
 
         </View>
+        </SafeAreaView>
     );
 
 }

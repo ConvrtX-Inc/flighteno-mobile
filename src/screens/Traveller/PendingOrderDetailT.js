@@ -27,6 +27,7 @@ import storage from '@react-native-firebase/storage';
 // Custom Imports
 import { generateImagePublicURLFirebase } from '../../Utility/Utils';
 import UploadProgressBar from '../../components/UploadProgressBart';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -297,7 +298,8 @@ export default function PendingOrderDetailT({ route }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <SafeAreaView style={{flex:1}}>
+  <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
             <ViewImages
                 showImageViewer={showProductPic}
                 images={imageProduct}
@@ -622,6 +624,8 @@ export default function PendingOrderDetailT({ route }) {
                     : <View style={{ height: 20 }} />}
             </ScrollView>
         </View>
+        </SafeAreaView>
+      
     );
 }
 

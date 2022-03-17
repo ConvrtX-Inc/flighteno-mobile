@@ -218,262 +218,113 @@ export default function MyTravel({ route }) {
         dispatch(AddTrip(token, obj))
     }
 
+
+    const renderHeader = () => (
+        <>
+            <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelFrom')}</TextBold>
+            <View style={[styles.pickerVIew, { alignItems: 'center', padding:4, paddingLeft:16 }]}>
+                <CountryPicker
+                    countryCode={countryCode}
+                    withFilter
+                    withFlag
+                    withAlphaFilter
+                    withCallingCode
+                    withEmoji
+                    onSelect={(country) => onSelect(country)}
+                    modalProps={{
+                        visible:country1
+                    }}
+                    onClose={() => setCountry1(false)}
+                    onOpen={() => setCountry1(true)}
+                />
+
+
+                <View style={{borderLeftWidth:1, paddingLeft:8, marginLeft:16}}>
+                    <TextMedium style={[styles.countryNameCSS]}>{country.country_name ? country.country_name : country.name}</TextMedium>
+                </View>
+                
+            </View>
+
+            <View style={[styles.pickerVIew, { alignItems: 'center', marginTop:16, padding:16 }]}>
+               
+                <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
+                    <TextMedium style={styles.countryNameCSS}>City</TextMedium>
+                    <Image
+                        style={[styles.countryDropImg, { marginLeft:8 }]}
+                        resizeMode='stretch'
+                        source={require('../../../images/dropDpwnCountry.png')}
+                    />
+                </TouchableOpacity>
+                
+                <View style={{borderLeftWidth:1, paddingLeft:8}}>
+                    <TextMedium style={[styles.countryNameCSS]}>{country.country_name ? country.country_name : country.name}</TextMedium>
+                </View>
+
+                
+            </View>
+
+            <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelTo')}</TextBold>
+                <View style={[styles.pickerVIew, { alignItems: 'center', padding:4, paddingLeft:16 }]}>
+                    <CountryPicker
+                        countryCode={countryCode}
+                        withFilter
+                        withFlag
+                        withAlphaFilter
+                        withCallingCode
+                        withEmoji
+                        onSelect={(country) => onSelect(country)}
+                        modalProps={{
+                            visible:country1
+                        }}
+                        onClose={() => setCountry1(false)}
+                        onOpen={() => setCountry1(true)}
+                    />
+
+
+                <View style={{borderLeftWidth:1, paddingLeft:8, marginLeft:16}}>
+                    <TextMedium style={[styles.countryNameCSS]}>{country.country_name ? country.country_name : country.name}</TextMedium>
+                </View>
+                
+            </View>
+
+            <View style={[styles.pickerVIew, { alignItems: 'center', marginTop:16, padding:16 }]}>
+               
+                <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
+                    <TextMedium style={styles.countryNameCSS}>City</TextMedium>
+                    <Image
+                        style={[styles.countryDropImg, { marginLeft:8 }]}
+                        resizeMode='stretch'
+                        source={require('../../../images/dropDpwnCountry.png')}
+                    />
+                </TouchableOpacity>
+                
+                <View style={{borderLeftWidth:1, paddingLeft:8}}>
+                    <TextMedium style={[styles.countryNameCSS]}>{country.country_name ? country.country_name : country.name}</TextMedium>
+                </View>
+
+                
+            </View>
+
+            <View>
+                <TextBold style={[styles.travelDateTitle, {marginTop:24}]}>{t('travelHome.depart')}</TextBold>
+            </View>
+        </>
+    )
+
     return (
-        <View style={styles.ScreenCss}>
+        <View style={[styles.ScreenCss,{marginLeft:18, marginRight:18}]}>
+            <FlatList
+            ListHeaderComponent={renderHeader}  
+            />
 
-            <ScrollView>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelFrom')}</TextBold>
-
-
-                <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
-                    <TouchableOpacity onPress={() => setCountry1(true)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <CountryPicker
-                            countryCode={countryCode}
-                            withFilter
-                            withFlag
-                            withAlphaFilter
-                            withCallingCode
-                            withEmoji
-                            onSelect={(country) => onSelect(country)}
-                            modalProps={{
-                                visible:country1
-                            }}
-                            onClose={() => setCountry1(false)}
-                            onOpen={() => setCountry1(true)}
-                            
-                        />
-
-                        <Image
-                            style={styles.countryDropImg}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
-
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{country.country_name ? country.country_name : country.name}</TextMedium>
-                    </View>
-                </TouchableOpacity>
-
-
-
-                <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
-
-                    <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
-                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
-
-                        <Image
-                            style={[styles.countryDropImg, { marginLeft: 16 }]}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
-
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCity}</TextMedium>
-                    </View>
-
-                </View>
-
-
-
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('travelHome.travelTo')}</TextBold>
-
-
-                <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
-                    <TouchableOpacity onPress={() => setCountry2(true)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <CountryPicker
-                            countryCode={countryCodeDeliver}
-                            withFilter={withFilterDeliver}
-                            withFlag={withFlagDeliver}
-                            withCountryNameButton={withCountryNameButtonDeliver}
-                            withAlphaFilter={withAlphaFilterDeliver}
-                            withCallingCode={withCallingCodeDeliver}
-                            withEmoji={withEmojiDeliver}
-                            // onSelect={(country) => onSelectDestinationCountry(country)}
-                            onSelect={onSelectDestinationCountry}
-                            modalProps={{
-                                visible: country2
-                            }}
-                            onClose={() => setCountry2(false)}
-                            onOpen={() => setCountry2(true)}
-                        
-                        />
-                        <Image
-                            style={styles.countryDropImg}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
-
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</TextMedium>
-                    </View>
-                </TouchableOpacity>
-
-
-
-                <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
-
-                    <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
-
-                        <Image
-                            style={[styles.countryDropImg, { marginLeft: 16 }]}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
-
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCityDeliver}</TextMedium>
-                    </View>
-
-                </View>
-
-
-
-                <View style={styles.travelDateContainer}>
-
-                    <View style={[styles.travelDateInner, { alignItems: 'flex-start' }]}>
-                        <TextBold style={styles.travelDateTitle}>{t('travelHome.depart')}</TextBold>
-
-                        <TouchableOpacity onPress={() => showMode('dep')}>
-                            <View style={{
-                                flexDirection: 'row',
-                                borderBottomColor: color.travelDateBorderColor,
-                                borderBottomWidth: 1,
-                                paddingBottom: 3,
-                            }}>
-                                <View>
-                                    <Image
-                                        style={styles.travelClandericon}
-                                        resizeMode='stretch'
-                                        source={require('../../../images/calendar.png')}
-                                    />
-                                </View>
-                                <TextBold style={styles.travelDateText}>{depDate}</TextBold>
-                            </View>
-                        </TouchableOpacity>
-
-                    </View>
-
-
-                    <View style={[styles.travelDateInner, { alignItems: 'flex-end' }]}>
-                        <TextBold style={[styles.travelDateTitle, { marginRight: 37 }]}>{t('travelHome.return')}</TextBold>
-                        <TouchableOpacity onPress={() => showMode('ret')}>
-
-                            <View style={{
-                                flexDirection: 'row',
-                                borderBottomColor: color.travelDateBorderColor,
-                                borderBottomWidth: 1,
-                                paddingBottom: 3,
-                            }}>
-                                <View>
-                                    <Image
-                                        style={styles.travelClandericon}
-                                        resizeMode='stretch'
-                                        source={require('../../../images/calendar.png')}
-                                    />
-                                </View>
-                                <Text style={[styles.travelDateText, { color: retDate == "00/00/00" ? 'gray' : 'black' }]}>{retDate}</Text>
-                            </View>
-
-                        </TouchableOpacity>
-                    </View>
-
-                </View>
-
-
-                <View style={{ marginBottom: 30, marginTop: 10 }}>
-                    <ButtonTraveller
-                        title={t('travelHome.addTrip')}
-                        loader={loading}
-                        onPress={() => addNewTrip()}
-                    />
-                </View>
-
-
-                {/* Travel List */}
-                {tripsData.length > 0 ?
-                    <FlatList
-                        data={tripsData}
-                        nestedScrollEnabled
-                        keyExtractor={(item, index) => item + index}
-                        renderItem={({ item, index }) =>
-                            <View style={{}}>
-                                <LinearGradient
-                                    start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-                                    colors={index % 2 == 0 ? ['#36C5F0', '#368CF0'] : ['#2C5EBE', '#2C5EBE']}
-                                    style={styles.travelList}
-                                >
-                                    <View style={styles.travelerListInnerView}>
-                                        <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white",textAlign:'left' }]}>{t('travelHome.from')}</TextSemiBold>
-                                            <TextBold style={styles.travelListValue}>{item.city}</TextBold>
-                                            <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
-                                        </View>
-                                        <Image source={require("../../../images/travel.png")}
-                                            resizeMode="contain"
-                                            style={{ height: 60, width: 60 }}
-                                        />
-                                        <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.to')}</TextSemiBold>
-                                            <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
-                                            <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
-                                        </View>
-                                    </View>
-                                    <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
-                                    <View style={styles.travelerListInnerView}>
-                                        <View>
-                                            <TextSemiBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.date')}</TextSemiBold>
-                                            <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
-                                        </View>
-                                    </View>
-                                    <View style={{ height: 15 }} />
-                                </LinearGradient>
-                            </View>
-
-                        }
-                        keyExtractor={item => item._id}
-                        style={{ marginTop: 3 }}
-                    />
-                    : null}
-
-                {/* Depart Date Calender */}
-                {show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                        minimumDate={new Date()}
-                    />
-                )}
-
-
-
-            </ScrollView>
-
-
-            <Modal
+             <Modal
                 animationType="slide"
                 transparent={true}
                 visible={modalVisibleCity}
                 onRequestClose={() => {
                     setModalCity(!modalCity);
                 }}
+                
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
@@ -504,60 +355,6 @@ export default function MyTravel({ route }) {
                             renderItem={({ item, index }) =>
                                 <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
                                     <TouchableOpacity onPress={() => selectPickerValueCityFN(index)}>
-                                        <View>
-                                            <Text style={styles.textSelectedCity}>{item}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-
-                            }
-                            keyExtractor={(item, index) => item + index}
-                            style={{ borderRadius: 100, marginTop: 3 }}
-                        />
-                    </View>
-                </View>
-            </Modal>
-
-
-            {/* /////////////Deliver */}
-
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisibleCityDeliver}
-                onRequestClose={() => {
-                    setModalVisibleCityDeliver(!modalVisibleCityDeliver);
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        {/* <Text style={styles.modalText}>Hello World!</Text> */}
-
-                        <View style={styles.modalCitySearchContainer}>
-                            <TouchableOpacity onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                                <Image
-                                    style={styles.cityModalClose}
-                                    resizeMode='stretch'
-                                    source={require('../../../images/cross.png')}
-                                />
-
-                            </TouchableOpacity>
-
-                            <TextInput style={styles.inputCityModal}
-                                placeholder="Enter city name"
-                                placeholderTextColor="#656F85"
-                                onChangeText={text => searchCitiesDestination(text)}
-                                secureTextEntry={false}
-
-                            />
-                        </View>
-
-                        <FlatList
-                            data={pickerValuesCityDeliver}
-                            nestedScrollEnabled={true}
-                            renderItem={({ item, index }) =>
-                                <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                                    <TouchableOpacity onPress={() => selectPickerValueCityDeliverFN(index)}>
                                         <View>
                                             <Text style={styles.textSelectedCity}>{item}</Text>
                                         </View>

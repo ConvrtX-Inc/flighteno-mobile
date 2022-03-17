@@ -10,6 +10,7 @@ import TextBold from '../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
 import TextMedium from '../components/atoms/TextMedium';
 import TextRegular from '../components/atoms/TextRegular';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const windowWidth = Dimensions.get('window').width;
 
 export default function SupportTicket({ navigation }) {
@@ -24,7 +25,8 @@ export default function SupportTicket({ navigation }) {
         dispatch(getTickets(data, token))
     }, [])
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{flex:1}}>
+ <View style={{ flex: 1, backgroundColor: 'white' }}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
                     style={styles.backImg}
@@ -89,6 +91,7 @@ export default function SupportTicket({ navigation }) {
                 />
             </View>
         </View>
+        </SafeAreaView>
     );
 }
 

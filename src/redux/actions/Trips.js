@@ -4,7 +4,8 @@ import {
     IS_LOADING, TRIPS_DATA, MY_ORDERS, MY_RECENT_ORDERS,
     ORDERS_TO_DESTINATION, TRAVLER_ORDERS, LATEST_TRIP_ID,
     TRENDING_ORDERS,
-    FILTERED_ORDERS_DATA
+    FILTERED_ORDERS_DATA,
+    IS_LOADING_RESET_FILTER
 } from '../constants';
 import Toast from 'react-native-toast-message';
 
@@ -115,7 +116,6 @@ export function UserOrders(token, data, hideFilter) {
 }
 
 export function FilterOrders(data, token, hideFilter) {
-    console.log("DATA", data)
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -127,7 +127,7 @@ export function FilterOrders(data, token, hideFilter) {
                 return true;
             },
         }).catch(error => {
-            dispatch({ type: IS_LOADING, isloading: true })
+            dispatch({ type: IS_LOADING, isloading: false })
             console.log("Error", error)
         }).then(Response => {
             dispatch({ type: IS_LOADING, isloading: false })
@@ -138,6 +138,38 @@ export function FilterOrders(data, token, hideFilter) {
         })
     }
 }
+
+export function FilterResetOrders(token, data, hideFilter) {
+    return async dispatch => {
+        dispatch({ type: IS_LOADING_RESET_FILTER, isloading: true })
+        axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/getUserOrdersOnTheBasisOnCountry`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        }).catch(error => {
+            console.log("Error", error)
+        }).then(Response => {
+            dispatch({ type: IS_LOADING_RESET_FILTER, isloading: false })
+            hideFilter()
+            if (Response.data.type == 200) {
+                if (Response.data.orders?.length > 0) {
+                    if (Response.data.orders[0].profile_data.length > 0) {
+                        dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+                        console.log(Response.data.orders)
+                        // dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
+                    }
+                }
+                else dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+            }
+        })
+    }
+}
+
+
 
 export function GetMyOrders(data, token) {
     return async dispatch => {

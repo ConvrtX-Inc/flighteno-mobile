@@ -10,6 +10,7 @@ import { UserTrips } from '../../redux/actions/Trips';
 import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -40,6 +41,7 @@ export default function OrdersByFlight() {
     )
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.ScreenCss}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -103,6 +105,8 @@ export default function OrdersByFlight() {
                 />
                 : null}
         </View>
+        </SafeAreaView>
+
     );
 
 }

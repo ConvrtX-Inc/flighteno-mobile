@@ -113,13 +113,13 @@ export const styles = StyleSheet.create({
         height: 20,
         width: 15,
         marginTop: (windowWidth * 8) / 100,
-        marginLeft: '5%',
+        // marginLeft: '5%',
     },
     //country number style
     phoneContainer: {
         height: 55,
         alignSelf: 'center',
-        width: '90%',
+        // width: '90%',
         borderColor: '#00000011',
         borderWidth: 1,
         // marginTop: 15,
@@ -316,19 +316,36 @@ export const styles = StyleSheet.create({
 
     //////////////////////////Picker Creation start///////////////////////
     pickerVIew: {
-        height: 50,
-        width: '90%',
+        // height: 40,
+        width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         borderRadius: 35,
         alignSelf: 'center',
-        paddingHorizontal: 5,
+        // paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
         fontFamily: 'OpenSans-Regular',
         backgroundColor: '#F6F9FF',
-        paddingHorizontal: 20,
-        flexDirection: 'row'
+        // paddingHorizontal: 20,
+        flexDirection: 'row',
+        overflow:'hidden'
+    },
+        pickerAndroidView: {
+        // height: 40,
+        // width: '100%',
+        borderColor: '#00000011',
+        borderWidth: 1,
+        borderRadius: 35,
+        // alignSelf: 'center',
+        // paddingHorizontal: 5,
+        // fontSize: 14,
+        // color: '#656F85',
+        // fontFamily: 'OpenSans-Regular',
+        backgroundColor: '#F6F9FF'
+        // // paddingHorizontal: 20,
+        // flexDirection: 'row',
+        // overflow:'hidden'
     },
     pickerLeftView: {
         width: '92%',
@@ -367,7 +384,8 @@ export const styles = StyleSheet.create({
         width: 25,
     },
     sliderStyle: {
-        width: '90%',
+        // width: '90%',
+        width:'100%',
         alignSelf: 'center',
         marginTop: 15,
         padding: 20
@@ -648,7 +666,7 @@ export const styles = StyleSheet.create({
     travelDateContainer: {
         flexDirection: 'row',
         width: '100%',
-        paddingHorizontal: '5%',
+        // paddingHorizontal: '5%',
         marginTop: 30,
     },
     travelDateInner: {
@@ -669,7 +687,7 @@ export const styles = StyleSheet.create({
         // fontWeight: 'bold'
     },
     travelList: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 12,
         borderColor: color.travelerListBorderColor,

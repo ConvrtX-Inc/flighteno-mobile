@@ -5,6 +5,7 @@ import TextMedium from '../../../components/atoms/TextMedium';
 import ButtonLarge from '../../../components/ButtonLarge';
 import { styles } from './styles';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function KYCIntroScreen({navigation}){
 
@@ -23,7 +24,8 @@ export default function KYCIntroScreen({navigation}){
 
     return(
         <>
-            <View style={styles.container}>
+        <SafeAreaView style={{flex:1}}>
+        <View style={styles.container}>
                 <View style={styles.content}>
                     <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
                     <TextExtraBold style={styles.title}>{t('kyc.accountNotVer')}</TextExtraBold>
@@ -38,6 +40,8 @@ export default function KYCIntroScreen({navigation}){
                     <ButtonLarge loader={false} title={t('kyc.getStarted')} onPress={onGetStartedTap} />
                 </View> 
             </View>
+        </SafeAreaView>
+
         </> 
     )
 }   
