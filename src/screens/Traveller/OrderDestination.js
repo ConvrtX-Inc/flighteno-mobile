@@ -10,8 +10,10 @@ import {
   TouchableHighlight,
   ScrollView,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import RNPickerSelect from 'react-native-picker-select';
 import {color} from '../../Utility/Color';
 import {styles} from '../../Utility/Styles';
 import ButtonTraveller from '../../components/ButtonTraveller';
@@ -23,6 +25,7 @@ import {
   UserOrders,
   FilterOrders,
   getStoreNames,
+  FilterResetOrders,
 } from '../../redux/actions/Trips';
 import {formatAmount} from '../../Utility/Utils';
 import ViewImages from '../../components/ViewImages';
@@ -31,7 +34,7 @@ import TextMedium from '../../components/atoms/TextMedium';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 import {useTranslation} from 'react-i18next';
 import ButtonLarge from '../../components/ButtonLarge';
-import {FILTERED_ORDERS_DATA} from '../../redux/constants';
+import {FILTERED_ORDERS_DATA, IS_LOADING_RESET_FILTER} from '../../redux/constants';
 import Toast from 'react-native-toast-message';
 import { Dropdown } from 'sharingan-rn-modal-dropdown';
 import { DefaultTheme } from 'react-native-paper';
@@ -43,7 +46,7 @@ export default function OrderDestination({route}) {
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const {loading, currentUser, token} = useSelector(({authRed}) => authRed);
-  const {ordersToDestination, filteredOrdersToDestination} = useSelector(
+  const {ordersToDestination} = useSelector(
     ({tripsRed}) => tripsRed,
   );
   const [showFilter, setShowFilter] = useState(false);
@@ -54,80 +57,76 @@ export default function OrderDestination({route}) {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(500000);
   const [selectedRange, setSelectedRange] = useState(0);
-  const [filterOrderData, setFilterOrderData] = useState(ordersToDestination);
-  const [isFiltered, setFiltered] = useState(false);
 
   const [rangeValue, setRangeValue] = useState('order_created_date');
+  const [resetLoading, setResetLoading] = useState(false)
+
+
+
   const [pickerValues, setPickerValues] = useState([
-    {
-      id: '0',
-      value: '',
-      option: 'Please select',
-    },
     {
       id: '1',
       value: 'cell phones',
-      option: 'Cell phones',
+      label: 'Cell phones',
+     
     },
     {
-      id: '2',
+      id: '2',    
       value: 'cell phones accessories',
-      option: 'Cell phones accessories',
+      label: 'Cell phones accessories',
     },
     {
       id: '3',
       value: 'computers',
-      option: 'Computers',
+      label: 'Computers',
     },
     {
       id: '4',
       value: 'cameras',
-      option: 'Cameras',
+      label: 'Cameras',
     },
     {
       id: '5',
       value: 'clothings',
-      option: 'Clothings',
+      label: 'Clothings',
     },
     {
       id: '6',
       value: 'electronics',
-      option: 'Electronics',
+      label: 'Electronics',
     },
     {
       id: '7',
       value: 'toys',
-      option: 'Toys',
+      label: 'Toys',
     },
     {
       id: '8',
       value: 'beauty and personal care',
-      option: 'Beauty and personal care',
+      label: 'Beauty and personal care',
     },
     {
       id: '9',
       value: 'novelty items',
-      option: 'Novelty Items',
+      label: 'Novelty Items',
     },
     {
       id: '10',
       value: 'retro or vintage items',
-      option: 'Retro or Vintage Items',
+      label: 'Retro or Vintage Items',
     },
     {
       id: '11',
       value: 'perishable / edible',
-      option: 'Perishable / Edible',
+      label: 'Perishable / Edible',
     },
     {
       id: '12',
       value: 'others',
-      option: 'Others',
+      label: 'Others',
     },
   ]);
-  const [pickerValueSelected, setPickerValueSelected] = useState(
-    pickerValues[0].value,
-  );
+  const [pickerValueSelected, setPickerValueSelected] = useState();
   const [storeValue, setStoreValue] = useState('');
   const [storeName, setNameOfStore] = useState('');
   const [sortMethod, setSortMethod] = useState(-1);
@@ -204,21 +203,13 @@ export default function OrderDestination({route}) {
       store_name: storeName,
     };
 
-    setFiltered(true);
+   
 
-    if (productType === '') {
-      Toast.show({
-        type: 'info',
-        text1: 'Alert!',
-        text2: 'Product type field is required',
-      });
-    } else {
-      dispatch(
-        FilterOrders(filterData, token, () => {
-          setShowFilter(false);
-        }),
-      );
-    }
+    dispatch(FilterOrders(filterData, token, () => {
+      setShowFilter(false);
+    }))
+
+
   };
 
   const resetFilter = () => {
@@ -226,20 +217,38 @@ export default function OrderDestination({route}) {
         admin_id: currentUser._id,
     };
 
-    dispatch(
-      UserOrders(token, obj, () => {
-        setPName('');
-        setMinPrice(0);
-        setShowFilter(false);
+    // IS_LOADING_RESET_FILTER
 
-        setNameOfStore('');
-        storeData.forEach(item => {
-          item.checked = false;
-        });
-        selectPickerValueFN(0);
-        setPickerShow(false);
-      }),
-    );
+    setResetLoading(true)
+
+    dispatch(FilterResetOrders(token,obj,() => {
+      setResetLoading(false)
+      setPName('');
+      setMinPrice(0);
+      setShowFilter(false);
+
+      setNameOfStore('');
+      storeData.forEach(item => {
+        item.checked = false;
+      });
+      setPickerValueSelected('')
+      selectPickerValueFN(0);
+    }))
+    // dispatch(
+    //   UserOrders(token, obj, () => {
+    //     // dispatch({type:IS_LOADING_RESET_FILTER,isLoading:false})
+    //     setPName('');
+    //     setMinPrice(0);
+    //     setShowFilter(false);
+
+    //     setNameOfStore('');
+    //     storeData.forEach(item => {
+    //       item.checked = false;
+    //     });
+    //     selectPickerValueFN(0);
+    //     setPickerShow(false);
+    //   }),
+    // );
   };
 
   const showGallery = data => {
@@ -247,69 +256,6 @@ export default function OrderDestination({route}) {
     images.push({url: data});
     setShowImageView(true);
   };
-
- const data = [
-  {
-    value: '1',
-    label: 'Tiger Nixon',
-    employee_salary: '320800',
-    employee_age: '61',
-    // avatarSource: require('./ddicon.png'),
-    disabled: true, // disable the item
-  },
-  {
-    value: '2',
-    label: 'Garrett Winters',
-    employee_salary: '170750',
-    employee_age: '63',
-    avatarSource: {
-      uri: 'https://img.icons8.com/color/344/circled-user-male-skin-type-5.png',
-    },
-  },
-  {
-    value: '3',
-    label: 'Ashton Cox',
-    employee_salary: '86000',
-    employee_age: '66',
-    avatarSource: {
-      uri: 'https://img.icons8.com/color/344/circled-user-male-skin-type-5.png',
-    },
-  },
-  {
-    value: '4',
-    label: 'Cedric Kelly',
-    employee_salary: '433060',
-    employee_age: '22',
-    avatarSource: {
-      uri: 'https://img.icons8.com/color/344/circled-user-male-skin-type-5.png',
-    },
-  },
-];
-
-const items=[
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '4', value: '4' },
-    { label: '5', value: '5' },
-    { label: '6', value: '6' },
-    { label: '7', value: '7' },
-    { label: '8', value: '8' },
-    { label: '9', value: '9' },
-    { label: '10', value: '10' },
-    { label: '11', value: '11' },
-    { label: '12', value: '12' },
-  ]
-
-const theme = {
-  ...DefaultTheme,
-  roundness: 2,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: '#3498db',
-    accent: '#f1c40f',
-  },
-};
 
   return (
     <View style={{flex: 1, backgroundColor: color.backgroundColor}}>
@@ -323,70 +269,84 @@ const theme = {
           <ScrollView style={{marginLeft: 18, marginRight: 18}}>
             <TouchableOpacity
               onPress={() => setShowFilter(false)}
-              style={{marginLeft: '-1.5%'}}
+              style={{marginLeft: '-1.5%', marginTop:24}}
             >
               <Icon name="cross" size={35} style={{margin: 0}} />
             </TouchableOpacity>
             <TextBold
-              style={[styles.HeadingText, {marginTop: 10, textAlign: 'left'}]}
+              style={[styles.HeadingText, {marginTop: 16, textAlign: 'left'}]}
             >
               {t('travelHome.filter')}
             </TextBold>
             <TextSemiBold
               style={[
                 styles.loginInputHeading,
-                {marginTop: 5, textAlign: 'left'},  
+                {marginTop: 16, textAlign: 'left'},  
               ]}
             >
               {t('buyerHome.productType')}
             </TextSemiBold>
 
-              <View  style={styles.pickerVIew}>
+
+
+          <View style={[ Platform.OS == 'ios' ? styles.pickerVIew : styles.pickerAndroidView, {marginTop:16}]}>
+           <RNPickerSelect
+            onValueChange={setPickerValueSelected}
+            items={pickerValues}
+            style={{
+              inputIOS:{
+                fontFamily:'Gilroy-Medium',
+                color:'#656F85'
+              },
+              inputAndroid:{
+                fontFamily:'GilroyMedium',
+                color:'#656F85'
+              },
+              viewContainer:{
+                padding:Platform.OS == 'ios' ?  16 : 0
+              },
+              placeholder:{
+                fontFamily:'Gilroy-Medium',
+                fontSize:14
+              }
+            }
+          }
+          value={pickerValueSelected}
+          />
+        </View>
+       
+            
+              
+              {/* <View style={[styles.pickerVIew, {marginTop:16}]}>
               <DropdownList
               // title='List'
               title=''
-              items={items}
-            
-              // customStyleContainer={{bor}}
-            />
-              </View>
-            
-
-              {/* <ModalDropdown  options={['option 1', 'option 2']}/> */}
-            {/* <Dropdown 
-            data={data} 
-            value={productSelectedType}
-            onChange={setProductType}
-            mode='outlined'
-            disableSelectionTick
-           underlineColor='transparent'
-        
+              custom
+              items={pickerValues}
+              defaultValue={pickerValueSelected}
+              onChange={(value) => {  
+                setPickerValueSelected(value)
+              }}
+               customStyleContainer={{
+                containerLight: {
+                  backgroundColor: '#fff',
+                  borderColor: 'transparent',
+                  borderBottomWidth: 0,
+                   
+                },
+              }}
+              customStyleFieldText={{
+                fieldTextLight: {
+                  fontFamily: 'Gilroy-Medium',
+                  fontSize: 14,
+                  marginLeft:0
+                }
+              }}
             /> */}
 
-            {/* <Pressable onPress={() => setPickerShow(!pickerShow)}>
-              <View style={styles.pickerVIew}>
-                <View style={styles.pickerLeftView}>
-                  <Text style={styles.textSelected}>
-                    {pickerValueSelected
-                      ? pickerValueSelected
-                      : 'Please select'}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    width: '10%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Image
-                    style={styles.pickerIcon}
-                    resizeMode="stretch"
-                    source={require('../../images/pickerIcon.png')}
-                  />
-                </View>
-              </View>
-            </Pressable> */}
+            {/* <Dropdown /> */}
+          {/* </View> */}
+            
 
 
             <TextSemiBold
@@ -549,11 +509,25 @@ const theme = {
                             </TouchableOpacity>
                         </View>
        
-            <ButtonTraveller
-              onPress={applyFilter}
-              loader={loading}
-              title={t('travelHome.applyFilter')}
-            />
+
+           
+
+            <View style={{marginTop:32}}>
+              <ButtonLarge title='Reset' onPress={resetFilter} loader={resetLoading} />
+            </View>
+              
+
+            <View style={{marginTop:16, marginBottom: 40}}>
+              <ButtonTraveller
+                onPress={applyFilter}
+                loader={loading}
+                title={t('travelHome.applyFilter')}
+              />
+            </View>                  
+
+
+           
+           
           </ScrollView>
         </>
       ) : null}

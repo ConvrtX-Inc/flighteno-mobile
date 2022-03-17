@@ -16,6 +16,7 @@ import {
 
 let initialState = {
     loading: false,
+    resetLoading:true,
     loadingResend: false,
     data: {},
     token: '',

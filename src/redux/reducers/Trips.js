@@ -20,8 +20,8 @@ let initialState = {
     travlerOrders: [],
     latestTripId: null,
     trendingOrders: [],
-    isFilterLoading:false,
-    isResetFilterLoading:false
+    isFilterLoading:true,
+    isLoadingReset:true
 };
 
 

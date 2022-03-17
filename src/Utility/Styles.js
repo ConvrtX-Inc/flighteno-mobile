@@ -316,20 +316,36 @@ export const styles = StyleSheet.create({
 
     //////////////////////////Picker Creation start///////////////////////
     pickerVIew: {
-        // height: 50,
-        // width: '90%',
+        // height: 40,
+        width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         borderRadius: 35,
         alignSelf: 'center',
-        paddingHorizontal: 5,
+        // paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
         fontFamily: 'OpenSans-Regular',
         backgroundColor: '#F6F9FF',
-        paddingHorizontal: 20,
+        // paddingHorizontal: 20,
         flexDirection: 'row',
         overflow:'hidden'
+    },
+        pickerAndroidView: {
+        // height: 40,
+        // width: '100%',
+        borderColor: '#00000011',
+        borderWidth: 1,
+        borderRadius: 35,
+        // alignSelf: 'center',
+        // paddingHorizontal: 5,
+        // fontSize: 14,
+        // color: '#656F85',
+        // fontFamily: 'OpenSans-Regular',
+        backgroundColor: '#F6F9FF'
+        // // paddingHorizontal: 20,
+        // flexDirection: 'row',
+        // overflow:'hidden'
     },
     pickerLeftView: {
         width: '92%',
