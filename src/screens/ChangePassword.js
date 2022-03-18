@@ -80,7 +80,7 @@ export default function ChangePassword() {
     }
 
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
  <View style={styles.ScreenCss}>
 
 <ScrollView>
@@ -93,9 +93,9 @@ export default function ChangePassword() {
         />
     </TouchableOpacity>
 
-    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.changePass')}</TextBold>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('common.changePass')}</TextBold>
 
-    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextBold>
 
     <Input
         placeholder={t('common.oldPass')}
@@ -104,7 +104,7 @@ export default function ChangePassword() {
         secureTextEntry={false}
         
     />
-    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
 
     <Input
         placeholder={t('common.newPass')}
@@ -113,7 +113,7 @@ export default function ChangePassword() {
         secureTextEntry={true}
     />
 
-    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</TextBold>
 
     <Input
         placeholder={t('common.confirmPass')}

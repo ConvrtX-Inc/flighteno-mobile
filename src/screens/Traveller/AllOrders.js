@@ -110,88 +110,41 @@ export default function AllOrders() {
         setOrderByTravler(res)
     }
 
-    return (
-      
-        <View style={styles.ScreenCss}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image
-                    style={styles.backImg}
-                    resizeMode='stretch'
-                    source={require('../../images/back.png')}
+    const renderHeader = () => (
+        <>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+                style={styles.backImg}
+                resizeMode='stretch'
+                source={require('../../images/back.png')}
+            />
+        </TouchableOpacity>
+
+        <View style={Styles.header}>
+            <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</TextBold>
+            <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
+                <Image source={require('../../images/filter.png')}
+                    style={styles.filterImage}
                 />
+                <TextBold style={{  fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</TextBold>
             </TouchableOpacity>
-            <ScrollView nestedScrollEnabled>
-                {showFilter ?
-                    <View style={{ marginTop: 20 }}>
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
-                                <Icon name="cross" size={35} style={{ margin: 0 }} />
-                            </TouchableOpacity>
-                            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.filter')}</TextBold>
-                            <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
-                        </View>
-                        <SearchInput
-                            placeholder="Product Name"
-                            value={searchValue}
-                            onChangeText={(text) => handleSearch(text)}
-                        />
-
-                        <View>
-                            <FlatList
-                                data={ordersListNames}
-                                style={Styles.storeNamesList}
-                                nestedScrollEnabled
-                                renderItem={({ item, index }) =>
-
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-                                        <TextMedium style={Styles.storeNameListText}>{item.name}</TextMedium>
-                                        <CheckBox
-                                            checkedIcon='dot-circle-o'
-                                            uncheckedIcon='circle'
-                                            checkedColor={color.blueColor}
-                                            uncheckedColor={color.inputBackColor}
-                                            containerStyle={{ padding: 0, margin: 0 }}
-                                            
-                                            checked={item.checked}
-                                            onPress={() => selectStore(index)}
-                                        />
-                                    </View>
-
-                                }
-                                keyExtractor={item => item.id}
-                            />
-                        </View>
-                    </View>
-                    : null}
-
-                <View style={Styles.header}>
-
-                    <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</TextBold>
-                    {!showFilter ?
-                        <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
-                            <Image source={require('../../images/filter.png')}
-                                style={styles.filterImage}
-                            />
-                            <TextBold style={{  fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</TextBold>
-                        </TouchableOpacity>
-                        : null}
-
-                </View>
-
-                <View style={{ height: 20 }} />
-                <FlatList
-                    data={ordersByTravler}
-                    renderItem={({ item, index }) =>
-                        <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate("PendingOrderDetailT", { currentOrder: item.orderAsTraveler[0] })} style={Styles.listView}>
-                            <CardOrderUser order={item.orderAsTraveler[0]} />
-                        </TouchableOpacity>
-                    }
-                    keyExtractor={item => item.id}
-                />
-            </ScrollView>
         </View>
-       
+        </>
+    )
 
+    return (
+        <SafeAreaView>
+            <FlatList
+                data={ordersByTravler}
+                ListHeaderComponent={renderHeader}
+                renderItem={({ item, index }) =>
+                    <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate("PendingOrderDetailT", { currentOrder: item.orderAsTraveler[0] })} style={Styles.listView}>
+                        <CardOrderUser order={item.orderAsTraveler[0]} />
+                    </TouchableOpacity>
+                }
+                keyExtractor={item => item.id}
+            />
+        </SafeAreaView>
     );
 
 }

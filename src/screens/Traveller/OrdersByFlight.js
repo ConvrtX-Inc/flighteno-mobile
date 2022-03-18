@@ -41,7 +41,7 @@ export default function OrdersByFlight() {
     )
 
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
         <View style={styles.ScreenCss}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -115,7 +115,7 @@ const Styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
         alignItems: 'center',
         marginVertical: 20
     },

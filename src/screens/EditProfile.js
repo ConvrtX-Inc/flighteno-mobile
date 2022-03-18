@@ -119,10 +119,9 @@ export default function EditProfile() {
     }
 
     return (
-        <SafeAreaView style={{flex:1}}>
-        <View style={styles.ScreenCss}>
-            {currentUser ?
-                <ScrollView>
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
+       
+          
 
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image
@@ -132,7 +131,7 @@ export default function EditProfile() {
                         />
                     </TouchableOpacity>
 
-                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.editProfile')}</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('common.editProfile')}</TextBold>
 
                     <TouchableOpacity onPress={chooseFile} style={Styles.profileButton}>
                         <Image
@@ -140,7 +139,7 @@ export default function EditProfile() {
                             style={styles.profileImage} />
                     </TouchableOpacity>
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.fullName')}</Text>
+                    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.fullName')}</TextBold>
 
                     <Input
                         placeholder={fullName}
@@ -148,7 +147,7 @@ export default function EditProfile() {
                         value={fullName}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</Text>
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
 
                     <Input
                         placeholder="myemail@flighteno.com"
@@ -158,24 +157,30 @@ export default function EditProfile() {
                         editable={false}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</Text>
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
                    
-                    <PhoneInput
-                        ref={phoneInput}
-                        defaultValue={currentUser.phone_number}
-                        defaultCode={currentUser?.country_code}
-                        disabled={true}
-                        containerStyle={styles.phoneContainer}
-                        textInputStyle={styles.phoneInput}
-                        textContainerStyle={styles.phoneTextContainer}
-                        codeTextStyle={styles.phoneCodeText}
-                        textInputProps={{
-                            placeholderTextColor: "#707070",
-                            keyboardType: "phone-pad",
-                            placeholder: "123-456-789",
-
-                        }}
-                    />
+                            <PhoneInput
+            // ref={phoneInput}
+            onPressFlag={() => {
+                // countryPicker.current?.open()
+                // setPickerOpen(!isPickerOpen)
+            }}
+            textProps={{
+                placeholder:'123-456-789'
+            }}
+            onChangePhoneNumber={(displayValue) => {
+            // if(displayValue.length >1){
+            //     setEmailEnabled(false)
+            // }else{
+            //     setEmailEnabled(true)
+            // }
+            //  setPhoneInputVal(displayValue)
+            }}
+            
+            // disabled={email ? true : false}
+            // disabled={!isPhoneEnabled}
+            style={[styles.phoneContainer, {padding:16}]}
+         />
 
                     <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
                         <ButtonLarge
@@ -184,9 +189,9 @@ export default function EditProfile() {
                             onPress={updateProfile}
                         />
                     </View>
-                </ScrollView>
-                : null}
-        </View>
+               
+               
+       
         </SafeAreaView>
     );
 
