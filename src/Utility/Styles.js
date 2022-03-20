@@ -473,7 +473,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     quantityContainer: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         flexDirection: 'row'
     },
@@ -507,12 +507,12 @@ export const styles = StyleSheet.create({
     subHeading: {
         fontSize: 17,
         width: (windowWidth * 90) / 100,
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
     },
     productDesc: {
         flexDirection: 'row',
-        width: '90%',
-        alignSelf: 'center',
+        // width: '90%',
+        // alignSelf: 'center',
         marginTop: 20,
     },
     productDescInerFirst: {
@@ -651,7 +651,7 @@ export const styles = StyleSheet.create({
     },
     billLeft: {
         width: '54%',
-        marginLeft: '5%',
+   
         // backgroundColor: 'pink',
         marginTop: (windowWidth * 4) / 100,
     },

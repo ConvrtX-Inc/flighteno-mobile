@@ -18,6 +18,8 @@ import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import RNPickerSelect from 'react-native-picker-select';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -48,49 +50,61 @@ export default function UrlData({ route }) {
     const [pickerValues, setPickerValues] = useState([
         {
             id: '0',
-            option: 'Cell phones'
+            value: 'Cell phones',
+            label: 'Cell phones'
         },
         {
             id: '1',
-            option: 'Cell phones accessories'
+            value: 'Cell phones accessories',
+            label:'Cell phones accessories'
         },
         {
             id: '2',
-            option: 'Computers'
+            value: 'Computers',
+            label:'Computers'
         },
         {
             id: '3',
-            option: 'Cameras'
+            value: 'Cameras',
+            label:'Cameras'
         },
         {
             id: '4',
-            option: 'Clothings'
+            value: 'Clothings',
+            label:'Clothings'
         },
         {
             id: '5',
-            option: 'Electronics'
+            value: 'Electronics',
+            label:'Electronics'
         },
         {
             id: '6',
-            option: 'Toys'
+            value: 'Toys',
+            label:'Toys'
         },
         {
             id: '7',
-            option: 'Beauty and personal care'
+            value: 'Beauty and personal care',
+            label:'Beauty and personal care'
         },
         {
             id: '8',
-            option: 'Novelty Items'
+            value: 'Novelty Items',
+            label:'Novelty Items'
         },
         {
             id: '9',
-            option: 'Retro or Vintage Items'
+            value: 'Retro or Vintage Items',
+            label:'Retro or Vintage Items'
         }, {
             id: '10',
-            option: 'Perishable / Edible'
+            value: 'Perishable / Edible',
+            label:'Perishable / Edible'
         }, {
             id: '11',
-            option: 'Others'
+            value: 'Others',
+            label:'Others'
         },
     ]);
 
@@ -99,11 +113,13 @@ export default function UrlData({ route }) {
     const [pickerValuesVip, setPickerValuesVip] = useState([
         {
             id: '0',
-            option: 'Yes'
+            value: 'Yes',
+            label: 'Yes'
         },
         {
             id: '1',
-            option: 'No'
+            value: 'No',
+            label:'No'
         },
 
     ]);
@@ -112,8 +128,8 @@ export default function UrlData({ route }) {
         setPickerValueSelectedVip(pickerValuesVip[0].option)
 
     }, []);
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+    const onChange = (event) => {
+        const currentDate = event|| date;
         if (mode == 'date') {
             setShow(false);
             // setDateValue(moment(currentDate).format("YYYY/MM/DD"));
@@ -175,6 +191,10 @@ export default function UrlData({ route }) {
         }
     }
 
+    const onCancelTap = () => {
+        setShow(false)
+    }
+
     const handleSubmit = () => {
         if (pickerValueSelected == "") {
             Toast.show({ type: 'error', text1: 'Alert!', text2: "Please select product type", })
@@ -222,7 +242,7 @@ export default function UrlData({ route }) {
     }
     return (
         <SafeAreaView style={{flex:1}}>
-              <View style={styles.ScreenCss}>
+              <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
 <ScrollView>
 
@@ -233,10 +253,10 @@ export default function UrlData({ route }) {
             source={require('../../images/back.png')}
         />
     </TouchableOpacity>
-    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',textAlign:'left' }]}>{t('buyerHome.dataFromUrl')}</TextBold>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,textAlign:'left' }]}>{t('buyerHome.dataFromUrl')}</TextBold>
 
 
-    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.yourUrl')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.yourUrl')}</TextBold>
 
     <Input
         placeholder={data.url}
@@ -244,15 +264,44 @@ export default function UrlData({ route }) {
         value={data.url}
         secureTextEntry={false}
         editable={false}
-        numLines={1}
+        // numLines={2}
     />
 
-    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
 
     {/* custom Picker */}
 
     <View>
-        <Pressable onPress={() => setPickerShow(!pickerShow)}>
+
+            <View style={styles.pickerVIew}>
+        <RNPickerSelect
+            onValueChange={(value) => {
+                setPickerValueSelected(value)
+            }}
+            items={pickerValues}
+            style={{
+              inputIOS:{
+                fontFamily:'Gilroy-Medium',
+                color:'#656F85'
+              },
+              inputAndroid:{
+                fontFamily:'GilroyMedium',
+                color:'#656F85'
+              },
+              viewContainer:{
+                padding:Platform.OS == 'ios' ?  16 : 0
+              },
+              placeholder:{
+                fontFamily:'Gilroy-Medium',
+                fontSize:14
+              }
+            }
+          }
+          value={pickerValueSelected}
+          />
+            </View>
+        
+        {/* <Pressable onPress={() => setPickerShow(!pickerShow)}>
             <View style={styles.pickerVIew}>
 
                 <View style={styles.pickerLeftView}>
@@ -266,8 +315,8 @@ export default function UrlData({ route }) {
                     />
                 </View>
             </View>
-        </Pressable>
-        {pickerShow == true ?
+        </Pressable> */}
+        {/* {pickerShow == true ?
             <View style={styles.pickerOptions}>
                 <FlatList
                     data={pickerValues}
@@ -286,7 +335,7 @@ export default function UrlData({ route }) {
                     style={{ borderRadius: 100, marginTop: 3 }}
                 />
             </View>
-            : null}
+            : null} */}
     </View>
     {/* custom Picker end */}
     <Image
@@ -295,7 +344,7 @@ export default function UrlData({ route }) {
         source={{uri: data.product_image}}
     />
     <TextBold style={styles.subHeading}>{data.name}</TextBold>
-    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, textAlign: 'justify', marginTop: 20 }]}>
     {data.name}
     </TextMedium>
     <View style={styles.productDesc}>
@@ -310,14 +359,14 @@ export default function UrlData({ route }) {
             <TextMedium style={styles.productAtrribute}>{t('buyerHome.notAvail')}</TextMedium>
         </View>
     </View>
-    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
     <Pressable onPress={() => showMode('date', 'date')}>
-        <View style={styles.pickerVIew}>
+        <View style={[styles.pickerVIew, {padding:16}]}>
             <View style={styles.pickerLeftView}>
                 <TextMedium style={styles.textSelected}>{moment(dateValue).format('MM/DD/YYYY')}</TextMedium>
             </View>
             <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-                <Image
+                <Image  
                     style={styles.datePickerIcon}
                     resizeMode='stretch'
                     source={require('../../images/calendar.png')}
@@ -325,8 +374,8 @@ export default function UrlData({ route }) {
             </View>
         </View>
     </Pressable>
-    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
-    <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
+    <View style={{ width: '100%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'from')}>
             <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</TextMedium>
         </TouchableOpacity>
@@ -403,16 +452,16 @@ export default function UrlData({ route }) {
 
     <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588' }}></View>
 
-    <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
+    <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
 
-    <TextMedium style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextMedium>
+    <TextMedium style={[styles.fasterItemTxt, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextMedium>
 
-    <TextSemiBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextSemiBold>
+    <TextSemiBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextSemiBold>
 
     {/* custom Picker */}
 
     <View>
-        <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
+        {/* <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
             <View style={styles.pickerVIew}>
                 <View style={styles.pickerLeftView}>
                     <TextMedium style={styles.textSelected}>{pickerValueSelectedVip}</TextMedium>
@@ -425,33 +474,42 @@ export default function UrlData({ route }) {
                     />
                 </View>
             </View>
-        </Pressable>
-        {pickerShowVip == true ?
-            <View style={styles.pickerOptions}>
-                <FlatList
-                    data={pickerValuesVip}
-                    renderItem={({ item, index }) =>
-                        <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                            <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueVipFN(index)}>
-                                <View>
-                                    <TextMedium style={styles.textSelected}>{item.option}</TextMedium>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
+        </Pressable> */}
+        <View  style={styles.pickerVIew}>
+                <RNPickerSelect
+            onValueChange={(value) => {
+                // setPickerValueSelected(value)
+                setPickerValueSelectedVip(value)
+            }}
+            items={pickerValuesVip}
+            style={{
+              inputIOS:{
+                fontFamily:'Gilroy-Medium',
+                color:'#656F85'
+              },
+              inputAndroid:{
+                fontFamily:'GilroyMedium',
+                color:'#656F85'
+              },
+              viewContainer:{
+                padding:Platform.OS == 'ios' ?  16 : 0
+              },
+              placeholder:{
+                fontFamily:'Gilroy-Medium',
+                fontSize:14
+              }
+            }
+          }
+          value={pickerValueSelectedVip}
+          />
+        </View>
 
-                    }
-                    keyExtractor={item => item.id}
-                    style={{ borderRadius: 100, marginTop: 3 }}
-                />
-            </View>
-            : null}
     </View>
-    {/* custom Picker end */}
 
     {
         pickerValueSelectedVip == "Yes" ? (
             <View>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
                     <Input
                         placeholder="$50.00"
                         onChangeText={text => setVipServiceFee(text.replace(/[^0-9]/g, ''))}
@@ -471,7 +529,7 @@ export default function UrlData({ route }) {
         loader={loading}
         onPress={() => handleSubmit()}
     />
-    {show && (
+    {/* {show && (
         <DateTimePicker
             testID="dateTimePicker"
             value={date}
@@ -481,9 +539,19 @@ export default function UrlData({ route }) {
             onChange={onChange}
             minimumDate={new Date()}
         />
-    )}
-    <Text></Text>
+    )} */}
 </ScrollView>
+
+        {show && (
+            <DateTimePickerModal
+                isVisible={show}
+                mode={mode}
+                onConfirm={onChange}
+                onCancel={onCancelTap}
+            />
+        )}
+
+
 </View>
         </SafeAreaView>
     );

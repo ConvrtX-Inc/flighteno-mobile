@@ -24,12 +24,13 @@ export default Input;
 
 const styles = StyleSheet.create({
     input: {
-        height: 50,
+        // height: 50,
         width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         borderRadius: 35,
         alignSelf: 'center',
+        padding:18,
         paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',

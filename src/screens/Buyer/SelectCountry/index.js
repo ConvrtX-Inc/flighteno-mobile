@@ -13,6 +13,7 @@ import { CREATE_ORDER_DETAIL } from '../../../redux/constants';
 import { formatAmount } from '../../../Utility/Utils';
 import TextBold from '../../../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -153,7 +154,8 @@ export default function SelectCountry({ route }) {
     }
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+  <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
             <ScrollView>
 
@@ -164,10 +166,10 @@ export default function SelectCountry({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.selCountry')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('buyerHome.selCountry')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('buyerHome.buyProdFrom')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('buyerHome.buyProdFrom')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -224,7 +226,7 @@ export default function SelectCountry({ route }) {
 
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.delProdTo')}</TextBold>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.delProdTo')}</TextBold>
 
 
                 <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
@@ -281,15 +283,15 @@ export default function SelectCountry({ route }) {
 
 
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.delDate')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, textAlign:'left' }]}>{t('buyerHome.delDate')}</TextBold>
 
 
-                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10,  textAlign: 'justify', marginTop: 20 }]}>
                     Based on country selection we estimate this should be delivered by
                 </TextMedium>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 4) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 4) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
                     {deliveryDay + " " + deliveryDateFormat}
                 </TextBold>
 
@@ -529,6 +531,7 @@ export default function SelectCountry({ route }) {
 
 
         </View>
+        </SafeAreaView>
     );
 
 }

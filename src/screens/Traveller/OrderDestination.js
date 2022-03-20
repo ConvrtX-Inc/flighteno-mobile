@@ -312,8 +312,7 @@ export default function OrderDestination({route}) {
               }
             }
           }
-          value={pickerValueSelected}
-        
+          value={pickerValueSelected}     
           />
         </View>
        
