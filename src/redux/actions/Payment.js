@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { BASE_URL ,PAYMENT_BASE_URL} from '../../BASE_URL/index'
-import { IS_LOADING, LOGIN_DATA } from '../constants';
+import { addCustomerDetails } from '../../services/Stripe/Customer';
+import { IS_LOADING, LOGIN_DATA, UPDATE_CUSTOMER_ID } from '../constants';
 
-export function ConfigureStripeAccount(data, token, navigation) {
+export function ConfigureStripeAccount(data, token, navigation,userDetails) {
 
     console.log("TOKEN",token)
     return async dispatch => {
@@ -18,9 +19,10 @@ export function ConfigureStripeAccount(data, token, navigation) {
         }).catch(error => {
             dispatch({ type: IS_LOADING, isloading: false })
             console.log(error)
-        }).then(Response => {
+        }).then(async Response =>   {
             console.log("RES:",Response.data)
             dispatch({ type: IS_LOADING, isloading: false })
+           
             navigation.navigate('StripeWebView', { url: Response.data.conected_account_id })
         })
     }
