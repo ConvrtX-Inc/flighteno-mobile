@@ -12,6 +12,7 @@ const Input = ({ placeholder, value, onChangeText, secureTextEntry, onPress, loa
                     value={value}
                     onChangeText={onChangeText}
                     secureTextEntry={secureTextEntry}
+                    multiline={false}
                 />
 
             </View>

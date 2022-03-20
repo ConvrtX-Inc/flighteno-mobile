@@ -48,6 +48,8 @@ export default function PaymentAddNewCard({ navigation }) {
                 type: 'error',
                 text1: data.error.message
             })
+
+          
         }
     }
 

@@ -61,7 +61,7 @@ export default function Notifications({ route }) {
                             </View>
                         </TouchableOpacity>
                     }
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item, index) => item + index}
                     ListEmptyComponent={<Text style={styles.emptyListText}>{t('common.noNotifications')}!</Text>}
                 />
                 : null}

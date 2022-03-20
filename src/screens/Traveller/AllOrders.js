@@ -6,8 +6,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import { color } from '../../Utility/Color';
 import { useSelector, useDispatch } from 'react-redux';
 import SearchInput from '../../components/SearchInput';
-import { CheckBox } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Entypo'
+import Input from '../../components/InputField';
+import { CheckBox} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Entypo';
 import { GetTravelerOrders } from '../../redux/actions/Trips';
 import CardOrderUser from '../../components/CardOrderUser';
 import { useTranslation } from 'react-i18next';
@@ -59,6 +60,8 @@ export default function AllOrders() {
     const [ordersByTravler, setOrderByTravler] = useState(travlerOrders)
     const {t} = useTranslation()
 
+
+
     useEffect(() => {
         setOrderByTravler(travlerOrders.reverse())
     }, [travlerOrders])
@@ -66,15 +69,15 @@ export default function AllOrders() {
     useFocusEffect(
         React.useCallback(() => {
             setOrderByTravler(travlerOrders.reverse())
-            ordersListNames.forEach(element => {
-                if (element.name == "All Orders") {
-                    element.checked = true
-                }
-                else {
-                    element.checked = false
-                }
-            });
-            setOrdersListNames([...ordersListNames])
+            // ordersListNames.forEach(element => {
+            //     if (element.name == "All Orders") {
+            //         element.checked = true
+            //     }
+            //     else {
+            //         element.checked = false
+            //     }
+            // });
+            // setOrdersListNames([...ordersListNames])
             var obj = {
                 admin_id: currentUser._id
             }
@@ -120,6 +123,13 @@ export default function AllOrders() {
             />
         </TouchableOpacity>
 
+
+        {showFilter && 
+        (
+            <FilterView/>
+        )}
+         
+
         <View style={Styles.header}>
             <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</TextBold>
             <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
@@ -132,7 +142,46 @@ export default function AllOrders() {
         </>
     )
 
+    const FilterView  = () => (
+        <SafeAreaView style={{
+            display:'flex',
+            flex:1,
+            // position:'absolute',
+            width:'100%',
+            height:'100%',
+            backgroundColor:'#fff',
+        }}>
+            <View style={{flex:1, marginLeft:18, marginRight:18}}>
+                <TouchableOpacity
+                    onPress={() => setShowFilter(false)}
+                >
+                    <Icon name="cross" size={35} style={{margin: 0}} />
+                </TouchableOpacity>
+                <TextBold style={{fontSize:26}}>Filter</TextBold>
+                <SearchInput/>
+
+                {ordersList.map((item, index) => {
+                    return (
+                    <View style={{flex:1, flexDirection: 'row', justifyContent:'space-between', marginTop:16}} key={index}>
+                        <TextMedium style={{fontSize:16}}>{item?.name}</TextMedium>
+                        <CheckBox
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle"
+                            checkedColor={color.blueColor}
+                            containerStyle={{padding: 0, margin: 0}}
+                            checked={item?.checked}
+                            onPress={() => selectStore(index)}
+                        />
+                </View>
+                    )
+                })}
+
+            </View>
+        </SafeAreaView>
+    )
+
     return (
+        <>
         <SafeAreaView>
             <FlatList
                 data={ordersByTravler}
@@ -142,9 +191,12 @@ export default function AllOrders() {
                         <CardOrderUser order={item.orderAsTraveler[0]} />
                     </TouchableOpacity>
                 }
-                keyExtractor={item => item.id}
+                keyExtractor={(item,index) => item + index}
             />
+
+           
         </SafeAreaView>
+        </>
     );
 
 }

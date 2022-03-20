@@ -257,6 +257,7 @@ export default function OrderDestination({route}) {
     setShowImageView(true);
   };
 
+
   return (
     <View style={{flex: 1, backgroundColor: color.backgroundColor}}>
       <ViewImages
@@ -312,6 +313,7 @@ export default function OrderDestination({route}) {
             }
           }
           value={pickerValueSelected}
+        
           />
         </View>
        

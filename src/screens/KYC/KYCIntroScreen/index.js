@@ -25,7 +25,11 @@ export default function KYCIntroScreen({navigation}){
     return(
         <>
         <SafeAreaView style={{flex:1}}>
-        <View style={styles.container}>
+            <View style={{marginLeft:18, marginRight:18}}>
+                <ButtonLarge loader={false} title={t('kyc.getStarted')} onPress={onGetStartedTap} />
+            </View>
+            
+        {/* <View style={[styles.container, {marginLeft:18, marginRight:18}]}>
                 <View style={styles.content}>
                     <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
                     <TextExtraBold style={styles.title}>{t('kyc.accountNotVer')}</TextExtraBold>
@@ -39,7 +43,7 @@ export default function KYCIntroScreen({navigation}){
                 <View style={styles.btnGetStarted}>
                     <ButtonLarge loader={false} title={t('kyc.getStarted')} onPress={onGetStartedTap} />
                 </View> 
-            </View>
+            </View> */}
         </SafeAreaView>
 
         </> 

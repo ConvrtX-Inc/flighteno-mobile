@@ -306,7 +306,6 @@ export default function MyTravel({ route }) {
                     <TextMedium style={[styles.countryNameCSS]}>{pickerValueSelectedCityDeliver}</TextMedium>
                 </View>
 
-
             </View>
 
             <View style={[styles.travelDateContainer, {marginTop:0}]}>
@@ -365,6 +364,10 @@ export default function MyTravel({ route }) {
 
         </>
     )
+
+    const onCancelTap = () => {
+        setShow(false);
+    }
 
     return (
         <View style={[styles.ScreenCss, { marginLeft: 18, marginRight: 18 }]}>
@@ -523,6 +526,7 @@ export default function MyTravel({ route }) {
                 isVisible={show}
                 mode='date'
                 onConfirm={onChange}
+                onCancel={onCancelTap}
             />
             {/* <DateTimePickerModal
         isVisible={isDatePickerVisible}
