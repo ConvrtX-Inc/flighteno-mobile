@@ -97,23 +97,21 @@ const BottomTab = ({ route }) => {
 
                 style: {
                     padding: 5,
-                    height:80,
+                    height: 80,
                     paddingBottom:8,
                     paddingTop:8,
                     backgroundColor:color.backgroundColor,
                     borderTopLeftRadius: 15,
                     borderTopRightRadius: 15,
                     borderTopWidth:0,
-               
                     shadowRadius: Platform.OS ==='ios' ?  14 : 2,
                     shadowOffset: {
                       width: 0,
                       height: Platform.OS === 'ios' ? -4 : -8,
                     },
-                   
                     shadowColor: '#000000',
                     shadowOpacity: Platform.OS === 'ios' ?  0.5 : 1.0,
-                    elevation: 18,
+                    elevation: 10,
                 },
                
                 keyboardHidesTabBar: true,

@@ -26,15 +26,19 @@ export async function createToken(cardDetails) {
             method: 'post',
             url: `${STRIPE_BASE_URL}/tokens`,
             data: formData,
-            // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+            headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
              validateStatus: (status) => {
                 return true;
             },
-        });
+        }).catch((error) => {
+            console.log(error.message)
+        })
 
         return response.data;
 
     } catch (err) {
+
+        console.log(err)
         return err;
     }
 }
@@ -59,7 +63,7 @@ export async function createCard(cardDetails, customerID) {
                 method: 'post',
                 url: `${STRIPE_BASE_URL}/customers/${customerID}/sources`,
                 data: formData,
-                // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+                headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
             
                 validateStatus: (status) => {
                     return true;
@@ -110,7 +114,7 @@ export async function removeCard(cardId, customerID) {
         const response = await axios({
             method: 'delete',
             url: `${STRIPE_BASE_URL}/customers/${customerID}/sources/${cardId}`,
-            // headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
+            headers: { "Authorization": `Bearer ${STRIPE_SECRET_KEY}`, "content-type": "application/x-www-form-urlencoded" },
          
             validateStatus: (status) => {
                 return true;

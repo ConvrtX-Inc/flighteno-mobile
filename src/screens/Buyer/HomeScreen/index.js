@@ -204,11 +204,10 @@ export default function HomeScreen({navigation}) {
                     </View>
 
 
-
                     <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterUrl')}</TextBold>
 
                     <InputImag
-                        placeholder="https://www.amazon.com/s?bbn"
+                        placeholder="https://www.ebay.com/itm/"
                         onChangeText={text => setUrl(text)}
                         value={url}
                         onPress={() => goToUrl()}

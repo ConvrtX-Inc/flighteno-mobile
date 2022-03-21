@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { SOCKET_URL, PAYMENT_BASE_URL } from '../../BASE_URL';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextBold from '../../components/atoms/TextBold';
-// import { STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY } from '@env'
+import { STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY } from '@env'
 import PaymentMethodModal from '../../components/PaymentMethodModal';
 
 

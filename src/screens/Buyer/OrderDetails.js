@@ -308,7 +308,12 @@ export default function OrderDetails({ route }) {
 
                     {/* Order history */}
                     <View style={{marginLeft:16, marginRight:16, marginTop:16}}>
-                        <FlatList
+                        { orderHistory.map((item,index) => {
+                            return (
+                                 <TextMedium style={{color:color.countrtTextColor}} key={index} >{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
+                            )
+                        }) }
+                        {/* <FlatList
                             data={orderHistory}
                             keyExtractor={(item,index) => item + index}
                             nestedScrollEnabled={true}
@@ -317,7 +322,7 @@ export default function OrderDetails({ route }) {
                                     <TextMedium style={{color:color.countrtTextColor}}>{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
                                 )
                             }}
-                        />
+                        /> */}
                     </View>
 
 

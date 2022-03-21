@@ -473,7 +473,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     quantityContainer: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         flexDirection: 'row'
     },
@@ -498,7 +498,8 @@ export const styles = StyleSheet.create({
     ////////////////////////////////////////////////////OrderDetail Screen///////////////////////////////////
     productImg: {
         height: (windowWidth * 58) / 100,
-        width: (windowWidth * 90) / 100,
+        // width: (windowWidth * 90) / 100,
+        width:'100%',
         alignSelf: 'center',
         borderRadius: (windowWidth * 3) / 100,
         marginTop: 28,
@@ -507,12 +508,12 @@ export const styles = StyleSheet.create({
     subHeading: {
         fontSize: 17,
         width: (windowWidth * 90) / 100,
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
     },
     productDesc: {
         flexDirection: 'row',
-        width: '90%',
-        alignSelf: 'center',
+        // width: '90%',
+        // alignSelf: 'center',
         marginTop: 20,
     },
     productDescInerFirst: {
@@ -566,17 +567,17 @@ export const styles = StyleSheet.create({
     modalView: {
         // margin: 20,
         backgroundColor: "white",
-        borderRadius: 20,
+        // borderRadius: 20,
         padding: 30,
         // alignItems: "center",
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 4,
+        // elevation: 5,
         height: '100%'
     },
     button: {
@@ -630,7 +631,7 @@ export const styles = StyleSheet.create({
     },
     orderNumberIst: {
         width: '54%',
-        marginLeft: '5%',
+        // marginLeft: '5%',
         // backgroundColor: 'pink',
         marginTop: (windowWidth * 6) / 100,
 
@@ -651,7 +652,7 @@ export const styles = StyleSheet.create({
     },
     billLeft: {
         width: '54%',
-        marginLeft: '5%',
+   
         // backgroundColor: 'pink',
         marginTop: (windowWidth * 4) / 100,
     },

@@ -58,7 +58,7 @@ export default function MyOrdersList({ route }) {
             <CardOrder order={item}></CardOrder>
         </TouchableOpacity>
     }
-    keyExtractor={item => item.id}
+    keyExtractor={(item,index) => item + index }
     ListEmptyComponent={<TextBold style={styles.emptyListText}>
         {t('common.thereAreNo')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')}  {t('track.orders').toLowerCase()}!
     </TextBold>}

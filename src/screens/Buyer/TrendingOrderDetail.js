@@ -26,7 +26,7 @@ const TrendingOrderDetail = ({ route }) => {
     }]
     return (
         <SafeAreaView style={{flex:1}}>
-   <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+   <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
             <ViewImages
                 showImageViewer={showProductPic}
                 images={imageProduct}
@@ -40,7 +40,7 @@ const TrendingOrderDetail = ({ route }) => {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>{order.name}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100 }]}>{order.name}</TextBold>
                 <View style={Styles.bottomView}>
                     <TouchableHighlight underlayColor="transparent" onPress={() => setShowProductPic(true)}>
                         <Image resizeMode='contain' source={{ uri: order.product_image }}

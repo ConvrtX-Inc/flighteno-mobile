@@ -10,6 +10,7 @@ import { formatAmount } from '../../../Utility/Utils';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -36,9 +37,9 @@ export default function Congratulation({ route }) {
     }, []);
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
 
-            <ScrollView>
+            <ScrollView  style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
                 <TouchableOpacity onPress={() => navigation.navigate("BottomTab", {screen: "Home"})}>
                     <Image
@@ -186,12 +187,7 @@ export default function Congratulation({ route }) {
 
             </ScrollView>
 
-
-
-
-
-
-        </View>
+        </SafeAreaView>
     );
 
 }
