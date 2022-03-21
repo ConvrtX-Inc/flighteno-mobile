@@ -116,7 +116,7 @@ export default function OrderDetail() {
 
     return (
         <SafeAreaView style={{flex:1}}>
-<View style={styles.ScreenCss}>
+<View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
 <ScrollView>
 
@@ -127,7 +127,7 @@ export default function OrderDetail() {
             source={require('../../../images/back.png')}
         />
     </TouchableOpacity>
-    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('buyerHome.orderDetails')}</TextBold>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('buyerHome.orderDetails')}</TextBold>
 
     {global.productImage.url ?
         <Image
@@ -146,7 +146,7 @@ export default function OrderDetail() {
 
     <TextBold style={styles.subHeading}>{buyerOrderData.prodect_name}</TextBold>
 
-    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
+    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, textAlign: 'justify', marginTop: 20 }]}>
         {buyerOrderData.product_discription}
     </TextMedium>
 
@@ -185,7 +185,7 @@ export default function OrderDetail() {
             onPress={() => setChecked(!checked)}
         />
 
-        <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Open box and check physical Apperance</TextMedium>
+        <TextMedium style={[styles.termAgreeText, { marginTop: 17, fontWeight: 'normal', color: color.countrtTextColor, }]}>Open box and check physical Apperance</TextMedium>
     </View>
 
     <View style={[styles.agreeTermContainer, { marginTop: -10 }]}>
@@ -200,7 +200,7 @@ export default function OrderDetail() {
             onPress={() => setUseForTesting(!useForTesting)}
         />
 
-        <TextMedium style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</TextMedium>
+        <TextMedium style={[styles.termAgreeText, { marginTop: 17, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</TextMedium>
     </View>
 
     <View style={{ marginVertical: 15 }}>                    
@@ -229,26 +229,7 @@ export default function OrderDetail() {
         />
     </View>
 
-    {/* <View style={{ marginBottom: 30, }}>
-        <ButtonDisable
-            title="Continue"
-            loader={loading}
-            onPress={() => navigation.navigate("OrderDetail")}
-        />
-    </View>
-    <View style={{ marginBottom: 30, }}>
-        <ButtonVerify
-            title="Verify Account"
-            loader={loading}
-            onPress={() => navigation.navigate("OrderDetail")}
-        />
-    </View> */}
 </ScrollView>
-
-
-
-
-
 
 </View>
         </SafeAreaView>

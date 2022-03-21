@@ -498,7 +498,8 @@ export const styles = StyleSheet.create({
     ////////////////////////////////////////////////////OrderDetail Screen///////////////////////////////////
     productImg: {
         height: (windowWidth * 58) / 100,
-        width: (windowWidth * 90) / 100,
+        // width: (windowWidth * 90) / 100,
+        width:'100%',
         alignSelf: 'center',
         borderRadius: (windowWidth * 3) / 100,
         marginTop: 28,
@@ -630,7 +631,7 @@ export const styles = StyleSheet.create({
     },
     orderNumberIst: {
         width: '54%',
-        marginLeft: '5%',
+        // marginLeft: '5%',
         // backgroundColor: 'pink',
         marginTop: (windowWidth * 6) / 100,
 
