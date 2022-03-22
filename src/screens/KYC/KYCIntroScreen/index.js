@@ -21,12 +21,20 @@ export default function KYCIntroScreen({navigation}){
         {text:t('kyc.cancel')}])
     }
 
-
     return(
         <>
         <SafeAreaView style={{flex:1}}>
             <View style={{marginLeft:18, marginRight:18}}>
-                <ButtonLarge loader={false} title={t('kyc.getStarted')} onPress={onGetStartedTap} />
+                <View style={{ alignItems:'center'}}>
+                    <Image source={require('../../../images/logoTxt.png')} style={styles.logoTxt} />
+                    <TextExtraBold style={styles.title}>{t('kyc.accountNotVer')}</TextExtraBold>
+                    <TextMedium style={styles.desc}>{t('kyc.completeProf')}</TextMedium>
+                    <Image source={require('../../../images/kycVerification.png')}  style={styles.kycImage} />
+                </View>
+                 <View style={{marginTop:24}}>
+                    <ButtonLarge loader={false} title={t('kyc.getStarted')} onPress={onGetStartedTap} />
+                 </View>
+                
             </View>
             
         {/* <View style={[styles.container, {marginLeft:18, marginRight:18}]}>

@@ -1,11 +1,13 @@
 import React, {useRef, useState} from 'react';
-import { Text, StyleSheet, View, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, StyleSheet, View, Image, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
 import { color } from '../../../Utility/Color';
 import { styles } from './styles';
 import ImageEditor from "@react-native-community/image-editor";
+import { generateImagePublicURLFirebase } from '../../../Utility/Utils';
+import storage from '@react-native-firebase/storage';
 
 export default function KYCSelectIDCameraScreen ({navigation,route}){
 
@@ -24,6 +26,8 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
     const [isRetake, setRetake] = useState(true)
     const [imgWidth, setImgWidth] = useState(windowWidth)
     const [imgHeight, setImgHeight] = useState(windowWidth/2)
+    const [transferred, setTransferred] = useState('')
+    const [isLoading, setLoading] = useState(false)
 
     const [type,setType] = useState('back')
     
@@ -65,13 +69,76 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
     }
 
     const onSendTap = () => {
+
+        uploadImgToFirebase(photo)
+
+        // if(isFrontID){
+        //     navigation.navigate('KYCSelectID', {frontImg:  photo})
+        // }else{
+        //     navigation.navigate('KYCSelectID', {backImg: photo})
+        // }
+
+        // console.log(photo)
+
+        uploadImgToFirebase(photo)
+
        
-        if(isFrontID){
-            navigation.navigate('KYCSelectID', {frontImg:  photo})
-        }else{
-            navigation.navigate('KYCSelectID', {backImg: photo})
+    }
+
+    
+    const uploadImgToFirebase = async (uri) => {
+
+       let ctr = 0
+        const filename = uri.substring(uri.lastIndexOf('/') + 1)
+        const uploadUri = Platform.OS === 'ios' ? uri.replace('file://','') : uri
+        const task = storage()
+                .ref(`${filename}`)
+                .putFile(`${uploadUri}`
+                )
+
+        setLoading(true)
+        task.on('state_changed', snapshot => {
+
+            const percentUploaded = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) *100)
+            
+            setTransferred(percentUploaded)
+            // setTransferred(Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 1000)
+           
+        })
+
+    
+        try {
+            const resImg = await task
+           
+            const idImage = generateImagePublicURLFirebase(resImg.metadata.name)
+
+            
+            if(transferred == 100){
+                setLoading(false)
+
+                console.log(idImage)
+
+                // if(isFrontID){
+                //     navigation.navigate('KYCSelectID', {frontImg:  idImage})
+                // }else{
+                //     navigation.navigate('KYCSelectID', {backImg: idImage})
+                // }
+
+            }
+
+
+            // if(transferred == 100){
+            //     kyc.profile_image = userImage
+            //     navigation.navigate('KYCFillOut',{ kyc:kyc })
+            // }
+
+
+            ctr++
+
+        }catch(e){
+            console.log('errooooorrrrr', e);
         }
-       
+
     }
 
     return (
@@ -85,7 +152,7 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
                 }
               
                 <TouchableOpacity style={[styles.btnWrapper, {alignItems:'flex-end', marginRight:18}]} onPress={onSendTap}>
-                   <Image source={sendImg} style={styles.sendImg}  />
+                   {isLoading ?  <ActivityIndicator animating={isLoading} /> :  <Image source={sendImg} style={styles.sendImg}  />  }
                 </TouchableOpacity>
             </View>
             

@@ -13,6 +13,8 @@ import Toast from 'react-native-toast-message';
 import TextBold from '../../../components/atoms/TextBold';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function KYCFillOutScreen ({navigation,route}){
 
@@ -44,7 +46,6 @@ export default function KYCFillOutScreen ({navigation,route}){
         const currentDate = event?.timestamp || birthdate
         // setDateValue(moment(currentDate).format("MM/DD/YYYY"))
         setBirthDateValue(moment(currentDate).format("MM/DD/YYYY"))
-        // setDate(event?.timestamp)
         setBirthDate(event?.timestamp)
     }
 
@@ -63,7 +64,6 @@ export default function KYCFillOutScreen ({navigation,route}){
         kyc.addressLine2 = addressLine2
         kyc.birthdate = birthdate
         kyc.phone = formattedPhone
-
        
 
         // const checkValid = phoneInput.current?.isValidNumber(cellno)
@@ -94,8 +94,13 @@ export default function KYCFillOutScreen ({navigation,route}){
     
     }
 
+    const onCancelTap = () => {
+
+    }
+
     return(
-        <ScrollView  style={styles.container}>
+        <SafeAreaView style={{flex:1}}>
+            <ScrollView  style={styles.container}>
             <View>
                 <TextBold style={[styles.titleTxt,  {textAlign:'left'}]}>{t('kyc.fillOutInfo')}</TextBold>
                 <View style={styles.stepsIndicator}>
@@ -169,22 +174,15 @@ export default function KYCFillOutScreen ({navigation,route}){
                 </View>
 
 
-                {onDatePickerShow  && (
-                    <DateTimePicker
-                        testID='dateTimePicker'
-                        value={birthdate ?? new Date()}
-                        mode='date'
-                        maximumDate={moment().subtract(18,'years').toDate()}
-                        display='calendar'
-                        // onChange={onDatePickerChange}
-                        onChange={({nativeEvent}) => {
-                            // console.log(nativeEvent)
-                            onDatePickerChange(nativeEvent)
-                        }}
-                    />
-                )}
+                <DateTimePickerModal
+                    isVisible={onDatePickerShow}
+                    mode='date'
+                    onCancel={onCancelTap}
+                    onConfirm={onDatePickerChange}
+                />
 
             </View>
         </ScrollView>
+        </SafeAreaView>
     )
 }

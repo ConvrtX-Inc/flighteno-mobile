@@ -315,38 +315,6 @@ export default function OrderDestination({route}) {
           value={pickerValueSelected}     
           />
         </View>
-       
-            
-              
-              {/* <View style={[styles.pickerVIew, {marginTop:16}]}>
-              <DropdownList
-              // title='List'
-              title=''
-              custom
-              items={pickerValues}
-              defaultValue={pickerValueSelected}
-              onChange={(value) => {  
-                setPickerValueSelected(value)
-              }}
-               customStyleContainer={{
-                containerLight: {
-                  backgroundColor: '#fff',
-                  borderColor: 'transparent',
-                  borderBottomWidth: 0,
-                   
-                },
-              }}
-              customStyleFieldText={{
-                fieldTextLight: {
-                  fontFamily: 'Gilroy-Medium',
-                  fontSize: 14,
-                  marginLeft:0
-                }
-              }}
-            /> */}
-
-            {/* <Dropdown /> */}
-          {/* </View> */}
             
 
 
@@ -509,9 +477,6 @@ export default function OrderDestination({route}) {
                                 </TextSemiBold>
                             </TouchableOpacity>
                         </View>
-       
-
-           
 
             <View style={{marginTop:32}}>
               <ButtonLarge title='Reset' onPress={resetFilter} loader={resetLoading} />
