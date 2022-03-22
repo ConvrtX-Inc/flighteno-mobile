@@ -122,7 +122,7 @@ export default function OrderDetails({ route }) {
 
     return (
         <SafeAreaView style={{flex:1}} >
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
             <ViewImages
                 showImageViewer={showProductPic}
                 images={imageProduct}
@@ -141,7 +141,7 @@ export default function OrderDetails({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('track.orderDetails')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('track.orderDetails')}</TextBold>
                 {order?.admin_id?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
@@ -269,7 +269,7 @@ export default function OrderDetails({ route }) {
 
                 </View>
                 <View>
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
                     {t('track.picOfProd')}
                     </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.new_image ? true : false}
@@ -287,7 +287,7 @@ export default function OrderDetails({ route }) {
                             />
                         }
                     </TouchableOpacity>
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
                         {t('track.prodReceipt')}
                     </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.recipt ? true : false}
@@ -307,7 +307,7 @@ export default function OrderDetails({ route }) {
                     </TouchableOpacity>
 
                     {/* Order history */}
-                    <View style={{marginLeft:16, marginRight:16, marginTop:16}}>
+                    <View style={{ marginTop:16}}>
                         { orderHistory.map((item,index) => {
                             return (
                                  <TextMedium style={{color:color.countrtTextColor}} key={index} >{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
@@ -413,13 +413,13 @@ const Styles = StyleSheet.create({
     },
     userView: {
         flexDirection: 'row',
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
         marginVertical: 20,
         alignItems: 'center'
     },
     productImageContainer: {
         height: 200,
-        width: '90%',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
