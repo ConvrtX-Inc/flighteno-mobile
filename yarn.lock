@@ -6917,6 +6917,11 @@ react-native-elements@^3.4.2:
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
 
+react-native-face-detection@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-face-detection/-/react-native-face-detection-0.1.1.tgz#626b1804e0d5b718313fc0486d333167e4df3396"
+  integrity sha512-OceKwx+0eqEJXRkv5RlULEo766bd2MGPf0MAIwytUdeIIqDuPwGxF8ZqOg4FgzvIvYylIp5S8oMspWOYVdcc9w==
+
 react-native-fast-image@^8.5.4:
   version "8.5.11"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"

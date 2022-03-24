@@ -1,20 +1,25 @@
 import React, { useRef, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Platform, ScrollView, Text, View } from 'react-native';
 import {RNCamera, FaceDetector} from 'react-native-camera';
 import StepsIndicator from '../../../components/StepsIndicator';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { styles } from './styles';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
-import { imgToBase64 } from '../../../Utility/Utils';
+import { generateImagePublicURLFirebase, generateUID, imgToBase64 } from '../../../Utility/Utils';
 import { useTranslation } from 'react-i18next';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { RNS3 } from 'react-native-aws3';
+import storage from '@react-native-firebase/storage';
 
 export default function KYCSelfieVerificationCameraScreen({navigation, route}){
 
     const cameraRef = useRef()
     const [canDetectFaces,setCanDetectFaces] = useState(false)
     const [cameraProgress, setCameraProgress] = useState(0)
+    const [transferred, setTransferred] = useState('')
+    const [uploadedCount, setUploadedCount] = useState('')
+    const [userImage, setUserImage] = useState('')
     const { kyc } = route.params
     const {t} = useTranslation()
 
@@ -27,6 +32,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
             setCameraProgress(100)
             takePicture()
         }
+
       
     }
 
@@ -37,19 +43,58 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
             const source = data.uri;
 
             if (source) {
+
                 await cameraRef.current.pausePreview();
 
-                imgToBase64(source).then((data) => {
-                    kyc.profile_image = data
-                })
-                
-                navigation.navigate('KYCFillOut',{ kyc:kyc })
+                uploadImgToFirebase(source)
+
+                // navigation.navigate('KYCFillOut',{ kyc:kyc })
                
             }
         }
     }
 
+    const uploadImgToFirebase = async (uri) => {
+       
+        let ctr = 0
+        const filename = uri.substring(uri.lastIndexOf('/') + 1)
+        const uploadUri = Platform.OS === 'ios' ? uri.replace('file://','') : uri
+        const task = storage()
+                .ref(`${filename}`)
+                .putFile(`${uploadUri}`
+                )
+
+        task.on('state_changed', snapshot => {
+
+            const percentUploaded = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) *100)
+            
+            setTransferred(percentUploaded)
+            // setTransferred(Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 1000)
+           
+        })
+
+    
+        try {
+            const resImg = await task
+           
+            const userImage = generateImagePublicURLFirebase(resImg.metadata.name)
+
+            kyc.profile_image = userImage
+            navigation.navigate('KYCFillOut',{ kyc:kyc })
+
+
+            ctr++
+
+        }catch(e){
+            console.log('errooooorrrrr', e);
+        }
+
+    }
+
     return (
+        <SafeAreaView style={{flex:1}}>
+            
+     
         <ScrollView style={styles.container}>
             <View>
                 <TextBold style={[styles.titleTxt, {textAlign:'left'}]}>{t('kyc.selfieVer')}</TextBold>
@@ -66,7 +111,7 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
                         <AnimatedCircularProgress
                             size={313}
                             width={6}
-                            fill={cameraProgress}
+                            fill={transferred}
                             tintColor="#F2BA39"
                             backgroundColor="#CDCDCD"
                             >
@@ -94,9 +139,8 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
                                             setCanDetectFaces(true)
                                         }}
                                         onPictureTaken={() => {
-                                            navigation.navigate('KYCFillOut', {kyc:kyc })
+                                            // navigation.navigate('KYCFillOut', {kyc:kyc })
                                         }}
-                                  
                                         // onFacesDetected={canDetectFaces ? facesDetected : null}
                                         onFacesDetected={canDetectFaces? facesDetected : null}
                                         onFaceDetectionError={error => console.log('FDError', error)}
@@ -112,5 +156,6 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
             </View>
 
         </ScrollView>
+           </SafeAreaView>
     )
 }

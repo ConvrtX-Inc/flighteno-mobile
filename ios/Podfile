@@ -7,6 +7,9 @@ target 'flighteno' do
 
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
+    'FaceDetectorMLKit'
+  ]
 
   config = use_native_modules!
 
