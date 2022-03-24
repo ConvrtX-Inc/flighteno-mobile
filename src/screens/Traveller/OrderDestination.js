@@ -429,7 +429,7 @@ export default function OrderDestination({route}) {
             
 
             {/* SORT */}
-            
+
 
             <View style={{ alignSelf: 'center', width:'100%', marginTop:24 }}>
                             <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.sort')}</TextBold>
@@ -448,14 +448,14 @@ export default function OrderDestination({route}) {
                                     {t('travelHome.recentAdded')}
                                 </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(3, 'product_price', -1)}
+                            <TouchableOpacity onPress={() => selectRange(3, 'product_price', 1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 3 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
                                    {t('buyerHome.price')} ({t('travelHome.low')} - {t('travelHome.high')})
                                 </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(4, 'product_price', 1)}
+                            <TouchableOpacity onPress={() => selectRange(4, 'product_price', -1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 4 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
@@ -469,7 +469,7 @@ export default function OrderDestination({route}) {
                                    {t('travelHome.delFee')} ({t('travelHome.low')} - {t('travelHome.high')})
                                 </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(6, 'estimated_dilivery_fee', +1)}
+                            <TouchableOpacity onPress={() => selectRange(6, 'estimated_dilivery_fee', 1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 6 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>

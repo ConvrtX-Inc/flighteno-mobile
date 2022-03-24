@@ -6,6 +6,7 @@ import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import TextBold from '../../../components/atoms/TextBold';
 import ButtonLarge from '../../../components/ButtonLarge';
+import { stripeVerification } from '../../../redux/actions/Auth';
 import { VerifyAccount} from '../../../redux/actions/KYC';
 import { IS_LOADING } from '../../../redux/constants';
 import { generateUID } from '../../../Utility/Utils';
@@ -39,42 +40,16 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
             phone_number: kyc?.phone
         }   
 
-
       
         dispatch({ type: IS_LOADING, isloading: true })
         dispatch(VerifyAccount(token,kycRequest,() => {
-
-            navigation.navigate('Profile')
+            
+            dispatch(stripeVerification(token))
+            // navigation.navigate('Profile')
 
         }))   
 
     }
-
-    //for future reference on uploading photos to S3
-    // const uploadPhotos = () => {
-        
-    //         dispatch({ type: IS_LOADING, isloading: true })
-         
-    //         const file = {
-    //                 uri: kyc?.backPic,
-    //                 name: generateUID() + ".jpg",
-    //                 type: 'image/jpeg'
-    //         }
-    //         const options = {
-    //             keyPrefix: "flighteno/reviews/",
-    //             bucket: "memee-bucket",
-    //             region: "eu-central-1",
-    //             accessKey: "AKIA2YJH3TLHCODGDKFV",
-    //             secretKey: "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",
-    //             successActionStatus: 201
-    //         }
-    //             RNS3.put(file, options).then(response => {
-    //                 if (response.status !== 201)
-    //                     throw new Error("Failed to upload image to S3");
-    //                 else
-    //                     console.log(response?.body)
-    //         });
-    // }
 
     return(
         <ScrollView style={styles.container}>

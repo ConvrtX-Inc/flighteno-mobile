@@ -46,10 +46,10 @@ export default function OrderDetails({ route }) {
     }
 
     useEffect(() => {
+
         if (order.rated_admin_id) {
             setRated(order.rated_admin_id.find(check))
         }
-
 
         // fix for flight-45
         var obj = {
@@ -62,8 +62,6 @@ export default function OrderDetails({ route }) {
             setTraveler(data)
         }))
 
-        // console.log(order)
-
         const orderRequest = {
             admin_id:order?.admin_id,
             order_id:order?._id 
@@ -73,16 +71,13 @@ export default function OrderDetails({ route }) {
             // console.log(data)
         },(orderHistory) => {
             setOrderHistory(orderHistory)
-            // console.log()
-          
-        }))
-      
+        }))      
      
 
     }, [])
 
-
     function cancelOrder() {
+
         var obj = {
             admin_id: currentUser?._id,
             order_id: order?._id
@@ -145,7 +140,7 @@ export default function OrderDetails({ route }) {
                 {order?.admin_id?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
-                            source={traveler?.profile_image ? { uri: 'data:image/png;base64,'+traveler?.profile_image } : require('../../images/manProfile.png')}
+                            source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
                             style={styles.profileImage}
                         />
                         <View style={{alignItems:'flex-start', paddingLeft:16}}>

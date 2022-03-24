@@ -55,7 +55,7 @@ export default function  KYCSelectIDScreen ({navigation,route}){
             })
             
         }else{  
-
+            
             const kycForm = {idNo: idNo, idType: pickerSelected, frontPic: imgFrontBase64, backPic: imgBackBase64}
 
             imgToBase64(frontPicture).then((data) => {

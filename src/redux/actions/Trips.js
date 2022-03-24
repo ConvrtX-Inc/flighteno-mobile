@@ -105,7 +105,7 @@ export function UserOrders(token, data, hideFilter) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
                         dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-                        console.log(Response.data.orders)
+                     
                         // dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
                     }
                 }
@@ -159,7 +159,7 @@ export function FilterResetOrders(token, data, hideFilter) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
                         dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-                        console.log(Response.data.orders)
+                     
                         // dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
                     }
                 }

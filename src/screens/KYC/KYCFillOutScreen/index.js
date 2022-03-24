@@ -179,6 +179,7 @@ export default function KYCFillOutScreen ({navigation,route}){
                     mode='date'
                     onCancel={onCancelTap}
                     onConfirm={onDatePickerChange}
+                    
                 />
 
             </View>

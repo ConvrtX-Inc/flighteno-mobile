@@ -79,10 +79,8 @@ export default function KYCSelfieVerificationCameraScreen({navigation, route}){
            
             const userImage = generateImagePublicURLFirebase(resImg.metadata.name)
 
-            if(transferred == 100){
-                kyc.profile_image = userImage
-                navigation.navigate('KYCFillOut',{ kyc:kyc })
-            }
+            kyc.profile_image = userImage
+            navigation.navigate('KYCFillOut',{ kyc:kyc })
 
 
             ctr++

@@ -15,6 +15,23 @@ import {
 import Toast from 'react-native-toast-message';
 
 
+export function stripeVerification (token) {
+    return async dispatch => {
+        axios({
+            method:'POST',
+            url: `${BASE_URL}Rest_calls/createverificationsession`,
+            headers: { "Authorization": token },
+            validateStatus : (status) => {
+                return true
+            }
+        }).catch(error => {
+            console.log('error', error)
+        }).then(Response => {
+            console.log(Response.data)
+        })
+    }
+}
+
 export function registerUserFN(data, removeStates, saveToken) {
     var obj = {
         full_name: data._parts[0][1],
