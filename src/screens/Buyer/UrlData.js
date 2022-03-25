@@ -243,7 +243,6 @@ export default function UrlData({ route }) {
     return (
         <SafeAreaView style={{flex:1}}>
               <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
-
 <ScrollView>
 
     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -273,32 +272,33 @@ export default function UrlData({ route }) {
 
     <View>
 
-            <View style={styles.pickerVIew}>
-        <RNPickerSelect
-            onValueChange={(value) => {
-                setPickerValueSelected(value)
-            }}
-            items={pickerValues}
-            style={{
-              inputIOS:{
-                fontFamily:'Gilroy-Medium',
-                color:'#656F85'
-              },
-              inputAndroid:{
-                fontFamily:'GilroyMedium',
-                color:'#656F85'
-              },
-              viewContainer:{
-                padding:Platform.OS == 'ios' ?  16 : 0
-              },
-              placeholder:{
-                fontFamily:'Gilroy-Medium',
-                fontSize:14
-              }
-            }
-          }
-          value={pickerValueSelected}
-          />
+        <View style={{ borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35}}>
+            <RNPickerSelect
+                onValueChange={(value) => {
+                    setPickerValueSelected(value)
+                }}
+                items={pickerValues}
+                // style={{
+                //     inputIOS:{
+                //         fontFamily:'Gilroy-Medium',
+                //         color:'#656F85'
+                //     },
+                //     inputAndroid:{
+                //         fontFamily:'GilroyMedium',
+                //         color:'#656F85'
+                //     },
+                //     viewContainer:{
+                //         padding:Platform.OS == 'ios' ?  16 : 0
+                //     },
+                //     placeholder:{
+                //         fontFamily:'Gilroy-Medium',
+                //         fontSize:14
+                //     }
+                // }
+                // }
+                // useNativeAndroidPickerStyle={true}
+                // value={pickerValueSelected}
+            />
             </View>
         
         {/* <Pressable onPress={() => setPickerShow(!pickerShow)}>
@@ -475,7 +475,7 @@ export default function UrlData({ route }) {
                 </View>
             </View>
         </Pressable> */}
-        <View  style={styles.pickerVIew}>
+        <View  style={{borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35}}>
                 <RNPickerSelect
             onValueChange={(value) => {
                 // setPickerValueSelected(value)

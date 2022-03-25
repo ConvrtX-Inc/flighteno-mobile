@@ -289,7 +289,6 @@ export default function OrderDestination({route}) {
             </TextSemiBold>
 
 
-
           <View style={[ Platform.OS == 'ios' ? styles.pickerVIew : styles.pickerAndroidView, {marginTop:16}]}>
            <RNPickerSelect
             onValueChange={setPickerValueSelected}
@@ -491,8 +490,6 @@ export default function OrderDestination({route}) {
               />
             </View>                  
 
-
-           
            
           </ScrollView>
         </>

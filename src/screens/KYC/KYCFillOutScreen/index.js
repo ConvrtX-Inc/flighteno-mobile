@@ -134,7 +134,7 @@ export default function KYCFillOutScreen ({navigation,route}){
 
                 <View style={styles.textField}>
                     <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.addrsLine2')}</TextBold>
-                    <InputText style={styles.inputTxt} placeholder='Toronto ON M4L 1V3(Toronto, Ontoario)' value={addressLine2} onChangeText={setAddressLine2} />
+                    <InputText style={styles.inputTxt} placeholders='Toronto ON M4L 1V3(Toronto, Ontoario)' value={addressLine2} onChangeText={setAddressLine2} />
                 </View>
 
                 <View style={styles.textField}>
@@ -179,7 +179,7 @@ export default function KYCFillOutScreen ({navigation,route}){
                     mode='date'
                     onCancel={onCancelTap}
                     onConfirm={onDatePickerChange}
-                    
+                    maximumDate={moment().subtract(18,'years').toDate()}
                 />
 
             </View>
