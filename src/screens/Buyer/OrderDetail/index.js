@@ -29,8 +29,9 @@ var windowWidth = Dimensions.get('window').width;
 export default function OrderDetail() {
 
     const navigation = useNavigation();
-    const { loading, token } = useSelector(({ authRed }) => authRed)
+    const { loading, token, currentUser } = useSelector(({ authRed }) => authRed)
     const { buyerOrderData } = useSelector(({ buyerOrderRed }) => buyerOrderRed)
+
     const {t} = useTranslation()
     const dispatch = useDispatch()
 
@@ -154,11 +155,9 @@ export default function OrderDetail() {
     <View style={styles.productDesc}>
 
         <View style={styles.productDescInerFirst}>
-
             <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.productType')}</TextBold>
             <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.weight')}</TextBold>
             <TextBold style={[styles.productAtrributeHead, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
-
         </View>
         <View style={styles.productDescInerSecond}>
             <TextMedium style={styles.productAtrribute}>{buyerOrderData.product_type}</TextMedium>
@@ -221,13 +220,51 @@ export default function OrderDetail() {
     </View> 
 
 
-    <View style={{ marginBottom: 30}}>
+    {!currentUser?.kyc_status_verified && (
+ <View style={{ marginBottom: 16}}>
+        <ButtonDisable loader={false} title='Continue' />
+    </View>
+    )}
+   
+   
+        {currentUser?.kyc_status_verified && (
+ <View style={{ marginBottom: 30}}>
         <ButtonLarge
             title={t('buyerHome.continue')}
             loader={loading}
             onPress={() => handleSubmit()}
-        />
+            
+        />  
+
+      
     </View>
+        )}
+   
+
+
+    {!currentUser?.kyc_status_verified && (
+          <View style={{ marginBottom: 16}}>
+        <TouchableOpacity 
+        style={{
+            borderWidth:1, 
+            borderColor: '#25A9D1' , 
+            padding:24, 
+            alignItems:'center',
+            borderRadius: 35
+             }}
+             onPress={() => {
+                navigation.navigate('KYCIntro')
+             }}
+          >
+            <TextBold style={{color:'#25A9D1'}}>Verify Account</TextBold>
+        </TouchableOpacity>
+    </View>
+    )
+    
+}
+  
+  
+    
 
 </ScrollView>
 

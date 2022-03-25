@@ -73,6 +73,9 @@ export default function OrderDetails({ route }) {
             setOrderHistory(orderHistory)
         }))      
      
+        
+        // !isComplete && order.status == "accepted"
+    
 
     }, [])
 
@@ -115,6 +118,9 @@ export default function OrderDetails({ route }) {
         })
     }
 
+
+
+
     return (
         <SafeAreaView style={{flex:1}} >
         <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
@@ -136,7 +142,9 @@ export default function OrderDetails({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('track.orderDetails')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>
+                    {isComplete ? "Rate Your Transaction" : "My Pending Order"}
+                </TextBold>
                 {order?.admin_id?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image

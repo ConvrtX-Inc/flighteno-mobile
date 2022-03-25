@@ -42,12 +42,15 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
 
       
         dispatch({ type: IS_LOADING, isloading: true })
-        dispatch(VerifyAccount(token,kycRequest,() => {
+        // dispatch(VerifyAccount(token,kycRequest,() => {
             
-            dispatch(stripeVerification(token))
-            // navigation.navigate('Profile')
+        //     dispatch(stripeVerification(token))
+        //     // navigation.navigate('Profile')
 
-        }))   
+        // }))   
+        dispatch(VerifyAccount(token,kycRequest,() => {
+            navigation.navigate('Profile')
+        }))
 
     }
 

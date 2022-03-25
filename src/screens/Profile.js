@@ -73,7 +73,7 @@ function Profile() {
   <View style={styles.ScreenCss}>
             {currentUser ?
                 <ScrollView>
-                    {currentUser ?
+                    { currentUser ?
                         <Image
                             style={[styles.homeProfileImg, { marginLeft: 0, alignSelf: 'center', marginTop: 20, borderRadius: 30 }]}
                             source={!currentUser.profile_image ? require('../images/manProfile.png') : { uri: currentUser.profile_image }}
@@ -149,15 +149,19 @@ function Profile() {
                         ) : null
                     }
                     
-                <TouchableOpacity style={styles.menuItem} onPress={() => {
-                    navigation.navigate("KYCIntro")
-                }}>
-                    <Image source={require('../images/accountVerify.png')}
-                        style={styles.menuIcon}
-                        resizeMode="contain"
-                    />
-                    <TextMedium style={styles.menuItemText}>{t('common.accountVerify')}</TextMedium>
-                </TouchableOpacity>
+
+                {!currentUser?.kyc_status_verified  && (
+                    <TouchableOpacity style={styles.menuItem} onPress={() => {
+                        navigation.navigate("KYCIntro")
+                    }}>
+                        <Image source={require('../images/accountVerify.png')}
+                            style={styles.menuIcon}
+                            resizeMode="contain"
+                        />
+                        <TextMedium style={styles.menuItemText}>{t('common.accountVerify')}</TextMedium>
+                    </TouchableOpacity>
+                )}    
+               
                     {currentProfile != "buyer" ?
                         <TouchableOpacity onPress={() => navigation.navigate("MyReviews")} style={styles.menuItem}>
                             <Image source={require('../images/review.png')}
