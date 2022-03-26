@@ -38,26 +38,31 @@ export default function PaymentAddNewCard({ navigation }) {
 
     async function addCard() {
         setLoading(true)
-        const existingCard = myCards.find((card) => card.metadata.number == cardDetails.values.number)
-        if (existingCard) {
-            Toast.show({
-                type: 'error',
-                text1: "Card Already Exists"
-            })
-        } else {
-            const data = await createCard(cardDetails, currentUser.customer_id);
-            if (data.id) {
-                dispatch({ type: ADD_CARD, data: data })
-            
-                navigation.pop();
-            } else {
-                
+        if (myCards && myCards.length > 0) {
+            const existingCard = myCards.find((card) => card.metadata.number == cardDetails.values.number)
+            if (existingCard) {
                 Toast.show({
                     type: 'error',
-                    text1: data.error.message
+                    text1: "Card Already Exists"
                 })
+                setLoading(false)
+                return;
             }
         }
+
+        const data = await createCard(cardDetails, currentUser.customer_id);
+        if (data.id) {
+            dispatch({ type: ADD_CARD, data: data })
+
+            navigation.pop();
+        } else {
+
+            Toast.show({
+                type: 'error',
+                text1: data.error.message
+            })
+        }
+
 
         setLoading(false);
 
@@ -65,35 +70,35 @@ export default function PaymentAddNewCard({ navigation }) {
     }
 
     return (
-        <SafeAreaView style={{flex:1}}>
-                <ScrollView>
-            <View style={[styles.container, commonStyles.marginTop10]}>
-                <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <IconEntypo name="chevron-left" size={34} color="#000" />
-                </TouchableOpacity>
-                <>
-                    <View style={[commonStyles.marginTop30]}>
-                        <TextBold style={[commonStyles.fs26]}>{t('payment.addNewCard')}</TextBold>
-                    </View>
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView>
+                <View style={[styles.container, commonStyles.marginTop10]}>
+                    <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                        <IconEntypo name="chevron-left" size={34} color="#000" />
+                    </TouchableOpacity>
+                    <>
+                        <View style={[commonStyles.marginTop30]}>
+                            <TextBold style={[commonStyles.fs26]}>{t('payment.addNewCard')}</TextBold>
+                        </View>
 
-                    <View style={[commonStyles.marginTop30]}>
-                        <CreditCardInput
-                            horizontal={false}
-                            requiresName
-                            onChange={(form) => _onChange(form)} />
-                    </View>
-                    <View style={[commonStyles.marginTop30]}>
-                        <ButtonLarge
-                            title={t('payment.addCard')}
-                            loader={loading}
-                            onPress={() => {
-                                addCard()
-                            }}
-                        />
-                    </View>
-                </>
-            </View>
-        </ScrollView>
+                        <View style={[commonStyles.marginTop30]}>
+                            <CreditCardInput
+                                horizontal={false}
+                                requiresName
+                                onChange={(form) => _onChange(form)} />
+                        </View>
+                        <View style={[commonStyles.marginTop30]}>
+                            <ButtonLarge
+                                title={t('payment.addCard')}
+                                loader={loading}
+                                onPress={() => {
+                                    addCard()
+                                }}
+                            />
+                        </View>
+                    </>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
