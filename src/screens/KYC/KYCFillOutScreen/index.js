@@ -95,7 +95,7 @@ export default function KYCFillOutScreen ({navigation,route}){
     }
 
     const onCancelTap = () => {
-
+        setDatePickerShow(false)
     }
 
     return(

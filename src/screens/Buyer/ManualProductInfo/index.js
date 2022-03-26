@@ -18,6 +18,7 @@ import TextBold from '../../../components/atoms/TextBold';
 import TextRegular from '../../../components/atoms/TextRegular';
 import TextMedium from '../../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
+import RNPickerSelect from 'react-native-picker-select';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -93,7 +94,6 @@ export default function ManualProductInfo({ route }) {
             option: 'Others'
         },
     ]);
-
     const [pickerShowVip, setPickerShowVip] = useState(false);
     const {t} = useTranslation()
     const [pickerValueSelectedVip, setPickerValueSelectedVip] = useState(false);
@@ -247,7 +247,7 @@ export default function ManualProductInfo({ route }) {
         navigation.navigate("SelectCountry")
     }
     return (
-        <View style={styles.ScreenCss}>
+        <View style={[styles.ScreenCss, { marginLeft:18, marginRight: 18 }]}>
 
             <ScrollView>
 
@@ -275,7 +275,33 @@ export default function ManualProductInfo({ route }) {
 
                 {/* custom Picker */}
 
-                <View>
+                <View style={[ Platform.OS == 'ios' ? styles.pickerVIew : styles.pickerAndroidView, {marginTop:16}]}>
+                    <RNPickerSelect
+                        onValueChange={setPickerValueSelected}
+                        items={pickerValues}
+                        style={{
+                            inputIOS:{
+                                fontFamily:'Gilroy-Medium',
+                                color:'#656F85'
+                            },
+                            inputAndroid:{
+                                fontFamily:'GilroyMedium',
+                                color:'#656F85'
+                            },
+                            viewContainer:{
+                                padding:Platform.OS == 'ios' ?  16 : 0
+                            },
+                            placeholder:{
+                                fontFamily:'Gilroy-Medium',
+                                fontSize:14
+                            }
+                        }
+                        }
+                        value={pickerValueSelected}     
+                    />
+                </View>
+
+                {/* <View>
                     <Pressable onPress={() => setPickerShow(!pickerShow)}>
                         <View style={styles.pickerVIew}>
 
@@ -295,8 +321,6 @@ export default function ManualProductInfo({ route }) {
 
                     {pickerShow == true ?
                         <View style={styles.pickerOptions}>
-
-
                             <FlatList
                                 data={pickerValues}
                                 nestedScrollEnabled={true}
@@ -313,11 +337,9 @@ export default function ManualProductInfo({ route }) {
                                 keyExtractor={item => item.id}
                                 style={{ borderRadius: 100, marginTop: 3 }}
                             />
-
-
                         </View>
                         : null}
-                </View>
+                </View> */}
                 {/* custom Picker end */}
 
                 <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.price')}</TextBold>
@@ -329,8 +351,6 @@ export default function ManualProductInfo({ route }) {
                     secureTextEntry={false}
                     keyboardType="number"
                 />
-
-
 
                 <TextRegular style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextRegular>
 
@@ -356,7 +376,7 @@ export default function ManualProductInfo({ route }) {
                         </View>
                     </Pressable>
 
-                    {pickerShowVip == true ?
+                    {/* {pickerShowVip == true ?
                         <View style={styles.pickerOptions}>
 
 
@@ -378,7 +398,7 @@ export default function ManualProductInfo({ route }) {
 
 
                         </View>
-                        : null}
+                        : null} */}
                 </View>
                 {/* custom Picker end */}
 
