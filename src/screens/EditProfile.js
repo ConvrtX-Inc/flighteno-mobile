@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
-import PhoneInput from "react-native-phone-number-input";
+import PhoneInput from 'react-native-phone-input'
 import { launchImageLibrary } from 'react-native-image-picker';
 import Input from '../components/InputField';
 import ButtonLarge from '../components/ButtonLarge';
@@ -15,6 +15,7 @@ import { IS_LOADING } from '../redux/constants';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import CountryPicker from 'react-native-country-picker-modal';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -25,10 +26,15 @@ export default function EditProfile() {
     const { currentUser, loading, token } = useSelector(({ authRed }) => authRed)
     const [fullName, setFullName] = useState(currentUser?.full_name);
     const [image, setImage] = useState(null)
-    const[phone,setPhone] = useState("")
+    const[phone,setPhone] = useState(currentUser?.phone_number)
     const phoneInput = useRef()
     const {t} = useTranslation()
+    const [isPickerOpen, setPickerOpen] = useState(false)
     
+    useEffect(() => {
+        console.log(currentUser)
+    },[])
+
     const chooseFile = () => {
         let options = {
             selectionLimit: 1,
@@ -159,23 +165,17 @@ export default function EditProfile() {
 
                     <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
                    
-                            <PhoneInput
-            // ref={phoneInput}
-            onPressFlag={() => {
-                // countryPicker.current?.open()
-                // setPickerOpen(!isPickerOpen)
-            }}
-            textProps={{
-                placeholder:'123-456-789'
-            }}
-            onChangePhoneNumber={(displayValue) => {
-            // if(displayValue.length >1){
-            //     setEmailEnabled(false)
-            // }else{
-            //     setEmailEnabled(true)
-            // }
-            //  setPhoneInputVal(displayValue)
-            }}
+                    <PhoneInput
+                    ref={phoneInput}
+                    onPressFlag={() => {
+                    // countryPicker.current?.open()
+                    setPickerOpen(!isPickerOpen)
+                    }}
+                    initialValue={phone}
+                    textProps={{
+                        placeholder:'123-456-789'
+                    }}
+                    onChangePhoneNumber={setPhone}
             
             // disabled={email ? true : false}
             // disabled={!isPhoneEnabled}
@@ -190,7 +190,23 @@ export default function EditProfile() {
                         />
                     </View>
                
-               
+        {isPickerOpen && (
+        <CountryPicker 
+            visible={true}
+            onClose={() => {
+                setPickerOpen(!isPickerOpen)
+            }}
+            
+            onSelect={(country) => {
+                // console.log(country?.cca2)
+                // setInitialCountry(country?.cca2.toLowerCase())
+                // setInitialCountry(country)
+                phoneInput.current?.selectCountry(country?.cca2.toLowerCase())
+            }}
+            withFilter={true}
+        />    
+        )}
+
        
         </SafeAreaView>
     );

@@ -62,8 +62,6 @@ export default function OrderDestination({route}) {
   const [rangeValue, setRangeValue] = useState('order_created_date');
   const [resetLoading, setResetLoading] = useState(false)
 
-
-
   const [pickerValues, setPickerValues] = useState([
     {
       id: '1',
