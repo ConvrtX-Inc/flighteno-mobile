@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Linking } from 'react-native';
 import { BASE_URL ,PAYMENT_BASE_URL} from '../../BASE_URL/index'
 import { addCustomerDetails } from '../../services/Stripe/Customer';
 import { IS_LOADING, LOGIN_DATA, UPDATE_CUSTOMER_ID } from '../constants';
@@ -22,8 +23,8 @@ export function ConfigureStripeAccount(data, token, navigation,userDetails) {
         }).then(async Response =>   {
             console.log("RES:",Response.data)
             dispatch({ type: IS_LOADING, isloading: false })
-           
-            navigation.navigate('StripeWebView', { url: Response.data.conected_account_id })
+        
+            navigation.replace('StripeWebView', { url: Response.data.conected_account_id })
         })
     }
 }

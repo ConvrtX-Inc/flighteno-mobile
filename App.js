@@ -14,6 +14,7 @@ import i18next from 'i18next'
 import common_en from './src/translation/en/common.json'
 import { lightTheme } from './src/lightTheme.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import linking from './src/navigation/linking.js';
 LogBox.ignoreLogs(['Reanimated 2', 'VirtualizedLists should never be nested']);
 // i18next.init({
 //   lng: 'en', // if you're using a language detector, do not define the lng option
@@ -67,7 +68,7 @@ function App() {
     <Provider store={store} >
       <I18nextProvider i18n={i18next}>
         <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer theme={lightTheme}>
+          <NavigationContainer theme={lightTheme} linking={linking}>
           <StatusBar barStyle="dark-content" hidden={false} backgroundColor={color.backgroundColor} translucent={false} />
             <Navigation />
             <Toast position="bottom" ref={(ref) => Toast.setRef(ref)} />

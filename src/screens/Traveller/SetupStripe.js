@@ -51,7 +51,7 @@ function SetupStripe({ route }) {
                     Flighteno partners with Stripe for secure payments and financial services. In order to start getting paid, you need to set up a Stripe account.
                 </Text>
             </View>
-            <View style={{ marginVertical: 30 }}>
+            <View style={{ marginVertical: 30  , margin: 12}}>
                 {currentUser.conected_account_id ?
                     <Text style={{ marginLeft: 20, fontSize: 18, color: '#000' }}>You're all set!</Text>
                     :
@@ -62,6 +62,9 @@ function SetupStripe({ route }) {
                     />
                 }
             </View>
+            <Text style={{ color: '#000', fontSize: 16, lineHeight: 25 ,textAlign:'center'}}>
+                    You'll be redirected to Stripe
+                </Text>
         </View>
     );
 }

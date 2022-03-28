@@ -99,7 +99,7 @@ export default function Settings() {
                     </View>
                 
  
-                    <TouchableOpacity onPress={() =>  navigation.navigate(paymentScreen)} style={styles.menuItem}>
+                    <TouchableOpacity onPress={() =>  navigation.navigate("SetupStripe")} style={styles.menuItem}>
                         <Image source={require('../images/payment.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
