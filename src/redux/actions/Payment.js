@@ -66,6 +66,7 @@ export function GetUserStipeAccountDetail(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(response => {
+            console.log("Stripe Data",response.data.data)
             dispatch({ type: LOGIN_DATA, data: response.data.data });
         });
     }

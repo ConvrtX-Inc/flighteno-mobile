@@ -29,7 +29,7 @@ export default function Settings() {
     const [isOpen, setOpen] = useState(false)
 
     useEffect(() => {
-        const paymentScreen = currentUser.customer_id && currentUser.customer_id !=null ? "LatestTransactions" : "SetupStripe";
+        const paymentScreen = currentUser.customer_id != null  ? "LatestTransactions" : "SetupStripe";
         setPaymentScreen(paymentScreen);
 
         items.forEach(item => {
@@ -69,7 +69,6 @@ export default function Settings() {
         <View style={styles.ScreenCss}>
 
             <ScrollView>
-               
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
                         style={styles.backImg}
@@ -99,7 +98,7 @@ export default function Settings() {
                     </View>
                 
  
-                    <TouchableOpacity onPress={() =>  navigation.navigate("SetupStripe")} style={styles.menuItem}>
+                    <TouchableOpacity onPress={() =>  navigation.navigate(paymentScreen)} style={styles.menuItem}>
                         <Image source={require('../images/payment.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"

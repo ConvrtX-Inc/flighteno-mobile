@@ -12,16 +12,16 @@ function SetupStripe({ route }) {
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const navigation = useNavigation()
     const dispatch = useDispatch();
-    useFocusEffect(
-        React.useCallback(() => {
-            var data = {
-                admin_id: currentUser._id
-            }
-            dispatch(GetUserStipeAccountDetail(data, token))
-            return () => {
-            };
-        }, [])
-    );
+    // useFocusEffect(
+    //     React.useCallback(() => {
+    //         var data = {
+    //             admin_id: currentUser._id
+    //         }
+    //         dispatch(GetUserStipeAccountDetail(data, token))
+    //         return () => {
+    //         };
+    //     }, [])
+    // );
 
    async function configureStripeAccount() {
         var obj = {
