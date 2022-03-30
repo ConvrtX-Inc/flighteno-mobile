@@ -21,6 +21,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
 import Input from '../../components/InputField';
 import {Slider, CheckBox} from 'react-native-elements';
+
 import {
   UserOrders,
   FilterOrders,
@@ -60,8 +61,6 @@ export default function OrderDestination({route}) {
 
   const [rangeValue, setRangeValue] = useState('order_created_date');
   const [resetLoading, setResetLoading] = useState(false)
-
-
 
   const [pickerValues, setPickerValues] = useState([
     {
@@ -315,8 +314,6 @@ export default function OrderDestination({route}) {
           />
         </View>
             
-
-
             <TextSemiBold
               style={[
                 styles.loginInputHeading,

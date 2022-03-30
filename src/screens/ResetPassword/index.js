@@ -36,10 +36,9 @@ export default function ResetPassword() {
 
     const [isPhoneEnabled, setPhoneEnabled] = useState(true)
     const [isEmailEnabled, setEmailEnabled] = useState(true)
-    const [isPickerOpen, setPickerOpen] = useState(false)
 
     const [initialCountry, setInitialCountry] = useState('us')
-
+    const [isPickerOpen, setPikckerOpen] = useState(false)
     const phoneInput = useRef();
     const [phoneInputVal, setPhoneInputVal] = useState('') 
 

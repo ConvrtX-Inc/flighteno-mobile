@@ -39,6 +39,7 @@ export default function OrderDetails({ route }) {
     let isComplete = order.status == 'complete'
     const {t} = useTranslation()
     const [orderHistory, setOrderHistory] = useState([])
+    const [imageValid, setImageValid] = useState(true)
 
 
     function check(id) {
@@ -71,11 +72,9 @@ export default function OrderDetails({ route }) {
             // console.log(data)
         },(orderHistory) => {
             setOrderHistory(orderHistory)
-        }))      
-     
-        
+        }))
         // !isComplete && order.status == "accepted"
-    
+        
 
     }, [])
 
@@ -120,7 +119,6 @@ export default function OrderDetails({ route }) {
 
 
 
-
     return (
         <SafeAreaView style={{flex:1}} >
         <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
@@ -145,11 +143,12 @@ export default function OrderDetails({ route }) {
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>
                     {isComplete ? "Rate Your Transaction" : "My Pending Order"}
                 </TextBold>
-                {order?.admin_id?
+                {traveler?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
-                            source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
+                            source={imageValid ? { uri:  traveler?.profile_image } : require('../../images/manProfile.png')}
                             style={styles.profileImage}
+                            onError={() => setImageValid(false)}
                         />
                         <View style={{alignItems:'flex-start', paddingLeft:16}}>
                             <TextBold style={Styles.userName}>{traveler?.full_name}</TextBold>

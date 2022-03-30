@@ -19,7 +19,6 @@ export default function ManualProductInfo({ route }) {
     const [email, setEmail] = useState('');
 
 
-
     return (
         <View style={styles.ScreenCss}>
 
@@ -32,9 +31,6 @@ export default function ManualProductInfo({ route }) {
                 />
 
                 <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Manual information</Text>
-
-
-
 
 
             </ScrollView>

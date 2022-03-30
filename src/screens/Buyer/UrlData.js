@@ -272,7 +272,7 @@ export default function UrlData({ route }) {
 
     <View>
 
-        <View style={{ borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35}}>
+        <View style={{ borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35, padding:16}}>
             <RNPickerSelect
                 onValueChange={(value) => {
                     setPickerValueSelected(value)
@@ -297,7 +297,7 @@ export default function UrlData({ route }) {
                 // }
                 // }
                 // useNativeAndroidPickerStyle={true}
-                // value={pickerValueSelected}
+                value={pickerValueSelected}
             />
             </View>
         

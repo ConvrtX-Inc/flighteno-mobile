@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TextBold from '../../components/atoms/TextBold';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -53,6 +54,7 @@ export default function SelectProfile() {
     }
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.ScreenCss}>
             {currentUser ?
                 <ScrollView>
@@ -134,6 +136,7 @@ export default function SelectProfile() {
                 </ScrollView>
                 : null}
         </View>
+        </SafeAreaView>
     );
 
 }

@@ -166,7 +166,7 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
                                     size={160}
                                     fill={transferred}
                                     width={6}
-                                    tintColor="#F2BA39"
+                                    tintColor="#25AE88"
                                     backgroundColor="#CDCDCD"
                                     style={{position:'relative'}}
                                 />

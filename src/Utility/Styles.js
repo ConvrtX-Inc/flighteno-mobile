@@ -322,6 +322,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 35,
         alignSelf: 'center',
+        padding:16,
         // paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',

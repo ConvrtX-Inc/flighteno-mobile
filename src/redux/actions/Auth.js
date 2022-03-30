@@ -391,6 +391,7 @@ export function SocialLogin(data, saveToken) {
                 dispatch({ type: LOGIN_DATA, data: response.data.data });
                 dispatch({ type: data.signup_source == "facebook" ? IS_LOADING_FACEBOOK : IS_LOADING_GOOGLE, isloading: false })
                 saveToken(response.data.data._id, response.data.token)
+                console.log(response.data)
             } else {
                 dispatch({ type: data.signup_source == "facebook" ? IS_LOADING_FACEBOOK : IS_LOADING_GOOGLE, isloading: false })
                 Toast.show({
