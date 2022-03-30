@@ -30,6 +30,7 @@ export default function EditProfile() {
     const phoneInput = useRef()
     const {t} = useTranslation()
     const [isPickerOpen, setPickerOpen] = useState(false)
+    const [imageValid, setImageValid] = useState(true)
     
     useEffect(() => {
         console.log(currentUser)
@@ -126,9 +127,6 @@ export default function EditProfile() {
 
     return (
         <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
-       
-          
-
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image
                             style={styles.backImg}
@@ -141,8 +139,11 @@ export default function EditProfile() {
 
                     <TouchableOpacity onPress={chooseFile} style={Styles.profileButton}>
                         <Image
-                            source={!currentUser.profile_image && image == null ? require("../images/manProfile.png") : { uri: image == null ? currentUser.profile_image : image.uri }}
-                            style={styles.profileImage} />
+                            // source={imageValid ?  !currentUser.profile_image && image == null ? require("../images/manProfile.png") : { uri: image == null ? currentUser.profile_image : image.uri }}
+                          source={imageValid ? {uri: currentUser.profile_image } : require("../images/manProfile.png")}
+                          style={styles.profileImage} 
+                          onError={() => setImageValid(false)}
+                          />
                     </TouchableOpacity>
 
                     <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.fullName')}</TextBold>

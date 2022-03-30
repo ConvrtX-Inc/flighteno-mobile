@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../../Utility/Styles';
@@ -11,8 +11,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 {/* Fix for FLIGHT-46 */}
 export default function MyTripTab() {
+
     const { currentUser } = useSelector(({ authRed }) => authRed)
     const navigation = useNavigation();
+    const [imageValid, setImageValid] = useState(true)
 
     return (
         <SafeAreaView style={{flex:1}}>
@@ -43,7 +45,8 @@ export default function MyTripTab() {
                     <TouchableOpacity onPress={() => { navigation.navigate('Profile') }}>
                         <Image
                             style={[styles.homeProfileImg, { margin: 15 }]}
-                            source={!currentUser.profile_image ? require('../../../images/manProfile.png') : { uri: currentUser.profile_image }}
+                            source={imageValid ? {uri: currentUser?.profile_image} : require('../../../images/manProfile.png')} 
+                            onError={() => setImageValid(false)}
                         />
                     </TouchableOpacity>
                     : null}

@@ -30,6 +30,8 @@ export default function HomeScreen({navigation}) {
     const [urlLoading, setUrlLoading] = useState(false)
     const { myRecentOrders, trendingOrders } = useSelector(({ tripsRed }) => tripsRed)
     const [currentAddress, setCurrentAddress] = useState();
+    const [imageValid, setImageValid] = useState(true)
+
     const goToDetails = (order) => {
         navigation.navigate("OrderDetails", { order: order })
     }
@@ -188,7 +190,8 @@ export default function HomeScreen({navigation}) {
                             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                                 <Image
                                     style={styles.homeProfileImg}
-                                    source={!currentUser.profile_image ? require('../../../images/manProfile.png') : { uri: currentUser.profile_image }}
+                                    source={imageValid ? { uri: currentUser.profile_image } : require('../../../images/manProfile.png')}
+                                    onError={() => setImageValid(false)}
                                 />
                             </TouchableOpacity>
 
