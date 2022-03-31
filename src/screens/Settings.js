@@ -111,7 +111,7 @@ export default function Settings() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Manage Cards</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.manageCards')}</TextMedium>
                     </TouchableOpacity>
                 
                 <TouchableOpacity onPress={() => navigation.navigate("Notifications")} style={styles.menuItem}>

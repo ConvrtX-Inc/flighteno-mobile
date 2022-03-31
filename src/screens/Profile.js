@@ -18,7 +18,7 @@ function Profile() {
     const [userRating, setUserRating] = useState('4.0')
     const { currentProfile, currentUser, token } = useSelector(({ authRed }) => authRed)
     const {t} = useTranslation()
-
+    const [imageValid, setImageValid] = useState(true)
 
 
     const onShare = async () => {
@@ -76,7 +76,8 @@ function Profile() {
                     { currentUser ?
                         <Image
                             style={[styles.homeProfileImg, { marginLeft: 0, alignSelf: 'center', marginTop: 20, borderRadius: 30 }]}
-                            source={!currentUser.profile_image ? require('../images/manProfile.png') : { uri: currentUser.profile_image }}
+                            source={imageValid ?  { uri: currentUser.profile_image } : require('../images/manProfile.png')}
+                            onError={() => setImageValid(false)}
                         />
                         : null}
                     {currentUser ?

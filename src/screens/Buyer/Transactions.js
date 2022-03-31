@@ -18,6 +18,7 @@ export default function Transactions({navigation}) {
     const dispatch = useDispatch()
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const { myOrders } = useSelector(({ tripsRed }) => tripsRed)
+    const [imageValid, setImageValid] = useState(true)
 
     const {t} = useTranslation()
 
@@ -64,8 +65,8 @@ export default function Transactions({navigation}) {
                             <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                                 <Image
                                     style={styles.homeProfileImg}
-                                    // source={currentUser.profile_image ? { uri: 'data:image/png;base64,'+currentUser.profile_image } : require('../../images/manProfile.png')}
-                                    source={currentUser.profile_image ? { uri: currentUser.profile_image } : require('../../images/manProfile.png')}
+                                    source={imageValid ? { uri: currentUser.profile_image } : require('../../images/manProfile.png')}
+                                    onError={() => setImageValid(false)}
                                 />
                             </TouchableOpacity>
 
