@@ -46,6 +46,7 @@ export default function PaymentCardItem({ card, defaultCard }) {
 
 
     function getCardLogo(brand) {
+
         switch (brand.toLowerCase()) {
             case "visa":
                 return require("../assets/images/card_logos/visa.png")
@@ -55,6 +56,10 @@ export default function PaymentCardItem({ card, defaultCard }) {
                 return require("../assets/images/card_logos/discover.png")
             case "jcb":
                 return require("../assets/images/card_logos/jcb.png")
+            case "unionpay":
+                return require("../assets/images/card_logos/unionpay.png")
+            case "diners club":
+                return require("../assets/images/card_logos/diners.png")
             default:
                 return require("../assets/images/card_logos/visa.png")
         }
@@ -123,15 +128,20 @@ export default function PaymentCardItem({ card, defaultCard }) {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <TextBold style={[commonStyles.fs18,{marginBottom: 10}]}>Remove Card</TextBold>
+                        <TextBold style={[commonStyles.fs18, { marginBottom: 10 }]}>Remove Card</TextBold>
                         <TextRegular style={commonStyles.fs12}> Are you sure you want to remove card?</TextRegular>
                         <View style={{ flexDirection: 'row', marginTop: 12, marginBottom: 24 }}>
-                            <View style={{ flex: 1 }}>
+                            <View style={{ flex: 1 }} >
                                 <TextRegular style={styles.modalCardDetails}>Ending in {card.last4}</TextRegular>
                                 <TextRegular style={styles.modalCardDetails}> {card.metadata.expiry}</TextRegular>
                             </View>
-                           
-                            <Image source={getCardLogo(card.brand)}  style={{height: 40,width: 60,  }} ></Image>
+
+                            <View>
+                                <Image source={getCardLogo(card.brand)} style={{
+                                    width: 70,
+                                    height: 44,
+                                }}></Image>
+                            </View>
                         </View>
 
                         <ButtonLarge
