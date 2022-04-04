@@ -66,7 +66,7 @@ export default function Settings() {
         <SafeAreaView style={{flex:1}}>
 
        
-        <View style={styles.ScreenCss}>
+        <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
             <ScrollView>
                
@@ -78,7 +78,7 @@ export default function Settings() {
                     />
                 </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.settings')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('common.settings')}</TextBold>
                 <View style={{ height: 30 }} />
              
                     <View>

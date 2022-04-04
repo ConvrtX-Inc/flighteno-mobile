@@ -86,7 +86,7 @@ export default function LatestTransactionsScreen({ navigation }) {
                 ) : (
                     <>
                         <View style={[commonStyles.marginTop30, styles.withMargin]}>
-                            <TextBold style={[commonStyles.fs26]}>{t('payment.addCard')}</TextBold>
+                            <TextBold style={[commonStyles.fs26, {textAlign:'left'}]}>{t('payment.addCard')}</TextBold>
                         </View>
                         {
                             hasCard ? (
@@ -123,7 +123,7 @@ export default function LatestTransactionsScreen({ navigation }) {
                         <View style={[styles.withMargin, commonStyles.flex1]}>
                             <ScrollView>
                                 <View style={[commonStyles.marginTop30]}>
-                                    <TextBold style={[commonStyles.fs26]}>{t('payment.latestTransactions')}</TextBold>
+                                    <TextBold style={[commonStyles.fs26, {textAlign:'left'}]}>{t('payment.latestTransactions')}</TextBold>
                                 </View>
                                 {
                                     transactions.map((transaction,index) =>(

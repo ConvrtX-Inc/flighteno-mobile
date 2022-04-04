@@ -40,6 +40,7 @@ import Toast from 'react-native-toast-message';
 import { Dropdown } from 'sharingan-rn-modal-dropdown';
 import { DefaultTheme } from 'react-native-paper';
 import { DropdownList } from 'react-native-ultimate-modal-picker';
+import { capitalize } from 'lodash';
 // import ModalDropdown from 'react-native-modal-dropdown';
 
 export default function OrderDestination({route}) {
@@ -193,6 +194,7 @@ export default function OrderDestination({route}) {
     const sort = sortMethod;
 
     const filterData = {
+      admin_id: currentUser._id,
       product_type: productType,
       product_name: productName,
       starting_price: startingPrice,
@@ -202,7 +204,9 @@ export default function OrderDestination({route}) {
       store_name: storeName,
     };
 
-   
+
+
+  //  console.log(filterData)
 
     dispatch(FilterOrders(filterData, token, () => {
       setShowFilter(false);
@@ -224,7 +228,7 @@ export default function OrderDestination({route}) {
       setResetLoading(false)
       setPName('');
       setMinPrice(0);
-      setShowFilter(false);
+      // setShowFilter(false);
 
       setNameOfStore('');
       storeData.forEach(item => {
@@ -428,8 +432,8 @@ export default function OrderDestination({route}) {
 
 
             <View style={{ alignSelf: 'center', width:'100%', marginTop:24 }}>
-                            <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.sort')}</TextBold>
-                            <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
+              <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.sort')}</TextBold>
+                  <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
                             <TouchableOpacity onPress={() => selectRange(1, 'vip_service_fee', 1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
@@ -458,14 +462,14 @@ export default function OrderDestination({route}) {
                                     {t('buyerHome.price')} ({t('travelHome.high')} - {t('travelHome.low')})
                                 </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(5, 'estimated_dilivery_fee', -1)}
+                            <TouchableOpacity onPress={() => selectRange(5, 'estimated_dilivery_fee', 1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 5 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
                                    {t('travelHome.delFee')} ({t('travelHome.low')} - {t('travelHome.high')})
                                 </TextSemiBold>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectRange(6, 'estimated_dilivery_fee', 1)}
+                            <TouchableOpacity onPress={() => selectRange(6, 'estimated_dilivery_fee', -1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 6 ? color.blueColor : color.loginTextHeadingColor,  textAlign:'left' }]}>
@@ -475,7 +479,7 @@ export default function OrderDestination({route}) {
                         </View>
 
             <View style={{marginTop:32}}>
-              <ButtonLarge title='Reset' onPress={resetFilter} loader={resetLoading} />
+              <ButtonLarge title={ capitalize(t('common.reset')) }  onPress={resetFilter} loader={resetLoading} />
             </View>
               
 

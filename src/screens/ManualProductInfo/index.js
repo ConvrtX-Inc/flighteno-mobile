@@ -7,8 +7,6 @@ import Toast from 'react-native-toast-message';
 
 
 
-
-
 var windowWidth = Dimensions.get('window').width;
 export default function ManualProductInfo({ route }) {
 

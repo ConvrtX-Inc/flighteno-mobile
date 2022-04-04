@@ -61,7 +61,6 @@ export default function PaymentAddNewCard({ navigation }) {
 
         setLoading(false);
 
-
     }
 
     return (
@@ -73,7 +72,7 @@ export default function PaymentAddNewCard({ navigation }) {
                 </TouchableOpacity>
                 <>
                     <View style={[commonStyles.marginTop30]}>
-                        <TextBold style={[commonStyles.fs26]}>{t('payment.addNewCard')}</TextBold>
+                        <TextBold style={[commonStyles.fs26, {textAlign:'left'}]}>{t('payment.addNewCard')}</TextBold>
                     </View>
 
                     <View style={[commonStyles.marginTop30]}>

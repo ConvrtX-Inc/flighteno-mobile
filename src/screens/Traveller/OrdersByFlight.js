@@ -30,7 +30,6 @@ export default function OrdersByFlight() {
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const { tripsData } = useSelector(({ tripsRed }) => tripsRed)
     const {t} = useTranslation()
-
     useFocusEffect(
         React.useCallback(() => {
             var obj = {

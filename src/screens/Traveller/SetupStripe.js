@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { styles } from '../../Utility/Styles';
 import ButtonLarge from '../../components/ButtonLarge';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,6 +7,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { ConfigureStripeAccount, GetUserStipeAccountDetail } from '../../redux/actions/Payment';
 import { addCustomerDetails } from '../../services/Stripe/Customer';
 import { UPDATE_CUSTOMER_ID } from '../../redux/constants';
+import TextBold from '../../components/atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function SetupStripe({ route }) {
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
@@ -35,8 +37,6 @@ function SetupStripe({ route }) {
              const user = currentUser;
              user.customer_id = addCustomerDetailsRes.customer;
 
-            
-
              dispatch({ type: UPDATE_CUSTOMER_ID, data: user });
 
           }
@@ -45,11 +45,18 @@ function SetupStripe({ route }) {
     }
 
     return (
-        <View>
-            <View style={{ width: '90%', alignSelf: 'center', marginTop: 50, }}>
-                <Text style={{ color: '#000', fontSize: 20, lineHeight: 25 }}>
+        <SafeAreaView>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Image
+                            style={styles.backImg}
+                            resizeMode='stretch'
+                            source={require('../../images/back.png')}
+                        />
+                    </TouchableOpacity>
+            <View style={{ width: '90%', alignSelf: 'center', marginTop: 40, }}>
+                <TextBold style={{ color: '#000', fontSize: 20, lineHeight: 25 }}>
                     Flighteno partners with Stripe for secure payments and financial services. In order to start getting paid, you need to set up a Stripe account.
-                </Text>
+                </TextBold>
             </View>
             <View style={{ marginVertical: 30 }}>
                 {currentUser.conected_account_id ?
@@ -58,11 +65,11 @@ function SetupStripe({ route }) {
                     <ButtonLarge
                         title="Setup Now!"
                         loader={loading}
-                        onPress={() => configureStripeAccount()}
+                        onPress={configureStripeAccount}
                     />
                 }
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 

@@ -26,6 +26,7 @@ import TextRegular from '../../components/atoms/TextRegular';
 import TextBold from '../../components/atoms/TextBold';
 import { STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY } from '@env'
 import PaymentMethodModal from '../../components/PaymentMethodModal';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const LocationView = ({ location }) => {
@@ -711,10 +712,11 @@ export default function Chattravelereler({ route }) {
     }
 
     return (
-        <StripeProvider
+        <SafeAreaView style={{flex:1}}>
+       <StripeProvider
             publishableKey={STRIPE_PUBLISHABLE_KEY}>
             {currentUser ?
-                <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+                <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight: 18 }}>
                     <ScreenLoader loader={loading} />
                     <Modal animationType={"slide"} transparent={true}
                         visible={chatModal}
@@ -742,11 +744,11 @@ export default function Chattravelereler({ route }) {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: '5%', marginTop: 20, marginBottom: 10 }}>
                         {route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ?
-                            <Image source={route.params.orderDetail.profile_data[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: 'data:image/png;base64,' + route.params.orderDetail.profile_data[0].profile_image }}
+                            <Image source={route.params.orderDetail.profile_data[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: route.params.orderDetail.profile_data[0].profile_image }}
                                 style={Styles.userImage}
                             />
                             :
-                            <Image source={route.params.userDetail.profile_image == "" ? require("../../images/manProfile.png") : { uri: 'data:image/png;base64,' + route.params.userDetail.profile_image }}
+                            <Image source={route.params.userDetail.profile_image == "" ? require("../../images/manProfile.png") : { uri: route.params.userDetail.profile_image }}
                                 style={Styles.userImage}
                             />
                         }
@@ -819,6 +821,7 @@ export default function Chattravelereler({ route }) {
                 </View>
                 : null}
         </StripeProvider>
+        </SafeAreaView>
     );
 }
 
@@ -829,7 +832,7 @@ const Styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        width: '90%',
+        width: '100%',
         alignSelf: 'center'
     },
     bottomButton: {

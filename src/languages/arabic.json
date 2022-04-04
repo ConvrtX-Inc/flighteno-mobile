@@ -10,7 +10,7 @@
             "termsConditions": "الأحكام والشروط",
             "iAgreeTerms": "أوافق على الشروط والأحكام",
             "skip": "يتخطى",
-            "manageCards": "Manage Cards",
+            "manageCards": "إدارة البطاقات",
             "login": "تسجيل الدخول",
             "loginWithFb":"تسجيل الدخول باستخدام الفيسبوك",
             "loginWithGoogle": "تسجيل الدخول عبر جوجل",
@@ -80,7 +80,8 @@
             "confirmNewPass": "تأكيد كلمة المرور الجديدة",
             "yourPasswordMust":" يجب أن تكون كلمة المرور الخاصة بك مختلفة عن كلمة المرور السابقة المستخدمة",
             "verifyPhone":"تحقق من الهاتف",
-            "attachment":"مرفق"
+            "attachment":"مرفق",
+            "reset":"إعادة تعيين"
         },
         "track": {
             "transactions": "المعاملات",
@@ -90,7 +91,7 @@
             "my":"لي",
             "accepted":"قبلت",
             "pending":"قيد الانتظار",
-            "orders": "الطلب #٪ s",
+            "orders": "ترتيب",
             "orderDetails": "تفاصيل الطلب",
             "orderNo":"رقم الطلب",
             "orderPrice":"سعر الطلب",
@@ -149,7 +150,11 @@
             "price":"السعر",
             "enterDesc":"أدخل الوصف",
             "uploadPic":"تحميل الصورة",
-            "city": "مدينة"
+            "city": "مدينة",
+            "buyerNote": "ملحوظة: الصندوق المذكور أعلاه كان الصندوق من الشركة المصنعة",
+            "getItemFaster":"هل تريد الحصول على العنصر الخاص بك بشكل أسرع",
+            "myPendingOrder": "طلبي المعلق",
+            "rateMyTransaction": "قيم معاملتي"
         },
         "support":{
             "support": "يدعم",
@@ -216,6 +221,12 @@
             "editOffer":"تحرير العرض",
             "accept":"قبول",
             "rejectDeal": "رفض الصفقة"
+        },
+        "payment": {
+            "addCard": "إضافة بطاقة",
+            "addNewCard": "أضف بطاقة جديدة",
+            "latestTransactions": "أحدث المعاملات",
+            "paymentMethod": "طريقة الدفع او السداد"
         }
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Button, Image, ScrollView, Dimensions, Pressable, Animated, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Button, Image, ScrollView, Dimensions, Pressable, Animated, FlatList, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../../Utility/Styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ import TextMedium from '../../../components/atoms/TextMedium';
 import { useTranslation } from 'react-i18next';
 import RNPickerSelect from 'react-native-picker-select';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -118,7 +119,7 @@ export default function ManualProductInfo({ route }) {
         },
         {
             id: '1',
-            option: 'No',
+            value: 'No',
             label:'No'
         },
 
@@ -176,8 +177,6 @@ export default function ManualProductInfo({ route }) {
     const onCancelTap = () => {
         setShow(false)
     }
-
-
 
     // Image Picker
     const chooseFile = () => {
@@ -267,7 +266,7 @@ export default function ManualProductInfo({ route }) {
         navigation.navigate("SelectCountry")
     }
     return (
-        <View style={[styles.ScreenCss, { marginLeft:18, marginRight: 18 }]}>
+        <SafeAreaView style={[styles.ScreenCss, { marginLeft:18, marginRight: 18 }]}>
 
             <ScrollView>
 
@@ -407,9 +406,8 @@ export default function ManualProductInfo({ route }) {
                 {/* custom Picker end */}
 
                 {pickerValueSelectedVip == 'Yes' && (
-                        <>
-                            <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
-
+                    <>
+                        <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
                 
                 <Input
                     placeholder="$50.00"
@@ -421,7 +419,6 @@ export default function ManualProductInfo({ route }) {
                 />
                 </>
                     )}
- 
 
                 <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterDesc')}</TextBold>
 
@@ -498,11 +495,10 @@ export default function ManualProductInfo({ route }) {
                     }
                 </TouchableOpacity>
 
-
                 <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
 
                 <Pressable onPress={() => showMode('date', 'date')} >
-                    <View style={styles.pickerVIew}>
+                    <View style={Platform.OS == 'ios' ? [styles.pickerVIew, {padding:16}]  : [styles.pickerVIew, {padding:16}]}>
                         <View style={styles.pickerLeftView}>
                             <TextMedium style={styles.textSelected}>{dateValue}</TextMedium>
                         </View>
@@ -519,7 +515,7 @@ export default function ManualProductInfo({ route }) {
 
                 <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
 
-                <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <View style={{ width: '100%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     {/* <View style={styles.timePickerVIew}> */}
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'from')}>
                         <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</TextMedium>
@@ -542,7 +538,7 @@ export default function ManualProductInfo({ route }) {
 
                     <View style={styles.leftQuantityStyle}>
 
-                        <TextBold style={styles.loginInputHeading}>{t('buyerHome.quantity')}</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
                         <Text style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</Text>
 
                     </View>
@@ -577,7 +573,6 @@ export default function ManualProductInfo({ route }) {
                 <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
-
                         <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.doYouNeedBox')}?</TextBold>
                         <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
                     </View>
@@ -631,13 +626,16 @@ export default function ManualProductInfo({ route }) {
                 <View style={{ height: 1, width: '100%', marginTop: 25, marginBottom: 15, backgroundColor: '#656F8588', }}></View>
 
 
-                <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
+                <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35, textAlign:'left' }]}>{t('buyerHome.buyerNote')}</TextMedium>
 
+                <View style={{marginBottom:32}}>
                 <ButtonLarge
                     title={t('buyerHome.continue')}
                     loader={loading}
                     onPress={() => handleSubmit()}
                 />
+                </View>
+
 
                 {/* {show && (
                     <DateTimePicker
@@ -657,13 +655,12 @@ export default function ManualProductInfo({ route }) {
                 onCancel={onCancelTap}
                 onConfirm={onChange}
                 // onConfirm={onChange}
-               
             />
 
 
             </ScrollView>
 
-        </View>
+        </SafeAreaView>
     );
 
 }

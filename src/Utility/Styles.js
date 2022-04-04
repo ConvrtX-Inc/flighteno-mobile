@@ -322,7 +322,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 35,
         alignSelf: 'center',
-        padding:16,
+        padding:8,
         // paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
@@ -743,7 +743,7 @@ export const styles = StyleSheet.create({
     },
     menuItem: {
         height: 40,
-        width: '90%',
+        width: '100%',
         flexDirection: 'row',
         alignSelf: 'center',
         alignItems: 'center',

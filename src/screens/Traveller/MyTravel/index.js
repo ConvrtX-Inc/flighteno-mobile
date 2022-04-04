@@ -96,7 +96,7 @@ export default function MyTravel({ route }) {
             // setPickerValueSelectedCity(selectedCountry.name)
             setPickerValuesCity([])
             setPickerValueSelectedCity('')
-
+            
         }
         else {
             // fix for FLIGHT-19
@@ -312,7 +312,7 @@ export default function MyTravel({ route }) {
 
                 <View style={[styles.travelDateInner, { alignItems: 'flex-start' }]}>
                     <TouchableOpacity onPress={() => showMode('dep') }>
-                        <TextBold style={[styles.travelDateTitle, { marginTop: 24 }]}>{t('travelHome.depart')}</TextBold>
+                        <TextBold style={[styles.travelDateTitle, { marginTop: 24, textAlign:'left' }]}>{t('travelHome.depart')}</TextBold>
                         <View style={{
                             flexDirection: 'row',
                             borderBottomColor: color.travelDateBorderColor,
@@ -331,7 +331,7 @@ export default function MyTravel({ route }) {
 
                 <View style={[styles.travelDateInner, { alignItems: 'flex-end' }]}>
                     <TouchableOpacity onPress={() => showMode('ret') }>
-                        <TextBold style={[styles.travelDateTitle, { marginTop: 24 }]}>{t('travelHome.return')}</TextBold>
+                        <TextBold style={[styles.travelDateTitle, { marginTop: 24, textAlign:'left' }]}>{t('travelHome.return')}</TextBold>
                         <View style={{
                             flexDirection: 'row',
                             borderBottomColor: color.travelDateBorderColor,
@@ -353,15 +353,14 @@ export default function MyTravel({ route }) {
 
             </View>
 
-                            <View style={{ marginBottom:24}}>
+                <View style={{ marginBottom:24}}>
                     <ButtonTraveller
-                        title="Add trip"
+                        title={t('travelHome.addTrip')}
                         loader={loading}
                         onPress={() => addNewTrip()}
                     />
                 </View>
-
-
+                
         </>
     )
 
