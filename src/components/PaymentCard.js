@@ -9,7 +9,7 @@ import { commonStyles } from '../Utility/CommonStyles';
 import Constants from '../Utility/Constants';
 
 export default function PaymentCard({ card }) {
- 
+
 
     function getCardLogo(brand) {
         switch (brand.toLowerCase()) {
@@ -21,6 +21,10 @@ export default function PaymentCard({ card }) {
                 return require("../assets/images/card_logos/discover.png")
             case "jcb":
                 return require("../assets/images/card_logos/jcb.png")
+            case "unionpay":
+                return require("../assets/images/card_logos/unionpay.png")
+            case "diners club":
+                return require("../assets/images/card_logos/diners.png")
             default:
                 return require("../assets/images/card_logos/visa.png")
         }
@@ -50,7 +54,7 @@ export default function PaymentCard({ card }) {
                 ]}>
                     <Image
                         resizeMode='contain'
-                        source={ getCardLogo(card.brand)}
+                        source={getCardLogo(card.brand)}
                         style={styles.tinyLogo} />
                     <TextMedium style={[commonStyles.cWhite]}>{card.metadata.expiry}</TextMedium>
                 </View>
@@ -61,7 +65,7 @@ export default function PaymentCard({ card }) {
             <View>
                 <View style={[commonStyles.flexDirectionRow, commonStyles.justifyContentSpaceBetween]}>
                     <TextBold style={[commonStyles.cWhite]}>{card.name}</TextBold>
-                    <TextMedium style={[commonStyles.cWhite]}>{card.funding.charAt(0).toUpperCase() +  card.funding.slice(1)} Card</TextMedium>
+                    <TextMedium style={[commonStyles.cWhite]}>{card.funding.charAt(0).toUpperCase() + card.funding.slice(1)} Card</TextMedium>
                 </View>
             </View>
         </View>

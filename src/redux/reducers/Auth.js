@@ -102,7 +102,6 @@ export default (state = initialState, action) => {
                 supportTickets: action.data,
             };
         case UPDATE_CUSTOMER_ID:
-            console.log("customer",action.data)
             return {
                 ...state,
                 currentUser: action.data,
