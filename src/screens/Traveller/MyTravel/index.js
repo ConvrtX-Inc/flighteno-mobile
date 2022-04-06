@@ -220,7 +220,17 @@ export default function MyTravel({ route }) {
             return_date: retDateApi
         }
 
-        dispatch(AddTrip(token, obj))
+
+        if(depDateApi == retDateApi){
+            Toast.show({
+                type: 'error',
+                text2: "Return date cannot be the same to departure date!",
+            })
+        }else{
+            dispatch(AddTrip(token, obj))
+        }
+
+       
     }
 
 

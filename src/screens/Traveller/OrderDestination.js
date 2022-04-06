@@ -57,11 +57,12 @@ export default function OrderDestination({route}) {
   const [images, setImages] = useState([]);
   const [pName, setPName] = useState('');
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(500000);
+  const [maxPrice, setMaxPrice] = useState(200);
   const [selectedRange, setSelectedRange] = useState(0);
 
   const [rangeValue, setRangeValue] = useState('order_created_date');
   const [resetLoading, setResetLoading] = useState(false)
+
 
   const [pickerValues, setPickerValues] = useState([
     {
@@ -367,15 +368,21 @@ export default function OrderDestination({route}) {
                 <Input
                   placeholder="500000"
                   secureTextEntry={false}
-                  editable={false}
+                  onChangeText={(value) => {
+                    setMaxPrice(parseInt(value))
+                  }}
+                  value={maxPrice}
                 />
               </View>
             </View>
 
             <Slider
               value={minPrice}
-              onValueChange={value => setMinPrice(value)}
-              maximumValue={500000}
+              // onValueChange={value => setMinPrice(value)}
+              onValueChange={(value) => {
+                console.log(value)
+              }}
+              maximumValue={maxPrice}
               minimumValue={0}
               style={[styles.sliderStyle, {}]}
               step={10}
@@ -402,7 +409,7 @@ export default function OrderDestination({route}) {
               <View
                 style={[styles.sliderTxtContainerOther, {marginLeft: 'auto'}]}
               >
-                <TextMedium style={styles.sliderTxt}>500000</TextMedium>
+                <TextMedium style={styles.sliderTxt}>{maxPrice}</TextMedium>
               </View>
             </View>
 
