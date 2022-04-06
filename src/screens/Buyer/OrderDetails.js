@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { getCurrentOrder } from '../../redux/actions/BuyerOrder';
 import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ImageModal from 'react-native-image-modal';
 
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
@@ -112,7 +113,7 @@ export default function OrderDetails({ route }) {
     const selectID = (id) => {
         Clipboard.setString(id)
         Toast.show({
-            type: 'success',
+            type: 'succes',
             text2: "Copied to clipboard",
         })
     }

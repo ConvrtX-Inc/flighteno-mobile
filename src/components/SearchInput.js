@@ -6,7 +6,7 @@ import Icon1 from 'react-native-vector-icons/Feather'
 
 const SearchInput = ({ placeholder, value, onChangeText }) => {
     return (
-        <View style={{ alignSelf: 'center', width: '90%', flexDirection: 'row', marginVertical: 20 }}>
+        <View style={{ alignSelf: 'center', width: '100%', flexDirection: 'row', marginVertical: 20 }}>
             <TextInput
                 style={Styles.searchInput}
                 placeholder={placeholder}

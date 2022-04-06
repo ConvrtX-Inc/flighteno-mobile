@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
 import PhoneInput from 'react-native-phone-input'
@@ -9,13 +9,15 @@ import ButtonLarge from '../components/ButtonLarge';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import { UpdateProfile } from '../redux/actions/Auth';
-import { generateUID } from '../Utility/Utils';
+import { generateImagePublicURLFirebase, generateUID } from '../Utility/Utils';
 import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../redux/constants';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../components/atoms/TextBold';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CountryPicker from 'react-native-country-picker-modal';
+import storage from '@react-native-firebase/storage';
+
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -31,6 +33,7 @@ export default function EditProfile() {
     const {t} = useTranslation()
     const [isPickerOpen, setPickerOpen] = useState(false)
     const [imageValid, setImageValid] = useState(true)
+    const [transferred, setTransferred] = useState(0)
     
     useEffect(() => {
         console.log(currentUser)
@@ -43,23 +46,71 @@ export default function EditProfile() {
             includeBase64: false,
         };
         launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
+
+            if(response?.didCancel){
                 console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log(
-                    'User tapped custom button: ',
-                    response.customButton
-                );
-                alert(response.customButton);
-            } else {
-                setImage(response.assets[0]);
+            }else{
+                setImage(response?.assets[0])
             }
+
+            // if (response.didCancel) {
+            //     console.log('User cancelled image picker');
+            // } else if (response.error) {
+            //     console.log('ImagePicker Error: ', response.error);
+            // } else if (response.customButton) {
+            //     console.log(
+            //         'User tapped custom button: ',
+            //         response.customButton
+            //     );
+            //     alert(response.customButton);
+            // } else {
+            //     setImage(response.assets[0]);
+            // }
         });
     };
 
+    const uploadImgToFirebase = async (uri) => {
+
+        const filename = uri.substring(uri.lastIndexOf('/') + 1)
+        const uploadUri = Platform.OS == 'ios' ? uri.replace('file://', '') : uri
+        const task = storage()
+        .ref(`${filename}`)
+        .putFile(`${uploadUri}`)
+
+        task.on('state_changed', snapshot => {
+            const percentUploaded = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) *100)
+            setTransferred(percentUploaded)
+        })
+
+        try{
+
+            const resImg = await task
+
+            const idImage = generateImagePublicURLFirebase(resImg.metadata.name)
+
+            var obj = {
+                admin_id: currentUser._id,
+                full_name: fullName,
+                phone_number:phone,
+                profile_image: idImage,
+            }
+
+            dispatch(UpdateProfile(
+                obj, token,
+                () => {
+                    dispatch({ type: IS_LOADING, isloading: false})
+                    navigation.goBack()
+                }
+            ))
+
+        }catch(e){
+            console.log('errooooorrrrr', e);
+        }
+
+    }
+
     const updateProfile = () => {
+    
         if (fullName == "") {
             Toast.show({
                 type: 'error',
@@ -68,7 +119,7 @@ export default function EditProfile() {
             })
             return
         }
-        if (image == null && (fullName == currentUser.full_name)) {
+        if (image == null && (fullName == currentUser.full_name) && phone == null) {
             Toast.show({
                 type: 'error',
                 text1: 'Alert!',
@@ -81,6 +132,7 @@ export default function EditProfile() {
                 admin_id: currentUser._id,
                 full_name: fullName,
                 profile_image: currentUser.profile_image,
+                phone_number: phone
             }
 
             dispatch(UpdateProfile(
@@ -91,37 +143,10 @@ export default function EditProfile() {
             ))
         }
         else {
+            
             dispatch({ type: IS_LOADING, isloading: true })
-            const file = {
-                uri: image.uri,
-                name: generateUID() + ".jpg",
-                type: 'image/jpeg'
-            }
-            const options = {
-                keyPrefix: "flighteno/users/",
-                bucket: "memee-bucket",
-                region: "eu-central-1",
-                accessKey: "AKIA2YJH3TLHCODGDKFV",
-                secretKey: "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",
-                successActionStatus: 201
-            }
-            RNS3.put(file, options).then(response => {
-                if (response.status !== 201)
-                    throw new Error("Failed to upload image to S3");
-                var obj = {
-                    admin_id: currentUser._id,
-                    full_name: fullName,
-                    profile_image: response.body.postResponse.location,
-                }
-
-                dispatch(UpdateProfile(
-                    obj, token,
-                    () => {
-                        navigation.goBack()
-                    }
-                ))
-
-            });
+            uploadImgToFirebase(image?.uri)
+            
         }
     }
 
@@ -139,7 +164,6 @@ export default function EditProfile() {
 
                     <TouchableOpacity onPress={chooseFile} style={Styles.profileButton}>
                         <Image
-                            // source={imageValid ?  !currentUser.profile_image && image == null ? require("../images/manProfile.png") : { uri: image == null ? currentUser.profile_image : image.uri }}
                           source={imageValid ? {uri: currentUser.profile_image } : require("../images/manProfile.png")}
                           style={styles.profileImage} 
                           onError={() => setImageValid(false)}
@@ -177,11 +201,8 @@ export default function EditProfile() {
                         placeholder:'123-456-789'
                     }}
                     onChangePhoneNumber={setPhone}
-            
-            // disabled={email ? true : false}
-            // disabled={!isPhoneEnabled}
-            style={[styles.phoneContainer, {padding:16}]}
-         />
+                    style={[styles.phoneContainer, {padding:16}]}
+                    />
 
                     <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
                         <ButtonLarge

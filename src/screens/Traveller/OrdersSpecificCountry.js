@@ -27,7 +27,7 @@ export default function OrdersSpecificCountry({ route }) {
     },[])
 
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18 }}>
         <View style={styles.ScreenCss}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -38,9 +38,7 @@ export default function OrdersSpecificCountry({ route }) {
             </TouchableOpacity>
 
             <View style={Styles.header}>
-
                 <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.orders')} - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
-
             </View>
             <FlatList
                 data={flightBaseOrders}
@@ -62,7 +60,7 @@ const Styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
         alignItems: 'center',
         marginVertical: 20
     },

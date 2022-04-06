@@ -9,11 +9,14 @@ import TextBold from './atoms/TextBold';
 import TextMedium from './atoms/TextMedium'
 import TextRegular from './atoms/TextMedium'
 import { useTranslation } from 'react-i18next';
+import ImageView from "react-native-image-viewing";
+
 
 const CardOrder = ({ order }) => {
 
     const [showProductPic, setShowProductPic] = useState(false)
     const {t} = useTranslation()
+    const [imageVisible, setImageVisible] = useState()
 
     function getOrderStatus() {
         return order.status == "new" ?  t('track.pending') : order.status == "complete" ? t('track.completed') : order.status == "accepted" ? t('track.inProgress') : t('track.cancelled')
@@ -68,7 +71,7 @@ const CardOrder = ({ order }) => {
                 </View>
                 <View style={{ height: 1, backgroundColor: 'gray' }} />
                 <View style={Styles.bottomView}>
-                    <TouchableOpacity onPress={() => setShowProductPic(true)} activeOpacity={1}>
+                    <TouchableOpacity onPress={() => setImageVisible(true) } activeOpacity={1}>
                     <Image source={{ uri: order.product_image }}
                         style={Styles.productImage}
                     />
@@ -78,6 +81,13 @@ const CardOrder = ({ order }) => {
                         {formatAmount(order.Total)}
                     </TextMedium>
                 </View>
+
+                <ImageView
+                    images={[{uri:order.product_image}]}
+                    imageIndex={0}
+                    visible={imageVisible}
+                    onRequestClose={() => setImageVisible(false)}
+                />
             </View>
 
         </View>

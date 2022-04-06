@@ -4,7 +4,8 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 
 const ViewImages = ({ showImageViewer, images, closeModal }) => {
     return (
-        <Modal onRequestClose={closeModal} visible={showImageViewer} transparent={true}>
+        <Modal onRequestClose={closeModal} visible={showImageViewer} transparent={true} >
+                
             <ImageViewer imageUrls={images} />
         </Modal>
     );

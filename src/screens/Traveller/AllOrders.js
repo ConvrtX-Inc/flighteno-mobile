@@ -30,19 +30,19 @@ var storeNamesList = [
 var ordersList = [
     {
         id: '1',
-        name: 'All Orders',
+        name: t('track.allOrders'),
         value: 'all',
         checked: true
     },
     {
         id: '2',
-        name: 'completed',
+        name: t('track.completed'),
         value: 'complete',
         checked: false
     },
     {
         id: '3',
-        name:'accepted',
+        name:t('track.accepted'),
         value: 'accepted',
         checked: false
     },
@@ -54,11 +54,30 @@ export default function AllOrders() {
     const dispatch = useDispatch()
     const [showFilter, setShowFilter] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const [ordersListNames, setOrdersListNames] = useState(ordersList)
+
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const { travlerOrders } = useSelector(({ tripsRed }) => tripsRed)
     const [ordersByTravler, setOrderByTravler] = useState(travlerOrders)
     const {t} = useTranslation()
+
+        const [ordersListNames, setOrdersListNames] = useState([{
+        id: '1',
+        name: t('track.allOrders'),
+        value: 'all',
+        checked: true
+    },
+    {
+        id: '2',
+        name: t('track.completed'),
+        value: 'complete',
+        checked: false
+    },
+    {
+        id: '3',
+        name:t('track.accepted'),
+        value: 'accepted',
+        checked: false
+    }])
 
 
 
@@ -151,16 +170,16 @@ export default function AllOrders() {
             height:'100%',
             backgroundColor:'#fff',
         }}>
-            <View style={{flex:1, marginLeft:18, marginRight:18}}>
+            <View style={{flex:1}}>
                 <TouchableOpacity
                     onPress={() => setShowFilter(false)}
                 >
                     <Icon name="cross" size={35} style={{margin: 0}} />
                 </TouchableOpacity>
-                <TextBold style={{fontSize:26}}>Filter</TextBold>
+                <TextBold style={{fontSize:26, textAlign:'left'}}>{t('travelHome.filter')}</TextBold>
                 <SearchInput/>
 
-                {ordersList.map((item, index) => {
+                {ordersListNames.map((item, index) => {
                     return (
                     <View style={{flex:1, flexDirection: 'row', justifyContent:'space-between', marginTop:16}} key={index}>
                         <TextMedium style={{fontSize:16}}>{item?.name}</TextMedium>
@@ -181,8 +200,7 @@ export default function AllOrders() {
     )
 
     return (
-        <>
-        <SafeAreaView>
+        <SafeAreaView style={{marginLeft:18, marginRight:18}}>
             <FlatList
                 data={ordersByTravler}
                 ListHeaderComponent={renderHeader}
@@ -194,9 +212,7 @@ export default function AllOrders() {
                 keyExtractor={(item,index) => item + index}
             />
 
-           
         </SafeAreaView>
-        </>
     );
 
 }
@@ -205,7 +221,7 @@ const Styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
         alignItems: 'center',
         marginVertical: 20
     },
@@ -216,12 +232,11 @@ const Styles = StyleSheet.create({
     listView: {
         paddingVertical: 20,
         backgroundColor: color.inputBackColor,
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 10,
         marginBottom: 20
     },
-
     storeNamesList: {
         maxHeight: 200,
         width: '90%',

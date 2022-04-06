@@ -136,7 +136,6 @@ export default function PaymentAddNewCard({ navigation }) {
 
         setLoading(false);
 
-
     }
 
     return (

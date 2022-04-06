@@ -34,7 +34,7 @@ export default function Notifications({ route }) {
 
     return (
         <SafeAreaView style={{flex:1}}>
-<View style={styles.ScreenCss}>
+<View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
             <ScreenLoader loader={loading} />
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -43,7 +43,7 @@ export default function Notifications({ route }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.notifications')}</TextBold>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('common.notifications')}</TextBold>
             {showList ?
                 <FlatList
                     data={notificationsData}
@@ -77,7 +77,7 @@ const Styles = StyleSheet.create({
         marginLeft: '5%'
     },
     listView: {
-        width: '90%',
+        width: '100%',
         flexDirection: 'row',
         alignSelf: 'center',
         marginTop: 25,

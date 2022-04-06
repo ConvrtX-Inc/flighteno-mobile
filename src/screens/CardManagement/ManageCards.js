@@ -40,7 +40,7 @@ export default function ManageCards({ navigation }) {
                 </TouchableOpacity>
                 <>
                     <View style={[commonStyles.marginTop30]}>
-                        <TextBold style={[commonStyles.fs26]}> Manage Cards </TextBold>
+                        <TextBold style={[commonStyles.fs26, {textAlign:'left'}]}>{t('common.manageCards')}</TextBold>
                     </View>
                     <View style={{ height: 22 }}></View>
                     {
@@ -54,7 +54,8 @@ export default function ManageCards({ navigation }) {
                         <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                             <IconEntypo name="plus" size={25} color="#36C5F0" />
                             <TextBold style={{ fontSize: 20, color: '#36C5F0', marginLeft: 14 }}>
-                                Add New Card
+                                {/* Add New Card */}
+                              {t('payment.addNewCard')} 
                             </TextBold>
                         </View>
                     </TouchableOpacity>

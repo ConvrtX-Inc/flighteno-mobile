@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Button, Image, ScrollView, Dimensions, Pressable, Animated, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Button, Image, ScrollView, Dimensions, Pressable, Animated, FlatList, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -126,7 +126,6 @@ export default function UrlData({ route }) {
     useEffect(() => {
         setPickerValueSelected(pickerValues[0].option)
         setPickerValueSelectedVip(pickerValuesVip[0].option)
-
     }, []);
     const onChange = (event) => {
         const currentDate = event|| date;
@@ -272,12 +271,13 @@ export default function UrlData({ route }) {
 
     <View>
 
-        <View style={{ borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35, padding:16}}>
+        <View style={{ borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35, padding: Platform.OS =="android" ? 4 : 8}}>
             <RNPickerSelect
                 onValueChange={(value) => {
                     setPickerValueSelected(value)
                 }}
                 items={pickerValues}
+                placeholder='Hello'
                 // style={{
                 //     inputIOS:{
                 //         fontFamily:'Gilroy-Medium',
@@ -297,7 +297,8 @@ export default function UrlData({ route }) {
                 // }
                 // }
                 // useNativeAndroidPickerStyle={true}
-                value={pickerValueSelected}
+               
+                // value={pickerValueSelected}
             />
             </View>
         
@@ -444,7 +445,7 @@ export default function UrlData({ route }) {
                 switchLeftPx={-90} // denominator for logic when sliding to TRUE position. Higher number = more space from RIGHT of the circle to END of the slider
                 switchRightPx={-90} // denominator for logic when sliding to FALSE position. Higher number = more space from LEFT of the circle to BEGINNING of the slider
                 switchWidthMultiplier={2} // multipled by the `circleSize` prop to calculate total width of the Switch
-                switchBorderRadius={30} // Sets the border Radius of the switch slider. If unset, it remains the circleSize.
+                switchBorderRadius={30} // Sets the border Radius of tfhe switch slider. If unset, it remains the circleSize.
                 style={{ marginLeft: 20 }}
             />
         </View>
@@ -452,55 +453,42 @@ export default function UrlData({ route }) {
 
     <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588' }}></View>
 
-    <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
+    <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', marginBottom: 35, textAlign:'left' }]}>{t('buyerHome.buyerNote')}</TextMedium>
 
-    <TextMedium style={[styles.fasterItemTxt, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextMedium>
+    <TextMedium style={[styles.fasterItemTxt, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.getItemFaster')}?</TextMedium>
 
     <TextSemiBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextSemiBold>
 
     {/* custom Picker */}
 
     <View>
-        {/* <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
-            <View style={styles.pickerVIew}>
-                <View style={styles.pickerLeftView}>
-                    <TextMedium style={styles.textSelected}>{pickerValueSelectedVip}</TextMedium>
-                </View>
-                <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-                    <Image
-                        style={styles.pickerIcon}
-                        resizeMode='stretch'
-                        source={require('../../images/pickerIcon.png')}
-                    />
-                </View>
-            </View>
-        </Pressable> */}
-        <View  style={{borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35}}>
+        <View style={{borderColor: '#00000011',borderWidth: 1 ,backgroundColor: '#F6F9FF',borderRadius: 35}}>
                 <RNPickerSelect
-            onValueChange={(value) => {
-                // setPickerValueSelected(value)
-                setPickerValueSelectedVip(value)
-            }}
-            items={pickerValuesVip}
-            style={{
-              inputIOS:{
-                fontFamily:'Gilroy-Medium',
-                color:'#656F85'
-              },
-              inputAndroid:{
-                fontFamily:'GilroyMedium',
-                color:'#656F85'
-              },
-              viewContainer:{
-                padding:Platform.OS == 'ios' ?  16 : 0
-              },
-              placeholder:{
-                fontFamily:'Gilroy-Medium',
-                fontSize:14
-              }
-            }
-          }
-          value={pickerValueSelectedVip}
+                    onValueChange={(value) => {
+                        // setPickerValueSelected(value)
+                        setPickerValueSelectedVip(value)
+                    }}
+                    items={pickerValuesVip}
+                    style={{
+                        inputIOS:{
+                            fontFamily:'Gilroy-Medium',
+                            color:'#656F85'
+                        },
+                        inputAndroid:{
+                            fontFamily:'GilroyMedium',
+                            color:'#656F85'
+                        },
+                        viewContainer:{
+                            padding:Platform.OS == 'ios' ?  16 : 0
+                        },
+                        placeholder:{
+                            fontFamily:'Gilroy-Medium',
+                            fontSize:14
+                        }
+                    }
+                  }
+                value={pickerValueSelectedVip}
+            
           />
         </View>
 

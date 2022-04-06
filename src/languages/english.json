@@ -80,7 +80,7 @@
             "confirmNewPass": "Confirm new password",
             "yourPasswordMust":"Your password must be different from previous used password",
             "verifyPhone":"Verify phone",
-            
+            "reset": "reset"
         },
         "track": {
             "transactions": "Transactions",
@@ -150,7 +150,11 @@
             "price":"Price",
             "enterDesc":"Enter Description",
             "uploadPic":"Upload picture",
-            "city": "City"
+            "city": "City",
+            "buyerNote": "Note: The box mentioned above was the box from the manufacturer",
+            "getItemFaster":"Do you want to get your item faster",
+            "myPendingOrder": "My Pending Order",
+            "rateMyTransaction": "Rate My Transaction"
         },
         "support":{
             "support": "Support",
@@ -187,7 +191,7 @@
             "acceptContinue":"Accept and Continue",
             "writeSubject":"Write subject here",
             "whatWouldYouLike": "What would you like to tell us"
-        },
+        }, 
         "travelHome":{
             "myTravel":"My Travel",
             "ordersDestination":"Orders to your Destination",

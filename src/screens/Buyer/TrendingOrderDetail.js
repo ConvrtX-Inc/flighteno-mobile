@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import TextBold from '../../components/atoms/TextBold';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ImageView from "react-native-image-viewing";
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -20,7 +21,8 @@ const TrendingOrderDetail = ({ route }) => {
     const { loading } = useSelector(({ authRed }) => authRed)
     const {t} = useTranslation()
     const [showProductPic, setShowProductPic] = useState(false)
-
+    const [imageVisible, setImageVisible] = useState(false)
+ 
     const imageProduct = [{
         url: order.product_image,
     }]
@@ -31,6 +33,7 @@ const TrendingOrderDetail = ({ route }) => {
                 showImageViewer={showProductPic}
                 images={imageProduct}
                 closeModal={() => setShowProductPic(false)}
+                
             />
             <ScrollView>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -42,7 +45,7 @@ const TrendingOrderDetail = ({ route }) => {
                 </TouchableOpacity>
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100 }]}>{order.name}</TextBold>
                 <View style={Styles.bottomView}>
-                    <TouchableHighlight underlayColor="transparent" onPress={() => setShowProductPic(true)}>
+                    <TouchableHighlight underlayColor="transparent" onPress={() => setImageVisible(true)}>
                         <Image resizeMode='contain' source={{ uri: order.product_image }}
                             style={Styles.productImage}
                         />
@@ -60,6 +63,13 @@ const TrendingOrderDetail = ({ route }) => {
                 </View>
             </ScrollView>
         </View>
+
+            <ImageView
+                images={[{uri:order.product_image}]}
+                imageIndex={0}
+                visible={imageVisible}
+                onRequestClose={() => setImageVisible(false)}
+            />
         </SafeAreaView>
     );
 }

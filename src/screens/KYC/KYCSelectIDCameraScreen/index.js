@@ -86,10 +86,8 @@ export default function KYCSelectIDCameraScreen ({navigation,route}){
 
         setLoading(true)
         task.on('state_changed', snapshot => {
-
             const percentUploaded = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) *100)
             setTransferred(percentUploaded)
-           
         })
 
     

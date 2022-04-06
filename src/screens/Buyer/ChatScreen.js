@@ -43,7 +43,7 @@ export default function ChatScreen() {
 
     return (
         <SafeAreaView style={{flex:1}}>
-    <View style={styles.ScreenCss}>
+    <View style={[styles.ScreenCss, {marginLeft:18}]}>
             <View>
                 <FlatList
                     data={chatMessages}
@@ -51,13 +51,13 @@ export default function ChatScreen() {
                     refreshing={refreshing}
                     onRefresh={() => {
                         dispatch({ type: CHAT_MESSAGES, data: [] })
-
                         getMessages()
                     }}
                     ListEmptyComponent={
                         <ChatsSkeleton />
                     }
-                    ListHeaderComponent={<View>
+                    ListHeaderComponent=
+                    {<View>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
                             <Image
                                 style={styles.backImg}
@@ -65,14 +65,14 @@ export default function ChatScreen() {
                                 source={require('../../images/back.png')}
                             />
                         </TouchableOpacity>
-                        <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign: 'left' }]}>{t('messages.inbox')}</TextBold>
+                        <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign: 'left' }]}>{t('messages.inbox')}</TextBold>
                         <View style={{ marginVertical: 30 }}>
                             <FlatList
                                 data={chatMessages}
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
                                 nestedScrollEnabled
-                                style={{ paddingHorizontal: '5%' }}
+                                // style={{ paddingHorizontal: '5%' }}
                                 renderItem={({ item, index }) =>
                                     <View style={{ marginRight: 15, width: 80 }}>
                                         <TouchableOpacity style={{ alignItems: 'center' }}
@@ -93,7 +93,7 @@ export default function ChatScreen() {
                     renderItem={({ item, index }) =>
                         <View >
                             {index == 0 ?
-                                <TextBold style={[styles.HeadingText, { marginLeft: '5%', textAlign: 'left' }]}>{t('messages.messages')}</TextBold>
+                                <TextBold style={[styles.HeadingText, { textAlign: 'left' }]}>{t('messages.messages')}</TextBold>
                                 : null}
                             <TouchableOpacity onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], receiverId: item.reciver_id, chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                 style={[Styles.itemView, {}]}>
@@ -118,7 +118,7 @@ export default function ChatScreen() {
                                     </View>
 
                                     <View >
-                                        <TextMedium style={[Styles.dateText, { marginLeft: 'auto', }]}>{moment(item.messages[0]?.currentMessage.createdAt).format("DD MMM")}</TextMedium>
+                                        <TextMedium style={[Styles.dateText, { marginLeft: 'auto', marginRight:18 }]}>{moment(item.messages[0]?.currentMessage.createdAt).format("DD MMM")}</TextMedium>
                                     </View>
 
                                 </View>
@@ -147,7 +147,7 @@ const Styles = StyleSheet.create({
     },
     itemView: {
         flexDirection: 'row',
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 15,
         height: 75,

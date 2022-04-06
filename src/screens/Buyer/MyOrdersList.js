@@ -32,17 +32,17 @@ export default function MyOrdersList({ route }) {
 
     return (
         <SafeAreaView style={{flex:1}}> 
-              <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+            <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
 
-<TouchableOpacity onPress={() => navigation.goBack()}>
-    <Image
-        style={styles.backImg}
-        resizeMode='stretch'
-        source={require('../../images/back.png')}
-    />
-</TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+                style={styles.backImg}
+                resizeMode='stretch'
+                source={require('../../images/back.png')}
+            />
+        </TouchableOpacity>
 
-<TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>
+<TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>
     {t('track.my')} {orderStatus == "Pending" ? t('track.pending') : orderStatus == "Completed" ? t('track.completed') : t('track.cancelled')} {t('track.orders')}
 </TextBold>
 <SearchInput
@@ -53,7 +53,6 @@ export default function MyOrdersList({ route }) {
 <FlatList
     data={searchedOrders}
     renderItem={({ item, index }) =>
-
         <TouchableOpacity onPress={() => goToDetails(item)} style={Styles.listView}>
             <CardOrder order={item}></CardOrder>
         </TouchableOpacity>
@@ -73,7 +72,7 @@ const Styles = StyleSheet.create({
     listView: {
         paddingVertical: 20,
         backgroundColor: color.inputBackColor,
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 10,
         marginBottom: 20
@@ -93,7 +92,6 @@ const Styles = StyleSheet.create({
     bottomView: {
         paddingHorizontal: '5%',
         marginTop: 20,
-
     },
     productImage: {
         height: 90,

@@ -70,7 +70,7 @@ function Profile() {
     }
     return (
         <SafeAreaView style={{flex:1}}>
-  <View style={styles.ScreenCss}>
+  <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
             {currentUser ?
                 <ScrollView>
                     { currentUser ?
@@ -195,7 +195,7 @@ function Profile() {
 
 const Styles = StyleSheet.create({
     topView: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         backgroundColor: color.inputBackColor,
         borderRadius: 16,
