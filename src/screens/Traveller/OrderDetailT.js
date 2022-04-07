@@ -18,6 +18,7 @@ import TextBold from '../../components/atoms/TextBold';
 import TextRegular from '../../components/atoms/TextRegular';
 import TextMedium from '../../components/atoms/TextMedium';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ImageView from "react-native-image-viewing";
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -28,6 +29,7 @@ export default function OrderDetailT({ route }) {
     const navigation = useNavigation()
     const [offerSent, setOfferSent] = useState("")
     const [showImageView, setShowImageView] = useState(false)
+    const [imageVisible, setImageVisible] = useState(false)
     const [images, setImages] = useState([])
     const {t} = useTranslation()
 
@@ -56,7 +58,7 @@ export default function OrderDetailT({ route }) {
         })
     }
     return (
-        <SafeAreaView style={{flex:1}} >
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}} >
     <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
             <ViewImages
                 showImageViewer={showImageView}
@@ -71,7 +73,7 @@ export default function OrderDetailT({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('track.orderDetails')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('track.orderDetails')}</TextBold>
                 <View style={Styles.listView}>
                     <View style={Styles.upperView}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -111,7 +113,7 @@ export default function OrderDetailT({ route }) {
                     <View style={{ height: 1, backgroundColor: 'gray' }} />
 
                     <View style={Styles.bottomView}>
-                        <TouchableHighlight underlayColor="transparent" onPress={() => showGallery(orderDetail.product_image)}>
+                        <TouchableHighlight underlayColor="transparent" onPress={() => setImageVisible(true)}>
                             <Image source={{ uri: orderDetail.product_image }}
                                 style={Styles.productImage}
                             />
@@ -278,6 +280,14 @@ export default function OrderDetailT({ route }) {
                     </View> */}
                 </View>
             </ScrollView>
+
+            <ImageView
+                images={[{uri:orderDetail.product_image}]}
+                imageIndex={0}
+                visible={imageVisible}
+                onRequestClose={() => setImageVisible(false)}
+            />
+
         </View>
         </SafeAreaView>
     );
@@ -287,7 +297,7 @@ const Styles = StyleSheet.create({
     listView: {
         paddingVertical: 20,
         backgroundColor: color.inputBackColor,
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 10,
         marginTop: 25

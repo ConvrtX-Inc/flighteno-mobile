@@ -15,6 +15,9 @@ import Toast from 'react-native-toast-message';
 import { RNS3 } from 'react-native-aws3';
 import { SubmitReview } from '../../redux/actions/Reviews';
 import { IS_LOADING } from '../../redux/constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import TextBold from '../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
 var windowWidth = Dimensions.get('window').width;
 
 export default function RateTransaction({ route }) {
@@ -28,6 +31,8 @@ export default function RateTransaction({ route }) {
     const [videosUrl, setVideosUrl] = useState([])
     const [message, setMessage] = useState('')
     const { order } = route.params
+    const {t} = useTranslation()
+
     const chooseMedia = (type) => {
         let options = {
             selectionLimit: 0,
@@ -113,7 +118,7 @@ export default function RateTransaction({ route }) {
             images.forEach(element => {
                 const file = {
                     uri: element.uri,
-                    name: generateUID() + ".jpg",
+                    name: generateUID() + ".jpg",   
                     type: 'image/jpeg'
                 }
                 const options = {
@@ -176,7 +181,8 @@ export default function RateTransaction({ route }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <SafeAreaView style={{flex:1}}>
+            <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
             <ScrollView>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -185,7 +191,7 @@ export default function RateTransaction({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', marginBottom: 20 }]}>Rate Transaction</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginBottom: 20 }]}>{t('track.rateTransaction')}</TextBold>
                 <CardOrder
                     order={order}>
                 </CardOrder>
@@ -197,7 +203,7 @@ export default function RateTransaction({ route }) {
                     showRating={false}
                     onFinishRating={(rating) => setUserRating(rating)}
                 />
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Add Photo</Text>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{}</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseMedia('photo')}>
                         <View style={styles.imgPickView}>
@@ -230,7 +236,7 @@ export default function RateTransaction({ route }) {
                     </View>
                 </View>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Add Video</Text>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Add Video</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseMedia('video')}>
                         <View style={styles.imgPickView}>
@@ -262,7 +268,7 @@ export default function RateTransaction({ route }) {
                         />
                     </View>
                 </View>
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter Description</Text>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter Description</TextBold>
                 <InputMultiline
                     placeholder="Share your experience with us."
                     onChangeText={text => setMessage(text)}
@@ -277,6 +283,7 @@ export default function RateTransaction({ route }) {
                 </View>
             </ScrollView>
         </View>
+        </SafeAreaView>
     );
 }
 
@@ -357,7 +364,7 @@ const Styles = StyleSheet.create({
     },
     boxView: {
         flexDirection: 'row',
-        marginLeft: '5%'
+        // marginLeft: '5%'
     },
     crossButton: {
         marginLeft: -35,
