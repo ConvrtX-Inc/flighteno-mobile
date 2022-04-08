@@ -21,6 +21,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
 import Input from '../../components/InputField';
 import {Slider, CheckBox} from 'react-native-elements';
+import ImageView from "react-native-image-viewing";
 
 import {
   UserOrders,
@@ -257,17 +258,23 @@ export default function OrderDestination({route}) {
 
   const showGallery = data => {
     images.length = 0;
-    images.push({url: data});
+    images.push({uri: data});
     setShowImageView(true);
   };
 
 
   return (
     <View style={{flex: 1, backgroundColor: color.backgroundColor}}>
-      <ViewImages
+      {/* <ViewImages
         showImageViewer={showImageView}
         images={images}
         closeModal={() => setShowImageView(false)}
+      /> */}
+      <ImageView
+        images={images}
+        imageIndex={0}
+        visible={showImageView}
+        onRequestClose={() =>  setShowImageView(false)}
       />
       {showFilter ? (
         <>
@@ -379,10 +386,10 @@ export default function OrderDestination({route}) {
             <Slider
               value={minPrice}
               // onValueChange={value => setMinPrice(value)}
-              onValueChange={(value) => {
-                console.log(value)
-              }}
-              maximumValue={maxPrice}
+              // // onValueChange={(value) => {
+              // //   console.log(value)
+              // // }}
+              maximumValue={1500}
               minimumValue={0}
               style={[styles.sliderStyle, {}]}
               step={10}

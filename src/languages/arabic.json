@@ -154,7 +154,10 @@
             "buyerNote": "ملحوظة: الصندوق المذكور أعلاه كان الصندوق من الشركة المصنعة",
             "getItemFaster":"هل تريد الحصول على العنصر الخاص بك بشكل أسرع",
             "myPendingOrder": "طلبي المعلق",
-            "rateMyTransaction": "قيم معاملتي"
+            "rateMyTransaction": "قيم معاملتي",
+            "addPhoto": "أضف صورة",
+            "addVideo": "أضف فيديو",
+            "enterDescription": "أدخل الوصف"
         },
         "support":{
             "support": "يدعم",

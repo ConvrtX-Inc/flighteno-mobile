@@ -11,7 +11,6 @@ import TextRegular from './atoms/TextMedium'
 import { useTranslation } from 'react-i18next';
 import ImageView from "react-native-image-viewing";
 
-
 const CardOrder = ({ order }) => {
 
     const [showProductPic, setShowProductPic] = useState(false)

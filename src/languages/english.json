@@ -154,7 +154,10 @@
             "buyerNote": "Note: The box mentioned above was the box from the manufacturer",
             "getItemFaster":"Do you want to get your item faster",
             "myPendingOrder": "My Pending Order",
-            "rateMyTransaction": "Rate My Transaction"
+            "rateMyTransaction": "Rate My Transaction",
+            "addPhoto": "Add Photo",
+            "addVideo": "Add Video",
+            "enterDescription": "Enter Description"
         },
         "support":{
             "support": "Support",
