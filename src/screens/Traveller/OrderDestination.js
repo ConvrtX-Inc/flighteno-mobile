@@ -421,7 +421,7 @@ export default function OrderDestination({route}) {
             </View>
 
             {/* STORE NAMES */}
-            <TextBold style={{fontSize:16, marginTop:24}}>Store name</TextBold>
+            <TextBold style={{fontSize:16, marginTop:24, textAlign:'left'}}>{t('travelHome.storeName')}</TextBold>
 
             {storeData.map((item,index)=> {
                 return (

@@ -196,6 +196,12 @@
             "whatWouldYouLike": "ماذا تريد أن تخبرنا"
         },
         "travelHome":{
+            "pleaseWaitTraveler": "يرجى الانتظار حتى يقوم المسافر بتجميع طلبك والاتصال بك لمزيد من المناقشة والاستعداد للدفع",
+            "yourOrder":"طلبك",
+            "hasBeenPlaced": "تم وضعه",
+            "openBoxCheck": "افتح الصندوق وتحقق من المظهر الخارجي",
+            "useItemTesting":"استخدم العنصر للاختبار",
+            "letsPost":"دعنا ننشر رحلتك",
             "myTravel":"رحلتي",
             "ordersDestination":"أوامر إلى وجهتك",
             "travelFrom": "السفر من",

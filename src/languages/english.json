@@ -196,6 +196,12 @@
             "whatWouldYouLike": "What would you like to tell us"
         }, 
         "travelHome":{
+            "pleaseWaitTraveler": "Please wait for a traveler to gather your order and contact you for further discussion and prepare for your payment",
+            "yourOrder":"Your order",
+            "hasBeenPlaced": "has been placed",
+            "openBoxCheck": "Open box and check physical appearance",
+            "useItemTesting":"Use item for testing",
+            "letsPost":"Let's post your flight",
             "myTravel":"My Travel",
             "ordersDestination":"Orders to your Destination",
             "travelFrom": "Travelling From",

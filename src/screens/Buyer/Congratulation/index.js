@@ -57,10 +57,10 @@ export default function Congratulation({ route }) {
                     />
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 6) / 100, marginLeft: '0%' }]}>Your order
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 6) / 100, marginLeft: '0%', textAlign:'center' }]}>{t('travelHome.yourOrder')}
                     </TextBold>
-                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 0) / 100, marginLeft: '0%' }]}>
-                        has been placed</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 0) / 100, marginLeft: '0%', textAlign:'center' }]}>
+                       {t('travelHome.hasBeenPlaced')}</TextBold>
                 </View>
 
                 <View style={{ alignSelf: "center", marginTop: 50, }}>
@@ -171,7 +171,7 @@ export default function Congratulation({ route }) {
                 </View>
                 
                 <TextMedium style={[styles.termText, { fontSize: 16, color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'center', marginTop: 70 }]}>
-                    Please wait for a traveler to gather your order and contact you for further discussion and prepare for your payment.
+                    {t('travelHome.pleaseWaitTraveler')}.
                 </TextMedium>
 
 
