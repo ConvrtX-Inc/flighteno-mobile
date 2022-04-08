@@ -112,6 +112,10 @@ export default function RateTransaction({ route }) {
         }))
     }
 
+    const uploadFilesToFirebase = async () => {
+        
+    }
+
     const uploadPhotos = () => {
         if (images.length != 0) {
             dispatch({ type: IS_LOADING, isloading: true })
@@ -191,7 +195,7 @@ export default function RateTransaction({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginBottom: 20 }]}>{t('track.rateTransaction')}</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginBottom: 20, textAlign:'left'}]}>{t('track.rateTransaction')}</TextBold>
                 <CardOrder
                     order={order}>
                 </CardOrder>
@@ -203,7 +207,7 @@ export default function RateTransaction({ route }) {
                     showRating={false}
                     onFinishRating={(rating) => setUserRating(rating)}
                 />
-                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>{}</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.addPhoto')}</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseMedia('photo')}>
                         <View style={styles.imgPickView}>
@@ -236,7 +240,7 @@ export default function RateTransaction({ route }) {
                     </View>
                 </View>
 
-                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Add Video</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.addVideo')}</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseMedia('video')}>
                         <View style={styles.imgPickView}>
@@ -268,7 +272,7 @@ export default function RateTransaction({ route }) {
                         />
                     </View>
                 </View>
-                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter Description</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterDescription')}</TextBold>
                 <InputMultiline
                     placeholder="Share your experience with us."
                     onChangeText={text => setMessage(text)}
@@ -276,7 +280,7 @@ export default function RateTransaction({ route }) {
                 />
                 <View style={{ marginVertical: 30 }}>
                     <ButtonLarge
-                        title="Submit"
+                        title={t('kyc.submit')}
                         loader={loading}
                         onPress={() => checkValidation()}
                     />

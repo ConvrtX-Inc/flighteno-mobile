@@ -118,13 +118,15 @@ export const styles = StyleSheet.create({
     //country number style
     phoneContainer: {
         height: 55,
-        alignSelf: 'center',
-        // width: '90%',
+        // alignSelf: 'center',
+        paddingLeft:16,
+        width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         // marginTop: 15,
         borderRadius: 35,
-        // borderRadius: 16,
+     fontFamily: 'Gilroy-Regular',
+     color: '#707070',
         backgroundColor: "#F6F9FF"
     },
     phoneInput: {

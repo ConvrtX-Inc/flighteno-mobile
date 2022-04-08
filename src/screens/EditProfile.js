@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
 import PhoneInput from 'react-native-phone-input'
@@ -17,6 +17,7 @@ import TextBold from '../components/atoms/TextBold';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CountryPicker from 'react-native-country-picker-modal';
 import storage from '@react-native-firebase/storage';
+import { Header } from '@react-navigation/stack';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -127,6 +128,18 @@ export default function EditProfile() {
             })
             return
         }
+
+        if(phone){
+            if(phone.length <= 10){
+                Toast.show({
+                    type: 'info',
+                    text1: 'Alert!',
+                    text2: "Phone number not valid",
+                })
+                return 
+            }
+        }
+
         if (!image) {
             var obj = {
                 admin_id: currentUser._id,
@@ -152,6 +165,9 @@ export default function EditProfile() {
 
     return (
         <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
+            <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex:1}}  >
+
+<ScrollView style={{flex:1}}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image
                             style={styles.backImg}
@@ -190,7 +206,7 @@ export default function EditProfile() {
 
                     <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
                    
-                    <PhoneInput
+                <PhoneInput
                     ref={phoneInput}
                     onPressFlag={() => {
                     // countryPicker.current?.open()
@@ -201,8 +217,20 @@ export default function EditProfile() {
                         placeholder:'123-456-789'
                     }}
                     onChangePhoneNumber={setPhone}
-                    style={[styles.phoneContainer, {padding:16}]}
+                    textStyle={styles.phoneContainer}
+                    // style={[styles.phoneContainer, {marginBottom:40, height:55}]}
+                    
                     />
+                
+             
+
+                    {/* <Input
+                        placeholder="myemail@flighteno.com"
+                        onChangeText={text => setEmail(text)}
+                        value={currentUser.email_address}
+                        secureTextEntry={false}
+                        editable={true}
+                    /> */}
 
                     <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
                         <ButtonLarge
@@ -229,7 +257,10 @@ export default function EditProfile() {
         />    
         )}
 
-       
+</ScrollView>
+           
+
+        </KeyboardAvoidingView>
         </SafeAreaView>
     );
 
