@@ -119,7 +119,7 @@ export default function OrderDetail() {
         <SafeAreaView style={{flex:1}}>
 <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
-<ScrollView>
+<ScrollView >
 
     <TouchableOpacity onPress={() => navigation.goBack()}>
         <Image
@@ -172,7 +172,7 @@ export default function OrderDetail() {
     <TextMedium style={[styles.productAtrribute, { alignSelf: 'center' }]}>({t('buyerHome.ifApplicable')})</TextMedium>
 
 
-    <View style={styles.agreeTermContainer}>
+    <View style={[styles.agreeTermContainer]}>
         <CheckBox
             checkedIcon={<Image source={require('../../../images/checked.png')}
                 style={{ height: 25, width: 25, tintColor: '#ECB22E', borderRadius: 7 }}
@@ -184,7 +184,7 @@ export default function OrderDetail() {
             onPress={() => setChecked(!checked)}
         />
 
-        <TextMedium style={[styles.termAgreeText, { marginTop: 17, fontWeight: 'normal', color: color.countrtTextColor, }]}>Open box and check physical Apperance</TextMedium>
+        <TextMedium style={[styles.termAgreeText, { marginTop: 17, fontWeight: 'normal', color: color.countrtTextColor, flex:1, textAlign:'left' }]}>{t('travelHome.openBoxCheck')}</TextMedium>
     </View>
 
     <View style={[styles.agreeTermContainer, { marginTop: -10 }]}>
@@ -199,7 +199,7 @@ export default function OrderDetail() {
             onPress={() => setUseForTesting(!useForTesting)}
         />
 
-        <TextMedium style={[styles.termAgreeText, { marginTop: 17, fontWeight: 'normal', color: color.countrtTextColor, }]}>Use item for testing</TextMedium>
+        <TextMedium style={[styles.termAgreeText, { marginTop: 17, fontWeight: 'normal', color: color.countrtTextColor, flex:1, textAlign:'left'}]}>{t('travelHome.useItemTesting')}</TextMedium>
     </View>
 
     <View style={{ marginVertical: 15 }}>                    

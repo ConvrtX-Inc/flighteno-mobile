@@ -8,11 +8,13 @@ import TopTabTraveller from '../TopTabTraveller';
 import TextBold from '../../../components/atoms/TextBold';
 import { color } from '../../../Utility/Color';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 {/* Fix for FLIGHT-46 */}
 export default function MyTripTab() {
 
     const { currentUser } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
     const navigation = useNavigation();
     const [imageValid, setImageValid] = useState(true)
 
@@ -40,7 +42,7 @@ export default function MyTripTab() {
                     </View>
                 </View> */}
             <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <TextBold style={{ marginLeft: '5%', marginTop: 15, marginBottom: 10, color: color.grayText, }}>Let’s Post your flight</TextBold>
+                <TextBold style={{ marginLeft: '5%', marginTop: 15, marginBottom: 10, color: color.grayText, }}>{t('travelHome.letsPost')}</TextBold>
                 {currentUser ?
                     <TouchableOpacity onPress={() => { navigation.navigate('Profile') }}>
                         <Image
