@@ -394,7 +394,7 @@ export default function MyTravel({ route }) {
                                 >
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>From</TextBold>
+                                            <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.travelFrom')}</TextBold>
                                             <TextBold style={styles.travelListValue}>{item.city}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                         </View>
@@ -403,7 +403,7 @@ export default function MyTravel({ route }) {
                                             style={{ height: 60, width: 60 }}
                                         />
                                         <View>
-                                            <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>To</TextBold>
+                                            <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.travelTo')}</TextBold>
                                             <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                         </View>
@@ -411,7 +411,7 @@ export default function MyTravel({ route }) {
                                     <View style={{ height: 1, backgroundColor: color.travelerListBorderColor, }} />
                                     <View style={styles.travelerListInnerView}>
                                         <View>
-                                            <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>Date</TextBold>
+                                            <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.date')}</TextBold>
                                             <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                         </View>
                                     </View>
