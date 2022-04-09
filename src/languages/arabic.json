@@ -157,7 +157,9 @@
             "rateMyTransaction": "قيم معاملتي",
             "addPhoto": "أضف صورة",
             "addVideo": "أضف فيديو",
-            "enterDescription": "أدخل الوصف"
+            "enterDescription": "أدخل الوصف",
+            "rateYourTransaction": "قيم معاملتك",
+            "orderCancelled":"تم الغاء الأمر او الطلب"
         },
         "support":{
             "support": "يدعم",

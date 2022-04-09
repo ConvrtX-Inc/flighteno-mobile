@@ -8,11 +8,13 @@ import ViewImages from './ViewImages';
 import { useTranslation } from 'react-i18next';
 import TextBold from './atoms/TextBold';
 import TextRegular from './atoms/TextRegular';
+import ImageView from "react-native-image-viewing";
 
 const CardOrderUser = ({ order }) => {
     
     const [showProductPic, setShowProductPic] = useState(false)
     const {t} = useTranslation()
+    const [imageVisible, setImageVisible] = useState(false)
 
 
     function getOrderStatus() {
@@ -65,7 +67,7 @@ const CardOrderUser = ({ order }) => {
             </View>
             <View style={{ height: 1, backgroundColor: '#6A6585'}} />
             <View style={Styles.bottomView}>
-                <TouchableOpacity onPress={() => setShowProductPic(true)} activeOpacity={1}>
+                <TouchableOpacity onPress={() => setImageVisible(true)} activeOpacity={1}>
                     <Image source={{ uri: order.product_image }}
                         style={Styles.productImage}
                     />
@@ -75,6 +77,13 @@ const CardOrderUser = ({ order }) => {
                     {formatAmount(order.Total)}
                 </TextBold>
             </View>
+
+            <ImageView
+                images={[{uri:order.product_image}]}
+                imageIndex={0}
+                visible={imageVisible}
+                onRequestClose={() => setImageVisible(false)}
+            />
         </View>
     );
 }

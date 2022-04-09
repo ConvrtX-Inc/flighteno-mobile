@@ -157,7 +157,9 @@
             "rateMyTransaction": "Rate My Transaction",
             "addPhoto": "Add Photo",
             "addVideo": "Add Video",
-            "enterDescription": "Enter Description"
+            "enterDescription": "Enter Description",
+            "rateYourTransaction":"Rate Your Transaction",
+            "orderCancelled":"Order Cancelled"
         },
         "support":{
             "support": "Support",
