@@ -34,7 +34,7 @@ const ButtonWithImage = ({ img, title, onPress, loader }) => {
                 <Image style={styles.tinyLogo} source={img} />
             </View>
             <View style={{flex:1}}>
-                <TextBold>{title}</TextBold>
+                <TextBold style={{textAlign:'left'}}>{title}</TextBold>
             </View>
             <View style={{flex:0.5}} />
         </TouchableOpacity>

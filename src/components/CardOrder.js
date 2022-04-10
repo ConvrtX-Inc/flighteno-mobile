@@ -85,7 +85,7 @@ const CardOrder = ({ order }) => {
                     images={[{uri:order.product_image}]}
                     imageIndex={0}
                     visible={imageVisible}
-                    onRequestClose={() =>  (false)}
+                    onRequestClose={() =>  setImageVisible(false)}
                 />
             </View>
 

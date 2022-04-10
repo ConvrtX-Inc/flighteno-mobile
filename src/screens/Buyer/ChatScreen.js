@@ -25,6 +25,7 @@ export default function ChatScreen() {
     const dispatch = useDispatch()
     const { t } = useTranslation()
     const [refreshing, setRefreshing] = useState(false)
+    const [imageValid, setImageValid] = useState(false)
 
     useFocusEffect(
         React.useCallback(() => {
@@ -78,9 +79,12 @@ export default function ChatScreen() {
                                         <TouchableOpacity style={{ alignItems: 'center' }}
                                             onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                         >
-                                            <Image source={item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                            <Image 
+                                                // source={ item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                                source={imageValid ? {uri:item.reciverImageName[0].profile_image } : require('../../images/manProfile.png') }
                                                 style={styles.profileImage}
                                                 resizeMode="cover"
+                                                onError={() => setImageValid(false)}
                                             />
                                             <TextMedium numberOfLines={1} style={{ textAlign: 'left' }}>{item?.reciverImageName[0].full_name?.split(" ")[0]}</TextMedium>
                                         </TouchableOpacity>
@@ -99,7 +103,7 @@ export default function ChatScreen() {
                                 style={[Styles.itemView, {}]}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View>
-                                        <Image source={item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                        <Image source={ imageValid ? {uri:item.reciverImageName[0].profile_image }: require('../../images/manProfile.png')}
                                             style={styles.profileImage}
                                             resizeMode="cover"
                                         />
