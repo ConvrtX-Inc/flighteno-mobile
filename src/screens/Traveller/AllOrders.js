@@ -211,7 +211,6 @@ export default function AllOrders() {
                 }
                 keyExtractor={(item,index) => item + index}
             />
-
         </SafeAreaView>
     );
 

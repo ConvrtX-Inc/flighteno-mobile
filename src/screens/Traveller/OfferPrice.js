@@ -76,7 +76,7 @@ export default function OfferPrice({ route }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
             <ScrollView>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -85,12 +85,12 @@ export default function OfferPrice({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',textAlign:'left' }]}>{t('travelHome.offerDetails')}</TextBold>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '5%', marginTop: 20 }}>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('travelHome.offerDetails')}</TextBold>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between',  marginTop: 20 }}>
                     <TextBold style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>{t('track.estimatedDelFee')}</TextBold>
                     <TextMedium style={Styles.priceText}>{formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}</TextMedium>
                 </View>
-                <View style={{ alignSelf: 'center', width: '90%' }}>
+                <View style={{ alignSelf: 'center', width: '100%' }}>
                     <TextBold style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.yourDelFeeOffer')}</TextBold>
                 </View>
                 <Input
@@ -102,7 +102,7 @@ export default function OfferPrice({ route }) {
                 />
                 <View style={styles.ordernumberStyle}>
 
-                    <View style={[styles.orderNumberIst, { paddingLeft: '5%' }]}>
+                    <View style={[styles.orderNumberIst]}>
                         <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderNo')}.</TextBold>
 
                     </View>
@@ -202,7 +202,7 @@ export default function OfferPrice({ route }) {
                         </View>
 
                     </View>
-                    <View style={{ alignSelf: 'center', width: '90%', marginTop: 30 }}>
+                    <View style={{ alignSelf: 'center', width: '100%', marginTop: 30 }}>
                         <TextBold style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
                     </View>
                     <Pressable style={{ marginTop: 5 }} onPress={() => setShow(!show)}>
@@ -220,7 +220,7 @@ export default function OfferPrice({ route }) {
 
                         </View>
                     </Pressable>
-                    <View style={{ alignSelf: 'center', width: '90%', }}>
+                    <View style={{ alignSelf: 'center', width: '100%', }}>
                         <TextBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('travelHome.notes')}</TextBold>
                     </View>
                     <InputMulti
@@ -254,7 +254,7 @@ export default function OfferPrice({ route }) {
 
 const Styles = StyleSheet.create({
     upperView: {
-        paddingHorizontal: '5%'
+        // paddingHorizontal: '5%'
     },
     userName: {
         fontSize: 16,

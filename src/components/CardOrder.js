@@ -15,7 +15,7 @@ const CardOrder = ({ order }) => {
 
     const [showProductPic, setShowProductPic] = useState(false)
     const {t} = useTranslation()
-    const [imageVisible, setImageVisible] = useState()
+    const [imageVisible, setImageVisible] = useState(false)
 
     function getOrderStatus() {
         return order.status == "new" ?  t('track.pending') : order.status == "complete" ? t('track.completed') : order.status == "accepted" ? t('track.inProgress') : t('track.cancelled')
@@ -85,7 +85,7 @@ const CardOrder = ({ order }) => {
                     images={[{uri:order.product_image}]}
                     imageIndex={0}
                     visible={imageVisible}
-                    onRequestClose={() => setImageVisible(false)}
+                    onRequestClose={() =>  setImageVisible(false)}
                 />
             </View>
 

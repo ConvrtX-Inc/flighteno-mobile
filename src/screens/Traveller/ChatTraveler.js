@@ -85,6 +85,7 @@ var checkCondition = false
 
 export default function Chattravelereler({ route }) {
     const { loading, currentUser, currentProfile, token } = useSelector(({ authRed }) => authRed)
+    const [imageValid, setImageValid] = useState(false)
     const navigation = useNavigation()
     const [messages, setMessages] = useState([]);
     const [modal, setModal] = useState(false);
@@ -744,11 +745,15 @@ export default function Chattravelereler({ route }) {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: '5%', marginTop: 20, marginBottom: 10 }}>
                         {route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ?
-                            <Image source={route.params.orderDetail.profile_data[0].profile_image == "" ? require("../../images/manProfile.png") : { uri: route.params.orderDetail.profile_data[0].profile_image }}
+                            <Image 
+                                source={imageValid ? {uri:route.params.orderDetail.profile_data[0].profile_image} : require("../../images/manProfile.png")}
+                                onError={() => setImageValid(false)}
                                 style={Styles.userImage}
                             />
                             :
-                            <Image source={route.params.userDetail.profile_image == "" ? require("../../images/manProfile.png") : { uri: route.params.userDetail.profile_image }}
+                            <Image 
+                                source={imageValid ? {uri: route.params.userDetail.profile_image} : require("../../images/manProfile.png")}
+                                onError={() => setImageValid(false)}
                                 style={Styles.userImage}
                             />
                         }
@@ -760,7 +765,6 @@ export default function Chattravelereler({ route }) {
                         onSend={messages => onSend(messages)}
                         user={user}
                         // scrollToBottom
-
                         showUserAvatar
                         // renderAvatar={props => customtAvatar(props)}
                         onPressAvatar={() => console.log(user)}

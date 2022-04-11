@@ -655,7 +655,6 @@ export const styles = StyleSheet.create({
     },
     billLeft: {
         width: '54%',
-   
         // backgroundColor: 'pink',
         marginTop: (windowWidth * 4) / 100,
     },

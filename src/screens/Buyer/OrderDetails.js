@@ -142,7 +142,7 @@ export default function OrderDetails({ route }) {
                     />
                 </TouchableOpacity>
                 <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>
-                    { order?.status.toLowerCase() == 'cancelled' ? "Order Cancelled" : isComplete ? "Rate Your Transaction" : "My Pending Order"}
+                    { order?.status.toLowerCase() == 'cancelled' ? t('buyerHome.orderCancelled') : isComplete ? t('buyerHome.rateYourTransaction') : t('buyerHome.myPendingOrder')}
                 </TextBold>
                 {traveler?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
