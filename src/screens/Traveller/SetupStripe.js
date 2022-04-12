@@ -9,11 +9,13 @@ import { addCustomerDetails } from '../../services/Stripe/Customer';
 import { UPDATE_CUSTOMER_ID } from '../../redux/constants';
 import TextBold from '../../components/atoms/TextBold';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 function SetupStripe({ route }) {
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const navigation = useNavigation()
     const dispatch = useDispatch();
+    const {t} = useTranslation()
     // useFocusEffect(
     //     React.useCallback(() => {
     //         var data = {
@@ -45,7 +47,7 @@ function SetupStripe({ route }) {
     }
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{marginLeft:18, marginRight:18}} >
               <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image
                             style={styles.backImg}
@@ -53,24 +55,22 @@ function SetupStripe({ route }) {
                             source={require('../../images/back.png')}
                         />
                     </TouchableOpacity>
-            <View style={{ width: '90%', alignSelf: 'center', marginTop: 40, }}>
-                <TextBold style={{ color: '#000', fontSize: 20, lineHeight: 25 }}>
-                    Flighteno partners with Stripe for secure payments and financial services. In order to start getting paid, you need to set up a Stripe account.
-                </TextBold>
+            <View style={{ width: '100%', alignSelf: 'center', marginTop: 40, }}>
+                <TextBold style={{ color: '#000', fontSize: 20, lineHeight: 25, textAlign:'left' }}>{t('common.flightenoPartners')}.</TextBold>
             </View>
-            <View style={{ marginVertical: 30  , margin: 12}}>
+            <View style={{ marginVertical: 30  }}>
                 {currentUser.conected_account_id ?
-                    <Text style={{ marginLeft: 20, fontSize: 18, color: '#000' }}>You're all set!</Text>
+                    <Text style={{ marginLeft: 20, fontSize: 18, color: '#000', textAlign:'left' }}>{t('common.setupNow')}!</Text>
                     :
                     <ButtonLarge
-                        title="Setup Now!"
+                        title={t('common.setupNow')}
                         loader={loading}
                         onPress={configureStripeAccount}
                     />
                 }
             </View>
             <Text style={{ color: '#000', fontSize: 16, lineHeight: 25 ,textAlign:'center'}}>
-                    You'll be redirected to Stripe
+                    {t('common.stripeRedirected')}
                 </Text>
         </SafeAreaView>
     );

@@ -58,7 +58,7 @@ export default function OrderDestination({route}) {
   const [images, setImages] = useState([]);
   const [pName, setPName] = useState('');
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(200);
+  const [maxPrice, setMaxPrice] = useState(10000);
   const [selectedRange, setSelectedRange] = useState(0);
 
   const [rangeValue, setRangeValue] = useState('order_created_date');
@@ -389,7 +389,7 @@ export default function OrderDestination({route}) {
               // // onValueChange={(value) => {
               // //   console.log(value)
               // // }}
-              maximumValue={1500}
+              maximumValue={100000}
               minimumValue={0}
               style={[styles.sliderStyle, {}]}
               step={10}
@@ -504,7 +504,6 @@ export default function OrderDestination({route}) {
                 title={t('travelHome.applyFilter')}
               />
             </View>                  
-
            
           </ScrollView>
         </>

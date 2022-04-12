@@ -31,14 +31,12 @@ export default function EditProfile() {
     const [image, setImage] = useState(null)
     const[phone,setPhone] = useState(currentUser?.phone_number)
     const phoneInput = useRef()
+   
     const {t} = useTranslation()
     const [isPickerOpen, setPickerOpen] = useState(false)
     const [imageValid, setImageValid] = useState(true)
     const [transferred, setTransferred] = useState(0)
     
-    useEffect(() => {
-        console.log(currentUser)
-    },[])
 
     const chooseFile = () => {
         let options = {
@@ -111,6 +109,8 @@ export default function EditProfile() {
     }
 
     const updateProfile = () => {
+
+         const phoneVal = phoneInput?.current.state.value
     
         if (fullName == "") {
             Toast.show({
@@ -129,15 +129,14 @@ export default function EditProfile() {
             return
         }
 
-        if(phone){
-            if(phone.length <= 10){
-                Toast.show({
-                    type: 'info',
-                    text1: 'Alert!',
-                    text2: "Phone number not valid",
-                })
-                return 
-            }
+
+        if(phoneVal?.length <= 10){
+           Toast.show({
+                type: 'info',
+                text1: 'Alert!',
+                text2: "Phone number not valid",
+            })
+            return 
         }
 
         if (!image) {
@@ -145,7 +144,7 @@ export default function EditProfile() {
                 admin_id: currentUser._id,
                 full_name: fullName,
                 profile_image: currentUser.profile_image,
-                phone_number: phone
+                phone_number: phoneVal
             }
 
             dispatch(UpdateProfile(
@@ -210,7 +209,7 @@ export default function EditProfile() {
                     ref={phoneInput}
                     onPressFlag={() => {
                     // countryPicker.current?.open()
-                    setPickerOpen(!isPickerOpen)
+                        setPickerOpen(!isPickerOpen)
                     }}
                     initialValue={phone}
                     textProps={{
