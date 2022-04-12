@@ -81,7 +81,11 @@
             "yourPasswordMust":" يجب أن تكون كلمة المرور الخاصة بك مختلفة عن كلمة المرور السابقة المستخدمة",
             "verifyPhone":"تحقق من الهاتف",
             "attachment":"مرفق",
-            "reset":"إعادة تعيين"
+            "reset":"إعادة تعيين",
+            "flightenoPartners":"شركاء flighteno مع Stripe للمدفوعات والخدمات المالية الآمنة. من أجل البدء في الحصول على أموال ، تحتاج إلى إعداد حساب Stripe",
+            "youreAllSet":"أنت جاهز تمامًا",
+            "setupNow": "الإعداد الآن",
+            "stripeRedirected": "ستتم إعادة توجيهك إلى Stripe"
         },
         "track": {
             "transactions": "المعاملات",
