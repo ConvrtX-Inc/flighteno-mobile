@@ -36,7 +36,7 @@ import TextMedium from '../../components/atoms/TextMedium';
 import TextSemiBold from '../../components/atoms/TextSemiBold';
 import {useTranslation} from 'react-i18next';
 import ButtonLarge from '../../components/ButtonLarge';
-import {FILTERED_ORDERS_DATA, IS_LOADING_RESET_FILTER} from '../../redux/constants';
+import {FILTERED_ORDERS_DATA, IS_LOADING_RESET_FILTER, ORDERS_TO_DESTINATION} from '../../redux/constants';
 import Toast from 'react-native-toast-message';
 import { Dropdown } from 'sharingan-rn-modal-dropdown';
 import { DefaultTheme } from 'react-native-paper';
@@ -145,7 +145,13 @@ export default function OrderDestination({route}) {
     // dispatch(UserOrders(token, obj,() => {
 
     // }))
-    dispatch(UserOrders(token, obj, () => {}));
+
+    if(currentUser?.kyc_status_verified){
+      dispatch(UserOrders(token, obj, () => {}));
+    }else{
+      dispatch({type: ORDERS_TO_DESTINATION, data: []});
+    }
+
 
     dispatch(
       getStoreNames(token, data => {
@@ -159,7 +165,11 @@ export default function OrderDestination({route}) {
         });
       }),
     );
+
+
     setStoreData(stores);
+
+    // console.log(currentUser.kyc_status_verified)
   }, []);
 
   const selectPickerValueFN = index => {
@@ -261,6 +271,23 @@ export default function OrderDestination({route}) {
     images.push({uri: data});
     setShowImageView(true);
   };
+
+  const renderEmpty = () => {
+
+    if (!currentUser?.kyc_status_verified){
+          return (
+            <View style={{marginLeft: 18}}>
+              <TextMedium>Your account is not verified</TextMedium>
+            </View>
+          )
+    }
+
+    return (
+      <View style={{marginLeft: 18}}>
+        <TextMedium>Order list is empty</TextMedium>
+      </View>
+    )
+  }
 
 
   return (
@@ -546,11 +573,7 @@ export default function OrderDestination({route}) {
           //     dispatch(UserOrders(token, obj))
           // }}/>}
           nestedScrollEnabled
-          ListEmptyComponent={() => (
-            <View style={{marginLeft: 18}}>
-              <TextMedium>Order list is empty</TextMedium>
-            </View>
-          )}
+          ListEmptyComponent={renderEmpty}
           renderItem={({item}) => (
             <View style={Styles.listView}>
               <View style={Styles.upperView}>

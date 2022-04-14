@@ -53,7 +53,7 @@ export default function MyTravel({ route }) {
     const [withAlphaFilterDeliver, setWithAlphaFilterDeliver] = useState(false)
     const [withCallingCode, setWithCallingCode] = useState(false)
     const [withCallingCodeDeliver, setWithCallingCodeDeliver] = useState(false)
-    const [countryCodeDeliver, setCountryCodeDeliver] = useState(currentCountry.country_code)
+    const [countryCodeDeliver, setCountryCodeDeliver] = useState(currentCountry?.country_code)
     const [countryCode, setCountryCode] = useState(currentCountry?.country_code)
     const [date, setDate] = useState(new Date());
     const [depDate, setDepDate] = useState(moment().format("DD/MM/YY"));
@@ -76,22 +76,22 @@ export default function MyTravel({ route }) {
     const [countryDeliver, setCountryDestination] = useState(currentCountry)
 
 
-    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country.country_name])]);
-    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country.country_name])]);
+    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country?.country_name])]);
+    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country?.country_name])]);
 
     const [pickerShowCity, setPickerShowCity] = useState(false);
-    const [pickerValueSelectedCity, setPickerValueSelectedCity] = useState(currentCountry.city);
-    const [pickerValueSelectedCityDeliver, setPickerValueSelectedCityDeliver] = useState(currentCountry.city);
+    const [pickerValueSelectedCity, setPickerValueSelectedCity] = useState(currentCountry?.city);
+    const [pickerValueSelectedCityDeliver, setPickerValueSelectedCityDeliver] = useState(currentCountry?.city);
 
-    originCities = countries[country.country_name ? country.country_name : country.name];
-    destinationCities = countries[countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name];
+    originCities = countries[country?.country_name ? country?.country_name : country?.name];
+    destinationCities = countries[countryDeliver?.country_name ? countryDeliver?.country_name : countryDeliver?.name];
 
     const [show, setShow] = useState(false);
 
     const onSelect = (selectedCountry) => {
         setCountryCode(selectedCountry.cca2)
         setCountryOrigin(selectedCountry)
-        originCities = countries[selectedCountry.name]
+        originCities = countries[selectedCountry?.name]
         if (originCities == undefined) {
             // setPickerValueSelectedCity(selectedCountry.name)
             setPickerValuesCity([])
@@ -115,10 +115,10 @@ export default function MyTravel({ route }) {
     const onSelectDestinationCountry = (selectedCountry) => {
         setCountryCodeDeliver(selectedCountry.cca2)
         setCountryDestination(selectedCountry)
-        destinationCities = countries[selectedCountry.name]
+        destinationCities = countries[selectedCountry?.name]
 
         if (destinationCities == undefined) {
-            setPickerValueSelectedCityDeliver(selectedCountry.name)
+            setPickerValueSelectedCityDeliver(selectedCountry?.name)
             setPickerValuesCityDeliver([])
             setPickerValueSelectedCityDeliver('')
 
@@ -211,10 +211,10 @@ export default function MyTravel({ route }) {
         }
 
         const obj = {
-            Traveling_from: country.country_name ? country.country_name : country.name,
+            Traveling_from: country.country_name ? country?.country_name : country?.name,
             admin_id: currentUser._id,
             city_from: pickerValueSelectedCity,
-            Traveling_to: countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name,
+            Traveling_to: countryDeliver?.country_name ? countryDeliver?.country_name : countryDeliver?.name,
             city_to: pickerValueSelectedCityDeliver,
             depart_date: depDateApi,
             return_date: retDateApi
@@ -254,7 +254,7 @@ export default function MyTravel({ route }) {
                 />
 
                 <View style={{ borderLeftWidth: 1, paddingLeft: 8, marginLeft: 16 }}>
-                    <TextMedium style={[styles.countryNameCSS]}>{country.country_name ? country.country_name : country.name}</TextMedium>
+                    <TextMedium style={[styles.countryNameCSS]}>{country?.country_name ? country?.country_name : country?.name}</TextMedium>
                 </View>
 
             </View>
@@ -296,7 +296,7 @@ export default function MyTravel({ route }) {
 
 
                 <View style={{ borderLeftWidth: 1, paddingLeft: 8, marginLeft: 16 }}>
-                    <TextMedium style={[styles.countryNameCSS]}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</TextMedium>
+                    <TextMedium style={[styles.countryNameCSS]}>{countryDeliver?.country_name ? countryDeliver?.country_name : countryDeliver?.name}</TextMedium>
                 </View>
 
             </View>
@@ -395,7 +395,7 @@ export default function MyTravel({ route }) {
                                     <View style={styles.travelerListInnerView}>
                                         <View>
                                             <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.from')}</TextBold>
-                                            <TextBold style={styles.travelListValue}>{item.city}</TextBold>
+                                            <TextBold style={styles.travelListValue}>{item?.city}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_from}</TextRegular>
                                         </View>
                                         <Image source={require("../../../images/travel.png")}
@@ -404,7 +404,7 @@ export default function MyTravel({ route }) {
                                         />
                                         <View>
                                             <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.to')}</TextBold>
-                                            <TextBold style={styles.travelListValue}>{item.cityTo}</TextBold>
+                                            <TextBold style={styles.travelListValue}>{item?.cityTo}</TextBold>
                                             <TextRegular style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white" }]}>{item.Traveling_to}</TextRegular>
                                         </View>
                                     </View>
@@ -412,7 +412,7 @@ export default function MyTravel({ route }) {
                                     <View style={styles.travelerListInnerView}>
                                         <View>
                                             <TextBold style={[styles.travelListTitle, { color: index % 2 == 0 ? color.travelerListTitle : "white", textAlign:'left' }]}>{t('travelHome.date')}</TextBold>
-                                            <TextBold style={styles.travelListValue}>{moment(item.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
+                                            <TextBold style={styles.travelListValue}>{moment(item?.depart_date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
                                         </View>
                                     </View>
                                     <View style={{ height: 15 }} />

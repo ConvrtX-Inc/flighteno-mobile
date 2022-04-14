@@ -64,7 +64,7 @@ const CardOrder = ({ order }) => {
                         <View>
                             <TextBold style={[styles.travelListTitle, { color: color.travelerButtonColor, textAlign:'left'}]}>{t('travelHome.to')}</TextBold>
                             <TextBold style={[styles.travelListValue, { color: 'black' }]}>{order.product_dilivery_city_name}</TextBold>
-                            <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_country_name}</TextRegular>
+                            <TextRegular style={[styles.travelListTitle, { color: 'black' }]}>{order.product_dilivery_}</TextRegular>
                         </View>
                     </View>
                 </View>
