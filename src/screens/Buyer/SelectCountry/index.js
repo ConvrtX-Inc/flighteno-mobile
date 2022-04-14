@@ -54,14 +54,14 @@ export default function SelectCountry({ route }) {
     const [countryDeliver, setCountryDestination] = useState(currentCountry)
 
     /*Fix for FLIGHT-11*/
-    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country.country_name])]);
-    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country.country_name])]);
+    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country?.country_name])]);
+    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country?.country_name])]);
 
     const [pickerValueSelectedCity, setPickerValueSelectedCity] = useState(currentCountry.city);
     const [pickerValueSelectedCityDeliver, setPickerValueSelectedCityDeliver] = useState(currentCountry.city);
 
-    originCities = countries[country.country_name ? country.country_name : country.name];
-    destinationCities = countries[countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name];
+    originCities = countries[country?.country_name ? country?.country_name : country.name];
+    destinationCities = countries[countryDeliver?.country_name ? countryDeliver?.country_name : countryDeliver.name];
 
 
     const onSelect = (selectedCountry) => {
@@ -139,9 +139,9 @@ export default function SelectCountry({ route }) {
         let deliveryFee = buyerOrderData.product_price / 100 * 10;
         deliveryFee = deliveryFee > 50 ? deliveryFee : 50;
 
-        buyerOrderData["product_buy_country_name"] = country.country_name ? country.country_name : country.name
+        buyerOrderData["product_buy_country_name"] = country.country_name ? country?.country_name : country.name
         buyerOrderData["product_buy_city_name"] = pickerValueSelectedCity
-        buyerOrderData["product_dilivery_country_name"] = countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name
+        buyerOrderData["product_dilivery_country_name"] = countryDeliver?.country_name ? countryDeliver?.country_name : countryDeliver.name
         buyerOrderData["product_dilivery_city_name"] = pickerValueSelectedCityDeliver
         buyerOrderData["flighteno_cost"] = Math.round((buyerOrderData.product_price / 100) * 7)
         buyerOrderData["product_dilivery_date"] = deliveryDateFormat
