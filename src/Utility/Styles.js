@@ -396,7 +396,7 @@ export const styles = StyleSheet.create({
     sliderTrackStyle: {
         height: 10,
         borderRadius: 30,
-        backgroundColor: '#E76F51',
+        // backgroundColor: '#E76F51',
 
     },
     sliderThumbStyle: {

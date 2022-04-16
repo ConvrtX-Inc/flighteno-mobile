@@ -120,7 +120,7 @@ export function FilterOrders(data, token, hideFilter) {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
             method: 'post',
-            url: `${BASE_URL}Rest_calls/filterApi`,
+            url: `${BASE_URL}Rest_calls/getUserOrdersOnTheBasisOnCountryFilter`,
             data: data,
             headers: { "Authorization": token },
             validateStatus: (status) => {
@@ -172,6 +172,7 @@ export function FilterResetOrders(token, data, hideFilter) {
 
 
 export function GetMyOrders(data, token) {
+
     return async dispatch => {
         axios({
             method: 'post',
@@ -189,7 +190,7 @@ export function GetMyOrders(data, token) {
     }
 }
 
-export function GetTravelerOrders(data, token) {
+export function GetTravelerOrders(data, token, success) {
     return async dispatch => {
         axios({
             method: 'post',
@@ -202,7 +203,8 @@ export function GetTravelerOrders(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
-            dispatch({ type: TRAVLER_ORDERS, data: Response.data.traveler_order })
+            success(Response.data.traveler_order)
+            // dispatch({ type: TRAVLER_ORDERS, data: Response.data.traveler_order })
         })
     }
 }

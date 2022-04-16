@@ -16,6 +16,7 @@ import { t } from 'i18next';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ORDERS_TO_DESTINATION } from '../../redux/constants';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -57,10 +58,10 @@ export default function AllOrders() {
 
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const { travlerOrders } = useSelector(({ tripsRed }) => tripsRed)
-    const [ordersByTravler, setOrderByTravler] = useState(travlerOrders)
+    const [ordersByTravler, setOrderByTravler] = useState('')
     const {t} = useTranslation()
 
-        const [ordersListNames, setOrdersListNames] = useState([{
+    const [ordersListNames, setOrdersListNames] = useState([{
         id: '1',
         name: t('track.allOrders'),
         value: 'all',
@@ -82,29 +83,22 @@ export default function AllOrders() {
 
 
     useEffect(() => {
-        setOrderByTravler(travlerOrders.reverse())
-    }, [travlerOrders])
+        // setOrderByTravler(travlerOrders.reverse())
+        var obj = {
+            admin_id: currentUser?._id
+        }   
+        if(currentUser?.kyc_status_verified){
+            dispatch(GetTravelerOrders(obj, token, (data) => {
+                setOrderByTravler(data)
+            }))
+            return
+        }else{
+            // dispatch({type: ORDERS_TO_DESTINATION, data: []});
+             setOrderByTravler([])
+            return
+        }
 
-    useFocusEffect(
-        React.useCallback(() => {
-            setOrderByTravler(travlerOrders.reverse())
-            // ordersListNames.forEach(element => {
-            //     if (element.name == "All Orders") {
-            //         element.checked = true
-            //     }
-            //     else {
-            //         element.checked = false
-            //     }
-            // });
-            // setOrdersListNames([...ordersListNames])
-            var obj = {
-                admin_id: currentUser._id
-            }
-            dispatch(GetTravelerOrders(obj, token))
-            return () => {
-            };
-        }, [])
-    );
+    }, [currentUser])
 
     const selectStore = (index) => {
         setOrdersListNames(ordersListNames[index].name)
@@ -151,12 +145,19 @@ export default function AllOrders() {
 
         <View style={Styles.header}>
             <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</TextBold>
-            <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
-                <Image source={require('../../images/filter.png')}
-                    style={styles.filterImage}
-                />
-                <TextBold style={{  fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</TextBold>
-            </TouchableOpacity>
+
+            {currentUser?.kyc_status_verified ?
+            (
+                <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
+                    <Image source={require('../../images/filter.png')}
+                        style={styles.filterImage}
+                    />
+                    <TextBold style={{  fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</TextBold>
+                </TouchableOpacity>
+            ):null
+            }
+
+
         </View>
         </>
     )
