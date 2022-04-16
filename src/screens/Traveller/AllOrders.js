@@ -17,6 +17,7 @@ import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ORDERS_TO_DESTINATION } from '../../redux/constants';
+import TextRegular from '../../components/atoms/TextRegular';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -200,6 +201,14 @@ export default function AllOrders() {
         </SafeAreaView>
     )
 
+    const renderEmpty = () => {
+        if(currentUser?.kyc_status_verified){
+            return (<TextRegular>Order list is empty</TextRegular>)
+        }else{
+            return (<TextRegular>Your account is not verified</TextRegular>)
+        }
+    }
+
     return (
         <SafeAreaView style={{marginLeft:18, marginRight:18}}>
             <FlatList
@@ -211,6 +220,7 @@ export default function AllOrders() {
                     </TouchableOpacity>
                 }
                 keyExtractor={(item,index) => item + index}
+                ListEmptyComponent={renderEmpty}
             />
         </SafeAreaView>
     );

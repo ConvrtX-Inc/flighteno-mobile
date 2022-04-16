@@ -64,7 +64,7 @@ export function getStoreNames(token, storeData){
     }
 }
 
-export function UserTrips(token, data) {
+export function UserTrips(token, data, success) {
     return async dispatch => {
         axios({
             method: 'post',
@@ -80,6 +80,7 @@ export function UserTrips(token, data) {
             if (Response.data.type == 200) {
                 dispatch({ type: TRIPS_DATA, data: Response.data.user_trip })
                 dispatch({ type: LATEST_TRIP_ID, data: Response.data.user_trip[0]?._id })
+                success(Response.data.user_trip)
             }
         })
     }
