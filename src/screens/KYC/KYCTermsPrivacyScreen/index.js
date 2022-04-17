@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TextBold from '../../../components/atoms/TextBold';
 import ButtonLarge from '../../../components/ButtonLarge';
 import { stripeVerification } from '../../../redux/actions/Auth';
-import { VerifyAccount} from '../../../redux/actions/KYC';
+import { createVerificationSession, VerifyAccount} from '../../../redux/actions/KYC';
 import { IS_LOADING } from '../../../redux/constants';
 import { generateUID } from '../../../Utility/Utils';
 import { styles } from './styles';
@@ -49,7 +49,12 @@ export default function KYCTermsPrivacyScreen({navigation, route}){
 
         // }))   
         dispatch(VerifyAccount(token,kycRequest,() => {
-            navigation.navigate('Profile')
+
+            dispatch(createVerificationSession(token,(data) =>{
+                navigation.navigate('Profile')
+            }))
+
+            
         }))
 
     }

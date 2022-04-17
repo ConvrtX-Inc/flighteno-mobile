@@ -27,3 +27,21 @@ export function VerifyAccount(token, data, message) {
         })
     }
 }
+
+export function createVerificationSession(token, success){
+    return async dispatch => {
+        axios({
+            method: 'POST',
+            url:`${BASE_URL}Rest_calls/createverificationsession`,
+            headers:{"Authorization": token},
+            validateStatus: (status) => {
+                return true
+            }
+        }).catch(error => {
+            console.log("Error", error)
+        }).then(Response => {
+            // console.log(Response.data)
+            success(Response.data)
+        })
+    }    
+}

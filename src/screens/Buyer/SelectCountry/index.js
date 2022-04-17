@@ -172,36 +172,6 @@ export default function SelectCountry({ route }) {
                 <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('buyerHome.buyProdFrom')}</TextBold>
 
 
-                {/* <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
-                    <TouchableOpacity onPress={() => setCountry1(true)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <CountryPicker
-                            countryCode={countryCode}
-                            withFilter
-                            withFlag
-                            withAlphaFilter
-                            withCallingCode
-                            withEmoji
-                            onSelect={(country) => onSelect(country)}
-                            modalProps={{
-                                visible: country1
-                            }}
-                            onClose={() => setCountry1(false)}
-                            onOpen={() => setCountry1(true)}
-                        />
-                        <Image
-                            style={styles.countryDropImg}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
-
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{country.country_name ? country.country_name : country.name}</TextMedium>
-                    </View>
-                </TouchableOpacity> */}
-
                 <View style={[styles.pickerVIew, { alignItems: 'center', padding: 4, paddingLeft: 16 }]}>
                     <CountryPicker
                         countryCode={countryCode}
@@ -261,7 +231,7 @@ export default function SelectCountry({ route }) {
                     />
 
                     <View style={{ borderLeftWidth: 1, paddingLeft: 8, marginLeft: 16 }}>
-                        <TextMedium style={[styles.countryNameCSS]}>{pickerValueSelectedCityDeliver}</TextMedium>
+                        <TextMedium style={[styles.countryNameCSS]}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</TextMedium>
                     </View>
                 </View>
 
