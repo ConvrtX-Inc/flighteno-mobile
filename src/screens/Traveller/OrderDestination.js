@@ -229,17 +229,11 @@ export default function OrderDestination({route}) {
 
 
 
-  //  console.log(filterData)
     if(currentUser?.kyc_status_verified){
-      dispatch(FilterOrders(filterData, token, () => {
+      dispatch(FilterOrders(filterData, token, (data) => {
         setShowFilter(false);
       }))
-    }else{
-
     }
-       
-
-
 
   };
 

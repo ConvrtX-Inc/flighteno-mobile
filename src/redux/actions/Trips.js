@@ -106,7 +106,7 @@ export function UserOrders(token, data, hideFilter) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
                         dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-                     
+                        
                         // dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
                     }
                 }
@@ -116,7 +116,7 @@ export function UserOrders(token, data, hideFilter) {
     }
 }
 
-export function FilterOrders(data, token, hideFilter) {
+export function FilterOrders(data, token, hideFilter, success) {
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -133,9 +133,16 @@ export function FilterOrders(data, token, hideFilter) {
         }).then(Response => {
             dispatch({ type: IS_LOADING, isloading: false })
             hideFilter()
-            if (Response.data.status == "Data Fetched!") {
-                dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-            }
+
+            // console.log(Response.data.orders)
+            dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+            
+            
+            // if (Response.data.status == "Successfully Fetched") {
+            //     success(Response.data.orders)
+            //     console.log(Response.data)
+            //     dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+            // }
         })
     }
 }
