@@ -11,6 +11,7 @@ import {
   ScrollView,
   RefreshControl,
   Platform,
+  Dimensions,
 } from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import RNPickerSelect from 'react-native-picker-select';
@@ -42,12 +43,16 @@ import { Dropdown } from 'sharingan-rn-modal-dropdown';
 import { DefaultTheme } from 'react-native-paper';
 import { DropdownList } from 'react-native-ultimate-modal-picker';
 import { capitalize } from 'lodash';
+// import MultiSlider from 'react-native-multi-slider';
+// import MultiSlider from 'react-native-multi-slider';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 // import ModalDropdown from 'react-native-modal-dropdown';
 
 export default function OrderDestination({route}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {t} = useTranslation();
+  const windowWidth = Dimensions.get('window').width
   const {loading, currentUser, token} = useSelector(({authRed}) => authRed);
   const {ordersToDestination} = useSelector(
     ({tripsRed}) => tripsRed,
@@ -59,10 +64,14 @@ export default function OrderDestination({route}) {
   const [pName, setPName] = useState('');
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
+  const [minPriceVal, setMinPriceVal] = useState('')
+  const [maxPriceVal,setMaxPriceVal] = useState('')
+
   const [selectedRange, setSelectedRange] = useState(0);
 
   const [rangeValue, setRangeValue] = useState('order_created_date');
   const [resetLoading, setResetLoading] = useState(false)
+  
 
 
   const [pickerValues, setPickerValues] = useState([
@@ -134,6 +143,8 @@ export default function OrderDestination({route}) {
   const [sortMethod, setSortMethod] = useState(-1);
   const [storeData, setStoreData] = useState([]);
   const [productSelectedType, setProductType] = useState('')
+  const [sliderValues,setSliderValues] = useState([minPrice,maxPrice])
+  
 
   useEffect(() => {
     var obj = {
@@ -209,8 +220,8 @@ export default function OrderDestination({route}) {
       admin_id: currentUser._id,
       product_type: productType,
       product_name: productName,
-      starting_price: startingPrice,
-      ending_price: endingPrice,
+      starting_price: minPrice,
+      ending_price: maxPrice,
       sorted_by: sortedBy,
       sort: sort,
       store_name: storeName,
@@ -218,12 +229,11 @@ export default function OrderDestination({route}) {
 
 
 
-  //  console.log(filterData)
-
-    dispatch(FilterOrders(filterData, token, () => {
-      setShowFilter(false);
-    }))
-
+    if(currentUser?.kyc_status_verified){
+      dispatch(FilterOrders(filterData, token, (data) => {
+        setShowFilter(false);
+      }))
+    }
 
   };
 
@@ -266,6 +276,12 @@ export default function OrderDestination({route}) {
     // );
   };
 
+  const multiSliderValuesChange = (values) => {
+    console.log(values)
+    setMinPrice(values[0])
+    setMaxPrice(values[1])
+  }
+
   const showGallery = data => {
     images.length = 0;
     images.push({uri: data});
@@ -292,12 +308,7 @@ export default function OrderDestination({route}) {
 
   return (
     <View style={{flex: 1, backgroundColor: color.backgroundColor}}>
-      {/* <ViewImages
-        showImageViewer={showImageView}
-        images={images}
-        closeModal={() => setShowImageView(false)}
-      /> */}
-      <ImageView
+              <ImageView
         images={images}
         imageIndex={0}
         visible={showImageView}
@@ -306,12 +317,19 @@ export default function OrderDestination({route}) {
       {showFilter ? (
         <>
           <ScrollView style={{marginLeft: 18, marginRight: 18}}>
+
+
+            {/* filter kyc verification */}
+          
             <TouchableOpacity
               onPress={() => setShowFilter(false)}
               style={{marginLeft: '-1.5%', marginTop:24}}
             >
               <Icon name="cross" size={35} style={{margin: 0}} />
-            </TouchableOpacity>
+            </TouchableOpacity> 
+       
+
+
             <TextBold
               style={[styles.HeadingText, {marginTop: 16, textAlign: 'left'}]}
             >
@@ -381,16 +399,22 @@ export default function OrderDestination({route}) {
               <View style={{flex: 1}}>
                 <Input
                   placeholder="0"
-                  onChangeText={value => {
-                    if (value == '') {
-                      setMinPrice(0);
-                    } else {
-                      setMinPrice(parseInt(value));
-                    }
-                  }}
-                  value={minPrice?.toString() ?? 0}
+                  value={minPriceVal}
+                  onChangeText={setMinPriceVal}
                   keyboardType="numeric"
                   secureTextEntry={false}
+                  onEndEditing={() => {
+                  
+                    const price = parseInt(minPriceVal)
+                    if(price >= maxPrice){
+                      alert('price must be less than max price')
+                      
+                    }else{
+                      setMinPrice(price)
+                    }
+
+
+                  }}
                 />
               </View>
 
@@ -400,17 +424,41 @@ export default function OrderDestination({route}) {
 
               <View style={{flex: 1}}>
                 <Input
-                  placeholder="500000"
+                  placeholder={maxPrice.toString()}
                   secureTextEntry={false}
-                  onChangeText={(value) => {
-                    setMaxPrice(parseInt(value))
+                  value={maxPriceVal}
+                  onChangeText={setMaxPriceVal}
+                  onEndEditing={()=>{
+                    // console.log('edited')
+                    const price = parseInt(maxPriceVal)
+                    if(price < minPrice){
+                      alert('price must be greater than min price')
+                    }else{
+                      setMaxPrice(price)
+                    }
+                    
                   }}
-                  value={maxPrice}
+                 
                 />
               </View>
             </View>
 
-            <Slider
+            <View style={{flex:1, alignItems:'center'}}>
+              <MultiSlider
+                isMarkersSeparated={true}
+                values={[sliderValues[0], sliderValues[1]]}
+                max={maxPrice}
+                min={minPrice}
+                sliderLength={windowWidth-56}
+                onValuesChange={multiSliderValuesChange}  
+                markerStyle={styles.sliderThumbStyle}
+                trackStyle={styles.sliderTrackStyle}
+                selectedStyle={{backgroundColor:'#E76F51'}}
+      
+              />
+            </View>
+
+            {/* <Slider
               value={minPrice}
               // onValueChange={value => setMinPrice(value)}
               // // onValueChange={(value) => {
@@ -433,11 +481,11 @@ export default function OrderDestination({route}) {
                   />
                 ),
               }}
-            />
+            /> */}
 
             <View style={styles.sliderTxtContainer}>
               <View style={styles.sliderTxtContainerFirst}>
-                <TextMedium style={styles.sliderTxt}>0</TextMedium>
+                <TextMedium style={styles.sliderTxt}>{minPrice}</TextMedium>
               </View>
 
               <View
@@ -523,6 +571,7 @@ export default function OrderDestination({route}) {
               <ButtonLarge title={ capitalize(t('common.reset')) }  onPress={resetFilter} loader={resetLoading} />
             </View>
               
+            
 
             <View style={{marginTop:16, marginBottom: 40}}>
               <ButtonTraveller
@@ -540,6 +589,7 @@ export default function OrderDestination({route}) {
           <TextBold style={styles.HeadingText}>
             {t('travelHome.recentOrders')}
           </TextBold>
+          {currentUser?.kyc_status_verified ?
           <TouchableOpacity
             onPress={() => {
               setShowFilter(!showFilter), setSelectedRange(0);
@@ -559,7 +609,7 @@ export default function OrderDestination({route}) {
             >
               {t('travelHome.filter')}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity>:null}
         </View>
       ) : null}
       {!showFilter ? (

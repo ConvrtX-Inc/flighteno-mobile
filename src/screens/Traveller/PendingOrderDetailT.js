@@ -21,6 +21,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import { useTranslation } from 'react-i18next';
 import TextBold from '../../components/atoms/TextBold';
 import TextRegular from '../../components/atoms/TextRegular';
+import ImageView from "react-native-image-viewing";
 
 import storage from '@react-native-firebase/storage';
 
@@ -52,7 +53,17 @@ export default function PendingOrderDetailT({ route }) {
     const [transferred, setTransferred] = useState(0);
     const [uploadedCount, setUploadedCount] = useState(0);
     const [images, setImages] = useState([]);
+    const [imageVisible, setImageVisible] = useState(false)
+    const [imageUrl,setImageUrl] = useState('')
     const {t} = useTranslation()
+
+    useEffect(() => {
+
+       
+        // console.log(currentOrder.status)
+
+    },[])
+
 
     const chooseFile = (type) => {
         let options = {
@@ -104,6 +115,14 @@ export default function PendingOrderDetailT({ route }) {
         }
 
     };
+
+    function getOrderStatus() {
+        return currentOrder.status == "new" ? t('track.pending') : currentOrder.status == "complete" ? t('track.completed'): currentOrder.status == "accepted" ? t('track.inProgress') : t('track.cancelled')
+    }
+    function getOrderStatusColor() {
+        return currentOrder.status == "new" ? "#ECB22E" : currentOrder.status == "complete" ? "#36C5F0" : currentOrder.status == "accepted" ? "#36C5F0" : "#E01E82"
+    }
+    
     const uploadProductImage = async () => {
         // const file = {
         //     uri: productPic,
@@ -297,8 +316,15 @@ export default function PendingOrderDetailT({ route }) {
         })
     }
 
+    const onImageTap = (image) => {
+        
+        setImageVisible(true)
+        setImageUrl(image)
+
+    }
+
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{flex:1, marginLeft: 18, marginRight:18}}>
   <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
             <ViewImages
                 showImageViewer={showProductPic}
@@ -315,6 +341,13 @@ export default function PendingOrderDetailT({ route }) {
                 images={[{ url: currentOrder.product_image }]}
                 closeModal={() => setSHowProduct(false)}
             />
+
+             <ImageView
+                images={[{uri: imageUrl}]}
+                imageIndex={0}
+                visible={imageVisible}
+                onRequestClose={() =>  setImageVisible(false)}
+            />
             <ScrollView>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -323,7 +356,7 @@ export default function PendingOrderDetailT({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%',  textAlign:'left' }]}>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>
                     {currentOrder.status == "accepted" ? t('common.updateOrder') : t('common.orderCompleted')}
                 </TextBold>
 
@@ -340,9 +373,11 @@ export default function PendingOrderDetailT({ route }) {
                                     {currentOrder.buyer_details[0].full_name}
                                 </TextBold>
                             </View>
-                            <View style={[Styles.dateView, { backgroundColor: currentOrder.status == "accepted" ? '#F2BA39' : "#36C5F0" }]}>
+                            <View style={[Styles.dateView, { backgroundColor: getOrderStatusColor() }]}>
                                 <TextBold style={Styles.dateText}>
-                                    {currentOrder.status == "accepted" ? t('track.pending') : t('track.completed')}
+                                    {/* {currentOrder.status == "accepted" ? t('track.pending') : t('track.completed')} */}
+                                    {/* {currentOrder.status} */}
+                                    {getOrderStatus()}
                                 </TextBold>
                             </View>
                         </View>
@@ -365,7 +400,9 @@ export default function PendingOrderDetailT({ route }) {
                     </View>
                     <View style={{ height: 1, backgroundColor: 'gray' }} />
                     <View style={Styles.bottomView}>
-                        <TouchableOpacity onPress={() => setSHowProduct(true)} activeOpacity={1}>
+                        <TouchableOpacity onPress={() => {
+                            onImageTap(currentOrder.product_image)
+                        }} activeOpacity={1}>
                         <Image source={{ uri: currentOrder.product_image }}
                             style={Styles.productImage}
                         />
@@ -376,7 +413,7 @@ export default function PendingOrderDetailT({ route }) {
                         </TextRegular>
                     </View>
                     {currentOrder.url != "" ?
-                        <View style={styles.productDesc}>
+                        <View style={[styles.productDesc, {marginLeft:18}]}>
                             <View style={styles.productDescInerFirst}>
                                 <TextBold style={styles.productAtrributeHead}>{t('buyerHome.color')}</TextBold>
                                 <TextBold style={styles.productAtrributeHead}>{t('buyerHome.weight')}</TextBold>
@@ -411,7 +448,7 @@ export default function PendingOrderDetailT({ route }) {
                 </View>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 1) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
                    {t('common.uploadPicProd')}
                 </TextBold>
                 <TouchableOpacity
@@ -430,7 +467,7 @@ export default function PendingOrderDetailT({ route }) {
                         />
                     }
                 </TouchableOpacity>
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
                     {t('common.uploadReceipt')}
                 </TextBold>
                 <TouchableOpacity
@@ -450,7 +487,7 @@ export default function PendingOrderDetailT({ route }) {
                     }
                 </TouchableOpacity>
                 {!showQrDetail && currentOrder.status == "accepted" ?
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>
                         {t('common.scanQR')}
                     </TextBold>
                     : null}
@@ -633,7 +670,7 @@ const Styles = StyleSheet.create({
     listView: {
         paddingVertical: 20,
         backgroundColor: color.inputBackColor,
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 10,
         marginBottom: 20
@@ -686,7 +723,7 @@ const Styles = StyleSheet.create({
     },
     productImageContainer: {
         height: 200,
-        width: '90%',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',

@@ -64,7 +64,7 @@ export function getStoreNames(token, storeData){
     }
 }
 
-export function UserTrips(token, data) {
+export function UserTrips(token, data, success) {
     return async dispatch => {
         axios({
             method: 'post',
@@ -80,6 +80,7 @@ export function UserTrips(token, data) {
             if (Response.data.type == 200) {
                 dispatch({ type: TRIPS_DATA, data: Response.data.user_trip })
                 dispatch({ type: LATEST_TRIP_ID, data: Response.data.user_trip[0]?._id })
+                success(Response.data.user_trip)
             }
         })
     }
@@ -105,7 +106,7 @@ export function UserOrders(token, data, hideFilter) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
                         dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-                     
+                        
                         // dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
                     }
                 }
@@ -115,12 +116,12 @@ export function UserOrders(token, data, hideFilter) {
     }
 }
 
-export function FilterOrders(data, token, hideFilter) {
+export function FilterOrders(data, token, hideFilter, success) {
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
             method: 'post',
-            url: `${BASE_URL}Rest_calls/filterApi`,
+            url: `${BASE_URL}Rest_calls/getUserOrdersOnTheBasisOnCountryFilter`,
             data: data,
             headers: { "Authorization": token },
             validateStatus: (status) => {
@@ -132,9 +133,16 @@ export function FilterOrders(data, token, hideFilter) {
         }).then(Response => {
             dispatch({ type: IS_LOADING, isloading: false })
             hideFilter()
-            if (Response.data.status == "Data Fetched!") {
-                dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-            }
+
+            // console.log(Response.data.orders)
+            dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+            
+            
+            // if (Response.data.status == "Successfully Fetched") {
+            //     success(Response.data.orders)
+            //     console.log(Response.data)
+            //     dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+            // }
         })
     }
 }
@@ -172,6 +180,7 @@ export function FilterResetOrders(token, data, hideFilter) {
 
 
 export function GetMyOrders(data, token) {
+
     return async dispatch => {
         axios({
             method: 'post',
@@ -189,7 +198,7 @@ export function GetMyOrders(data, token) {
     }
 }
 
-export function GetTravelerOrders(data, token) {
+export function GetTravelerOrders(data, token, success) {
     return async dispatch => {
         axios({
             method: 'post',
@@ -202,7 +211,8 @@ export function GetTravelerOrders(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
-            dispatch({ type: TRAVLER_ORDERS, data: Response.data.traveler_order })
+            success(Response.data.traveler_order)
+            // dispatch({ type: TRAVLER_ORDERS, data: Response.data.traveler_order })
         })
     }
 }

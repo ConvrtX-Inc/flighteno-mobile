@@ -29,15 +29,33 @@ export default function OrdersByFlight() {
     const dispatch = useDispatch()
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const { tripsData } = useSelector(({ tripsRed }) => tripsRed)
+    const [ordersByFlight, setOrdersByFlight] = useState([])
     const {t} = useTranslation()
+
     useFocusEffect(
         React.useCallback(() => {
             var obj = {
                 admin_id: currentUser._id
             }
-            dispatch(UserTrips(token, obj))
+
+            if(currentUser?.kyc_status_verified){
+                dispatch(UserTrips(token, obj, (data) => {
+                    setOrdersByFlight(data)
+                }))
+            }else{
+                setOrdersByFlight([])
+            }
+
         }, [])
     )
+
+    const renderEmpty = () => {
+        if(currentUser?.kyc_status_verified){
+            return (<TextRegular>Order list is empty</TextRegular>)
+        }else{
+            return (<TextRegular>Your account is not verified</TextRegular>)
+        }
+    }
 
     return (
         <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
@@ -60,9 +78,9 @@ export default function OrdersByFlight() {
             </View>
 
             <View style={{ height: 20 }} />
-            {tripsData.length > 0 ?
+           
                 <FlatList
-                    data={tripsData}
+                    data={ordersByFlight}
                     nestedScrollEnabled
                     renderItem={({ item, index }) =>
                         <TouchableOpacity key={item._id.toString()} activeOpacity={0.7} onPress={() => navigation.navigate("OrdersSpecificCountry", { flightBaseOrders: item.offers, date: item.depart_date })}>
@@ -100,9 +118,10 @@ export default function OrdersByFlight() {
 
                     }
                     keyExtractor={item => item._id}
+                    ListEmptyComponent={renderEmpty}
                     style={{ marginTop: 3 }}
                 />
-                : null}
+              
         </View>
         </SafeAreaView>
 
