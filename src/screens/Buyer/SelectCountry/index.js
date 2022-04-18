@@ -214,7 +214,7 @@ export default function SelectCountry({ route }) {
                 <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.delProdTo')}</TextBold>
 
 
-   <View style={[styles.pickerVIew, { alignItems: 'center', padding: 4, paddingLeft: 16 }]}>
+                <View style={[styles.pickerVIew, { alignItems: 'center', padding: 4, paddingLeft: 16 }]}>
                     <CountryPicker
                         countryCode={countryCodeDeliver}
                         withFilter

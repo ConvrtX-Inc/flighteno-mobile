@@ -85,7 +85,13 @@
             "flightenoPartners":"شركاء flighteno مع Stripe للمدفوعات والخدمات المالية الآمنة. من أجل البدء في الحصول على أموال ، تحتاج إلى إعداد حساب Stripe",
             "youreAllSet":"أنت جاهز تمامًا",
             "setupNow": "الإعداد الآن",
-            "stripeRedirected": "ستتم إعادة توجيهك إلى Stripe"
+            "stripeRedirected": "ستتم إعادة توجيهك إلى Stripe",
+            "orderListEmpty":"قائمة الطلبات فارغة",
+            "accountNotVerified":"لم يتم التحقق من حسابك",
+            "cardNumber": "رقم البطاقة",
+            "expiry":"تاريخ الانتهاء",
+            "cardHolder":"حامل البطاقة",
+            "cvc":"السيرة الذاتية"
         },
         "track": {
             "transactions": "المعاملات",

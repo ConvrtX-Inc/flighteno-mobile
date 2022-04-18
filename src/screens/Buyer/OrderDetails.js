@@ -22,6 +22,7 @@ import { getCurrentOrder } from '../../redux/actions/BuyerOrder';
 import moment from 'moment';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ImageModal from 'react-native-image-modal';
+import ImageView from "react-native-image-viewing";
 
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
@@ -41,6 +42,8 @@ export default function OrderDetails({ route }) {
     const {t} = useTranslation()
     const [orderHistory, setOrderHistory] = useState([])
     const [imageValid, setImageValid] = useState(true)
+    const [orderImage, setOrderImage] = useState('')
+    const [imageVisible, setImageVisible] = useState(false)
 
 
     function check(id) {
@@ -87,6 +90,11 @@ export default function OrderDetails({ route }) {
         }
         dispatch(CancelOrder(obj, token, navigation))
        
+    }
+
+    const onOrderImageTap = (image) => {
+        setImageVisible(true)
+        setOrderImage(image)
     }
 
     const imageProduct = [{
@@ -166,8 +174,8 @@ export default function OrderDetails({ route }) {
                     </TouchableOpacity>
                  : null}
                 <CardOrder
-                    order={order}>
-                </CardOrder>
+                    order={order}/>
+               
                 <View style={{ alignSelf: "center", marginVertical: 20, }}>
                     <QRCode
                         value={order._id}
@@ -276,7 +284,11 @@ export default function OrderDetails({ route }) {
                     {t('track.picOfProd')}
                     </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.new_image ? true : false}
-                        onPress={() => viewImage('image')} style={Styles.productImageContainer}>
+                        // onPress={() => viewImage('image')}
+                        onPress={()=>{
+                            onOrderImageTap(order.new_image)
+                        }} 
+                        style={Styles.productImageContainer}>
                         {order.new_image ?
                             <Image
                                 source={{ uri: order.new_image }}
@@ -294,7 +306,11 @@ export default function OrderDetails({ route }) {
                         {t('track.prodReceipt')}
                     </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.recipt ? true : false}
-                        onPress={() => viewImage('receipt')} style={Styles.productImageContainer}>
+                        // onPress={() => viewImage('receipt')}
+                        onPress={() => {
+                            onOrderImageTap(order.recipt)
+                        }}
+                        style={Styles.productImageContainer}>
                         {order.recipt ?
                             <Image
                                 source={{ uri: order.recipt }}
@@ -361,6 +377,13 @@ export default function OrderDetails({ route }) {
                         : null : null}
                 <View style={{ height: 20 }} />
             </ScrollView>
+
+            <ImageView
+                images={[{uri:orderImage}]}
+                imageIndex={0}
+                visible={imageVisible}
+                onRequestClose={() =>  setImageVisible(false)}
+            />
         </View>
         </SafeAreaView>
     );

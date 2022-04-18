@@ -84,7 +84,13 @@
             "flightenoPartners":"Flighteno partners with Stripe for secure payments and financial services. In order to start getting paid, you need to set up a Stripe account",
             "youreAllSet":"You're all set",
             "setupNow":"Setup Now",
-            "stripeRedirected": "You'll be redirected to Stripe"
+            "stripeRedirected": "You'll be redirected to Stripe",
+            "orderListEmpty":"Order list is empty",
+            "accountNotVerified":"Your account is not verified",
+            "cardNumber": "Card Number",
+            "expiry":"Expiry Date",
+            "cardHolder":"Card Holder",
+            "cvc":"CVV"
         },
         "track": {
             "transactions": "Transactions",
