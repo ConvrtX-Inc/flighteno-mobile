@@ -123,7 +123,6 @@ export default function PaymentAddNewCard({ navigation }) {
         const data = await createCard(cardDetails, currentUser.customer_id);
         if (data.id) {
             dispatch({ type: ADD_CARD, data: data })
-
             navigation.pop();
         } else {
 
@@ -147,15 +146,17 @@ export default function PaymentAddNewCard({ navigation }) {
                     </TouchableOpacity>
                     <>
                         <View style={[commonStyles.marginTop30]}>
-                            <TextBold style={[commonStyles.fs26]}>{t('payment.addNewCard')}</TextBold>
+                            <TextBold style={[commonStyles.fs26, {textAlign:'left'}]}>{t('payment.addNewCard')}</TextBold>
                         </View>
 
                         <View style={[commonStyles.marginTop30]}>
                             <CreditCardInput
-
                                 horizontal={false}
                                 requiresName
-                                onChange={(form) => _onChange(form)} />
+                                onChange={(form) => _onChange(form)} 
+                                labels={{number:t('common.cardNumber'),expiry:t('common.expiry'), name:t('common.cardHolder'), cvc: t('common.cvc') }}
+                                labelStyle={{textAlign:'left'}}
+                            />
                         </View>
                         <View style={[commonStyles.marginTop30]}>
                             <ButtonLarge

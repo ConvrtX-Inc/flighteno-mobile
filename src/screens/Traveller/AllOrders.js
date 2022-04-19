@@ -203,9 +203,9 @@ export default function AllOrders() {
 
     const renderEmpty = () => {
         if(currentUser?.kyc_status_verified){
-            return (<TextRegular>Order list is empty</TextRegular>)
+            return (<TextRegular style={{textAlign:'left'}}>{t('common.orderListEmpty')}</TextRegular>)
         }else{
-            return (<TextRegular>Your account is not verified</TextRegular>)
+            return (<TextRegular style={{textAlign:'left'}}>Your account is not verified</TextRegular>)
         }
     }
 
