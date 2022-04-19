@@ -90,7 +90,9 @@
             "cardNumber": "Card Number",
             "expiry":"Expiry Date",
             "cardHolder":"Card Holder",
-            "cvc":"CVV"
+            "cvc":"CVV",
+            "travelerWereAllowed": "Traveler were allowed to",
+            "openBoxCheck":"Open box and check physical appearance"
         },
         "track": {
             "transactions": "Transactions",

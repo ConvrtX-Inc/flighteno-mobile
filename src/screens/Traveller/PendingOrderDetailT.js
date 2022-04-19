@@ -428,16 +428,16 @@ export default function PendingOrderDetailT({ route }) {
                         : null}
                     <View style={Styles.bottomView}>
                         {currentOrder.open_box_check_phisical_apperance == true && currentOrder.use_item_for_testing == true ?
-                            <TextRegular style={styles.productAtrributeHead}>Traveler were allowed to:</TextRegular>
+                            <TextRegular style={styles.productAtrributeHead}>{t('common.travelerWereAllowed')}:</TextRegular>
                             : null}
                         {currentOrder.open_box_check_phisical_apperance == true ?
                             <TextRegular style={Styles.priceText}>
-                                Open box and check physical Apperance
+                                {t('common.openBoxCheck')}
                             </TextRegular>
                             : null}
                         {currentOrder.use_item_for_testing == true ?
                             <TextRegular style={Styles.priceText}>
-                                Use item for testing
+                                {t('travelHome.useItemTesting')}
                             </TextRegular>
                             : null}
                         <TextBold style={[Styles.priceText, { marginTop: 10 }]}>

@@ -91,7 +91,9 @@
             "cardNumber": "رقم البطاقة",
             "expiry":"تاريخ الانتهاء",
             "cardHolder":"حامل البطاقة",
-            "cvc":"السيرة الذاتية"
+            "cvc":"السيرة الذاتية",
+            "travelerWereAllowed": "تم السماح للمسافر",
+            "openBoxCheck":"افتح الصندوق وتحقق من المظهر الخارجي"
         },
         "track": {
             "transactions": "المعاملات",
