@@ -12,6 +12,7 @@ const Input = ({ placeholder, value, onChangeText, secureTextEntry}) => {
                 multiline
                 numberOfLines={5}
                 style={styles.input}
+            
             />
     );
 }
@@ -27,13 +28,13 @@ const styles = StyleSheet.create({
         // borderColor: '#00000011',
         // borderWidth: 1,
         borderRadius: 22,
-        paddingTop:0    
+        paddingTop:0,   
         // alignSelf: 'center',
         // // paddingHorizontal: 5,
         // // paddingVertical:16,
         // padding:16,
         // fontSize: 14,
-        // color: '#656F85',
+        color: '#656F85'
         // fontFamily: Platform.OS =='ios' ? 'Gilroy-Regular' : 'GilroyRegular',
         // backgroundColor: '#F6F9FF',
         // paddingHorizontal: 20,
