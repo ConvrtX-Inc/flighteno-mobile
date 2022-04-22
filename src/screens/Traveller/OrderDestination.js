@@ -29,6 +29,7 @@ import {
   FilterOrders,
   getStoreNames,
   FilterResetOrders,
+  FilterNewOrders,
 } from '../../redux/actions/Trips';
 import {formatAmount} from '../../Utility/Utils';
 import ViewImages from '../../components/ViewImages';
@@ -145,7 +146,7 @@ export default function OrderDestination({route}) {
   const [productSelectedType, setProductType] = useState('')
   const [sliderValues,setSliderValues] = useState([minPrice,maxPrice])
   
-
+  
   useEffect(() => {
     var obj = {
       admin_id: currentUser._id,
@@ -227,13 +228,28 @@ export default function OrderDestination({route}) {
       store_name: storeName,
     };
 
+    // const filterData  = new FormData()
+    // filterData.append('admin_id', currentUser._id)
+    // filterData.append('product_type', productType)
+    // filterData.append('product_name', productName)
+    // filterData.append('starting_price', "0")
+    // filterData.append('ending_price', "20")
+    // filterData.append('sorted_by', sortedBy)
+    // filterData.append('sort', sort)
+    // filterData.append('store_name', storeName)
 
+    console.log(filterData)
 
-    if(currentUser?.kyc_status_verified){
-      dispatch(FilterOrders(filterData, token, (data) => {
-        setShowFilter(false);
-      }))
-    }
+    // dispatch(FilterOrders(filterData, token, (data) => {
+
+    // }))
+    dispatch(FilterNewOrders(filterData,token))
+
+    // if(currentUser?.kyc_status_verified){
+    //   dispatch(FilterOrders(filterData, token, (data) => {
+    //     // setShowFilter(false);
+    //   }))
+    // }
 
   };
 
@@ -293,14 +309,14 @@ export default function OrderDestination({route}) {
     if (!currentUser?.kyc_status_verified){
           return (
             <View style={{marginLeft: 18}}>
-              <TextMedium>Your account is not verified</TextMedium>
+              <TextMedium style={{textAlign:'left'}}>{t('common.accountNotVerified')}</TextMedium>
             </View>
           )
     }
 
     return (
       <View style={{marginLeft: 18}}>
-        <TextMedium>Order list is empty</TextMedium>
+        <TextMedium style={{textAlign:'left'}}>{t('common.orderListEmpty')}</TextMedium>
       </View>
     )
   }
@@ -308,7 +324,7 @@ export default function OrderDestination({route}) {
 
   return (
     <View style={{flex: 1, backgroundColor: color.backgroundColor}}>
-              <ImageView
+      <ImageView
         images={images}
         imageIndex={0}
         visible={showImageView}
@@ -327,7 +343,6 @@ export default function OrderDestination({route}) {
             >
               <Icon name="cross" size={35} style={{margin: 0}} />
             </TouchableOpacity> 
-       
 
 
             <TextBold
