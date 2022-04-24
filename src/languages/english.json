@@ -92,7 +92,8 @@
             "cardHolder":"Card Holder",
             "cvc":"CVV",
             "travelerWereAllowed": "Traveler were allowed to",
-            "openBoxCheck":"Open box and check physical appearance"
+            "openBoxCheck":"Open box and check physical appearance",
+            "travIsAllowedTo":"Traveller is allowed to"
         },
         "track": {
             "transactions": "Transactions",
