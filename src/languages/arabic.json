@@ -93,7 +93,8 @@
             "cardHolder":"حامل البطاقة",
             "cvc":"السيرة الذاتية",
             "travelerWereAllowed": "تم السماح للمسافر",
-            "openBoxCheck":"افتح الصندوق وتحقق من المظهر الخارجي"
+            "openBoxCheck":"افتح الصندوق وتحقق من المظهر الخارجي",
+            "travIsAllowedTo":"المسافر مسموح به"
         },
         "track": {
             "transactions": "المعاملات",

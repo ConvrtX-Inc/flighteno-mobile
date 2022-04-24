@@ -142,13 +142,13 @@ export default function OrderDetailT({ route }) {
                             </TextRegular>
                         </View>
                         {orderDetail.open_box_check_phisical_apperance || orderDetail.use_item_for_testing ?
-                            <TextRegular style={[Styles.userName, { marginLeft: 0, marginTop: 20 }]}>Traveler is allowed to:</TextRegular>
+                            <TextRegular style={[Styles.userName, { marginLeft: 0, marginTop: 20, textAlign:'left' }]}>{t('common.travIsAllowedTo')}:</TextRegular>
                             : null}
                         {orderDetail.open_box_check_phisical_apperance ?
-                            <TextRegular style={[Styles.priceText, { marginTop: 5 }]}>Open box and check physical Apperance</TextRegular>
+                            <TextRegular style={[Styles.priceText, { marginTop: 5, textAlign:'left' }]}>{t('common.openBoxCheck')}</TextRegular>
                             : null}
                         {orderDetail.use_item_for_testing ?
-                            <TextRegular style={[Styles.priceText, { marginTop: 5, marginBottom: 15 }]}>Use item for testing</TextRegular>
+                            <TextRegular style={[Styles.priceText, { marginTop: 5, marginBottom: 15, textAlign:'left' }]}>{t('travelHome.useItemTesting')}</TextRegular>
                             : null}
                     </View>
                 </View>
