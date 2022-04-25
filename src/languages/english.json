@@ -93,7 +93,21 @@
             "cvc":"CVV",
             "travelerWereAllowed": "Traveler were allowed to",
             "openBoxCheck":"Open box and check physical appearance",
-            "travIsAllowedTo":"Traveller is allowed to"
+            "travIsAllowedTo":"Traveller is allowed to",
+            "manageBankAccount": "Manage Bank Account",
+            "accountName": "Account Name",
+            "bankName":"Bank Name",
+            "default":"Default",
+            "setDefault": "Set Default",
+            "addNewAccount":"Add New Account",
+            "edit": "Edit",
+            "removeAccount": "Remove Account",
+            "areYouSureRemove":"Are you sure you want to remove the account",
+            "confirm": "Confirm",
+            "accountNum": "Account Number",
+            "emailAddress": "Email Address",
+            "address":"Address",
+            "addBankAccount": "Add Bank Account"
         },
         "track": {
             "transactions": "Transactions",

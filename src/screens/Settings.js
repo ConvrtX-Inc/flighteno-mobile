@@ -113,6 +113,14 @@ export default function Settings() {
                         />
                         <TextMedium style={styles.menuItemText}>{t('common.manageCards')}</TextMedium>
                     </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate("ManageBankAccount")} style={styles.menuItem}>
+                        <Image source={require('../images/payment.png')}
+                            style={styles.menuIcon}
+                            resizeMode="contain"
+                        />
+                        <TextMedium style={styles.menuItemText}>{t('common.manageBankAccount')}</TextMedium>
+                    </TouchableOpacity>
                 
                 <TouchableOpacity onPress={() => navigation.navigate("Notifications")} style={styles.menuItem}>
                     <Image source={require('../images/notification.png')}
