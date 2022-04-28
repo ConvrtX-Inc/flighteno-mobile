@@ -8,6 +8,7 @@ import {
     IS_LOADING_RESET_FILTER
 } from '../constants';
 import Toast from 'react-native-toast-message';
+import { generateUID } from '../../Utility/Utils';
 
 export function AddTrip(token, data) {
     return async dispatch => {
@@ -54,7 +55,6 @@ export function getStoreNames(token, storeData){
             console.log('Error', error)
         }).then(Response => {
             // console.log(Response.data)
-            
             storeData(Response.data)
             // if(Response.data.type == 200){
             //     storeData(Response.data)
@@ -117,13 +117,18 @@ export function UserOrders(token, data, hideFilter) {
 }
 
 export function FilterOrders(data, token, hideFilter, success) {
+    // console.log(data)
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
             method: 'post',
-            url: `${BASE_URL}Rest_calls/getUserOrdersOnTheBasisOnCountryFilter`,
+            url: `${BASE_URL}Rest_calls/getUserOrdersOnTheBasisOnCountryFilter/?${generateUID()}`,
             data: data,
-            headers: { "Authorization": token },
+            headers: { 
+                "Authorization": token,
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
             validateStatus: (status) => {
                 return true;
             },
@@ -134,10 +139,46 @@ export function FilterOrders(data, token, hideFilter, success) {
             dispatch({ type: IS_LOADING, isloading: false })
             hideFilter()
 
-            // console.log(Response.data.orders)
+            console.log(Response.data.orders)
+            // dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+            
+            
+            // if (Response.data.status == "Successfully Fetched") {
+            //     success(Response.data.orders)
+            //     console.log(Response.data)
+            //     dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
+            // }
+        })
+    }
+}
+
+export function FilterNewOrders(data, token, success) {
+
+    return async dispatch => {
+        dispatch({ type: IS_LOADING, isloading: true })
+
+        axios({
+            method: "post",
+            url: `${BASE_URL}Rest_calls/getUserOrdersOnTheBasisOnCountryFilter`,
+            data:data,
+            headers: {
+                'Authorization': token,
+                "content-type": "application/x-www-form-urlencoded"
+            },
+            validateStatus: (status) => {
+                return true;
+            },
+        }).catch(error => {
+            dispatch({ type: IS_LOADING, isloading: false })
+            console.log("Error", error)
+        }).then(Response => {
+            dispatch({ type: IS_LOADING, isloading: false })
+            // hideFilter()
+
+            // console.log(data)
+            // console.log(Response.data)
             dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-            
-            
+            success(Response.data)
             // if (Response.data.status == "Successfully Fetched") {
             //     success(Response.data.orders)
             //     console.log(Response.data)

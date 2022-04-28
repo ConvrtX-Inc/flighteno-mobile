@@ -217,33 +217,25 @@ export default function OrderDestination({route}) {
     const sortedBy = rangeValue.toLowerCase();
     const sort = sortMethod;
 
-    const filterData = {
-      admin_id: currentUser._id,
-      product_type: productType,
-      product_name: productName,
-      starting_price: minPrice,
-      ending_price: maxPrice,
-      sorted_by: sortedBy,
-      sort: sort,
-      store_name: storeName,
-    };
 
-    // const filterData  = new FormData()
-    // filterData.append('admin_id', currentUser._id)
-    // filterData.append('product_type', productType)
-    // filterData.append('product_name', productName)
-    // filterData.append('starting_price', "0")
-    // filterData.append('ending_price', "20")
-    // filterData.append('sorted_by', sortedBy)
-    // filterData.append('sort', sort)
-    // filterData.append('store_name', storeName)
+    const filterData = new URLSearchParams();
+    filterData.append('admin_id', currentUser._id)
+    filterData.append('product_type', productType)
+    filterData.append('product_name', productName)
+    filterData.append('starting_price', minPrice)
+    filterData.append('ending_price', maxPrice)
+    filterData.append('sorted_by', sortedBy)
+    filterData.append('sort', sort)
+    filterData.append('store_name', storeName)
 
-    console.log(filterData)
+    // console.log(filterData)
 
     // dispatch(FilterOrders(filterData, token, (data) => {
 
     // }))
-    dispatch(FilterNewOrders(filterData,token))
+    dispatch(FilterNewOrders(filterData,token, () => {
+      setShowFilter(false)
+    }))
 
     // if(currentUser?.kyc_status_verified){
     //   dispatch(FilterOrders(filterData, token, (data) => {
@@ -274,6 +266,7 @@ export default function OrderDestination({route}) {
       });
       setPickerValueSelected('')
       selectPickerValueFN(0);
+
     }))
     // dispatch(
     //   UserOrders(token, obj, () => {
@@ -421,11 +414,17 @@ export default function OrderDestination({route}) {
                   onEndEditing={() => {
                   
                     const price = parseInt(minPriceVal)
-                    if(price >= maxPrice){
-                      alert('price must be less than max price')
-                      
+
+                    if(minPriceVal == ''){
+                      alert('amount not valid')
                     }else{
-                      setMinPrice(price)
+                      
+                      if(price >= maxPrice){
+                        alert('price must be less than max price')
+                      }else{
+                        setMinPrice(price)
+                      }
+
                     }
 
 
@@ -446,11 +445,18 @@ export default function OrderDestination({route}) {
                   onEndEditing={()=>{
                     // console.log('edited')
                     const price = parseInt(maxPriceVal)
-                    if(price < minPrice){
-                      alert('price must be greater than min price')
+
+                    if(maxPriceVal == ''){
+                      alert('amount not valid')
                     }else{
-                      setMaxPrice(price)
+                      if(price < minPrice){
+                        alert('price must be greater than min price')
+                      }else{
+                        setMaxPrice(price)
+                      }
                     }
+
+
                     
                   }}
                  
