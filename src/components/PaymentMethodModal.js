@@ -66,7 +66,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
     return (
         <ScrollView>
             <View style={[styles.container, commonStyles.marginTop10]}>
-                <TouchableOpacity style={styles.backButton} onPress={() => closeModal()}>
+                {/* <TouchableOpacity style={styles.backButton} onPress={() => closeModal()}>
                     <IconEntypo name="chevron-left" size={34} color="#000" />
                 </TouchableOpacity>
                 <>
@@ -78,7 +78,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
                     <View style={{ height: 22 }}></View>
                     {
-                        myCards?.length > 0 ? myCards?.map(card =>
+                        myCards.length > 0 ? myCards.map(card =>
                             <View
                                 style={styles.cardItem}
                                 key={card.id}
@@ -123,7 +123,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                             </View>
                         </TouchableOpacity>
                     }
-                </>
+                </> */}
             </View>
         </ScrollView>
     )
