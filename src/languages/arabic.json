@@ -94,7 +94,18 @@
             "cvc":"السيرة الذاتية",
             "travelerWereAllowed": "تم السماح للمسافر",
             "openBoxCheck":"افتح الصندوق وتحقق من المظهر الخارجي",
-            "travIsAllowedTo":"المسافر مسموح به"
+            "travIsAllowedTo":"المسافر مسموح به",
+            "manageBankAccount": "إدارة الحساب المصرفي",
+            "default":"إفتراضي",
+            "setDefault": "الوضع الإفتراضي",
+            "edit": "تعديل",
+            "accountName": "إسم الحساب",
+            "accountNum": "رقم حساب",
+            "removeAccount": "إزالة الحساب",
+            "areYouSureRemove":"هل أنت متأكد أنك تريد إزالة الحساب",
+            "emailAddress": "عنوان بريد الكتروني",
+            "address":"عنوان",
+            "addBankAccount": "إضافة حساب مصرفي"
         },
         "track": {
             "transactions": "المعاملات",

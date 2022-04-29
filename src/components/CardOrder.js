@@ -23,7 +23,7 @@ const CardOrder = ({ order }) => {
     function getOrderStatusColor() {
         return order.status == "new" ? "#ECB22E" : order.status == "complete" ? "#36C5F0" : order.status == "accepted" ? "#36C5F0" : "#E01E82"
     }
-
+    
     return (
         <View
             activeOpacity={0.5}
