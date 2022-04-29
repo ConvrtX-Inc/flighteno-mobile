@@ -59,6 +59,8 @@ import KYCTestScreen from '../screens/KYC/KYCTestScreen';
 import LatestTransactionsScreen from '../screens/Payment/LatestTransactions';
 import PaymentAddNewCard from '../screens/Payment/AddNewCard';
 import ManageCards from '../screens/CardManagement/ManageCards';
+import ManageBankAccountScreen from '../screens/ManageBankAccount/ManageBankAccountScreen';
+import AddNewCardScreen from '../screens/ManageBankAccount/AddNewCardScreen';
 // https://extreme-ip-lookup.com/json/
 // https://geolocation-db.com/json/
 
@@ -147,7 +149,7 @@ function Navigation() {
        currentUser ?
            <Stack.Navigator
                initialRouteName={currentProfile ? "BottomTab" : "SelectProfile"}
-            //    initialRouteName="KYCTestScreen"
+            //    initialRouteName="ManageBankAccount"
                screenOptions={{
                    headerShown: false
                }}
@@ -189,8 +191,27 @@ function Navigation() {
                 <Stack.Screen name="SupportReply" component={SupportReply} />
                 <Stack.Screen name="LatestTransactions" component={LatestTransactionsScreen} />
                 <Stack.Screen name="ManageCards" component={ManageCards} />
-
                 <Stack.Screen name="PaymentAddNewCard" component={PaymentAddNewCard} />
+                <Stack.Screen 
+                    name="BankAddNewCard"
+                    component={AddNewCardScreen}
+                    options={() => {
+                        return {
+                            headerShown:true,
+                            headerTitle:false
+                        }
+                    }}
+                />
+                <Stack.Screen
+                    name="ManageBankAccount"
+                    component={ManageBankAccountScreen}
+                    options={() => {
+                        return {
+                            headerShown:true,
+                            headerTitle:false
+                        }
+                    }}
+                />
                 <Stack.Screen 
                     name="KYCIntro" 
                     component={KYCIntroScreen} 
