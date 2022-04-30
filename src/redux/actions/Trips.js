@@ -253,7 +253,7 @@ export function GetTravelerOrders(data, token, success) {
             console.log("Error", error)
         }).then(Response => {
             success(Response.data.traveler_order)
-            // dispatch({ type: TRAVLER_ORDERS, data: Response.data.traveler_order })
+            dispatch({ type: TRAVLER_ORDERS, data: Response.data.traveler_order })
         })
     }
 }
