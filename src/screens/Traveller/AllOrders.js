@@ -75,9 +75,15 @@ export default function AllOrders() {
         checked: false
     },
     {
-        id: '3',
-        name:t('track.accepted'),
-        value: 'accepted',
+        id: '3',    
+        name: t('track.pending'),
+        value: 'pending',
+        checked: false
+    },
+    {
+        id: '4',    
+        name: t('track.cancelled'),
+        value: 'cancelled',
         checked: false
     }])
 
@@ -95,7 +101,7 @@ export default function AllOrders() {
             return
         }else{
             // dispatch({type: ORDERS_TO_DESTINATION, data: []});
-             setOrderByTravler([])
+            setOrderByTravler([])
             return
         }
 
@@ -108,15 +114,22 @@ export default function AllOrders() {
         });
         ordersListNames[index].checked = true
         setOrdersListNames([...ordersListNames])
+
+        // console.log(ordersListNames[index].value)
+        
+
         if (ordersListNames[index].value != "all") {
             var res = travlerOrders.filter(function (element) {
                 return element.orderAsTraveler[0].status.toLowerCase().includes(ordersListNames[index].value.toLowerCase());
             });
             setOrderByTravler(res)
+            console.log(travlerOrders[0].orderAsTraveler[0].status)
         }
         else {
+            // console.log(travlerOrders)
             setOrderByTravler(travlerOrders)
         }
+        
     }
 
     const handleSearch = (text) => {

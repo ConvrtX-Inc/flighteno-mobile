@@ -13,6 +13,7 @@ import { createStripePaymentIntent } from '../services/Stripe/Payment';
 import Toast from 'react-native-toast-message';
 import { getCards, getCustomerDefaultCard } from '../services/Stripe/CardManagement'
 import TextRegular from './atoms/TextRegular';
+import { useIsFocused } from '@react-navigation/native';
 
 export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerID, navigation ,addPaymentMethod }) {
     const { t } = useTranslation();
@@ -22,8 +23,16 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
     const [selectedCard, selectCard] = useState()
     const [isLoading, setLoading] = useState(false);
 
+   
+  
+
     useEffect(() => {
         getMyCards()
+
+        if(!selectedCard){
+            selectCard(myCards[0])
+        }
+
     }, [])
 
     async function getMyCards() {
@@ -35,15 +44,17 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
     }
 
     async function submitPayment() {
-        if(!selectedCard){
-            selectCard(myCards[0])
-        }
-        console.log("selectedCArd",selectedCard)
+
         const cardId = selectedCard.id !='' ? selectedCard.id : defaultCard;
+
+        console.log(myCards[0].id)
+
         setLoading(true)
         let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}&cardId=${selectedCard.id}`
         const res = await createStripePaymentIntent(url);
         console.log("res", res)
+
+
         if (res.paymentIntentId) {
 
             setLoading(false)
@@ -66,7 +77,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
     return (
         <ScrollView>
             <View style={[styles.container, commonStyles.marginTop10]}>
-                {/* <TouchableOpacity style={styles.backButton} onPress={() => closeModal()}>
+                <TouchableOpacity style={styles.backButton} onPress={() => closeModal()}>
                     <IconEntypo name="chevron-left" size={34} color="#000" />
                 </TouchableOpacity>
                 <>
@@ -123,7 +134,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                             </View>
                         </TouchableOpacity>
                     }
-                </> */}
+                </>
             </View>
         </ScrollView>
     )
