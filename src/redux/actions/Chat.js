@@ -37,7 +37,7 @@ export function getChatMessages(data, token) {
     }
 }
 
-export function sendEditOffer(data, token) {
+export function sendEditOffer(data, token, success) {
     return async dispatch => {
         axios({
             method: 'post',
@@ -50,6 +50,9 @@ export function sendEditOffer(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
+
+            success(Response.data)
+            // console.log(Response)
         })
     }
 }

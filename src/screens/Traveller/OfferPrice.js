@@ -59,7 +59,6 @@ export default function OfferPrice({ route }) {
             deliveryDate: dateValue,
             notes: notes
         }
-        navigation.navigate("ChatTraveler", { orderDetail: orderDetail, offer: offer, currentStatus: 'offer' })
         var data = {
             order_id: orderDetail._id,
             order_price: orderDetail.product_price,
@@ -72,7 +71,9 @@ export default function OfferPrice({ route }) {
             tirpId: latestTripId,
             total: parseInt(orderDetail.product_price) + parseInt(offerPrice) + parseInt(orderDetail.vip_service_status == "Yes" ? orderDetail.vip_service_fee : 0) + parseInt(orderDetail.flighteno_cost) + parseInt(orderDetail.tax)
         }
-        dispatch(sendEditOffer(data, token))
+        dispatch(sendEditOffer(data, token, (res) => {
+            navigation.navigate("ChatTraveler", { orderDetail: orderDetail, offer: offer, currentStatus: 'offer', offerID: res.offerId})
+        }))
     }
 
     return (

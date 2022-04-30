@@ -251,7 +251,7 @@ export default function Chattravelereler({ route }) {
         dispatch(RespondToOffer(data, token,
             () => {
                 socket = io.connect(SOCKET_URL);
-                socket.emit('addUser', currentUser._id);
+                socket.emit('addUser', currentUser._id)
                 const roomDetails = {
                     userID: currentUser._id,
                     chat_id: route.params.currentStatus == "offer" ? chatId : route.params.currentStatus == "edit" ? route.params.chatID : route.params.chatHistory[0].chat_id
@@ -323,8 +323,13 @@ export default function Chattravelereler({ route }) {
         socket.emit('addRoom', roomDetails)
 
         if (route.params.currentStatus == "offer") {
+           
             socket.emit('sendOffer', { orderId: route.params.orderDetail._id, senderId: currentUser._id, receiverId: route.params.orderDetail.admin_id });
             socket.on("createChat", async msg => {
+
+                console.log("created")
+                
+
                 chatId = msg
                 var message1 = {
                     _id: Math.floor(Math.random() * 1000000),
@@ -355,6 +360,7 @@ export default function Chattravelereler({ route }) {
                 pushNewMessageToCurrentInbox(message1)
                 pushNewMessageToCurrentInbox(message2)
             });
+
 
 
         }
