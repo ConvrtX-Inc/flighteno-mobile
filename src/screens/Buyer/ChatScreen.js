@@ -30,10 +30,15 @@ export default function ChatScreen() {
     useFocusEffect(
         React.useCallback(() => {
             getMessages()
+
+       
+
             return () => {
             };
         }, [])
     );
+
+
 
     const getMessages = () => {
         var data = {
@@ -80,11 +85,11 @@ export default function ChatScreen() {
                                             onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                         >
                                             <Image 
-                                                // source={ item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
-                                                source={imageValid ? {uri:item.reciverImageName[0].profile_image } : require('../../images/manProfile.png') }
+                                                source={ item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                                // source={  {uri: item.reciverImageName[0].profile_image }  }
                                                 style={styles.profileImage}
                                                 resizeMode="cover"
-                                                onError={() => setImageValid(false)}
+                                                // onError={() => setImageValid(false)}
                                             />
                                             <TextMedium numberOfLines={1} style={{ textAlign: 'left' }}>{item?.reciverImageName[0].full_name?.split(" ")[0]}</TextMedium>
                                         </TouchableOpacity>
@@ -103,7 +108,9 @@ export default function ChatScreen() {
                                 style={[Styles.itemView, {}]}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View>
-                                        <Image source={ imageValid ? {uri:item.reciverImageName[0].profile_image }: require('../../images/manProfile.png')}
+                                        <Image 
+                                            // source={ imageValid ? {uri:item.reciverImageName[0].profile_image }: require('../../images/manProfile.png')}
+                                            source={ item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
                                             style={styles.profileImage}
                                             resizeMode="cover"
                                         />

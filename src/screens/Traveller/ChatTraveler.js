@@ -92,10 +92,11 @@ export default function Chattravelereler({ route }) {
     const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [chatModal, setChatModal] = useState(false)
     const [offerStatus, setOfferStatus] = useState("")
-    const [currentPerson, setCurrentPerson] = useState(currentProfile == "buyer" ? "traveler's" : "buyer's")
+    const { t } = useTranslation()
+    const [currentPerson, setCurrentPerson] = useState(currentProfile == "buyer" ? t('common.travelers') : t('common.buyers'))
     const offerID = route.params.offerID
     const dispatch = useDispatch()
-    const { t } = useTranslation()
+  
     const [isPaymentModalVisible, setPaymentModalVisible] = useState(false)
 
     //Payment
@@ -739,7 +740,7 @@ export default function Chattravelereler({ route }) {
                         closeModal={() => setModal(false)}
                         onPressYes={() => offerConfirmation(offerStatus)}
                         onPressNo={() => setModal(false)}
-                        title={`Would you like to ${offerStatus}${'\n'}the ${currentPerson} offer?`}
+                        title={ t('common.wouldYouLikeTo') + offerStatus  + t('common.the') + currentPerson  + t('common.offer') + "?"}
                     />
 
                     <TouchableOpacity onPress={() => backAction1()}>
