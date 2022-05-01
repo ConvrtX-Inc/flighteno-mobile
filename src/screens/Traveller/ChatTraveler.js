@@ -740,7 +740,7 @@ export default function Chattravelereler({ route }) {
                         closeModal={() => setModal(false)}
                         onPressYes={() => offerConfirmation(offerStatus)}
                         onPressNo={() => setModal(false)}
-                        title={ t('common.wouldYouLikeTo') + offerStatus  + t('common.the') + currentPerson  + t('common.offer') + "?"}
+                        title={ t('common.wouldYouLikeTo') + " "+offerStatus  + " "+ t('common.the') + " " + currentPerson + " " + t('common.offer') + "?"}
                     />
 
                     <TouchableOpacity onPress={() => backAction1()}>

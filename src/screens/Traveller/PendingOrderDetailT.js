@@ -360,7 +360,7 @@ export default function PendingOrderDetailT({ route }) {
                     {currentOrder.status == "accepted" ? t('common.updateOrder') : t('common.orderCompleted')}
                 </TextBold>
 
-                <View style={Styles.listView}>
+                <View style={[Styles.listView, {marginTop: 24}]}>
                     <View style={Styles.upperView}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
