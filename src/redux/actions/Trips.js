@@ -86,7 +86,7 @@ export function UserTrips(token, data, success) {
     }
 }
 
-export function UserOrders(token, data, hideFilter) {
+export function UserOrders(token, data, hideFilter, success) {
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -106,7 +106,7 @@ export function UserOrders(token, data, hideFilter) {
                 if (Response.data.orders?.length > 0) {
                     if (Response.data.orders[0].profile_data.length > 0) {
                         dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-                        
+                        success(Response.data.orders)
                         // dispatch({ type: FILTERED_ORDERS_DATA, data: Response.data.orders })
                     }
                 }
@@ -178,7 +178,8 @@ export function FilterNewOrders(data, token, success) {
             // console.log(data)
             // console.log(Response.data)
             dispatch({ type: ORDERS_TO_DESTINATION, data: Response.data.orders })
-            success(Response.data)
+            success(Response.data.orders)
+
             // if (Response.data.status == "Successfully Fetched") {
             //     success(Response.data.orders)
             //     console.log(Response.data)

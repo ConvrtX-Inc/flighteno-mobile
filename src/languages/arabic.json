@@ -105,7 +105,16 @@
             "areYouSureRemove":"هل أنت متأكد أنك تريد إزالة الحساب",
             "emailAddress": "عنوان بريد الكتروني",
             "address":"عنوان",
-            "addBankAccount": "إضافة حساب مصرفي"
+            "addBankAccount": "إضافة حساب مصرفي",
+            "basedOnYourCountry": "بناءً على اختيار البلد ، نقدر أن هذا يجب أن يتم تسليمه بحلول",
+            "addNewAccount":"إضافة حساب جديد",
+            "wouldYouLikeTo": "هل تريد أن",
+            "the":"ال",
+            "offer":"عرض",
+            "travelers": "مسافر",
+            "buyers":"المشتري",
+            "payments": "المدفوعات",
+            "selectPaymentMethod": "اختار طريقة الدفع"
         },
         "track": {
             "transactions": "المعاملات",
@@ -133,7 +142,9 @@
             "orderByFlight": "الطلبات بالطائرة",
             "allOrders": "جميع الطلبات",
             "inProgress": "في تقدم",
-            "datePlaced": "تاريخ التقديم"
+            "datePlaced": "تاريخ التقديم",
+            "attachment":"المرفق",
+            "travelers": "مسافرين"
         },
         "messages":{
             "inbox":"صندوق الوارد",

@@ -52,7 +52,6 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
         setLoading(true)
         let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}&cardId=${selectedCard.id}`
         const res = await createStripePaymentIntent(url);
-        console.log("res", res)
 
 
         if (res.paymentIntentId) {
@@ -82,8 +81,8 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                 </TouchableOpacity>
                 <>
                     <View style={[commonStyles.marginTop30]}>
-                        <TextBold style={[commonStyles.fs26]}> Payments </TextBold>
-                        <TextBold style={[commonStyles.fs18, commonStyles.marginTop10]}> Select Payment Method </TextBold>
+                        <TextBold style={[commonStyles.fs26, {textAlign:'left'}]}>{t('common.payments')}</TextBold>
+                        <TextBold style={[commonStyles.fs18, commonStyles.marginTop10, {textAlign:'left'}]}> {t('common.selectPaymentMethod')} </TextBold>
 
                     </View>
 
@@ -119,7 +118,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                     {
                         myCards.length > 0 ? <View style={{ marginTop: 20 }}>
                             <ButtonLarge
-                                title="Submit"
+                                title={t('kyc.submit')}
                                 loader={isLoading}
                                 onPress={() => submitPayment()}
                             ></ButtonLarge>
@@ -129,7 +128,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                             <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                                 <IconEntypo name="plus" size={25} color="#36C5F0" />
                                 <TextBold style={{ fontSize: 20, color: '#36C5F0', marginLeft: 14 }}>
-                                    Add Payment Method
+                                    {t('common.addPaymentMethod')}
                                 </TextBold>
                             </View>
                         </TouchableOpacity>

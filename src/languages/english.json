@@ -107,7 +107,16 @@
             "accountNum": "Account Number",
             "emailAddress": "Email Address",
             "address":"Address",
-            "addBankAccount": "Add Bank Account"
+            "addBankAccount": "Add Bank Account",
+            "basedOnYourCountry": "Based on country selection we estimate this should be delivered by",
+            "wouldYouLikeTo": "Would you like to",
+            "the":"the",
+            "offer":"offer",
+            "travelers": "traveler's",
+            "buyers": "buyer's",
+            "payments":"Payments",
+            "selectPaymentMethod": "Select Payment Method",
+            "addPaymentMethod": "Add Payment Method"
         },
         "track": {
             "transactions": "Transactions",
@@ -136,7 +145,8 @@
             "allOrders": "All Orders",
             "inProgress": "In Progress",
             "datePlaced": "Date Placed",
-            "attachment":"Attachment"
+            "attachment":"Attachment",
+            "travelers": "traveler's"
         },
         "messages":{
             "inbox":"Inbox",

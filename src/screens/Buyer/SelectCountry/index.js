@@ -259,7 +259,7 @@ export default function SelectCountry({ route }) {
 
 
                 <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10,  textAlign: 'justify', marginTop: 20 }]}>
-                    Based on country selection we estimate this should be delivered by
+                    {t('common.basedOnYourCountry')}
                 </TextMedium>
 
 

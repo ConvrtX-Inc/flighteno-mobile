@@ -58,6 +58,7 @@ export default function OrderDestination({route}) {
   const {ordersToDestination} = useSelector(
     ({tripsRed}) => tripsRed,
   );
+  const [orderData, setOrderData] = useState('')
   const [showFilter, setShowFilter] = useState(false);
   const [pickerShow, setPickerShow] = useState(false);
   const [showImageView, setShowImageView] = useState(false);
@@ -159,7 +160,9 @@ export default function OrderDestination({route}) {
     // }))
 
     if(currentUser?.kyc_status_verified){
-      dispatch(UserOrders(token, obj, () => {}));
+      dispatch(UserOrders(token, obj,() =>{},(response) => {
+        setOrderData(response)
+      }));
     }else{
       dispatch({type: ORDERS_TO_DESTINATION, data: []});
     }
@@ -233,8 +236,10 @@ export default function OrderDestination({route}) {
     // dispatch(FilterOrders(filterData, token, (data) => {
 
     // }))
-    dispatch(FilterNewOrders(filterData,token, () => {
+    dispatch(FilterNewOrders(filterData,token, (response) => {
+      setOrderData(response)
       setShowFilter(false)
+
     }))
 
     // if(currentUser?.kyc_status_verified){
@@ -635,7 +640,7 @@ export default function OrderDestination({route}) {
       ) : null}
       {!showFilter ? (
         <FlatList
-          data={ordersToDestination}
+          data={orderData}
           //    extraData={loading}
           // refreshControl={<RefreshControl refreshing={loading} onRefresh={() => {
           //     var obj = {

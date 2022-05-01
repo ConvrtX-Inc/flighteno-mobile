@@ -126,7 +126,7 @@ export default function ManageBankAccountScreen({navigation}) {
 
     const renderHeader = () => (
         <>
-         <TextBold style={styles.title}>{t('common.manageBankAccount')}</TextBold>
+         <TextBold style={[styles.title, {textAlign:'left'}]}>{t('common.manageBankAccount')}</TextBold>
         </>
     )
 

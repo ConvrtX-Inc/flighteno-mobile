@@ -95,6 +95,8 @@ export async function getCards(customerID) {
                     return true;
                 },
             });
+
+            console.log(STRIPE_SECRET_KEY)
             dispatch({ type: GET_CARDS, data: response.data.data })
 
         }
