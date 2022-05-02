@@ -740,7 +740,7 @@ export default function Chattravelereler({ route }) {
                         closeModal={() => setModal(false)}
                         onPressYes={() => offerConfirmation(offerStatus)}
                         onPressNo={() => setModal(false)}
-                        title={ t('common.wouldYouLikeTo') + offerStatus  + t('common.the') + currentPerson  + t('common.offer') + "?"}
+                        title={ t('common.wouldYouLikeTo') + " "+offerStatus  + " "+ t('common.the') + " " + currentPerson + " " + t('common.offer') + "?"}
                     />
 
                     <TouchableOpacity onPress={() => backAction1()}>
@@ -753,13 +753,13 @@ export default function Chattravelereler({ route }) {
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: '5%', marginTop: 20, marginBottom: 10 }}>
                         {route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ?
                             <Image 
-                                source={imageValid ? {uri:route.params.orderDetail.profile_data[0].profile_image} : require("../../images/manProfile.png")}
+                                 source={ route.params.userDetail.profile_image  == "" ?  require("../../images/manProfile.png")  : {uri: route.params.userDetail.profile_image}}
                                 onError={() => setImageValid(false)}
                                 style={Styles.userImage}
                             />
                             :
                             <Image 
-                                source={imageValid ? {uri: route.params.userDetail.profile_image} : require("../../images/manProfile.png")}
+                                source={ route.params.userDetail.profile_image  == "" ?  require("../../images/manProfile.png")  : {uri: route.params.userDetail.profile_image}}
                                 onError={() => setImageValid(false)}
                                 style={Styles.userImage}
                             />
