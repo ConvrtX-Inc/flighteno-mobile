@@ -133,7 +133,7 @@ export default function EditOffer({ route }) {
                                 <View style={styles.billRight}>
                                     <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                         {formatAmount(orderDetail.product_price)}
-                                    </TextMedium>
+   s     s                                   </TextMedium>
                                 </View>
 
                             </View>

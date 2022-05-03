@@ -692,7 +692,7 @@ export default function Chattravelereler({ route }) {
                     valueToPush["user"] = {
                         _id: currentUser?._id,
                         name: currentUser?.full_name,
-                        avatar: currentUser?.profile_image ? currentUser?.profile_image : require("../../images/manProfile.png")
+                        avatar: currentUser?.profile_image ? currentUser?.profile_image ?? "" : require("../../images/manProfile.png")
                     }
                     valueToPush["image"] = response.body.postResponse.location
                     setMessages(previousMessages => GiftedChat.append(previousMessages, valueToPush))
@@ -753,18 +753,18 @@ export default function Chattravelereler({ route }) {
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: '5%', marginTop: 20, marginBottom: 10 }}>
                         {route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ?
                             <Image 
-                                 source={ route.params.userDetail.profile_image  == "" ?  require("../../images/manProfile.png")  : {uri: route.params.userDetail.profile_image}}
+                                 source={ route.params?.userDetail?.profile_image  == "" ?  require("../../images/manProfile.png")  : {uri: route.params.userDetail?.profile_image}}
                                 onError={() => setImageValid(false)}
                                 style={Styles.userImage}
                             />
                             :
                             <Image 
-                                source={ route.params.userDetail.profile_image  == "" ?  require("../../images/manProfile.png")  : {uri: route.params.userDetail.profile_image}}
+                                source={ route?.params.userDetail?.profile_image  == "" ?  require("../../images/manProfile.png")  : {uri: route.params.userDetail?.profile_image}}
                                 onError={() => setImageValid(false)}
                                 style={Styles.userImage}
                             />
                         }
-                        <TextBold style={Styles.userName}>{route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ? route.params.orderDetail.profile_data[0].full_name : route.params.userDetail.full_name}</TextBold>
+                        <TextBold style={Styles.userName}>{route.params.currentStatus == "offer" || route.params.currentStatus == "edit" ? route.params.orderDetail?.profile_data[0]?.full_name : route.params?.userDetail?.full_name}</TextBold>
 
                     </View>
                     <GiftedChat
