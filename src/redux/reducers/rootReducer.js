@@ -10,6 +10,7 @@ import myCardsRed from './Cards'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistReducer } from 'redux-persist'
+import myBankAccountsRed from './BankAccounts'
 
 
 /**
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
     chatRed:persistReducer(chatsPersistConfig, chatRed),
     reviewRed,
     kycRed,
-    myCardsRed
+    myCardsRed,
+    myBankAccountsRed
 });
   
 export default rootReducer;

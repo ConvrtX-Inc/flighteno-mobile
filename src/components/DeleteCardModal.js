@@ -5,7 +5,7 @@ import TextBold from './atoms/TextBold';
 import TextRegular from './atoms/TextRegular';
 import ButtonLarge from './ButtonLarge';
 
-export const DeleteCardModal = ({isModalClose, onCancelTap}) => {
+export const DeleteCardModal = ({isModalClose, onCancelTap,bankAccountDetails,onConfirmTap}) => {
 
     const {t} = useTranslation()
 
@@ -18,8 +18,8 @@ export const DeleteCardModal = ({isModalClose, onCancelTap}) => {
 
                     <View style={{flexDirection:'row', marginTop:16}} >
                         <View style={{flex:1}}>
-                            <TextRegular>Ending in 1234</TextRegular>
-                            <TextRegular>01/23</TextRegular>
+                            <TextRegular>Ending in {bankAccountDetails?.last4}</TextRegular>
+                            <TextRegular>{bankAccountDetails?.bank_name}</TextRegular>
                         </View>
                         <View style={{flex:1, alignItems:'flex-end'}}>
                             <Image source={{uri:'https://picsum.photos/200'}} style={{width:56, height: 56}} />
@@ -28,7 +28,7 @@ export const DeleteCardModal = ({isModalClose, onCancelTap}) => {
 
                     {/* <ButtonPlain/> */}
                     <View style={{marginTop:16}}>
-                        <ButtonLarge title="Confirm" />
+                        <ButtonLarge title="Confirm" onPress={onConfirmTap}/>
                     </View>
 
                     <View style={{marginTop:16, marginBottom:16 }}>
