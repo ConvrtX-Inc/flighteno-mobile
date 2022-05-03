@@ -377,7 +377,7 @@ export default function PendingOrderDetailT({ route }) {
                                 <TextBold style={Styles.dateText}>
                                     {/* {currentOrder.status == "accepted" ? t('track.pending') : t('track.completed')} */}
                                     {/* {currentOrder.status} */}
-                                    {getOrderStatus()}
+                                    {getOrderStatus()}  
                                 </TextBold>
                             </View>
                         </View>
@@ -501,7 +501,7 @@ export default function PendingOrderDetailT({ route }) {
                     </TouchableOpacity>
                     : null}
                 {showQrDetail || currentOrder.status == "complete" ?
-                    <View style={{ backgroundColor: color.inputBackColor, width: '90%', alignSelf: 'center', borderRadius: 12, marginVertical: 10 }}>
+                    <View style={{ backgroundColor: color.inputBackColor, width: '100%', alignSelf: 'center', borderRadius: 12, marginVertical: 10 }}>
                         <View style={{ alignSelf: "center", marginTop: 50, }}>
                             <QRCode
                                 value={currentOrder._id}
