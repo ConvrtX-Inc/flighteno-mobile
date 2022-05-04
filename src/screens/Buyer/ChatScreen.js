@@ -85,7 +85,7 @@ export default function ChatScreen() {
                                             onPress={() => navigation.navigate("ChatTraveler", { currentStatus: 'message', userDetail: item.reciverImageName[0], chatHistory: item.messages, orderID: item.order_id, offerID: item.offer_id.length > 0 ? item.offer_id[0].offer_id : '', offerStatus: item.offer_id.length > 0 ? item.offer_id[0].status : '' })}
                                         >
                                             <Image 
-                                                source={ item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                                source={ item.reciverImageName[0]?.profile_image == "" ? require('../../images/manProfile.png') : { uri: item?.reciverImageName[0]?.profile_image }}
                                                 // source={  {uri: item.reciverImageName[0].profile_image }  }
                                                 style={styles.profileImage}
                                                 resizeMode="cover"
@@ -110,7 +110,7 @@ export default function ChatScreen() {
                                     <View>
                                         <Image 
                                             // source={ imageValid ? {uri:item.reciverImageName[0].profile_image }: require('../../images/manProfile.png')}
-                                            source={ item.reciverImageName[0].profile_image == "" ? require('../../images/manProfile.png') : { uri: item.reciverImageName[0].profile_image }}
+                                            source={ item?.reciverImageName[0]?.profile_image == "" ? require('../../images/manProfile.png') : { uri: item?.reciverImageName[0]?.profile_image }}
                                             style={styles.profileImage}
                                             resizeMode="cover"
                                         />
