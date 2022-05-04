@@ -25,6 +25,8 @@ export default function PaymentCard({ card }) {
                 return require("../assets/images/card_logos/unionpay.png")
             case "diners club":
                 return require("../assets/images/card_logos/diners.png")
+            case "american express":
+                return require("../assets/images/card_logos/amex.png")
             default:
                 return require("../assets/images/card_logos/visa.png")
         }

@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { Linking } from 'react-native';
-import { BASE_URL ,PAYMENT_BASE_URL} from '../../BASE_URL/index'
+import { BASE_URL, PAYMENT_BASE_URL } from '../../BASE_URL/index'
 import { addCustomerDetails } from '../../services/Stripe/Customer';
 import { IS_LOADING, LOGIN_DATA, UPDATE_CUSTOMER_ID } from '../constants';
 
-export function ConfigureStripeAccount(data, token, navigation,userDetails) {
+export function ConfigureStripeAccount(data, token, navigation, userDetails) {
 
-    console.log("TOKEN",token)
+    console.log("TOKEN", token)
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -20,10 +20,10 @@ export function ConfigureStripeAccount(data, token, navigation,userDetails) {
         }).catch(error => {
             dispatch({ type: IS_LOADING, isloading: false })
             console.log(error)
-        }).then(async Response =>   {
-            console.log("RES:",Response.data)
+        }).then(async Response => {
+            console.log("RES:", Response.data)
             dispatch({ type: IS_LOADING, isloading: false })
-        
+
             navigation.replace('StripeWebView', { url: Response.data.conected_account_id })
         })
     }
@@ -66,8 +66,27 @@ export function GetUserStipeAccountDetail(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(response => {
-            console.log("Stripe Data",response.data.data)
+            console.log("Stripe Data", response.data.data)
             dispatch({ type: LOGIN_DATA, data: response.data.data });
         });
+    }
+}
+
+
+export async function SetupStripeAccount(data, token) {
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/createStripeAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
     }
 }
