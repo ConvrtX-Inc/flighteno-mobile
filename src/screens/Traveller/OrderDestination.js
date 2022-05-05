@@ -139,7 +139,7 @@ export default function OrderDestination({route}) {
       label: 'Others',
     },
   ]);
-  const [pickerValueSelected, setPickerValueSelected] = useState();
+  const [pickerValueSelected, setPickerValueSelected] = useState('');
   const [storeValue, setStoreValue] = useState('');
   const [storeName, setNameOfStore] = useState('');
   const [sortMethod, setSortMethod] = useState(-1);
@@ -215,11 +215,8 @@ export default function OrderDestination({route}) {
     // setFiltered(true)
     const productType = pickerValueSelected?.toLowerCase();
     const productName = pName;
-    const startingPrice = minPrice;
-    const endingPrice = '500000';
     const sortedBy = rangeValue.toLowerCase();
     const sort = sortMethod;
-
 
     const filterData = new URLSearchParams();
     filterData.append('admin_id', currentUser._id)
@@ -239,7 +236,6 @@ export default function OrderDestination({route}) {
     dispatch(FilterNewOrders(filterData,token, (response) => {
       setOrderData(response)
       setShowFilter(false)
-
     }))
 
     // if(currentUser?.kyc_status_verified){
@@ -263,6 +259,9 @@ export default function OrderDestination({route}) {
       setResetLoading(false)
       setPName('');
       setMinPrice(0);
+      setMaxPrice(1000)
+      setMaxPriceVal('1000')
+      setMinPriceVal('0')
       // setShowFilter(false);
 
       setNameOfStore('');
@@ -270,7 +269,7 @@ export default function OrderDestination({route}) {
         item.checked = false;
       });
       setPickerValueSelected('')
-      selectPickerValueFN(0);
+      // selectPickerValueFN(0);
 
     }))
     // dispatch(
@@ -291,7 +290,7 @@ export default function OrderDestination({route}) {
   };
 
   const multiSliderValuesChange = (values) => {
-    console.log(values)
+ 
     setMinPrice(values[0])
     setMaxPrice(values[1])
   }
@@ -549,7 +548,7 @@ export default function OrderDestination({route}) {
             <View style={{ alignSelf: 'center', width:'100%', marginTop:24 }}>
               <TextBold style={[styles.HeadingText, { marginTop: 10, textAlign:'left' }]}>{t('travelHome.sort')}</TextBold>
                   <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
-                            <TouchableOpacity onPress={() => selectRange(1, 'vip_service_fee', 1)}
+                            <TouchableOpacity onPress={() => selectRange(1, 'vip_service_fee', -1)}
                                 style={Styles.rangeButton}>
                                 <TextSemiBold style={[styles.loginInputHeading,
                                 { fontSize: 18, color: selectedRange == 1 ? color.blueColor : color.loginTextHeadingColor, textAlign:'left' }]}>
