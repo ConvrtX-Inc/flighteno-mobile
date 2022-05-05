@@ -27,24 +27,24 @@ function SetupStripe({ route }) {
     //     }, [])
     // );
 
-   async function configureStripeAccount() {
-        var obj = {
-            admin_id: currentUser._id,
-        }
+//    async function configureStripeAccount() {
+//         var obj = {
+//             admin_id: currentUser._id,
+//         }
 
-         //create customer if no customer found on stripe
-         const addCustomerDetailsRes = await addCustomerDetails(currentUser._id);
+//          //create customer if no customer found on stripe
+//          const addCustomerDetailsRes = await addCustomerDetails(currentUser._id);
 
-         if (addCustomerDetailsRes.customer) {
-             const user = currentUser;
-             user.customer_id = addCustomerDetailsRes.customer;
+//          if (addCustomerDetailsRes.customer) {
+//              const user = currentUser;
+//              user.customer_id = addCustomerDetailsRes.customer;
 
-             dispatch({ type: UPDATE_CUSTOMER_ID, data: user });
+//              dispatch({ type: UPDATE_CUSTOMER_ID, data: user });
 
-          }
+//           }
         
-        dispatch(ConfigureStripeAccount(obj, token, navigation,currentUser))
-    }
+//         dispatch(ConfigureStripeAccount(obj, token, navigation,currentUser))
+//     }
 
     return (
         <SafeAreaView style={{marginLeft:18, marginRight:18}} >
@@ -65,13 +65,11 @@ function SetupStripe({ route }) {
                     <ButtonLarge
                         title={t('common.setupNow')}
                         loader={loading}
-                        onPress={configureStripeAccount}
+                        onPress={() =>{navigation.replace("CreateStripeAccount")}}
                     />
                 }
             </View>
-            <Text style={{ color: '#000', fontSize: 16, lineHeight: 25 ,textAlign:'center'}}>
-                    {t('common.stripeRedirected')}
-                </Text>
+        
         </SafeAreaView>
     );
 }

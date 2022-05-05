@@ -11,7 +11,8 @@ import {
     FIRST_LAUNCH,
     NOTIFICATION_LIST,
     SUPPORT_TICKETS,
-    UPDATE_CUSTOMER_ID
+    UPDATE_CUSTOMER_ID,
+    UPDATE_ACCOUNT_ID
 } from '../constants'
 
 let initialState = {
@@ -101,7 +102,7 @@ export default (state = initialState, action) => {
                 ...state,
                 supportTickets: action.data,
             };
-        case UPDATE_CUSTOMER_ID:
+        case UPDATE_ACCOUNT_ID:
             return {
                 ...state,
                 currentUser: action.data,
