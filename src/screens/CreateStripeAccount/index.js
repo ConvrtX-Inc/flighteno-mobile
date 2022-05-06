@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View} from 'react-native';
+import { View } from 'react-native';
 import ButtonLarge from '../../components/ButtonLarge';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +13,8 @@ import { styles } from '../../Utility/Styles';
 import CountryPicker from 'react-native-country-picker-modal'
 import { color } from '../../Utility/Color';
 import Toast from 'react-native-toast-message';
-import { SetupStripeAccount } from '../../redux/actions/Payment';
+import { OnBoardStripeAccount, SetupStripeAccount } from '../../redux/actions/Payment';
+import { UPDATE_ACCOUNT_ID } from '../../redux/constants';
 
 
 function CreateStripeAccount({ route }) {
@@ -30,7 +31,7 @@ function CreateStripeAccount({ route }) {
     const [lastName, setLastName] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [dialCode, setDialCode] = useState();
-    const[isLoading,setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const onSelect = (country) => {
@@ -95,18 +96,25 @@ function CreateStripeAccount({ route }) {
 
         setIsLoading(true);
         try {
-             
+
             const response = await SetupStripeAccount(form_data, token);
-            if(response.code == 400){
+            if (response.code == 400) {
                 Toast.show({
                     type: 'error',
                     text2: response.message,
                 })
                 setIsLoading(false);
                 return
-            }else{
+            } else {
                 setIsLoading(false);
-                // success message redirect to stripe website
+                const user = currentUser;
+                user.stripe_account_id = response.stripe_account_id;
+
+                dispatch({ type: UPDATE_ACCOUNT_ID, data: user });
+                // onboard user / redirect to stripe website
+                onBoardAccount(response.stripe_account_id);
+
+
             }
         } catch (err) {
             console.log('ERROR: ', err)
@@ -114,8 +122,28 @@ function CreateStripeAccount({ route }) {
 
 
     }
+
+    async function onBoardAccount(accountId) {
+        const form_data = new FormData()
+        form_data.append("stripe_account_id", accountId);
+
+        try {
+            const onBoardRes = await OnBoardStripeAccount(form_data, token);
+
+
+            if (onBoardRes.code == 201) {
+                console.log("onboard response", onBoardRes)
+
+                navigation.replace('StripeWebView', { url: onBoardRes.response.url });
+
+            }
+        } catch (err) {
+            console.log("Error", err)
+        }
+    }
     return (
         <SafeAreaView style={{ marginLeft: 18, marginRight: 18 }}>
+
             <ScrollView>
                 <TextBold style={{ fontSize: 26, textAlign: 'left' }}>Create Stripe Account</TextBold>
 

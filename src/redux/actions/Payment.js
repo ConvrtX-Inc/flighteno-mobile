@@ -30,6 +30,7 @@ export function ConfigureStripeAccount(data, token, navigation, userDetails) {
 }
 
 export function RespondToOffer(data, token, sendOfferMessage, callback) {
+    console.log('Offer Data',data);
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -90,3 +91,61 @@ export async function SetupStripeAccount(data, token) {
         return err;
     }
 }
+
+
+export async function OnBoardStripeAccount(data, token) {
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/onBoardAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+
+export async function CreateTransferIntent(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/transferToAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+
+export async function ConfirmTransferToAccount(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/confirmTransferToAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+

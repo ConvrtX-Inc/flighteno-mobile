@@ -13,11 +13,13 @@ import { color } from '../../../Utility/Color';
 import { showErrorToast, showToast } from '../../../Utility/Utils';
 import Toast from 'react-native-toast-message';
 import { addBankAccountToStripe } from '../../../services/Stripe/BankAccountManagement';
+import { ADD_BANK_ACCOUNT } from '../../../redux/constants';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function AddNewCardScreen() {
 
-
+    const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
     const { t } = useTranslation()
     const [countryCode, setCountryCode] = useState('AE');
     const [accountName, setAccountName] = useState('');
@@ -28,7 +30,7 @@ export default function AddNewCardScreen() {
     const [address, setAddress] = useState('');
     const [currency, setCurrency] = useState('AED');
 
-
+    const dispatch = useDispatch();
 
     const onSelect = (country) => {
         setCountryCode(country.cca2)
@@ -77,13 +79,18 @@ export default function AddNewCardScreen() {
             address: address
         }
 
-        console.log('Bank Account Details',bankAccountDetails)
+       
         ///Static account id for now...
-        const accountId ='acct_1Kut5d4KEhni0zMM';
+        const accountId =currentUser.stripe_account_id;
+
+        console.log('Bank Account Details',bankAccountDetails, accountId)
         try{
             const res = await addBankAccountToStripe(bankAccountDetails,accountId);
            if(res?.id ){
             console.log('Response id',res.id)
+
+            dispatch({ type: ADD_BANK_ACCOUNT, data: res })
+            navigation.pop();
            }else{
                showErrorToast(res.error.message);
            }

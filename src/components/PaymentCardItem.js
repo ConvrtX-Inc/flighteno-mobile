@@ -19,7 +19,7 @@ export default function PaymentCardItem({ card, defaultCard }) {
     const [isModalVisible, setModalVisible] = useState(false);
     async function setDefault() {
         console.log("CARD ID", card.id)
-        const res = await setDefaultCard(card.id, currentUser.customer_id);
+        const res = await setDefaultCard(card.id, currentUser.stripe_customer_id);
 
         if (res.default_source) {
             dispatch({ type: SET_DEFAULT_CARD, data: res.default_source })
@@ -33,7 +33,7 @@ export default function PaymentCardItem({ card, defaultCard }) {
     }
 
     async function remove() {
-        const res = await removeCard(card.id, currentUser.customer_id)
+        const res = await removeCard(card.id, currentUser.stripe_customer_id)
         if (res.id) {
             dispatch({ type: REMOVE_CARD, data: res.id })
         } else {

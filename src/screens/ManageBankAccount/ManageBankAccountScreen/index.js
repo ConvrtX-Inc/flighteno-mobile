@@ -62,10 +62,13 @@ export default function ManageBankAccountScreen({ navigation }) {
     ]
 
     const { myBankAccounts } = useSelector(({ myBankAccountsRed }) => myBankAccountsRed)
+    const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
+
+    
     const dispatch = useDispatch();
     const [selectedBankAccount, selectBankAccount] = useState();
     //static account for now
-    const accountId = 'acct_1Kut5d4KEhni0zMM';
+    const accountId = currentUser.stripe_account_id;
     useEffect(() => {
         getBankAccounts()
     }, [])

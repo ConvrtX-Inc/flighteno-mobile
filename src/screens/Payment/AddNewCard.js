@@ -120,7 +120,7 @@ export default function PaymentAddNewCard({ navigation }) {
             }
         }
 
-        const data = await createCard(cardDetails, currentUser.customer_id);
+        const data = await createCard(cardDetails, currentUser.stripe_customer_id);
         if (data.id) {
             dispatch({ type: ADD_CARD, data: data })
             navigation.pop();

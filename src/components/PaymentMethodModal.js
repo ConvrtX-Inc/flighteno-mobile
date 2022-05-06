@@ -36,10 +36,10 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
     }, [])
 
     async function getMyCards() {
-        dispatch(await getCards(currentUser.customer_id))
+        dispatch(await getCards(currentUser.stripe_customer_id))
 
         //get default card
-        dispatch(await getCustomerDefaultCard(currentUser.customer_id, currentUser));
+        dispatch(await getCustomerDefaultCard(currentUser.stripe_customer_id, currentUser));
 
     }
 
@@ -49,25 +49,29 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
         console.log(myCards[0].id)
 
-        setLoading(true)
-        let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}&cardId=${selectedCard.id}`
-        const res = await createStripePaymentIntent(url);
+        // setLoading(true)
+        // let url = `${PAYMENT_BASE_URL}/create-payment/?admin_id=${currentUser._id}&offerId=${offerID}&cardId=${selectedCard.id}`
+        // const res = await createStripePaymentIntent(url);
 
 
-        if (res.paymentIntentId) {
+        // if (res.paymentIntentId) {
 
-            setLoading(false)
-            onPaymentSubmit(res)
+        //     setLoading(false)
+        //     onPaymentSubmit(res)
 
 
-        } else {
+        // } else {
 
-            Toast.show({
-                type: 'error',
-                text1: 'Error'
-            })
-            setLoading(false)
+        //     Toast.show({
+        //         type: 'error',
+        //         text1: 'Error'
+        //     })
+        //     setLoading(false)
 
+        // }
+
+        if(cardId){
+            onPaymentSubmit(cardId);
         }
 
     }

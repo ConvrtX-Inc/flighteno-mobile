@@ -101,6 +101,8 @@ export function LoginAction(data, removeStates, loginError, saveToken) {
         }).then(response => {
             if (response.data.status == "successfully Login!!!!!!!!!!") {
 
+                console.log("Login data",response.data.data)
+
                 dispatch({ type: LOGIN_ACTION, data: response.data.token });
                 dispatch({ type: LOGIN_DATA, data: response.data.data });
                 dispatch({ type: IS_LOADING, isloading: false })
