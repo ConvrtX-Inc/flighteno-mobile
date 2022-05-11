@@ -6,7 +6,7 @@ import { addCustomerDetails } from './Customer';
 
 
 export async function createToken(cardDetails) {
-    console.log('create token', cardDetails.values)
+ 
     const { number, expiry, name, cvc } = cardDetails.values;
 
     const expiryDates = expiry.split("/");
@@ -18,7 +18,7 @@ export async function createToken(cardDetails) {
     formData.append("card[cvc]", cvc);
     formData.append("card[name]", name);
 
-    console.log("form data", formData);
+
 
     try {
 
@@ -47,7 +47,7 @@ export async function createToken(cardDetails) {
 export async function createCard(cardDetails, customerID) {
     const token_source = await createToken(cardDetails);
     if (token_source.id) {
-        console.log("customer id", customerID)
+     
         var cardColor = Math.floor(Math.random() * 16777215).toString(16);
         const { number, expiry, cvc } = cardDetails.values;
         const formData = new URLSearchParams();
@@ -96,7 +96,6 @@ export async function getCards(customerID) {
                 },
             });
 
-            console.log(STRIPE_SECRET_KEY)
             dispatch({ type: GET_CARDS, data: response.data.data })
 
         }
@@ -162,7 +161,6 @@ export async function getCustomerDefaultCard(customerID,currentUser) {
                 },
             });
 
-            console.log("default card",response.data.default_source)
             if (response.data.default_source) {
                 dispatch({ type: SET_DEFAULT_CARD, data: response.data.default_source });
 

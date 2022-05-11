@@ -52,6 +52,8 @@ export default function OrderDetails({ route }) {
 
     useEffect(() => {
 
+        console.log('order id ',order._id)
+
         if (order.rated_admin_id) {
             setRated(order.rated_admin_id.find(check))
         }

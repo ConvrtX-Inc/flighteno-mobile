@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, Modal, ScrollView, Platform } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, Modal, ScrollView, Platform, Alert } from 'react-native';
 import { useNavigation, SwitchActions } from '@react-navigation/native';
 import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
@@ -29,7 +29,8 @@ import storage from '@react-native-firebase/storage';
 import { generateImagePublicURLFirebase } from '../../Utility/Utils';
 import UploadProgressBar from '../../components/UploadProgressBart';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ConfirmTransferToAccount, CreateTransferIntent } from '../../redux/actions/Payment';
+import { ConfirmTransferToAccount, CreateTransferIntent, GetPaymentMethodId } from '../../redux/actions/Payment';
+import { Button } from 'react-native-elements';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -60,8 +61,7 @@ export default function PendingOrderDetailT({ route }) {
 
     useEffect(() => {
 
-
-        // console.log(currentOrder.buyer_details[0].email_address)
+        // console.log(currentOrder._id)
 
     }, [])
 
@@ -265,43 +265,58 @@ export default function PendingOrderDetailT({ route }) {
         }
 
         ///Capture Payment Here...
+        const paymentMethodFormData = new FormData();
+        paymentMethodFormData.append("order_id", currentOrder._id);
+        const paymentMethodRes = await GetPaymentMethodId(paymentMethodFormData, token);
 
-        console.log("ORDER DETAILS ", currentOrder);
-        const totalSerivceAmount = currentOrder.estimated_dilivery_fee + currentOrder.product_price;
+        // console.log("payment method id",paymentMethodRes.payment_method_id)
 
-        const transferPaymentData = new FormData();
-        transferPaymentData.append("stripe_account_id", currentUser.stripe_account_id);
-        transferPaymentData.append("total_service_amount", totalSerivceAmount);
-        transferPaymentData.append("transfer_money", currentOrder.flighteno_cost);
-        transferPaymentData.append("payee_email", currentOrder.buyer_details[0].email_address);
-        transferPaymentData.append("currency", "usd");
+        // console.log("ORDER DETAILS ", currentOrder);
+
+        if (currentUser.stripe_account_id) {
+            const totalSerivceAmount = currentOrder.estimated_dilivery_fee + currentOrder.product_price;
+            const transferPaymentData = new FormData();
+            transferPaymentData.append("stripe_account_id", currentUser.stripe_account_id);
+            transferPaymentData.append("total_service_amount", totalSerivceAmount);
+            transferPaymentData.append("transfer_money", currentOrder.flighteno_cost);
+            transferPaymentData.append("payee_email", currentOrder.buyer_details[0].email_address);
+            transferPaymentData.append("currency", "usd");
 
 
-        const transferIntentRes = await CreateTransferIntent(transferPaymentData, token);
+            const transferIntentRes = await CreateTransferIntent(transferPaymentData, token);
 
-        console.log('Intent response', transferIntentRes)
+            console.log('Intent response', transferIntentRes)
 
-        if (transferIntentRes.code == 201) {
-            const chargeFormData = new FormData();
-            chargeFormData.append("payment_intent_id", transferIntentRes.response.payment_intent_id);
-            chargeFormData.append("payment_method_id", "card_1Kw2oAKn5tIlJ89h14bCTTcd");
+            if (transferIntentRes.code == 201) {
+                const chargeFormData = new FormData();
+                chargeFormData.append("payment_intent_id", transferIntentRes.response.payment_intent_id);
+                chargeFormData.append("payment_method_id", paymentMethodRes.payment_method_id);
 
-            const confirmTransferRes = await ConfirmTransferToAccount(chargeFormData, token);
+                const confirmTransferRes = await ConfirmTransferToAccount(chargeFormData, token);
 
-            console.log('Transfer response', confirmTransferRes);
+                console.log('Transfer response', confirmTransferRes);
 
-            if (confirmTransferRes.code == 201) {
-                dispatch(CompleteOrder(data, token, () => {
-                    navigation.goBack()
-                }))
-            } else {
-                Toast.show(
-                    {
-                        type: 'error',
-                        text1: confirmTransferRes.message
-                    }
-                )
+                if (confirmTransferRes.code == 201) {
+                    dispatch(CompleteOrder(data, token, () => {
+                        navigation.goBack()
+                    }))
+                } else {
+                    Toast.show(
+                        {
+                            type: 'error',
+                            text1: confirmTransferRes.message
+                        }
+                    )
+                }
             }
+        } else {
+            Alert.alert('Setup Stripe', 'Please setup your stripe account to process payment.', [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { text: "Setup Now", onPress: () => navigation.navigate("CreateStripeAccount") }
+            ]);
         }
 
 
@@ -691,7 +706,7 @@ export default function PendingOrderDetailT({ route }) {
                                 <ButtonTraveller
                                     loader={loading}
                                     title={t('common.save')}
-                                    // onPress={() => orderCompletion()}
+                                 
                                 onPress={() => uploadImages()}
 
                                 />

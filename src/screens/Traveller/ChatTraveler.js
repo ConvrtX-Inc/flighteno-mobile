@@ -244,10 +244,12 @@ export default function Chattravelereler({ route }) {
     };
 
 
-    function respondToOffer() {
+    function respondToOffer(paymentDetails) {
+        console.log('payment details',paymentDetails)
         let data = {
             offer_id: offerID,
-            status: 'accept'
+            status: 'accept',
+            payment_method_id:paymentDetails
         }
         dispatch(RespondToOffer(data, token,
             () => {
@@ -282,7 +284,7 @@ export default function Chattravelereler({ route }) {
     async function onPaymentSubmitted(paymentDetails) {
         setPaymentModalVisible(false)
         console.log("PAYMENT SUBMITTED", paymentDetails);
-        respondToOffer();
+        respondToOffer(paymentDetails);
 
     }
 

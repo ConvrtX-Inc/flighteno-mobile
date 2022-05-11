@@ -28,6 +28,8 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
     const { myCards, defaultCard } = useSelector(({ myCardsRed }) => myCardsRed)
     const [selectedCard, selectCard] = useState()
     const [isLoading, setLoading] = useState(false);
+    const [selectedPaymentMethod, setPaymentMethod] = useState('credit_card');
+    const [googlePayDetails, setGooglePayDetails] = useState();
 
     const {
         isGooglePaySupported,
@@ -37,7 +39,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
 
     const createPaymentMethodForGooglePay = async () => {
-         const { error, paymentMethod } = await createGooglePayPaymentMethod({
+        const { error, paymentMethod } = await createGooglePayPaymentMethod({
             amount: 12,
             currencyCode: 'USD',
         });
@@ -46,14 +48,13 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
 
 
-        if (error) {
+        if (error && !error.message.toLocaleLowerCase() == 'Google Pay has been canceled') {
             Alert.alert(error.code, error.message);
             return;
         } else if (paymentMethod) {
-            Alert.alert(
-                'Success',
-                `The payment method was created successfully. paymentMethodId: ${paymentMethod.id}`
-            );
+            setGooglePayDetails(paymentMethod);
+            setPaymentMethod('google_pay')
+            
         }
     };
 
@@ -103,10 +104,18 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
         // }
 
-        if (cardId) {
-            onPaymentSubmit(cardId);
+        let paymentMethodId ='';
+        if (selectedPaymentMethod =='credit_card' && cardId) {
+            paymentMethodId = cardId;
+        }else if(selectedPaymentMethod =='google_pay'){
+            paymentMethodId = googlePayDetails.id;
+        }else if(selectedPaymentMethod =='apple_pay'){
+            // add apple pay payment method id here..
         }
 
+        console.log('payment method',paymentMethodId)
+        ///Close this modal and proceed to Respond to offer  on chat traveler
+        onPaymentSubmit(paymentMethodId)
     }
 
     async function initializeGPay() {
@@ -117,7 +126,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
         const { error } = await initGooglePay({
             testEnv: true,
-            merchantName: '<Your merchant name>',
+            merchantName: 'Flighteno',
             countryCode: 'US',
             billingAddressConfig: {
                 format: 'FULL',
@@ -168,8 +177,11 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                                         uncheckedIcon={<Image source={require('../images/unchecked.png')}
                                             style={{ height: 25, width: 25, tintColor: '#EFF1F5' }}
                                         />}
-                                        checked={selectedCard ? selectedCard.id == card.id : defaultCard == card.id}
-                                        onPress={() => selectCard(card)}
+                                        checked={selectedCard ? selectedCard.id == card.id && selectedPaymentMethod == 'credit_card' : defaultCard == card.id && selectedPaymentMethod == 'credit_card'}
+                                        onPress={() => {
+                                            selectCard(card)
+                                            setPaymentMethod('credit_card')
+                                        }}
                                     />
                                 </View>
 
@@ -184,8 +196,9 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                         <View style={{ flexDirection: 'row', padding: 16 }}>
                             <View style={{ flex: 2 }}>
                                 <TextBold style={[commonStyles.fs18, styles.cardName]}> Google Pay </TextBold>
-                                <TextRegular style={styles.cardDetails}>test.com</TextRegular>
-
+                                {
+                                    googlePayDetails ? <TextRegular style={styles.cardDetails}>{googlePayDetails.billingDetails.email}</TextRegular> : <></>
+                                }
                             </View>
 
                             <CheckBox
@@ -195,7 +208,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                                 uncheckedIcon={<Image source={require('../images/unchecked.png')}
                                     style={{ height: 25, width: 25, tintColor: '#EFF1F5' }}
                                 />}
-                                checked={false}
+                                checked={selectedPaymentMethod == 'google_pay'}
                                 onPress={() => {
                                     createPaymentMethodForGooglePay();
                                 }}
