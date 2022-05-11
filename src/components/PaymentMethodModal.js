@@ -1,5 +1,5 @@
 import React, { useEffect, useState, } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +14,14 @@ import Toast from 'react-native-toast-message';
 import { getCards, getCustomerDefaultCard } from '../services/Stripe/CardManagement'
 import TextRegular from './atoms/TextRegular';
 import { useIsFocused } from '@react-navigation/native';
+import { GooglePay } from 'react-native-google-pay';
+import { STRIPE_PUBLISHABLE_KEY } from '@env';
+import { GooglePayButton, useGooglePay } from '@stripe/stripe-react-native';
 
-export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerID, navigation ,addPaymentMethod }) {
+
+
+
+export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerID, navigation, addPaymentMethod }) {
     const { t } = useTranslation();
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch();
@@ -23,13 +29,40 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
     const [selectedCard, selectCard] = useState()
     const [isLoading, setLoading] = useState(false);
 
-   
-  
+    const {
+        isGooglePaySupported,
+        initGooglePay,
+        createGooglePayPaymentMethod,
+    } = useGooglePay();
+
+
+    const createPaymentMethodForGooglePay = async () => {
+         const { error, paymentMethod } = await createGooglePayPaymentMethod({
+            amount: 12,
+            currencyCode: 'USD',
+        });
+
+        console.log('Error', error, paymentMethod)
+
+
+
+        if (error) {
+            Alert.alert(error.code, error.message);
+            return;
+        } else if (paymentMethod) {
+            Alert.alert(
+                'Success',
+                `The payment method was created successfully. paymentMethodId: ${paymentMethod.id}`
+            );
+        }
+    };
 
     useEffect(() => {
+        initializeGPay();
+
         getMyCards()
 
-        if(!selectedCard){
+        if (!selectedCard && myCards) {
             selectCard(myCards[0])
         }
 
@@ -45,7 +78,7 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
     async function submitPayment() {
 
-        const cardId = selectedCard.id !='' ? selectedCard.id : defaultCard;
+        const cardId = selectedCard.id != '' ? selectedCard.id : defaultCard;
 
         console.log(myCards[0].id)
 
@@ -70,12 +103,36 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
         // }
 
-        if(cardId){
+        if (cardId) {
             onPaymentSubmit(cardId);
         }
 
     }
 
+    async function initializeGPay() {
+        // if (!(await isGooglePaySupported({ testEnv: true }))) {
+        //     Alert.alert('Google Pay is not supported.');
+        //     return;
+        //   }
+
+        const { error } = await initGooglePay({
+            testEnv: true,
+            merchantName: '<Your merchant name>',
+            countryCode: 'US',
+            billingAddressConfig: {
+                format: 'FULL',
+                isPhoneNumberRequired: true,
+                isRequired: false,
+            },
+            existingPaymentMethodRequired: false,
+            isEmailRequired: true,
+        });
+
+        if (error) {
+            Alert.alert(error.code, error.message);
+            return;
+        }
+    }
 
     return (
         <ScrollView>
@@ -85,14 +142,14 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                 </TouchableOpacity>
                 <>
                     <View style={[commonStyles.marginTop30]}>
-                        <TextBold style={[commonStyles.fs26, {textAlign:'left'}]}>{t('common.payments')}</TextBold>
-                        <TextBold style={[commonStyles.fs18, commonStyles.marginTop10, {textAlign:'left'}]}> {t('common.selectPaymentMethod')} </TextBold>
+                        <TextBold style={[commonStyles.fs26, { textAlign: 'left' }]}>{t('common.payments')}</TextBold>
+                        <TextBold style={[commonStyles.fs18, commonStyles.marginTop10, { textAlign: 'left' }]}> {t('common.selectPaymentMethod')} </TextBold>
 
                     </View>
 
                     <View style={{ height: 22 }}></View>
                     {
-                        myCards.length > 0 ? myCards.map(card =>
+                        myCards ? myCards.map(card =>
                             <View
                                 style={styles.cardItem}
                                 key={card.id}
@@ -119,15 +176,47 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
 
                             </View>) : null
                     }
+
+                    <View
+                        style={styles.cardItem}
+
+                    >
+                        <View style={{ flexDirection: 'row', padding: 16 }}>
+                            <View style={{ flex: 2 }}>
+                                <TextBold style={[commonStyles.fs18, styles.cardName]}> Google Pay </TextBold>
+                                <TextRegular style={styles.cardDetails}>test.com</TextRegular>
+
+                            </View>
+
+                            <CheckBox
+                                checkedIcon={<Image source={require('../images/checked_blue.png')}
+                                    style={{ height: 25, width: 25, borderRadius: 7 }}
+                                />}
+                                uncheckedIcon={<Image source={require('../images/unchecked.png')}
+                                    style={{ height: 25, width: 25, tintColor: '#EFF1F5' }}
+                                />}
+                                checked={false}
+                                onPress={() => {
+                                    createPaymentMethodForGooglePay();
+                                }}
+
+                            />
+                        </View>
+
+
+                    </View>
+
+
+
                     {
-                        myCards.length > 0 ? <View style={{ marginTop: 20 }}>
+                        myCards && myCards.length > 0 ? <View style={{ marginTop: 20 }}>
                             <ButtonLarge
                                 title={t('kyc.submit')}
                                 loader={isLoading}
                                 onPress={() => submitPayment()}
                             ></ButtonLarge>
                         </View> : <TouchableOpacity style={styles.addCardBtn} onPress={() => {
-                           addPaymentMethod()
+                            addPaymentMethod()
                         }}>
                             <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                                 <IconEntypo name="plus" size={25} color="#36C5F0" />
@@ -138,7 +227,10 @@ export default function PaymentMethodModal({ closeModal, onPaymentSubmit, offerI
                         </TouchableOpacity>
                     }
                 </>
+
             </View>
+
+
         </ScrollView>
     )
 }

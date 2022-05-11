@@ -61,7 +61,7 @@ export default function PendingOrderDetailT({ route }) {
     useEffect(() => {
 
 
-        // console.log(currentOrder.status)
+        // console.log(currentOrder.buyer_details[0].email_address)
 
     }, [])
 
@@ -273,7 +273,7 @@ export default function PendingOrderDetailT({ route }) {
         transferPaymentData.append("stripe_account_id", currentUser.stripe_account_id);
         transferPaymentData.append("total_service_amount", totalSerivceAmount);
         transferPaymentData.append("transfer_money", currentOrder.flighteno_cost);
-        transferPaymentData.append("payee_email", "testwest321@gmail.com");
+        transferPaymentData.append("payee_email", currentOrder.buyer_details[0].email_address);
         transferPaymentData.append("currency", "usd");
 
 

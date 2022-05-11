@@ -61,10 +61,11 @@ export default function LatestTransactionsScreen({ navigation }) {
     }, [])
 
     async function getMyCards() {
-        dispatch(await getCards(currentUser.customer_id))
+        console.log('CUSTOMER ID::',currentUser.stripe_customer_id)
+        dispatch(await getCards(currentUser.stripe_customer_id))
 
         //get default card
-        dispatch(await getCustomerDefaultCard(currentUser.customer_id, currentUser));
+        dispatch(await getCustomerDefaultCard(currentUser.stripe_customer_id, currentUser));
 
     }
 
