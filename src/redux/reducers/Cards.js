@@ -14,7 +14,6 @@ let initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case GET_CARDS:
-            console.log('cards', action.data)
             return {
                 ...state,
                 myCards: action.data,

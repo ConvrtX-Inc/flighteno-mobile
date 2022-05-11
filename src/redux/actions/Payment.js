@@ -149,3 +149,42 @@ export async function ConfirmTransferToAccount(data,token){
     }
 }
 
+
+
+export async function GetPaymentMethodId(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/getPaymentMethodByOrderId`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+export async function GetLatestTransactions(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/getUserLatestTransactions`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+

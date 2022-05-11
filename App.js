@@ -15,6 +15,10 @@ import common_en from './src/translation/en/common.json'
 import { lightTheme } from './src/lightTheme.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import linking from './src/navigation/linking.js';
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { STRIPE_PUBLISHABLE_KEY } from '@env';
+
+
 LogBox.ignoreLogs(['Reanimated 2', 'VirtualizedLists should never be nested']);
 // i18next.init({
 //   lng: 'en', // if you're using a language detector, do not define the lng option
@@ -77,7 +81,7 @@ function App() {
         </PersistGate>
       </I18nextProvider>
     </Provider>
-  );
+   );
 }
 
 export default App;
