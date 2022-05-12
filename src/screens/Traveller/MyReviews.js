@@ -9,6 +9,8 @@ import { GetProfile } from '../../redux/actions/Trips';
 import VideoView from '../../components/VideoView';
 import ScreenLoader from '../../components/ScreenLoader'
 import { LOGIN_DATA } from '../../redux/constants';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
 var windowWidth = Dimensions.get('window').width;
 
 export default function MyReviews({ route }) {
@@ -19,6 +21,8 @@ export default function MyReviews({ route }) {
     const [videoView, setVideoView] = useState(false)
     const [videoUrl, setVideoUrl] = useState("")
     const [showList, setShowList] = useState(false)
+    const {t} = useTranslation()
+
     useEffect(() => {
         var obj = {
             admin_id: currentUser._id
@@ -72,7 +76,7 @@ export default function MyReviews({ route }) {
                     source={require('../../images/back.png')}
                 />
             </TouchableOpacity>
-            <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>My Reviews</Text>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.myReviews')}</TextBold>
             {showList ?
                 <FlatList
                     data={userRating.traveler_review}

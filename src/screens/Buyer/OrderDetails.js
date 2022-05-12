@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, ScrollView, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
@@ -17,9 +17,16 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
+import { getCurrentOrder } from '../../redux/actions/BuyerOrder';
+import moment from 'moment';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import ImageModal from 'react-native-image-modal';
+import ImageView from "react-native-image-viewing";
 
 {/* Fix for FLIGHT-46 */}
 export default function OrderDetails({ route }) {
+
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const { loading, currentUser, token } = useSelector(({ authRed }) => authRed)
@@ -32,40 +39,64 @@ export default function OrderDetails({ route }) {
     let isCancellable = order.status != 'cancelled' && order.status == 'new'
     let isStarted = order.status == 'accepted'
     let isComplete = order.status == 'complete'
+    const {t} = useTranslation()
+    const [orderHistory, setOrderHistory] = useState([])
+    const [imageValid, setImageValid] = useState(true)
+    const [orderImage, setOrderImage] = useState('')
+    const [imageVisible, setImageVisible] = useState(false)
+
 
     function check(id) {
         return id == currentUser._id
     }
 
     useEffect(() => {
+
+        console.log('order id ',order._id)
+
         if (order.rated_admin_id) {
             setRated(order.rated_admin_id.find(check))
         }
 
-
         // fix for flight-45
         var obj = {
-            admin_id: order?.traveler_id[0]?.traveler_id
+            admin_id: order?.admin_id
         }
-    
+        
       
         const userToken = token.replace('Token: ','')
         dispatch(GetProfile(obj, userToken, (data) => {
             setTraveler(data)
         }))
 
-        console.log(order)
+        const orderRequest = {
+            admin_id:order?.admin_id,
+            order_id:order?._id 
+        }
+
+        dispatch(getCurrentOrder(orderRequest,userToken,(data) => {
+            // console.log(data)
+        },(orderHistory) => {
+            setOrderHistory(orderHistory)
+        }))
+        // !isComplete && order.status == "accepted"
+        console.log(order.status)
 
     }, [])
 
-
     function cancelOrder() {
+
         var obj = {
             admin_id: currentUser?._id,
             order_id: order?._id
         }
         dispatch(CancelOrder(obj, token, navigation))
        
+    }
+
+    const onOrderImageTap = (image) => {
+        setImageVisible(true)
+        setOrderImage(image)
     }
 
     const imageProduct = [{
@@ -92,13 +123,16 @@ export default function OrderDetails({ route }) {
     const selectID = (id) => {
         Clipboard.setString(id)
         Toast.show({
-            type: 'success',
+            type: 'succes',
             text2: "Copied to clipboard",
         })
     }
 
+
+
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <SafeAreaView style={{flex:1}} >
+        <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
             <ViewImages
                 showImageViewer={showProductPic}
                 images={imageProduct}
@@ -117,12 +151,15 @@ export default function OrderDetails({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Order Details</TextBold>
-                {order?.traveler_id[0]?.traveler_id?
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>
+                    { order?.status.toLowerCase() == 'cancelled' ? t('buyerHome.orderCancelled') : isComplete ? t('buyerHome.rateYourTransaction') : t('buyerHome.myPendingOrder')}
+                </TextBold>
+                {traveler?
                     <TouchableOpacity onPress={() => navigation.navigate("TravelerProfile", { traveler: traveler, orderId: order._id })} style={Styles.userView}>
                         <Image
-                            source={traveler?.profile_image ? { uri: traveler?.profile_image } : require('../../images/manProfile.png')}
+                            source={imageValid ? { uri:  traveler?.profile_image } : require('../../images/manProfile.png')}
                             style={styles.profileImage}
+                            onError={() => setImageValid(false)}
                         />
                         <View style={{alignItems:'flex-start', paddingLeft:16}}>
                             <TextBold style={Styles.userName}>{traveler?.full_name}</TextBold>
@@ -132,16 +169,15 @@ export default function OrderDetails({ route }) {
                                 ratingCount={5}
                                 size={15}
                                 showRating={false}
-                                isDisabled={true}
-                            
+                                isDisabled={true}   
                             />
                             <TextBold style={styles.ratingText}>{traveler?.traveler_ratting?.length != 0 ? traveler?.traveler_ratting[0].avg_rating : 0} Out of 5.0</TextBold>
                         </View>
                     </TouchableOpacity>
                  : null}
                 <CardOrder
-                    order={order}>
-                </CardOrder>
+                    order={order}/>
+               
                 <View style={{ alignSelf: "center", marginVertical: 20, }}>
                     <QRCode
                         value={order._id}
@@ -150,7 +186,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={styles.orderNumberIst}>
-                        <TextBold style={styles.loginInputHeading}>Order No.</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderNo')}.</TextBold>
                     </View>
                     <View style={styles.orderNumberSecond}>
                         <TextMedium onLongPress={() => selectID(order._id)}
@@ -163,7 +199,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderPrice')}</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
@@ -177,7 +213,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -192,7 +228,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -206,7 +242,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
+                        <TextBold style={styles.loginInputHeading}>Flighteno {t('track.cost')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -221,7 +257,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -235,7 +271,7 @@ export default function OrderDetails({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.textLarge}>Total</TextBold>
+                        <TextBold style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -246,11 +282,15 @@ export default function OrderDetails({ route }) {
 
                 </View>
                 <View>
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                        Picture of product
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                    {t('track.picOfProd')}
                     </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.new_image ? true : false}
-                        onPress={() => viewImage('image')} style={Styles.productImageContainer}>
+                        // onPress={() => viewImage('image')}
+                        onPress={()=>{
+                            onOrderImageTap(order.new_image)
+                        }} 
+                        style={Styles.productImageContainer}>
                         {order.new_image ?
                             <Image
                                 source={{ uri: order.new_image }}
@@ -264,11 +304,15 @@ export default function OrderDetails({ route }) {
                             />
                         }
                     </TouchableOpacity>
-                    <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                        Product Receipt
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 5) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                        {t('track.prodReceipt')}
                     </TextBold>
                     <TouchableOpacity activeOpacity={1} disabled={!order.recipt ? true : false}
-                        onPress={() => viewImage('receipt')} style={Styles.productImageContainer}>
+                        // onPress={() => viewImage('receipt')}
+                        onPress={() => {
+                            onOrderImageTap(order.recipt)
+                        }}
+                        style={Styles.productImageContainer}>
                         {order.recipt ?
                             <Image
                                 source={{ uri: order.recipt }}
@@ -282,16 +326,37 @@ export default function OrderDetails({ route }) {
                             />
                         }
                     </TouchableOpacity>
-                    {!isComplete && order.status == "accepted" ?
+
+                    {/* Order history */}
+                    <View style={{ marginTop:16}}>
+                        { orderHistory.map((item,index) => {
+                            return (
+                                 <TextMedium style={{color:color.countrtTextColor}} key={index} >{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
+                            )
+                        }) }
+                        {/* <FlatList
+                            data={orderHistory}
+                            keyExtractor={(item,index) => item + index}
+                            nestedScrollEnabled={true}
+                            renderItem={({item}) => {
+                                return (
+                                    <TextMedium style={{color:color.countrtTextColor}}>{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
+                                )
+                            }}
+                        /> */}
+                    </View>
+
+
+                    {/* {!isComplete && order.status == "accepted" ? */}
                         <TextMedium style={Styles.bottomText}>
-                            PLEASE COORDINATE WITH THE{'\n'}TRAVELER TO RECEIVE THE PRODUCT
+                        {t('track.pleaseCoord')}
                         </TextMedium>
-                        : null}
+                        {/* : null} */}
                 </View>
                 {isComplete && !rated ?
                     <View style={{ marginVertical: 20 }}>
                         <ButtonLarge
-                            title="Rate Transaction"
+                            title= {t('track.rateTransaction')}
                             loader={loading}
                             onPress={() => navigation.navigate("RateTransaction", { order: order })}
                         />
@@ -300,7 +365,7 @@ export default function OrderDetails({ route }) {
                 {isCancellable ?
                     <View style={{ marginVertical: 20 }}>
                         <ButtonLarge
-                            title="Cancel Order"
+                            title={t('track.cancelOrder')}
                             loader={loading}
                             color='#E01E82'
                             onPress={cancelOrder}
@@ -314,7 +379,15 @@ export default function OrderDetails({ route }) {
                         : null : null}
                 <View style={{ height: 20 }} />
             </ScrollView>
+
+            <ImageView
+                images={[{uri:orderImage}]}
+                imageIndex={0}
+                visible={imageVisible}
+                onRequestClose={() =>  setImageVisible(false)}
+            />
         </View>
+        </SafeAreaView>
     );
 }
 
@@ -368,13 +441,13 @@ const Styles = StyleSheet.create({
     },
     userView: {
         flexDirection: 'row',
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
         marginVertical: 20,
         alignItems: 'center'
     },
     productImageContainer: {
         height: 200,
-        width: '90%',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',

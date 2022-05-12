@@ -6,10 +6,18 @@ import LinearGradient from 'react-native-linear-gradient';
 import { color } from '../../Utility/Color';
 import { useSelector, useDispatch } from 'react-redux';
 import SearchInput from '../../components/SearchInput';
-import { CheckBox } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/Entypo'
+import Input from '../../components/InputField';
+import { CheckBox} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Entypo';
 import { GetTravelerOrders } from '../../redux/actions/Trips';
 import CardOrderUser from '../../components/CardOrderUser';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
+import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ORDERS_TO_DESTINATION } from '../../redux/constants';
+import TextRegular from '../../components/atoms/TextRegular';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -24,19 +32,19 @@ var storeNamesList = [
 var ordersList = [
     {
         id: '1',
-        name: "All Orders",
+        name: t('track.allOrders'),
         value: 'all',
         checked: true
     },
     {
         id: '2',
-        name: "Completed",
+        name: t('track.completed'),
         value: 'complete',
         checked: false
     },
     {
         id: '3',
-        name: "Pending",
+        name:t('track.accepted'),
         value: 'accepted',
         checked: false
     },
@@ -48,35 +56,56 @@ export default function AllOrders() {
     const dispatch = useDispatch()
     const [showFilter, setShowFilter] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const [ordersListNames, setOrdersListNames] = useState(ordersList)
+
     const { currentUser, token } = useSelector(({ authRed }) => authRed)
     const { travlerOrders } = useSelector(({ tripsRed }) => tripsRed)
-    const [ordersByTravler, setOrderByTravler] = useState(travlerOrders)
+    const [ordersByTravler, setOrderByTravler] = useState('')
+    const {t} = useTranslation()
+
+    const [ordersListNames, setOrdersListNames] = useState([{
+        id: '1',
+        name: t('track.allOrders'),
+        value: 'all',
+        checked: true
+    },
+    {
+        id: '2',
+        name: t('track.completed'),
+        value: 'complete',
+        checked: false
+    },
+    {
+        id: '3',    
+        name: t('track.pending'),
+        value: 'pending',
+        checked: false
+    },
+    {
+        id: '4',    
+        name: t('track.cancelled'),
+        value: 'cancelled',
+        checked: false
+    }])
+
+
 
     useEffect(() => {
-        setOrderByTravler(travlerOrders.reverse())
-    }, [travlerOrders])
+        // setOrderByTravler(travlerOrders.reverse())
+        var obj = {
+            admin_id: currentUser?._id
+        }   
+        if(currentUser?.kyc_status_verified){
+            dispatch(GetTravelerOrders(obj, token, (data) => {
+                setOrderByTravler(data)
+            }))
+            return
+        }else{
+            // dispatch({type: ORDERS_TO_DESTINATION, data: []});
+            setOrderByTravler([])
+            return
+        }
 
-    useFocusEffect(
-        React.useCallback(() => {
-            setOrderByTravler(travlerOrders.reverse())
-            ordersListNames.forEach(element => {
-                if (element.name == "All Orders") {
-                    element.checked = true
-                }
-                else {
-                    element.checked = false
-                }
-            });
-            setOrdersListNames([...ordersListNames])
-            var obj = {
-                admin_id: currentUser._id
-            }
-            dispatch(GetTravelerOrders(obj, token))
-            return () => {
-            };
-        }, [])
-    );
+    }, [currentUser])
 
     const selectStore = (index) => {
         setOrdersListNames(ordersListNames[index].name)
@@ -85,15 +114,22 @@ export default function AllOrders() {
         });
         ordersListNames[index].checked = true
         setOrdersListNames([...ordersListNames])
+
+        // console.log(ordersListNames[index].value)
+        
+
         if (ordersListNames[index].value != "all") {
             var res = travlerOrders.filter(function (element) {
                 return element.orderAsTraveler[0].status.toLowerCase().includes(ordersListNames[index].value.toLowerCase());
             });
             setOrderByTravler(res)
+            console.log(travlerOrders[0].orderAsTraveler[0].status)
         }
         else {
+            // console.log(travlerOrders)
             setOrderByTravler(travlerOrders)
         }
+        
     }
 
     const handleSearch = (text) => {
@@ -104,84 +140,102 @@ export default function AllOrders() {
         setOrderByTravler(res)
     }
 
-    return (
-        <View style={styles.ScreenCss}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image
-                    style={styles.backImg}
-                    resizeMode='stretch'
-                    source={require('../../images/back.png')}
-                />
-            </TouchableOpacity>
-            <ScrollView nestedScrollEnabled>
-                {showFilter ?
-                    <View style={{ marginTop: 20 }}>
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <TouchableOpacity onPress={() => setShowFilter(false)} style={{ marginLeft: '-1.5%' }}>
-                                <Icon name="cross" size={35} style={{ margin: 0 }} />
-                            </TouchableOpacity>
-                            <Text style={[styles.HeadingText, { marginTop: 10 }]}>Filter</Text>
-                            <View style={{ height: 1, backgroundColor: 'gray', marginTop: 20 }} />
-                        </View>
-                        <SearchInput
-                            placeholder="Product Name"
-                            value={searchValue}
-                            onChangeText={(text) => handleSearch(text)}
-                        />
+    const renderHeader = () => (
+        <>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+                style={styles.backImg}
+                resizeMode='stretch'
+                source={require('../../images/back.png')}
+            />
+        </TouchableOpacity>
 
-                        <View>
-                            <FlatList
-                                data={ordersListNames}
-                                style={Styles.storeNamesList}
-                                nestedScrollEnabled
-                                renderItem={({ item, index }) =>
 
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
-                                        <Text style={Styles.storeNameListText}>{item.name}</Text>
-                                        <CheckBox
-                                            checkedIcon='dot-circle-o'
-                                            uncheckedIcon='circle'
-                                            checkedColor={color.blueColor}
-                                            uncheckedColor={color.inputBackColor}
-                                            containerStyle={{ padding: 0, margin: 0 }}
-                                            checked={item.checked}
-                                            onPress={() => selectStore(index)}
-                                        />
-                                    </View>
+        {showFilter && 
+        (
+            <FilterView/>
+        )}
+         
 
-                                }
-                                keyExtractor={item => item.id}
-                            />
-                        </View>
-                    </View>
-                    : null}
+        <View style={Styles.header}>
+            <TextBold style={[styles.HeadingText, { marginTop: 0 }]}>{t('track.allOrders')}</TextBold>
 
-                <View style={Styles.header}>
+            {currentUser?.kyc_status_verified ?
+            (
+                <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
+                    <Image source={require('../../images/filter.png')}
+                        style={styles.filterImage}
+                    />
+                    <TextBold style={{  fontSize: 15, color: color.userNameHomeColor }}>{t('travelHome.filter')}</TextBold>
+                </TouchableOpacity>
+            ):null
+            }
 
-                    <Text style={[styles.HeadingText, { marginTop: 0 }]}>All Orders</Text>
-                    {!showFilter ?
-                        <TouchableOpacity onPress={() => setShowFilter(true)} style={styles.filterButton}>
-                            <Image source={require('../../images/filter.png')}
-                                style={styles.filterImage}
-                            />
-                            <Text style={{ fontWeight: 'bold', fontSize: 15, color: color.userNameHomeColor }}>Filter</Text>
-                        </TouchableOpacity>
-                        : null}
 
-                </View>
-
-                <View style={{ height: 20 }} />
-                <FlatList
-                    data={ordersByTravler}
-                    renderItem={({ item, index }) =>
-                        <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate("PendingOrderDetailT", { currentOrder: item.orderAsTraveler[0] })} style={Styles.listView}>
-                            <CardOrderUser order={item.orderAsTraveler[0]} />
-                        </TouchableOpacity>
-                    }
-                    keyExtractor={item => item.id}
-                />
-            </ScrollView>
         </View>
+        </>
+    )
+
+    const FilterView  = () => (
+        <SafeAreaView style={{
+            display:'flex',
+            flex:1,
+            // position:'absolute',
+            width:'100%',
+            height:'100%',
+            backgroundColor:'#fff',
+        }}>
+            <View style={{flex:1}}>
+                <TouchableOpacity
+                    onPress={() => setShowFilter(false)}
+                >
+                    <Icon name="cross" size={35} style={{margin: 0}} />
+                </TouchableOpacity>
+                <TextBold style={{fontSize:26, textAlign:'left'}}>{t('travelHome.filter')}</TextBold>
+                <SearchInput/>
+
+                {ordersListNames.map((item, index) => {
+                    return (
+                    <View style={{flex:1, flexDirection: 'row', justifyContent:'space-between', marginTop:16}} key={index}>
+                        <TextMedium style={{fontSize:16}}>{item?.name}</TextMedium>
+                        <CheckBox
+                            checkedIcon="dot-circle-o"
+                            uncheckedIcon="circle"
+                            checkedColor={color.blueColor}
+                            containerStyle={{padding: 0, margin: 0}}
+                            checked={item?.checked}
+                            onPress={() => selectStore(index)}
+                        />
+                </View>
+                    )
+                })}
+
+            </View>
+        </SafeAreaView>
+    )
+
+    const renderEmpty = () => {
+        if(currentUser?.kyc_status_verified){
+            return (<TextRegular style={{textAlign:'left'}}>{t('common.orderListEmpty')}</TextRegular>)
+        }else{
+            return (<TextRegular style={{textAlign:'left'}}>Your account is not verified</TextRegular>)
+        }
+    }
+
+    return (
+        <SafeAreaView style={{marginLeft:18, marginRight:18}}>
+            <FlatList
+                data={ordersByTravler}
+                ListHeaderComponent={renderHeader}
+                renderItem={({ item, index }) =>
+                    <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate("PendingOrderDetailT", { currentOrder: item.orderAsTraveler[0] })} style={Styles.listView}>
+                        <CardOrderUser order={item.orderAsTraveler[0]} />
+                    </TouchableOpacity>
+                }
+                keyExtractor={(item,index) => item + index}
+                ListEmptyComponent={renderEmpty}
+            />
+        </SafeAreaView>
     );
 
 }
@@ -190,7 +244,7 @@ const Styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
         alignItems: 'center',
         marginVertical: 20
     },
@@ -201,12 +255,11 @@ const Styles = StyleSheet.create({
     listView: {
         paddingVertical: 20,
         backgroundColor: color.inputBackColor,
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 10,
         marginBottom: 20
     },
-
     storeNamesList: {
         maxHeight: 200,
         width: '90%',

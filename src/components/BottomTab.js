@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Text, StyleSheet, View, Image } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/Buyer/HomeScreen'
 import Profile from '../screens/Profile';
 import { color } from '../Utility/Color';
@@ -19,6 +19,9 @@ import AllOrders from '../screens/Traveller/AllOrders';
 import OrdersSpecificCountry from '../screens/Traveller/OrdersSpecificCountry';
 import PendingOrderDetailT from '../screens/Traveller/PendingOrderDetailT';
 import ChatScreen from '../screens/Buyer/ChatScreen';
+import { useTranslation } from 'react-i18next';
+import TextBold from './atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -70,8 +73,10 @@ function TravelerStack() {
 
 const Tab = createBottomTabNavigator();
 const BottomTab = ({ route }) => {
-    const { currentProfile } = useSelector(({ authRed }) => authRed)
     
+    const { currentProfile } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
+   
     return (
         <Tab.Navigator
             // initialRouteName="Home"
@@ -80,17 +85,39 @@ const BottomTab = ({ route }) => {
                 labelStyle: {
                     fontSize: 14,
                     fontWeight: 'bold',
+                  
                 },
+                inactiveTintColor:'#999999',
+                tabStyle:{
+                    // padding:8
+                    // height:100   
+                    // paddingTop:20,
+                    // paddingBottom:20
+                },
+
                 style: {
                     padding: 5,
-                    backgroundColor:color.backgroundColor
-                    // borderTopLeftRadius: 15,
-                    // borderTopRightRadius: 15,
-                    // position: 'absolute'
+                    height: 80,
+                    paddingBottom:8,
+                    paddingTop:8,
+                    backgroundColor:color.backgroundColor,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    borderTopWidth:0,
+                    shadowRadius: Platform.OS ==='ios' ?  14 : 2,
+                    shadowOffset: {
+                      width: 0,
+                      height: Platform.OS === 'ios' ? -4 : -8,
+                    },
+                    shadowColor: '#000000',
+                    shadowOpacity: Platform.OS === 'ios' ?  0.5 : 1.0,
+                    elevation: 10,
                 },
+               
                 keyboardHidesTabBar: true,
                 
             }}
+            
         >
             <Tab.Screen
                 name="Home"
@@ -103,11 +130,16 @@ const BottomTab = ({ route }) => {
                             source={require('../images/homeFlighteno.png')}
                         />
                     ),
+                    tabBarLabel: ({color})  => (
+                      <TextBold style={{fontSize:13, color:color}}>{ t('common.home')}</TextBold>  
+                    ),
+                
                 }}
+                
             />
             <Tab.Screen
                 name={"Messages"}
-                component={ChatScreen}
+                component={ChatScreen}  
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Image
@@ -116,6 +148,12 @@ const BottomTab = ({ route }) => {
                             source={require('../images/messages.png')}
                         />
                     ),
+                    tabBarLabel: ({color}) => (
+                      
+<TextBold style={{fontSize:13,color:color}}>{ t('common.messages')}</TextBold>
+                      
+                        
+                    )
                 }}
             />
             <Tab.Screen
@@ -129,6 +167,9 @@ const BottomTab = ({ route }) => {
                             source={require('../images/truckcrop.png')}
                         />
                     ),
+                    tabBarLabel: ({color}) => (
+                        <TextBold style={{fontSize:13,color:color}}>{t('common.track')}</TextBold>
+                    ) 
                 }}
             />
             <Tab.Screen
@@ -142,7 +183,10 @@ const BottomTab = ({ route }) => {
                             source={require('../images/profile.png')}
                         />
                     ),
-                    tabBarVisible: false
+                    tabBarVisible: false,
+                    tabBarLabel: ({color}) => (
+                        <TextBold style={{fontSize:13,color:color}}>{t('common.profile')}</TextBold>
+                    ) 
                 }}
             />
         </Tab.Navigator>
@@ -169,8 +213,33 @@ const Styles = StyleSheet.create({
     },
     txtStyle: {
         fontSize: 11,
-    }
+    },
+    bottomTabIos:{
 
+    },
+    bottomTabAndroid: {
+        padding: 5,
+        height:80,
+        paddingBottom:8,
+        paddingTop:8,
+        backgroundColor:color.backgroundColor,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        borderTopWidth:0,
+        shadowRadius: 2,
+        shadowOffset: {
+          width: -60,
+        //   height: -8,
+          height: -30,
+        },
+       
+        shadowColor: '#000000',
+        shadowOpacity:1.0,
+        elevation: 18,
+    },
+    bottomTabIOS:{
+
+    }
 })
 
 export default BottomTab;

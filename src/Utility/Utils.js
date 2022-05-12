@@ -1,4 +1,6 @@
-import RNFetchBlob from "rn-fetch-blob";
+import { Platform } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
+import Constants from './Constants';
 
 export function generateUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -14,4 +16,25 @@ export function formatAmount(amount){
 
 export function imgToBase64 (imgPath){
     return RNFetchBlob.fs.readFile(imgPath,'base64')
+}
+
+export const getPathForFirebaseStorage = async(uri) => {
+    if (Platform.OS === 'ios')
+    {
+        return uri
+    } 
+    const stat = await RNFetchBlob.fs.stat(uri)
+    return stat.path
+}
+
+
+/**
+ * 
+ * @param {Array} imageData 
+ * @returns String
+ * @see https://firebasestorage.googleapis.com/v0/b/flighteno-e0abd.appspot.com/o/rn_image_picker_lib_temp_3cd781c7-2f27-4a18-8a52-4115e0aede73.jpg?alt=media
+ */
+export const generateImagePublicURLFirebase = (filename) => {    
+    return `${Constants.firebaseGoogleAPIsURL}${Constants.storageUrl}${Constants.storageUrlExt}${filename}?alt=media`;
+
 }

@@ -9,12 +9,17 @@ import { ProfileSelection, Logout } from '../redux/actions/Auth'
 import { CURRENT_PROFILE } from '../redux/constants'
 import TextBold from '../components/atoms/TextBold';
 import TextMedium from '../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function Profile() {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const [userRating, setUserRating] = useState('4.0')
     const { currentProfile, currentUser, token } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
+    const [imageValid, setImageValid] = useState(true)
+
 
     const onShare = async () => {
 
@@ -64,20 +69,22 @@ function Profile() {
         dispatch(Logout())
     }
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+  <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
             {currentUser ?
                 <ScrollView>
-                    {currentUser ?
+                    { currentUser ?
                         <Image
                             style={[styles.homeProfileImg, { marginLeft: 0, alignSelf: 'center', marginTop: 20, borderRadius: 30 }]}
-                            source={!currentUser.profile_image ? require('../images/manProfile.png') : { uri: currentUser.profile_image }}
+                            source={imageValid ?  { uri: currentUser.profile_image } : require('../images/manProfile.png')}
+                            onError={() => setImageValid(false)}
                         />
                         : null}
                     {currentUser ?
                         <View style={Styles.topView}>
                             <View style={{ width: '85%' }}>
-                                <TextBold style={Styles.firstName}>Hello, {currentUser ? currentUser.full_name.split(" ")[0] : null}</TextBold>
-                                <TextBold style={Styles.fullName}>{currentUser ? currentUser.full_name : null}</TextBold>
+                                <TextBold style={[Styles.firstName, {textAlign:'left'}]}>{t('common.hello')}, {currentUser ? currentUser?.full_name?.split(" ")[0] : null}</TextBold>
+                                <TextBold style={Styles.fullName}>{currentUser ? currentUser?.full_name : null}</TextBold>
                                 {currentProfile != "buyer" && currentUser ?
                                     <View style={{ flexDirection: 'row' }}>
                                         <TextBold style={styles.ratingText}>{currentUser.rating ? parseFloat(currentUser.rating.toFixed(1)) : 0} out of 5</TextBold>
@@ -106,7 +113,7 @@ function Profile() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>My orders</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.myOrders')}</TextMedium>
                     </TouchableOpacity>
                     {currentProfile != "buyer" ?
                         <TouchableOpacity onPress={() => navigation.navigate("BottomTab", { screen: "Track" })} style={styles.menuItem}>
@@ -114,7 +121,7 @@ function Profile() {
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <TextMedium style={styles.menuItemText}>Orders By Flight</TextMedium>
+                            <TextMedium style={styles.menuItemText}>{t('common.ordersByFlight')}</TextMedium>
                         </TouchableOpacity>
                         : null}
                     <TouchableOpacity onPress={() => navigation.navigate("ChatScreen")} style={styles.menuItem}>
@@ -122,38 +129,47 @@ function Profile() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Messages</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.messages')}</TextMedium>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onShare} style={styles.menuItem}>
                         <Image source={require('../images/inviteFriends.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Invite Friends</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.inviteFriends')}</TextMedium>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate("SupportTicket")} style={styles.menuItem}>
+                    {
+                        currentProfile == "buyer" ? (
+                            <TouchableOpacity onPress={() => navigation.navigate("SupportTicket")} style={styles.menuItem}>
                         <Image source={require('../images/support.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Support</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.support')}</TextMedium>
                     </TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem} onPress={() => {
-                    navigation.navigate("KYCIntro")
-                }}>
-                    <Image source={require('../images/accountVerify.png')}
-                        style={styles.menuIcon}
-                        resizeMode="contain"
-                    />
-                    <TextMedium style={styles.menuItemText}>Account Verification</TextMedium>
-                </TouchableOpacity>
+                        ) : null
+                    }
+                    
+
+                {!currentUser?.kyc_status_verified  && (
+                    <TouchableOpacity style={styles.menuItem} onPress={() => {
+                        navigation.navigate("KYCIntro")
+                    }}>
+                        <Image source={require('../images/accountVerify.png')}
+                            style={styles.menuIcon}
+                            resizeMode="contain"
+                        />
+                        <TextMedium style={styles.menuItemText}>{t('common.accountVerify')}</TextMedium>
+                    </TouchableOpacity>
+                )}    
+               
                     {currentProfile != "buyer" ?
                         <TouchableOpacity onPress={() => navigation.navigate("MyReviews")} style={styles.menuItem}>
                             <Image source={require('../images/review.png')}
                                 style={styles.menuIcon}
                                 resizeMode="contain"
                             />
-                            <TextMedium style={styles.menuItemText}>My Reviews</TextMedium>
+                            <TextMedium style={styles.menuItemText}>{t('common.myReviews')}</TextMedium>
                         </TouchableOpacity>
                         : null}
                     <TouchableOpacity onPress={() => changeProfile()} style={styles.menuItem}>
@@ -161,24 +177,25 @@ function Profile() {
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Switch To {currentProfile == "buyer" ? 'Traveler' : 'Buyer'}</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.switchTo')} {currentProfile == "buyer" ? t('common.traveller') : t('common.buyer') }</TextMedium>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => logout()} style={styles.menuItem}>
                         <Image source={require('../images/logout.png')}
                             style={styles.menuIcon}
                             resizeMode="contain"
                         />
-                        <TextMedium style={styles.menuItemText}>Logout</TextMedium>
+                        <TextMedium style={styles.menuItemText}>{t('common.logout')}</TextMedium>
                     </TouchableOpacity>
                 </ScrollView>
                 : null}
         </View>
+        </SafeAreaView>
     );
 }
 
 const Styles = StyleSheet.create({
     topView: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         backgroundColor: color.inputBackColor,
         borderRadius: 16,

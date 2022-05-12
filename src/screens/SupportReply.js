@@ -8,6 +8,9 @@ import moment from 'moment';
 import VideoView from '../components/VideoView'
 import Icon from 'react-native-vector-icons/AntDesign'
 import RNFetchBlob from 'rn-fetch-blob'
+import { useTranslation } from 'react-i18next';
+import TextBold from '../components/atoms/TextBold';
+import TextMedium from '../components/atoms/TextMedium';
 var RNFS = require('react-native-fs');
 const windowWidth = Dimensions.get('window').width;
 
@@ -26,6 +29,7 @@ export default function SupportReply({ navigation, route }) {
     const [showVideo, setShowVideo] = useState(false)
     const [videoUrl, setVideoUrl] = useState("")
     const [images, setImages] = useState([])
+    const {t} = useTranslation()
 
     const android = RNFetchBlob.android
     let downloadDest = `${RNFS.ExternalStorageDirectoryPath}/Download`;
@@ -98,7 +102,7 @@ export default function SupportReply({ navigation, route }) {
                             source={require('../images/back.png')}
                         />
                     </TouchableOpacity>
-                    <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', marginBottom: 25 }]}>Support</Text>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', marginBottom: 25, textAlign:'left' }]}>{t('support.support')}</TextBold>
                     <View style={Styles.SuportReplyCSS}>
                         <View style={Styles.replyUperMainBox}>
                             <View style={{ marginTop: 15 }}>
@@ -107,23 +111,23 @@ export default function SupportReply({ navigation, route }) {
                                 />
                             </View>
                             <View style={Styles.replyHTxtBox}>
-                                <Text style={Styles.replyHTxt}>
+                                <TextMedium style={Styles.replyHTxt}>
                                     {ticket._id}
-                                </Text>
-                                <Text style={[Styles.replyHTxt, { fontWeight: 'bold', marginVertical: 2 }]}>{currentUser.full_name}</Text>
-                                <Text style={[Styles.replyHTxt, { color: '#8E8E8E' }]}>
+                                </TextMedium>
+                                <TextBold style={[Styles.replyHTxt, {  marginVertical: 2 }]}>{currentUser.full_name}</TextBold>
+                                <TextMedium style={[Styles.replyHTxt, { color: '#8E8E8E' }]}>
                                     {moment(ticket.created_date.$date.$numberLong, 'x').format("MM/DD/YYYY | hh:mmA")}
-                                </Text>
+                                </TextMedium>
                             </View>
                             <View style={Styles.replyStatusBox}>
-                                <Text style={[Styles.suportno, { marginTop: 0, color: ticket.status == "pending" ? '#FFA800' : "#10CF73", marginLeft: 'auto', textTransform: "capitalize", marginRight: (windowWidth * 2) / 100, }]}>
+                                <TextMedium style={[Styles.suportno, { marginTop: 0, color: ticket.status == "pending" ? '#FFA800' : "#10CF73", marginLeft: 'auto', textTransform: "capitalize", marginRight: (windowWidth * 2) / 100, }]}>
                                     {ticket.status}
-                                </Text>
+                                </TextMedium>
                             </View>
                         </View>
-                        <Text style={[Styles.suportTxt, { alignSelf: 'center', width: (windowWidth * 81) / 100, lineHeight: (windowWidth * 5.5) / 100, marginTop: (windowWidth * 5.8) / 100 }]}>
+                        <TextMedium style={[Styles.suportTxt, { alignSelf: 'center', width: (windowWidth * 81) / 100, lineHeight: (windowWidth * 5.5) / 100, marginTop: (windowWidth * 5.8) / 100 }]}>
                             {ticket.message}
-                        </Text>
+                        </TextMedium>
                         <FlatList
                             data={ticket.image}
                             horizontal
@@ -166,17 +170,17 @@ export default function SupportReply({ navigation, route }) {
                                         />
                                     </View>
                                     <View style={Styles.replyHTxtBox}>
-                                        <Text style={[Styles.replyHTxt, { fontWeight: 'bold', marginTop: 8 }]}>Flighteno Admin</Text>
-                                        <Text style={[Styles.replyHTxt, { color: '#8E8E8E' }]}>
+                                        <TextBold style={[Styles.replyHTxt, { fontWeight: 'bold', marginTop: 8 }]}>Flighteno Admin</TextBold>
+                                        <TextMedium style={[Styles.replyHTxt, { color: '#8E8E8E' }]}>
                                             {moment(element.created_date.$date.$numberLong, 'x').format("MM/DD/YYYY | hh:mmA")}
-                                        </Text>
+                                        </TextMedium>
                                     </View>
 
                                 </View>
                                 {element.message ?
-                                    <Text style={[Styles.suportTxt, { alignSelf: 'center', width: (windowWidth * 81) / 100, lineHeight: (windowWidth * 5.5) / 100, marginTop: (windowWidth * 5.8) / 100 }]}>
+                                    <TextMedium style={[Styles.suportTxt, { alignSelf: 'center', width: (windowWidth * 81) / 100, lineHeight: (windowWidth * 5.5) / 100, marginTop: (windowWidth * 5.8) / 100 }]}>
                                         {element.message}
-                                    </Text>
+                                    </TextMedium>
                                     : null}
                                 {element.image ?
                                     <TouchableHighlight style={{ marginTop: 10 }} underlayColor="transparent" onPress={() => toggleSlider(0, [element.image])}>
@@ -192,7 +196,7 @@ export default function SupportReply({ navigation, route }) {
                                         justifyContent: 'space-between', paddingHorizontal: 10, backgroundColor: color.blueColor, marginTop: 10
                                     }}>
                                         <Icon name="clouddownload" size={24} color="white" />
-                                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>Attatchment</Text>
+                                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'white' }}>{t('track.attachment')}</Text>
                                     </TouchableOpacity>
                                     : null
                                 }
@@ -243,6 +247,7 @@ const Styles = StyleSheet.create({
     suportTxt: {
         color: '#8E8E8E',
         marginTop: (windowWidth * 1) / 100,
+        marginBottom: 20,
         width: (windowWidth * 60) / 100,
         textAlign: 'justify'
     },

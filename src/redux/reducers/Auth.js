@@ -10,11 +10,14 @@ import {
     IS_LOADING_GOOGLE,
     FIRST_LAUNCH,
     NOTIFICATION_LIST,
-    SUPPORT_TICKETS
+    SUPPORT_TICKETS,
+    UPDATE_CUSTOMER_ID,
+    UPDATE_ACCOUNT_ID
 } from '../constants'
 
 let initialState = {
     loading: false,
+    resetLoading:true,
     loadingResend: false,
     data: {},
     token: '',
@@ -98,6 +101,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 supportTickets: action.data,
+            };
+        case UPDATE_ACCOUNT_ID:
+            return {
+                ...state,
+                currentUser: action.data,
             };
         default:
             return state;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, ActivityIndicator } from 'react-native'
+import TextBold from './atoms/TextBold';
 
 const ButtonDisable = ({ title, onPress, font, loader }) => {
 
@@ -10,7 +11,7 @@ const ButtonDisable = ({ title, onPress, font, loader }) => {
             style={styles.buttonStyle}>
 
             {loader == false ?
-                <Text style={{ textAlign: "center", fontFamily: font, fontSize: 16, color: "#fff" }}>{title}</Text>
+                <TextBold style={{ textAlign: "center",  fontSize: 16, color: "#fff" }}>{title}</TextBold>
                 :
                 <ActivityIndicator size="small" color="#fff" />
             }
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     buttonStyle: {
         backgroundColor: "#D4D4D4",
         height: 55,
-        width: '89%',
+        width: '100%',
         justifyContent: 'center',
         alignSelf: 'center',
         borderRadius: 35,

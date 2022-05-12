@@ -8,7 +8,10 @@ import Toast from 'react-native-toast-message';
 
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
-import { newPaswordCreationAction } from '../../redux/actions/Auth';
+import { CheckSamePasswordAction, newPaswordCreationAction } from '../../redux/actions/Auth';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
+import { IS_LOADING } from '../../redux/constants';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -17,6 +20,8 @@ export default function NewPassword({ route }) {
     const navigation = useNavigation();
     const { loading } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
+    const {cellno} = route?.params
 
     const [password, setPassword] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
@@ -24,7 +29,7 @@ export default function NewPassword({ route }) {
     const phoneInput = useRef()
 
     useEffect(() => {
-        cellNoParam = route.params.cellno
+        // cellNoParam = route.params.cellno
     }, []);
 
 
@@ -59,22 +64,51 @@ export default function NewPassword({ route }) {
         }
 
         var obj = {
-            phone_number: cellNoParam,
+            phone_number: cellno,
             password: password,
             confirmed_password: confirmPass
         }
 
-        dispatch(newPaswordCreationAction(
-            obj,
-            () => {
-                setPassword("")
-                setConfirmPass("")
-            },
-            () => {
-                navigation.navigate('LoginScreen')
-            },
 
-        ))
+        const samePassObj = new FormData()
+        samePassObj.append('phone_number', cellno)
+        samePassObj.append('password', password)
+
+        dispatch(CheckSamePasswordAction(samePassObj,(data) => {
+           console.log(data)
+            if(data?.isOldPassword){
+                dispatch({ type: IS_LOADING, isloading: false })
+                Toast.show({
+                    type: 'error',
+                    text1: 'Alert!',
+                    text2: data?.Message,
+                })
+            }else{
+               dispatch(newPaswordCreationAction(
+                    obj,
+                    () => {
+                        setPassword("")
+                        setConfirmPass("")
+                    },
+                    () => {
+                        navigation.navigate('LoginScreen')
+                    },
+
+                ))  
+            }
+        }))
+
+        // dispatch(newPaswordCreationAction(
+        //     obj,
+        //     () => {
+        //         setPassword("")
+        //         setConfirmPass("")
+        //     },
+        //     () => {
+        //         navigation.navigate('LoginScreen')
+        //     },
+
+        // ))
 
     }
     return (
@@ -90,17 +124,17 @@ export default function NewPassword({ route }) {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Create new password</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.createNewPass')}</TextBold>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                    Your password must be different from previous used password.
+                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+                    {t('common.yourPasswordMust')}.
                 </Text>
 
 
                 {/* TextInputs For Reset Password */}
 
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter new password</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
 
                 <Input
                     placeholder="************"
@@ -109,7 +143,7 @@ export default function NewPassword({ route }) {
                     secureTextEntry={true}
                 />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Confirm new password</Text>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100,  textAlign:'left' }]}>{t('common.confirmNewPass')}</TextBold>
 
                 <Input
                     placeholder="************"
@@ -126,7 +160,7 @@ export default function NewPassword({ route }) {
 
                 <View style={{ marginTop: (windowWidth * 20) / 100, marginBottom: 35 }}>
                     <ButtonLarge
-                        title="Verify Account"
+                        title={t('common.verifyAccount')}
                         loader={loading}
                         onPress={() => setNewpasswordFN()}
                     />

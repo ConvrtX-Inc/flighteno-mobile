@@ -9,6 +9,8 @@ import QRCode from 'react-native-qrcode-svg';
 import { formatAmount } from '../../../Utility/Utils';
 import TextBold from '../../../components/atoms/TextBold';
 import TextMedium from '../../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -18,6 +20,7 @@ export default function Congratulation({ route }) {
     const navigation = useNavigation();
     const { data } = route.params
     const { loading } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
 
     useEffect(() => {
         const backAction = () => {
@@ -34,9 +37,9 @@ export default function Congratulation({ route }) {
     }, []);
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
 
-            <ScrollView>
+            <ScrollView  style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
                 <TouchableOpacity onPress={() => navigation.navigate("BottomTab", {screen: "Home"})}>
                     <Image
@@ -54,10 +57,10 @@ export default function Congratulation({ route }) {
                     />
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 6) / 100, marginLeft: '0%' }]}>Your order
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 6) / 100, marginLeft: '0%', textAlign:'center' }]}>{t('travelHome.yourOrder')}
                     </TextBold>
-                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 0) / 100, marginLeft: '0%' }]}>
-                        has been placed</TextBold>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 0) / 100, marginLeft: '0%', textAlign:'center' }]}>
+                       {t('travelHome.hasBeenPlaced')}</TextBold>
                 </View>
 
                 <View style={{ alignSelf: "center", marginTop: 50, }}>
@@ -69,7 +72,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.ordernumberStyle}>
 
                     <View style={styles.orderNumberIst}>
-                        <TextBold style={styles.loginInputHeading}>Order No.</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderNo')}.</TextBold>
 
                     </View>
                     <View style={styles.orderNumberSecond}>
@@ -84,7 +87,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.orderPrice')}</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
@@ -98,7 +101,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
+                        <TextBold style={[styles.loginInputHeading,{textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -113,7 +116,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -127,7 +130,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>Flighteno {t('track.cost')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -142,7 +145,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -156,7 +159,7 @@ export default function Congratulation({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.textLarge}>Total</TextBold>
+                        <TextBold style={[styles.textLarge,{textAlign:'left'}]}>{t('track.total')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -168,14 +171,14 @@ export default function Congratulation({ route }) {
                 </View>
                 
                 <TextMedium style={[styles.termText, { fontSize: 16, color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'center', marginTop: 70 }]}>
-                    Please wait for a traveler to gather your order and contact you for further discussion and prepare for your payment.
+                    {t('travelHome.pleaseWaitTraveler')}.
                 </TextMedium>
 
 
 
                 <View style={{ marginBottom: 35, marginTop: 26 }}>
                     <ButtonLarge
-                        title="Place a new order"
+                        title={t('buyerHome.placeNewOrder')}
                         loader={loading}
                         onPress={() => navigation.navigate("BottomTab", {screen: "Home"})}
                     />
@@ -184,12 +187,7 @@ export default function Congratulation({ route }) {
 
             </ScrollView>
 
-
-
-
-
-
-        </View>
+        </SafeAreaView>
     );
 
 }

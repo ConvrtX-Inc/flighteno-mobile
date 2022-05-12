@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
-import { verificationCodeAction, verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
+import { otpResetPasswordAction, verificationCodeAction, verifyOtpCodeResetPasswordAction } from '../../redux/actions/Auth';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
+import TextRegular from '../../components/atoms/TextRegular';
+import moment from 'moment';
 
 
 
@@ -19,26 +23,39 @@ export default function VerifyCode({ route }) {
     const navigation = useNavigation();
     const { loading } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
 
-
-    const [email, setEmail] = useState('');
-    const [cellno, setCellNo] = useState('');
     const [code, setcode] = useState('')
-    const [userCell, setUserCell] = useState('')
+    const [userCell, setUserCell] = useState(route.params?.cellNo)
+    // const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
 
+    const startingMins = 10
+    let time = startingMins * 60
+
+    // const [seconds, setSeconds] = useState(0)
+    // const [minutes, setMinutes] = useState(0)
+
+    const [counter, setCounter] = useState(300)
 
     useEffect(() => {
 
-        cellNoParam = route.params.cellNo
-        setUserCell(cellNoParam)
+        // cellNoParam =
+        // setUserCell(cellNoParam)
+
+        // console.log(userCell)
+
+        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
 
 
-    }, []);
+
+    }, [counter]);
+
 
 
     const verifyCodeFN = () => {
 
+     
         if (code.length < 4) {
             Toast.show({
                 type: 'info',
@@ -50,8 +67,9 @@ export default function VerifyCode({ route }) {
 
         const form_data = new FormData()
         form_data.append("code", code)
-        form_data.append("phoneNumber", cellNoParam)
+        form_data.append("phoneNumber", userCell)
 
+     
 
         dispatch(verifyOtpCodeResetPasswordAction(
             form_data,
@@ -59,7 +77,7 @@ export default function VerifyCode({ route }) {
                 setcode("")
             },
             () => {
-                navigation.navigate('NewPassword', { cellno: cellNoParam })
+                navigation.navigate('NewPassword', { cellno: userCell })
             },
             () => {
                 Toast.show({
@@ -76,10 +94,9 @@ export default function VerifyCode({ route }) {
     /*Fix for FLIGHT-6*/
     const resendOtp = () => {
        
-        const form_data = new FormData()
-        form_data.append("phoneNumber", cellNoParam)
 
-        console.log(cellNoParam)
+        const form_data = new FormData()
+        form_data.append("phoneNumber", userCell)
 
         dispatch(verificationCodeAction(
             form_data,
@@ -97,6 +114,10 @@ export default function VerifyCode({ route }) {
                 })
             }
         ))
+
+   
+
+        setCounter(300)
     }
 
 
@@ -113,10 +134,10 @@ export default function VerifyCode({ route }) {
                     />
                 </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Verify code</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.verifyCode')}</TextBold>
 
-                <Text style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100, }]}>Verification code sent to</Text>
-                <Text style={styles.verifyPhonTxt}>{userCell}</Text>
+                <TextRegular style={[styles.verifyPhonTxt, { marginTop: (windowWidth * 10) / 100,textAlign:'left' }]}>{t('common.verCodeSentTo')}</TextRegular>
+                <TextRegular style={styles.verifyPhonTxt}>{userCell}</TextRegular>
 
 
                 <OTPInputView
@@ -130,17 +151,22 @@ export default function VerifyCode({ route }) {
                     })}
                 />
                 {/* Fix for FLIGHT-6 */}
-                <Text style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>Didn’t receive code?</Text>
+                
+             {counter == 0 ?    
+                <>
+                <TextRegular style={[styles.verifyPhonTxt, { alignSelf: 'center', marginLeft: '0%', fontSize: 17, marginTop: (windowWidth * 15) / 100 }]}>{t('common.didntRecCode')}?</TextRegular>
                 <TouchableOpacity onPress={() => resendOtp()}>
-                    <Text style={styles.resentPassTxt}>Resend OTP</Text>
+                    <TextBold style={styles.resentPassTxt}>{t('common.resend')} OTP</TextBold>
                 </TouchableOpacity>
+                </> :  <TextRegular style={{textAlign:'center', marginBottom:16, fontSize:16, marginTop:24}}>{counter} seconds left remaining</TextRegular>} 
 
             </ScrollView>
 
 
             <View style={{ marginTop: (windowWidth * 30) / 100, marginBottom: 20 }}>
+              
                 <ButtonLarge
-                    title="Verify account"
+                    title={t('common.verifyAccount')}
                     loader={loading}
                     onPress={() => verifyCodeFN()}
                 />

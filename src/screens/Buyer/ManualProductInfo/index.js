@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Button, Image, ScrollView, Dimensions, Pressable, Animated, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Button, Image, ScrollView, Dimensions, Pressable, Animated, FlatList, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../../Utility/Styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +17,11 @@ import { CREATE_ORDER_DETAIL, IS_LOADING } from '../../../redux/constants';
 import TextBold from '../../../components/atoms/TextBold';
 import TextRegular from '../../../components/atoms/TextRegular';
 import TextMedium from '../../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
+import RNPickerSelect from 'react-native-picker-select';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 var windowWidth = Dimensions.get('window').width;
 {/* Fix for FLIGHT-46 */}
@@ -46,62 +51,76 @@ export default function ManualProductInfo({ route }) {
     const [pickerValues, setPickerValues] = useState([
         {
             id: '0',
-            option: 'Cell phones'
+            value: 'Cell phones',
+            label:'Cell phones'
         },
         {
             id: '1',
-            option: 'Cell phones accessories'
+            value: 'Cell phones accessories',
+            label:'Cell phones accessories'
         },
         {
             id: '2',
-            option: 'Computers'
+            value: 'Computers',
+            label:'Computers'
         },
         {
             id: '3',
-            option: 'Cameras'
+            value: 'Cameras',
+            label:'Cameras'
         },
         {
             id: '4',
-            option: 'Clothings'
+            value: 'Clothings',
+            label:'Clothings'
         },
         {
             id: '5',
-            option: 'Electronics'
+            value: 'Electronics',
+            label:'Electronics'
         },
         {
             id: '6',
-            option: 'Toys'
+            value: 'Toys',
+            label:'Toys'
         },
         {
             id: '7',
-            option: 'Beauty and personal care'
+            value: 'Beauty and personal care',
+            label:'Beauty and personal care'
         },
         {
             id: '8',
-            option: 'Novelty Items'
+            value: 'Novelty Items',
+            label:'Novelty Items'
         },
         {
             id: '9',
-            option: 'Retro or Vintage Items'
+            value: 'Retro or Vintage Items',
+            label:'Retro or Vintage Items'
         }, {
             id: '10',
-            option: 'Perishable / Edible'
+            value: 'Perishable / Edible',
+            label:'Perishable / Edible'
         }, {
             id: '11',
-            option: 'Others'
+            value: 'Others',
+            label:'Others'
         },
     ]);
-
     const [pickerShowVip, setPickerShowVip] = useState(false);
+    const {t} = useTranslation()
     const [pickerValueSelectedVip, setPickerValueSelectedVip] = useState(false);
     const [pickerValuesVip, setPickerValuesVip] = useState([
         {
             id: '0',
-            option: 'Yes'
+            value: 'Yes',
+            label:'Yes'
         },
         {
             id: '1',
-            option: 'No'
+            value: 'No',
+            label:'No'
         },
 
     ]);
@@ -109,8 +128,10 @@ export default function ManualProductInfo({ route }) {
         setPickerValueSelected(pickerValues[0].option)
         setPickerValueSelectedVip(pickerValuesVip[0].option)
     }, []);
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+    const onChange = (event) => {
+
+        // setShow(false)
+        const currentDate = event;
         if (mode == 'date') {
             setShow(false);
             setDateValue(moment(currentDate).format("MM/DD/YYYY"));
@@ -144,17 +165,18 @@ export default function ManualProductInfo({ route }) {
 
     // Picker selection
     const selectPickerValueFN = (index) => {
-
         setPickerShow(!pickerShow)
         setPickerValueSelected(pickerValues[index].option)
     }
 
     const selectPickerValueVipFN = (index) => {
-
         setPickerShowVip(!pickerShowVip)
         setPickerValueSelectedVip(pickerValuesVip[index].option)
     }
 
+    const onCancelTap = () => {
+        setShow(false)
+    }
 
     // Image Picker
     const chooseFile = () => {
@@ -244,7 +266,7 @@ export default function ManualProductInfo({ route }) {
         navigation.navigate("SelectCountry")
     }
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={[styles.ScreenCss, { marginLeft:18, marginRight: 18 }]}>
 
             <ScrollView>
 
@@ -255,10 +277,10 @@ export default function ManualProductInfo({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Manual information</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('buyerHome.manualInfo')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Product name</TextBold>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productName')}</TextBold>
 
                 <Input
                     placeholder={name}
@@ -268,56 +290,37 @@ export default function ManualProductInfo({ route }) {
                     editable={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Product Type</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.productType')}</TextBold>
 
                 {/* custom Picker */}
 
-                <View>
-                    <Pressable onPress={() => setPickerShow(!pickerShow)}>
-                        <View style={styles.pickerVIew}>
-
-                            <View style={styles.pickerLeftView}>
-                                <TextBold style={styles.textSelected}>{pickerValueSelected}</TextBold>
-                            </View>
-                            <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
-                                <Image
-                                    style={styles.pickerIcon}
-                                    resizeMode='stretch'
-                                    source={require('../../../images/pickerIcon.png')}
-                                />
-                            </View>
-
-                        </View>
-                    </Pressable>
-
-                    {pickerShow == true ?
-                        <View style={styles.pickerOptions}>
-
-
-                            <FlatList
-                                data={pickerValues}
-                                nestedScrollEnabled={true}
-                                renderItem={({ item, index }) =>
-                                    <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                                        <TouchableOpacity style={{height: 30, justifyContent: 'center'}} onPress={() => selectPickerValueFN(index)}>
-                                            <View>
-                                                <Text style={styles.textSelected}>{item.option}</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </View>
-
-                                }
-                                keyExtractor={item => item.id}
-                                style={{ borderRadius: 100, marginTop: 3 }}
-                            />
-
-
-                        </View>
-                        : null}
+                <View style={[ Platform.OS == 'ios' ? styles.pickerVIew : styles.pickerAndroidView, {marginTop:16}]}>
+                    <RNPickerSelect
+                        onValueChange={setPickerValueSelected}
+                        items={pickerValues}
+                        style={{
+                            inputIOS:{
+                                fontFamily:'Gilroy-Medium',
+                                color:'#656F85'
+                            },
+                            inputAndroid:{
+                                fontFamily:'GilroyMedium',
+                                color:'#656F85'
+                            },
+                            viewContainer:{
+                                padding:Platform.OS == 'ios' ?  16 : 0
+                            },
+                            placeholder:{
+                                fontFamily:'Gilroy-Medium',
+                                fontSize:14
+                            }
+                        }
+                        }
+                        value={pickerValueSelected}     
+                    />
                 </View>
-                {/* custom Picker end */}
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Price</TextBold>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.price')}</TextBold>
 
                 <Input
                     placeholder="Enter price (for eg: $10.00)"
@@ -327,16 +330,37 @@ export default function ManualProductInfo({ route }) {
                     keyboardType="number"
                 />
 
+                <TextRegular style={[styles.fasterItemTxt, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextRegular>
 
-
-                <TextRegular style={[styles.fasterItemTxt, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Do you want to get your item faster?</TextRegular>
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Try our VIP Service</TextBold>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 2) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.tryVipServ')}</TextBold>
 
                 {/* custom Picker */}
 
-                <View>
-                    <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
+                <View style={[ Platform.OS == 'ios' ? styles.pickerVIew : styles.pickerAndroidView, {marginTop:16}]}>
+                    <RNPickerSelect
+                        onValueChange={setPickerValueSelectedVip}
+                        items={pickerValuesVip}
+                        style={{
+                            inputIOS:{
+                                fontFamily:'Gilroy-Medium',
+                                color:'#656F85'
+                            },
+                            inputAndroid:{
+                                fontFamily:'GilroyMedium',
+                                color:'#656F85'
+                            },
+                            viewContainer:{
+                                padding:Platform.OS == 'ios' ?  16 : 0
+                            },
+                            placeholder:{
+                                fontFamily:'Gilroy-Medium',
+                                fontSize:14
+                            }
+                        }
+                        }
+                        value={pickerValueSelectedVip}     
+                    />
+                    {/* <Pressable onPress={() => setPickerShowVip(!pickerShowVip)}>
                         <View style={styles.pickerVIew}>
 
                             <View style={styles.pickerLeftView}>
@@ -351,9 +375,9 @@ export default function ManualProductInfo({ route }) {
                             </View>
 
                         </View>
-                    </Pressable>
+                    </Pressable> */}
 
-                    {pickerShowVip == true ?
+                    {/* {pickerShowVip == true ?
                         <View style={styles.pickerOptions}>
 
 
@@ -375,12 +399,16 @@ export default function ManualProductInfo({ route }) {
 
 
                         </View>
-                        : null}
+                        : null} */}
                 </View>
+
+
                 {/* custom Picker end */}
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>VIP Service Fee</TextBold>
-
+                {pickerValueSelectedVip == 'Yes' && (
+                    <>
+                        <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.vipServFee')}</TextBold>
+                
                 <Input
                     placeholder="$50.00"
                     onChangeText={text => setVipServiceFee(text.replace(/[^0-9]/g, ''))}
@@ -389,9 +417,10 @@ export default function ManualProductInfo({ route }) {
                     keyboardType="number"
                     editable={pickerValueSelectedVip == "No" ? false : true}
                 />
+                </>
+                    )}
 
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter Description</TextBold>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterDesc')}</TextBold>
 
                 <InputMultiline
                     placeholder="Description"
@@ -442,9 +471,9 @@ export default function ManualProductInfo({ route }) {
                 </View>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Upload picture</TextBold>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.uploadPic')}</TextBold>
 
-                <TouchableOpacity style={{marginLeft: '5%', width: 100}} onPress={() => chooseFile()}>
+                <TouchableOpacity style={{ width: 100}} onPress={() => chooseFile()}>
 
                     {filePath.uri == undefined ?
                         <View style={styles.imgPickView}>
@@ -466,13 +495,10 @@ export default function ManualProductInfo({ route }) {
                     }
                 </TouchableOpacity>
 
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
 
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Date </TextBold>
-
-
-                <Pressable onPress={() => showMode('date', 'date')}>
-                    <View style={styles.pickerVIew}>
+                <Pressable onPress={() => showMode('date', 'date')} >
+                    <View style={Platform.OS == 'ios' ? [styles.pickerVIew, {padding:16}]  : [styles.pickerVIew, {padding:16}]}>
                         <View style={styles.pickerLeftView}>
                             <TextMedium style={styles.textSelected}>{dateValue}</TextMedium>
                         </View>
@@ -487,16 +513,16 @@ export default function ManualProductInfo({ route }) {
                 </Pressable>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Preferred Delivery Time</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.prefDelTime')}</TextBold>
 
-                <View style={{ width: '90%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                <View style={{ width: '100%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     {/* <View style={styles.timePickerVIew}> */}
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'from')}>
                         <TextMedium style={{ color: color.verifyPhoneTextColor, }}>{fromTime}</TextMedium>
                     </TouchableOpacity>
                     {/* </View> */}
 
-                    <TextMedium>to</TextMedium>
+                    <TextMedium>{t('travelHome.to')}</TextMedium>
 
                     <TouchableOpacity style={styles.timePickerVIew} onPress={() => showMode('time', 'to')}>
                         {/* <View style={[styles.timePickerVIew, {width: '100%', paddingHorizontal: 0}]}> */}
@@ -512,7 +538,7 @@ export default function ManualProductInfo({ route }) {
 
                     <View style={styles.leftQuantityStyle}>
 
-                        <TextBold style={styles.loginInputHeading}>Quantity</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.quantity')}</TextBold>
                         <Text style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500' }]}>{quantity}</Text>
 
                     </View>
@@ -547,8 +573,7 @@ export default function ManualProductInfo({ route }) {
                 <View style={{ height: 1, width: '100%', marginVertical: 25, backgroundColor: '#656F8588', }}></View>
                 <View style={styles.quantityContainer}>
                     <View style={styles.leftQuantityStyle}>
-
-                        <TextBold style={styles.loginInputHeading}>Do you need a box?</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.doYouNeedBox')}?</TextBold>
                         <TextMedium style={[styles.loginInputHeading, { fontWeight: '500', color: color.verifyPhoneTextColor, }]}>{switchBox == false ? "No" : "Yes"}</TextMedium>
                     </View>
                     <View style={styles.rightQuantityStyle}>
@@ -601,15 +626,18 @@ export default function ManualProductInfo({ route }) {
                 <View style={{ height: 1, width: '100%', marginTop: 25, marginBottom: 15, backgroundColor: '#656F8588', }}></View>
 
 
-                <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35 }]}>Note: The box mentioned above was the box from the manufacturer</TextMedium>
+                <TextMedium style={[styles.loginInputHeading, { color: color.verifyPhoneTextColor, fontWeight: '500', paddingHorizontal: '5%', marginBottom: 35, textAlign:'left' }]}>{t('buyerHome.buyerNote')}</TextMedium>
 
+                <View style={{marginBottom:32}}>
                 <ButtonLarge
-                    title="Continue"
+                    title={t('buyerHome.continue')}
                     loader={loading}
                     onPress={() => handleSubmit()}
                 />
+                </View>
 
-                {show && (
+
+                {/* {show && (
                     <DateTimePicker
                         testID="dateTimePicker"
                         value={date}
@@ -619,11 +647,20 @@ export default function ManualProductInfo({ route }) {
                         onChange={onChange}
                         minimumDate={new Date()}
                     />
-                )}
-                <Text></Text>
+                )} */}
+
+            <DateTimePickerModal
+                isVisible={show}
+                mode={mode}
+                onCancel={onCancelTap}
+                onConfirm={onChange}
+                // onConfirm={onChange}
+            />
+
+
             </ScrollView>
 
-        </View>
+        </SafeAreaView>
     );
 
 }

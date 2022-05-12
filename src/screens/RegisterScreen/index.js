@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
 import PhoneInput from "react-native-phone-number-input";
@@ -13,6 +13,7 @@ import ButtonLarge from '../../components/ButtonLarge';
 import { registerUserFN, verificationCodeAction } from '../../redux/actions/Auth';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -24,6 +25,7 @@ export default function RegisterScreen() {
     const navigation = useNavigation();
     const dispatch = useDispatch()
     const { currentUser, loading } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
 
 
     const [email, setEmail] = useState('');
@@ -133,9 +135,9 @@ export default function RegisterScreen() {
                     />
                 </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Register</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('common.register')}</TextBold>
                 {/* TextInputs For Login */}
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Full name</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.fullName')}</TextBold>
 
                 <Input
                     placeholder="John doe"
@@ -144,7 +146,7 @@ export default function RegisterScreen() {
                     secureTextEntry={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
 
                 <Input
                     placeholder="myemail@flighteno.com"
@@ -153,7 +155,7 @@ export default function RegisterScreen() {
                     secureTextEntry={false}
                 />
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Password</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.password')}</TextBold>
 
                 <Input
                     placeholder="**************"
@@ -163,7 +165,7 @@ export default function RegisterScreen() {
                 />
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
 
                 <PhoneInput
                     ref={phoneInput}
@@ -186,14 +188,14 @@ export default function RegisterScreen() {
                         placeholderTextColor: "#707070",
                         keyboardType: "phone-pad",
                         placeholder: "123-456-789",
-                        fontFamily: 'GilroyRegular'
+                        fontFamily: Platform.OS == 'ios' ? 'Gilroy-Regular':'GilroyRegular'
                     }}
                 />
 
 
                 <View style={{ marginTop: (windowWidth * 20) / 100, }}>
                     <ButtonLarge
-                        title="Register"
+                        title={t('common.register')}
                         loader={loading}
                         onPress={() => getVerificationCode()}
                     />
@@ -201,11 +203,11 @@ export default function RegisterScreen() {
 
                 <View style={styles.bottomTxt}>
                     <TextBold style={styles.loginInputHeading}>
-                        Don’t have an account?
+                        {t('common.dontHaveAccount')}?
                     </TextBold>
 
                     <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> Login</TextBold>
+                        <TextBold style={[styles.loginInputHeading, { textDecorationLine: 'underline', color: '#B52551' }]}> {t('common.login')}</TextBold>
                     </TouchableOpacity>
                 </View>
 

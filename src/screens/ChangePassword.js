@@ -6,7 +6,11 @@ import Input from '../components/InputField';
 import ButtonLarge from '../components/ButtonLarge';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-import { UpdatePassword } from '../redux/actions/Auth';
+import { CheckSamePasswordAction, UpdatePassword } from '../redux/actions/Auth';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../components/atoms/TextBold';
+import TextRegular from '../components/atoms/TextRegular';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -18,6 +22,7 @@ export default function ChangePassword() {
     const [oldPassword, setOldPassword] = useState("")
     const [password, setPassword] = useState("");
     const [cPassword, setCPassword] = useState("")
+    const {t} = useTranslation()
 
     const passwordChange = () => {
         if (oldPassword == "") {
@@ -53,6 +58,12 @@ export default function ChangePassword() {
             confirmed_password: cPassword
         }
 
+        // var samePassObj = {
+        //     phone_number: 
+        // }
+
+        // dispatch(CheckSamePasswordAction())
+
         dispatch(UpdatePassword(
             obj, token,
             () => {
@@ -69,55 +80,58 @@ export default function ChangePassword() {
     }
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
+ <View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView>
 
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image
-                        style={styles.backImg}
-                        resizeMode='stretch'
-                        source={require('../images/back.png')}
-                    />
-                </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image
+            style={styles.backImg}
+            resizeMode='stretch'
+            source={require('../images/back.png')}
+        />
+    </TouchableOpacity>
 
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Change Password</Text>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('common.changePass')}</TextBold>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Old password</Text>
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('common.oldPass')}</TextBold>
 
-                <Input
-                    placeholder="Old Password"
-                    onChangeText={text => setOldPassword(text)}
-                    value={oldPassword}
-                    secureTextEntry={false}
-                />
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter new password</Text>
+    <Input
+        placeholder={t('common.oldPass')}
+        onChangeText={text => setOldPassword(text)}
+        value={oldPassword}
+        secureTextEntry={false}
+        
+    />
+    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.enterNewPass')}</TextBold>
 
-                <Input
-                    placeholder="New Password"
-                    onChangeText={text => setPassword(text)}
-                    value={password}
-                    secureTextEntry={true}
-                />
+    <Input
+        placeholder={t('common.newPass')}
+        onChangeText={text => setPassword(text)}
+        value={password}
+        secureTextEntry={true}
+    />
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Confirm password</Text>
+    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.confirmPass')}</TextBold>
 
-                <Input
-                    placeholder="Confirm Password"
-                    onChangeText={text => setCPassword(text)}
-                    value={cPassword}
-                    secureTextEntry={true}
-                />
+    <Input
+        placeholder={t('common.confirmPass')}
+        onChangeText={text => setCPassword(text)}
+        value={cPassword}
+        secureTextEntry={true}
+    />
 
-                <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
-                    <ButtonLarge
-                        title="Save"
-                        loader={loading}
-                        onPress={passwordChange}
-                    />
-                </View>
-            </ScrollView>
-        </View>
+    <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
+        <ButtonLarge
+            title={t('common.save')}
+            loader={loading}
+            onPress={passwordChange}
+        />
+    </View>
+</ScrollView>
+</View>
+        </SafeAreaView>
     );
 
 }

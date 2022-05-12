@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
     splashText: {
         color: color.splashTextColor,
         fontSize: (windowWidth * 8.5) / 100,
+        textAlign:'left'
     },
     splashTxtContainer: {
         marginLeft: '5%',
@@ -112,18 +113,20 @@ export const styles = StyleSheet.create({
         height: 20,
         width: 15,
         marginTop: (windowWidth * 8) / 100,
-        marginLeft: '5%',
+        // marginLeft: '5%',
     },
     //country number style
     phoneContainer: {
         height: 55,
-        alignSelf: 'center',
-        width: '90%',
+        // alignSelf: 'center',
+        paddingLeft:16,
+        width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         // marginTop: 15,
         borderRadius: 35,
-        // borderRadius: 16,
+     fontFamily: 'Gilroy-Regular',
+     color: '#707070',
         backgroundColor: "#F6F9FF"
     },
     phoneInput: {
@@ -161,7 +164,7 @@ export const styles = StyleSheet.create({
         color: '#000',
         textDecorationLine: 'underline',
         fontSize: 17,
-        fontWeight: 'bold',
+      
         alignSelf: 'center'
     },
     otpInputSyle: {
@@ -315,19 +318,37 @@ export const styles = StyleSheet.create({
 
     //////////////////////////Picker Creation start///////////////////////
     pickerVIew: {
-        height: 50,
-        width: '90%',
+        // height: 40,
+        width: '100%',
         borderColor: '#00000011',
         borderWidth: 1,
         borderRadius: 35,
         alignSelf: 'center',
-        paddingHorizontal: 5,
+        padding:8,
+        // paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
         fontFamily: 'OpenSans-Regular',
         backgroundColor: '#F6F9FF',
-        paddingHorizontal: 20,
-        flexDirection: 'row'
+        // paddingHorizontal: 20,
+        flexDirection: 'row',
+        overflow:'hidden'
+    },
+        pickerAndroidView: {
+        // height: 40,
+        // width: '100%',
+        borderColor: '#00000011',
+        borderWidth: 1,
+        borderRadius: 35,
+        // alignSelf: 'center',
+        // paddingHorizontal: 5,
+        // fontSize: 14,
+        // color: '#656F85',
+        // fontFamily: 'OpenSans-Regular',
+        backgroundColor: '#F6F9FF'
+        // // paddingHorizontal: 20,
+        // flexDirection: 'row',
+        // overflow:'hidden'
     },
     pickerLeftView: {
         width: '92%',
@@ -366,7 +387,8 @@ export const styles = StyleSheet.create({
         width: 25,
     },
     sliderStyle: {
-        width: '90%',
+        // width: '90%',
+        width:'100%',
         alignSelf: 'center',
         marginTop: 15,
         padding: 20
@@ -374,7 +396,7 @@ export const styles = StyleSheet.create({
     sliderTrackStyle: {
         height: 10,
         borderRadius: 30,
-        backgroundColor: '#E76F51',
+        // backgroundColor: '#E76F51',
 
     },
     sliderThumbStyle: {
@@ -446,7 +468,7 @@ export const styles = StyleSheet.create({
         borderRadius: 35,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'OpenSans-Regular',
+        fontFamily: 'Gilroy-Regular',
         backgroundColor: '#F6F9FF',
         paddingHorizontal: 20,
         flexDirection: 'row',
@@ -454,7 +476,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     quantityContainer: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         flexDirection: 'row'
     },
@@ -479,7 +501,8 @@ export const styles = StyleSheet.create({
     ////////////////////////////////////////////////////OrderDetail Screen///////////////////////////////////
     productImg: {
         height: (windowWidth * 58) / 100,
-        width: (windowWidth * 90) / 100,
+        // width: (windowWidth * 90) / 100,
+        width:'100%',
         alignSelf: 'center',
         borderRadius: (windowWidth * 3) / 100,
         marginTop: 28,
@@ -488,12 +511,12 @@ export const styles = StyleSheet.create({
     subHeading: {
         fontSize: 17,
         width: (windowWidth * 90) / 100,
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
     },
     productDesc: {
         flexDirection: 'row',
-        width: '90%',
-        alignSelf: 'center',
+        // width: '90%',
+        // alignSelf: 'center',
         marginTop: 20,
     },
     productDescInerFirst: {
@@ -547,17 +570,17 @@ export const styles = StyleSheet.create({
     modalView: {
         // margin: 20,
         backgroundColor: "white",
-        borderRadius: 20,
+        // borderRadius: 20,
         padding: 30,
         // alignItems: "center",
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
+        // shadowOffset: {
+        //     width: 0,
+        //     height: 2
+        // },
+        // shadowOpacity: 0.25,
+        // shadowRadius: 4,
+        // elevation: 5,
         height: '100%'
     },
     button: {
@@ -611,7 +634,7 @@ export const styles = StyleSheet.create({
     },
     orderNumberIst: {
         width: '54%',
-        marginLeft: '5%',
+        // marginLeft: '5%',
         // backgroundColor: 'pink',
         marginTop: (windowWidth * 6) / 100,
 
@@ -632,7 +655,6 @@ export const styles = StyleSheet.create({
     },
     billLeft: {
         width: '54%',
-        marginLeft: '5%',
         // backgroundColor: 'pink',
         marginTop: (windowWidth * 4) / 100,
     },
@@ -647,7 +669,7 @@ export const styles = StyleSheet.create({
     travelDateContainer: {
         flexDirection: 'row',
         width: '100%',
-        paddingHorizontal: '5%',
+        // paddingHorizontal: '5%',
         marginTop: 30,
     },
     travelDateInner: {
@@ -668,7 +690,7 @@ export const styles = StyleSheet.create({
         // fontWeight: 'bold'
     },
     travelList: {
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 12,
         borderColor: color.travelerListBorderColor,
@@ -722,7 +744,7 @@ export const styles = StyleSheet.create({
     },
     menuItem: {
         height: 40,
-        width: '90%',
+        width: '100%',
         flexDirection: 'row',
         alignSelf: 'center',
         alignItems: 'center',

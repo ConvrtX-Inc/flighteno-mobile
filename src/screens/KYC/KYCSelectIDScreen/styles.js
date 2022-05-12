@@ -4,6 +4,38 @@ import { color } from "../../../Utility/Color";
 
 export const styles = StyleSheet.create(
     {
+            pickerAndroidView: {
+        // height: 40,
+        // width: '100%',
+        borderColor: '#00000011',
+        borderWidth: 1,
+        borderRadius: 35,
+        // alignSelf: 'center',
+        // paddingHorizontal: 5,
+        // fontSize: 14,
+        // color: '#656F85',
+        // fontFamily: 'OpenSans-Regular',
+        backgroundColor: '#F6F9FF'
+        // // paddingHorizontal: 20,
+        // flexDirection: 'row',
+        // overflow:'hidden'
+    },
+        pickerVIew: {
+        // height: 40,
+        width: '100%',
+        borderColor: '#00000011',
+        borderWidth: 1,
+        borderRadius: 35,
+        alignSelf: 'center',
+        // paddingHorizontal: 5,
+        fontSize: 14,
+        color: '#656F85',
+        fontFamily: 'OpenSans-Regular',
+        backgroundColor: '#F6F9FF',
+        // paddingHorizontal: 20,
+        flexDirection: 'row',
+        overflow:'hidden'
+    },
     container:{
         marginLeft:16,
         marginRight:16,

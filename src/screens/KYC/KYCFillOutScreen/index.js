@@ -12,11 +12,15 @@ import { useCallback } from 'react';
 import Toast from 'react-native-toast-message';
 import TextBold from '../../../components/atoms/TextBold';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function KYCFillOutScreen ({navigation,route}){
 
     // const phoneInput = useRef()
     const { kyc } = route?.params
+    const {t} = useTranslation()
 
     const phoneInput = React.useRef()
 
@@ -42,7 +46,6 @@ export default function KYCFillOutScreen ({navigation,route}){
         const currentDate = event?.timestamp || birthdate
         // setDateValue(moment(currentDate).format("MM/DD/YYYY"))
         setBirthDateValue(moment(currentDate).format("MM/DD/YYYY"))
-        // setDate(event?.timestamp)
         setBirthDate(event?.timestamp)
     }
 
@@ -61,7 +64,6 @@ export default function KYCFillOutScreen ({navigation,route}){
         kyc.addressLine2 = addressLine2
         kyc.birthdate = birthdate
         kyc.phone = formattedPhone
-
        
 
         // const checkValid = phoneInput.current?.isValidNumber(cellno)
@@ -92,53 +94,58 @@ export default function KYCFillOutScreen ({navigation,route}){
     
     }
 
+    const onCancelTap = () => {
+        setDatePickerShow(false)
+    }
+
     return(
-        <ScrollView  style={styles.container}>
+        <SafeAreaView style={{flex:1}}>
+            <ScrollView  style={styles.container}>
             <View>
-                <TextBold style={styles.titleTxt}>Fill Out Information</TextBold>
+                <TextBold style={[styles.titleTxt,  {textAlign:'left'}]}>{t('kyc.fillOutInfo')}</TextBold>
                 <View style={styles.stepsIndicator}>
                     <StepsIndicator currentPosition={3}/>
                 </View>
                 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>First Name</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.firstName')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Yasmin' value={firstName} onChangeText={setFirstName}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>Middle Name</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.middleName')}</TextBold>
                     <InputText placeholder='Che' value={middleName} onChangeText={setMiddleName}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>Last Name</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.lastName')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='Latika' value={lastName} onChangeText={setLastName}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>Suffix</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.suffix')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='eg.Jr.' value={suffix} onChangeText={setSuffix}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>Address Line 1</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.addrsLine1')}</TextBold>
                     <InputText style={styles.inputTxt} placeholder='500 Kingston Rd' value={addressLine1} onChangeText={setAddressLine1} />
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>Address Line 2</TextBold>
-                    <InputText style={styles.inputTxt} placeholder='Toronto ON M4L 1V3(Toronto, Ontoario)' value={addressLine2} onChangeText={setAddressLine2} />
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.addrsLine2')}</TextBold>
+                    <InputText style={styles.inputTxt} placeholders='Toronto ON M4L 1V3(Toronto, Ontoario)' value={addressLine2} onChangeText={setAddressLine2} />
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>Birthdate</TextBold>
+                    <TextBold style={[styles.inputLabel,  {textAlign:'left'}]}>{t('kyc.bdate')}</TextBold>
                     <DatePickerField onPress={() => {
                         onDatePickerTap()
                     }} date={birthDateValue}/>
                 </View>
 
                 <View style={styles.textField}>
-                    <TextBold style={[styles.inputLabel]}>Phone Number</TextBold>
+                    <TextBold style={[styles.inputLabel, {textAlign:'left'}]}>{t('kyc.phoneNum')}</TextBold>
                     <View>
                         <PhoneInput
                             ref={phoneInput}
@@ -163,26 +170,20 @@ export default function KYCFillOutScreen ({navigation,route}){
 
                
                 <View style={styles.btnSubmit}>
-                    <ButtonLarge title='Submit' loader={false} onPress={onSubmitTap}/>
+                    <ButtonLarge title={t('kyc.submit')} loader={false} onPress={onSubmitTap}/>
                 </View>
 
 
-                {onDatePickerShow  && (
-                    <DateTimePicker
-                        testID='dateTimePicker'
-                        value={birthdate ?? new Date()}
-                        mode='date'
-                        maximumDate={moment().subtract(18,'years').toDate()}
-                        display='calendar'
-                        // onChange={onDatePickerChange}
-                        onChange={({nativeEvent}) => {
-                            // console.log(nativeEvent)
-                            onDatePickerChange(nativeEvent)
-                        }}
-                    />
-                )}
+                <DateTimePickerModal
+                    isVisible={onDatePickerShow}
+                    mode='date'
+                    onCancel={onCancelTap}
+                    onConfirm={onDatePickerChange}
+                    maximumDate={moment().subtract(18,'years').toDate()}
+                />
 
             </View>
         </ScrollView>
+        </SafeAreaView>
     )
 }

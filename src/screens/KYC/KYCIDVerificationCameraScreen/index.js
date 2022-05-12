@@ -20,6 +20,8 @@ export default function KYCIDVerificationCameraScreen(){
         // if(bothEyes <= 0.3){
         //     console.log('blink detected')
         // }
+
+        
         console.log(faces)
     }
 

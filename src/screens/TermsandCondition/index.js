@@ -8,6 +8,7 @@ import { CheckBox } from 'react-native-elements'
 import { FIRST_LAUNCH } from '../../redux/constants';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -18,6 +19,7 @@ export default function TermsandCondition() {
     const navigation = useNavigation();
     const dispatch = useDispatch()
     const [checked, setChecked] = useState(false);
+    const {t} = useTranslation()
 
     function checkedFN() {
 
@@ -41,7 +43,7 @@ export default function TermsandCondition() {
                 </View>
 
              
-                <TextBold style={[styles.HeadingText, { alignSelf: 'center', marginTop: (windowWidth * 4) / 100 }]}>Terms and Conditions</TextBold>
+                <TextBold style={[styles.HeadingText, { alignSelf: 'center', marginTop: (windowWidth * 4) / 100 }]}>{t('common.termsConditions')}</TextBold>
                 <View style={styles.termContainer}>
 
                     <TextMedium style={[styles.termText, { marginBottom: (windowWidth * 5) / 100 }]}>Lorem Ipsum is simply dummy text of the{"\n"}printing and typesetting industry. Lorem {"\n"}Ipsum has been the industry's standard{"\n"}dummy text ever since the 1500s, when an{"\n"}unknown printer took a galley of type and{"\n"}scrambled 
@@ -65,7 +67,7 @@ It was popularised in the 1960s with the{"\n"}release of Letraset sheets contain
                 />
 
                 <Text ></Text>
-                <TextBold style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10 }]}>I agree with Terms & Conditions</TextBold>
+                <TextBold style={[styles.termAgreeText, { marginTop: 17, marginLeft: -10 }]}>{t('common.iAgreeTerms')}</TextBold>
             </View>
 
         </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, FlatList, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions, FlatList, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { color } from '../../Utility/Color';
 import { styles } from '../../Utility/Styles';
@@ -10,11 +10,18 @@ import CardOrder from '../../components/CardOrder';
 import InputMultiline from '../../components/inputFieldMultiLine';
 import Icon from 'react-native-vector-icons/Entypo'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { generateUID } from '../../Utility/Utils';
+import { generateImagePublicURLFirebase, generateUID, getPathForFirebaseStorage } from '../../Utility/Utils';
 import Toast from 'react-native-toast-message';
 import { RNS3 } from 'react-native-aws3';
 import { SubmitReview } from '../../redux/actions/Reviews';
 import { IS_LOADING } from '../../redux/constants';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import TextBold from '../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
+import storage from '@react-native-firebase/storage';
+import UploadProgressBar from '../../components/UploadProgressBart';
+
+
 var windowWidth = Dimensions.get('window').width;
 
 export default function RateTransaction({ route }) {
@@ -27,7 +34,12 @@ export default function RateTransaction({ route }) {
     const [imagesUrl, setImagesUrl] = useState([])
     const [videosUrl, setVideosUrl] = useState([])
     const [message, setMessage] = useState('')
+    const [transferred, setTransferred] = useState(0)
+    const [uploadedCount, setUploadedCount] = useState(0);
+
     const { order } = route.params
+    const {t} = useTranslation()
+
     const chooseMedia = (type) => {
         let options = {
             selectionLimit: 0,
@@ -81,7 +93,7 @@ export default function RateTransaction({ route }) {
                 submitRating()
             }
             else {
-                uploadPhotos()
+               uploadFilesToFirebase()
             }
         }
     }
@@ -107,39 +119,76 @@ export default function RateTransaction({ route }) {
         }))
     }
 
-    const uploadPhotos = () => {
-        if (images.length != 0) {
-            dispatch({ type: IS_LOADING, isloading: true })
-            images.forEach(element => {
-                const file = {
-                    uri: element.uri,
-                    name: generateUID() + ".jpg",
-                    type: 'image/jpeg'
-                }
-                const options = {
-                    keyPrefix: "flighteno/reviews/",
-                    bucket: "memee-bucket",
-                    region: "eu-central-1",
-                    accessKey: "AKIA2YJH3TLHCODGDKFV",
-                    secretKey: "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",
-                    successActionStatus: 201
-                }
-                RNS3.put(file, options).then(response => {
-                    if (response.status !== 201)
-                        throw new Error("Failed to upload image to S3");
-                    imagesUrl.push(response.body.postResponse.location)
-                    setImagesUrl([...imagesUrl]);
-                    if (images.length == imagesUrl.length) {
-                        uploadVideos()
-                    }
+    const uploadFilesToFirebase = () => {
+        let ctr = 0;
+        if(images.length != 0 ){
+            images.forEach(async(element) => {
+
+                const { uri } = element
+                const filename = uri.substring(uri.lastIndexOf('/') + 1);
+                const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+                const task = storage()
+                    .ref(`${filename}`)
+                    .putFile(`${uploadUri}`);
+
+                // set progress state
+                task.on('state_changed', snapshot => {                    
+                    setTransferred(
+                        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+                    );
                 });
 
-            })
+                try {
+                    const resImg = await task
+                    setUploadedCount(ctr + 1)
+                    const resImgPublicUrl = generateImagePublicURLFirebase(resImg.metadata.name)
+                    imagesUrl.push(resImgPublicUrl)
+                    setImagesUrl([...imagesUrl])
+                    ctr++;
+                }catch(e){
+                    console.log('errooooorrrrr', e);
+                }
+
+                  submitRating()
+
+            });
         }
-        else {
-            uploadVideos()
+
+        if(videos.length != 0){
+            videos.forEach(async(element) => {
+                const { uri } = element
+                const filename  = generateUID() + ".mp4"
+                const uploadUri = await getPathForFirebaseStorage(uri)
+                const task = storage()
+                .ref(`${filename}`)
+                .putFile(`${uploadUri}`)
+
+                //set progress state
+                task.on('state_changed', snapshot => {
+                    setTransferred(
+                        Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+                    );
+                })
+
+                try {
+                    const resvid = await task;
+                    setUploadedCount(ctr + 1);
+                    const resVidPublicUrl = generateImagePublicURLFirebase(resVid.metadata.name);
+                    videosUrl.push(resVidPublicUrl)
+                    setVideosUrl([...resVidPublicUrl])
+                    ctr++
+                }catch(e){
+                    console.log('errooooorrrrr', e);
+                }
+
+                submitRating()
+                
+            });
         }
     }
+    // const uploadVideosToFirebase = () => {
+    //     console.log(videos)
+    // }
 
     const uploadVideos = () => {
         if (videos.length != 0) {
@@ -176,7 +225,8 @@ export default function RateTransaction({ route }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <SafeAreaView style={{flex:1}}>
+            <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
             <ScrollView>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -185,7 +235,7 @@ export default function RateTransaction({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', marginBottom: 20 }]}>Rate Transaction</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginBottom: 20, textAlign:'left'}]}>{t('track.rateTransaction')}</TextBold>
                 <CardOrder
                     order={order}>
                 </CardOrder>
@@ -197,7 +247,7 @@ export default function RateTransaction({ route }) {
                     showRating={false}
                     onFinishRating={(rating) => setUserRating(rating)}
                 />
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Add Photo</Text>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.addPhoto')}</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseMedia('photo')}>
                         <View style={styles.imgPickView}>
@@ -230,7 +280,7 @@ export default function RateTransaction({ route }) {
                     </View>
                 </View>
 
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Add Video</Text>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.addVideo')}</TextBold>
                 <View style={Styles.boxView}>
                     <TouchableOpacity onPress={() => chooseMedia('video')}>
                         <View style={styles.imgPickView}>
@@ -262,21 +312,25 @@ export default function RateTransaction({ route }) {
                         />
                     </View>
                 </View>
-                <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Enter Description</Text>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.enterDescription')}</TextBold>
                 <InputMultiline
                     placeholder="Share your experience with us."
                     onChangeText={text => setMessage(text)}
                     value={message}
                 />
+
+                <UploadProgressBar />
+                
                 <View style={{ marginVertical: 30 }}>
                     <ButtonLarge
-                        title="Submit"
+                        title={t('kyc.submit')}
                         loader={loading}
                         onPress={() => checkValidation()}
                     />
                 </View>
             </ScrollView>
         </View>
+        </SafeAreaView>
     );
 }
 
@@ -357,7 +411,7 @@ const Styles = StyleSheet.create({
     },
     boxView: {
         flexDirection: 'row',
-        marginLeft: '5%'
+        // marginLeft: '5%'
     },
     crossButton: {
         marginLeft: -35,

@@ -12,6 +12,8 @@ import moment from 'moment';
 import { CREATE_ORDER_DETAIL } from '../../../redux/constants';
 import { formatAmount } from '../../../Utility/Utils';
 import TextBold from '../../../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -21,6 +23,7 @@ var destinationCities = ""
 export default function SelectCountry({ route }) {
 
     const navigation = useNavigation();
+    const {t} = useTranslation()
     const { loading, currentCountry } = useSelector(({ authRed }) => authRed)
     const { buyerOrderData } = useSelector(({ buyerOrderRed }) => buyerOrderRed)
     const dispatch = useDispatch()
@@ -34,8 +37,8 @@ export default function SelectCountry({ route }) {
     const [withAlphaFilterDeliver, setWithAlphaFilterDeliver] = useState(false)
     const [withCallingCode, setWithCallingCode] = useState(false)
     const [withCallingCodeDeliver, setWithCallingCodeDeliver] = useState(false)
-    const [countryCodeDeliver, setCountryCodeDeliver] = useState(currentCountry.country_code)
-    const [countryCode, setCountryCode] = useState(currentCountry.country_code)
+    const [countryCodeDeliver, setCountryCodeDeliver] = useState(currentCountry?.country_code)
+    const [countryCode, setCountryCode] = useState(currentCountry?.country_code)
     const [modalCity, setModalCity] = useState("")
     const [modalVisibleCity, setModalVisibleCity] = useState("")
     const [modalVisibleCityDeliver, setModalVisibleCityDeliver] = useState("")
@@ -51,14 +54,14 @@ export default function SelectCountry({ route }) {
     const [countryDeliver, setCountryDestination] = useState(currentCountry)
 
     /*Fix for FLIGHT-11*/
-    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country.country_name])]);
-    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country.country_name])]);
+    const [pickerValuesCity, setPickerValuesCity] = useState([...new Set(countries[country?.country_name])]);
+    const [pickerValuesCityDeliver, setPickerValuesCityDeliver] = useState([...new Set(countries[country?.country_name])]);
 
     const [pickerValueSelectedCity, setPickerValueSelectedCity] = useState(currentCountry.city);
     const [pickerValueSelectedCityDeliver, setPickerValueSelectedCityDeliver] = useState(currentCountry.city);
 
-    originCities = countries[country.country_name ? country.country_name : country.name];
-    destinationCities = countries[countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name];
+    originCities = countries[country?.country_name ? country?.country_name : country.name];
+    destinationCities = countries[countryDeliver?.country_name ? countryDeliver?.country_name : countryDeliver.name];
 
 
     const onSelect = (selectedCountry) => {
@@ -136,9 +139,9 @@ export default function SelectCountry({ route }) {
         let deliveryFee = buyerOrderData.product_price / 100 * 10;
         deliveryFee = deliveryFee > 50 ? deliveryFee : 50;
 
-        buyerOrderData["product_buy_country_name"] = country.country_name ? country.country_name : country.name
+        buyerOrderData["product_buy_country_name"] = country.country_name ? country?.country_name : country.name
         buyerOrderData["product_buy_city_name"] = pickerValueSelectedCity
-        buyerOrderData["product_dilivery_country_name"] = countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name
+        buyerOrderData["product_dilivery_country_name"] = countryDeliver?.country_name ? countryDeliver?.country_name : countryDeliver.name
         buyerOrderData["product_dilivery_city_name"] = pickerValueSelectedCityDeliver
         buyerOrderData["flighteno_cost"] = Math.round((buyerOrderData.product_price / 100) * 7)
         buyerOrderData["product_dilivery_date"] = deliveryDateFormat
@@ -151,7 +154,8 @@ export default function SelectCountry({ route }) {
     }
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+  <View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
 
             <ScrollView>
 
@@ -162,132 +166,104 @@ export default function SelectCountry({ route }) {
                         source={require('../../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Select country</TextBold>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('buyerHome.selCountry')}</TextBold>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Buy Product From</TextBold>
+                <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left'}]}>{t('buyerHome.buyProdFrom')}</TextBold>
 
 
-                <TouchableOpacity activeOpacity={1} disabled={country1 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
-                    <TouchableOpacity onPress={() => setCountry1(true)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <CountryPicker
-                            countryCode={countryCode}
-                            withFilter
-                            withFlag
-                            withAlphaFilter
-                            withCallingCode
-                            withEmoji
-                            onSelect={(country) => onSelect(country)}
-                            modalProps={{
-                                visible: country1
-                            }}
-                            onClose={() => setCountry1(false)}
-                            onOpen={() => setCountry1(true)}
-                        />
-                        <Image
-                            style={styles.countryDropImg}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
+                <View style={[styles.pickerVIew, { alignItems: 'center', padding: 4, paddingLeft: 16 }]}>
+                    <CountryPicker
+                        countryCode={countryCode}
+                        withFilter
+                        withFlag
+                        withAlphaFilter
+                        withCallingCode
+                        withEmoji
+                        onSelect={(country) => onSelect(country)}
+                        modalProps={{
+                            visible: country1
+                        }}
+                        onClose={() => setCountry1(false)}
+                        onOpen={() => setCountry1(true)}
+                    />
 
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{country.country_name ? country.country_name : country.name}</TextMedium>
+                    <View style={{ borderLeftWidth: 1, paddingLeft: 8, marginLeft: 16 }}>
+                        <TextMedium style={[styles.countryNameCSS]}>{country.country_name ? country.country_name : country.name}</TextMedium>
                     </View>
-                </TouchableOpacity>
+                </View>
 
+                    
+                <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 16, padding: 16 }]}>
 
-
-                <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
-
-                    <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
-                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
-
-                        <Image
-                            style={[styles.countryDropImg, { marginLeft: 16 }]}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
+                <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCity(!modalVisibleCity)}>
+                    <TextMedium style={styles.countryNameCSS}>City</TextMedium>
+                    <Image
+                        style={[styles.countryDropImg, { marginLeft: 8 }]}
+                        resizeMode='stretch'
+                        source={require('../../../images/dropDpwnCountry.png')}
+                    />
                     </TouchableOpacity>
-                    <View style={styles.vertyicalLine}></View>
 
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCity}</TextMedium>
+                    <View style={{ borderLeftWidth: 1, paddingLeft: 8 }}>
+                        <TextMedium style={[styles.countryNameCSS]}>{pickerValueSelectedCity}</TextMedium>
+                    </View>
+
+                </View>
+
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('buyerHome.delProdTo')}</TextBold>
+
+
+                <View style={[styles.pickerVIew, { alignItems: 'center', padding: 4, paddingLeft: 16 }]}>
+                    <CountryPicker
+                        countryCode={countryCodeDeliver}
+                        withFilter
+                        withFlag
+                        withAlphaFilter
+                        withCallingCode
+                        withEmoji
+                        onSelect={(country) => onSelectDestinationCountry(country)}
+                        modalProps={{
+                            visible: country2
+                        }}
+                        onClose={() => setCountry2(false)}
+                        onOpen={() => setCountry2(true)}
+                    />
+
+                    <View style={{ borderLeftWidth: 1, paddingLeft: 8, marginLeft: 16 }}>
+                        <TextMedium style={[styles.countryNameCSS]}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</TextMedium>
+                    </View>
+                </View>
+
+                    
+                <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 16, padding: 16 }]}>
+
+                <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
+                    <TextMedium style={styles.countryNameCSS}>City</TextMedium>
+                    <Image
+                        style={[styles.countryDropImg, { marginLeft: 8 }]}
+                        resizeMode='stretch'
+                        source={require('../../../images/dropDpwnCountry.png')}
+                    />
+                    </TouchableOpacity>
+
+                    <View style={{ borderLeftWidth: 1, paddingLeft: 8 }}>
+                        <TextMedium style={[styles.countryNameCSS]}>{pickerValueSelectedCityDeliver}</TextMedium>
                     </View>
 
                 </View>
 
 
 
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 10) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Deliver Product To</TextBold>
-
-
-                <TouchableOpacity activeOpacity={1} disabled={country2 ? true : false} style={[styles.pickerVIew, { alignItems: 'center' }]}>
-                    <TouchableOpacity onPress={() => setCountry2(true)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <CountryPicker
-                            countryCode={countryCodeDeliver}
-                            withFilter={withFilterDeliver}
-                            withFlag={withFlagDeliver}
-                            withCountryNameButton={withCountryNameButtonDeliver}
-                            withAlphaFilter={withAlphaFilterDeliver}
-                            withCallingCode={withCallingCodeDeliver}
-                            withEmoji={withEmojiDeliver}
-                            onSelect={(country) => onSelectDestinationCountry(country)}
-                            modalProps={{
-                                visible: country2
-                            }}
-                            onClose={() => setCountry2(false)}
-                            onOpen={() => setCountry2(true)}
-                        />
-                        <Image
-                            style={styles.countryDropImg}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{countryDeliver.country_name ? countryDeliver.country_name : countryDeliver.name}</TextMedium>
-                    </View>
-                </TouchableOpacity>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, textAlign:'left' }]}>{t('buyerHome.delDate')}</TextBold>
 
 
-
-                <View style={[styles.pickerVIew, { alignItems: 'center', marginTop: 30 }]}>
-
-                    <TouchableOpacity style={styles.citySelect} onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                        <TextMedium style={styles.countryNameCSS}>City</TextMedium>
-
-                        <Image
-                            style={[styles.countryDropImg, { marginLeft: 16 }]}
-                            resizeMode='stretch'
-                            source={require('../../../images/dropDpwnCountry.png')}
-                        />
-                    </TouchableOpacity>
-
-                    <View style={styles.vertyicalLine}></View>
-
-                    <View style={styles.countryNameCSSContainer}>
-                        <TextMedium style={styles.countryNameCSS}>{pickerValueSelectedCityDeliver}</TextMedium>
-                    </View>
-
-                </View>
-
-
-
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 17) / 100, marginLeft: '5%' }]}>Delivery date</TextBold>
-
-
-                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', marginTop: 20 }]}>
-                    Based on country selection we estimate this should be delivered by
+                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10,  textAlign: 'justify', marginTop: 20 }]}>
+                    {t('common.basedOnYourCountry')}
                 </TextMedium>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 4) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
+                <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 4) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
                     {deliveryDay + " " + deliveryDateFormat}
                 </TextBold>
 
@@ -310,7 +286,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={styles.billLeft}>
-                        <TextBold style={styles.loginInputHeading}>Order price</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.orderPrice')}</TextBold>
                     </View>
 
                     <View style={styles.billRight}>
@@ -324,7 +300,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Estimated Delivery Fee</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -339,7 +315,7 @@ export default function SelectCountry({ route }) {
                     <View style={styles.orderBillStyle}>
 
                         <View style={[styles.billLeft, { marginTop: 2 }]}>
-                            <TextBold style={styles.loginInputHeading}>VIP Service Fee</TextBold>
+                            <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                         </View>
 
                         <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -354,7 +330,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Flightneno cost</TextBold>
+                        <TextBold style={styles.loginInputHeading}>Flighteno {t('track.cost')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -369,7 +345,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.loginInputHeading}>Tax</TextBold>
+                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -383,7 +359,7 @@ export default function SelectCountry({ route }) {
                 <View style={styles.orderBillStyle}>
 
                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                        <TextBold style={styles.textLarge}>Total</TextBold>
+                        <TextBold style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</TextBold>
                     </View>
 
                     <View style={[styles.billRight, { marginTop: 2 }]}>
@@ -396,7 +372,7 @@ export default function SelectCountry({ route }) {
 
                 <View style={{ marginTop: 40, marginBottom: 20 }}>
                     <ButtonLarge
-                        title="Continue"
+                        title={t('buyerHome.continue')}
                         loader={loading}
                         onPress={() => handleSubmit()}
                     />
@@ -408,125 +384,119 @@ export default function SelectCountry({ route }) {
 
             <Modal
                 animationType="slide"
-                transparent={true}
+                transparent={false}
                 visible={modalVisibleCity}
                 onRequestClose={() => {
                     setModalCity(!modalCity);
                 }}
+
             >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        {/* <Text style={styles.modalText}>Hello World!</Text> */}
+                <SafeAreaView style={{ flex: 1 }}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            {/* <Text style={styles.modalText}>Hello World!</Text> */}
 
-                        <View style={styles.modalCitySearchContainer}>
-                            <TouchableOpacity onPress={() => setModalVisibleCity(!modalVisibleCity)}>
-                                <Image
-                                    style={styles.cityModalClose}
-                                    resizeMode='stretch'
-                                    source={require('../../../images/cross.png')}
+                            <View style={styles.modalCitySearchContainer}>
+                                <TouchableOpacity onPress={() => setModalVisibleCity(!modalVisibleCity)}>
+                                    <Image
+                                        style={styles.cityModalClose}
+                                        resizeMode='stretch'
+                                        source={require('../../../images/cross.png')}
+                                    />
+
+                                </TouchableOpacity>
+
+                                <TextInput style={styles.inputCityModal}
+                                    placeholder="Enter city name"
+                                    placeholderTextColor="#656F85"
+                                    onChangeText={text => searchCitiesOrigin(text)}
+                                    secureTextEntry={false}
+
                                 />
+                            </View>
 
-                            </TouchableOpacity>
+                            <FlatList
+                                data={pickerValuesCity}
+                                nestedScrollEnabled={true}
+                                renderItem={({ item, index }) =>
+                                    <View style={{ marginLeft: 10, paddingVertical: 16, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
+                                        <TouchableOpacity onPress={() => selectPickerValueCityFN(index)}>
+                                            <View>
+                                                <Text style={styles.textSelectedCity}>{item}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
 
-                            <TextInput style={styles.inputCityModal}
-                                placeholder="Enter city name"
-                                placeholderTextColor="#656F85"
-                                onChangeText={text => searchCitiesOrigin(text)}
-                                secureTextEntry={false}
-                                
+                                }
+                                keyExtractor={(item, index) => item + index}
+                                style={{ marginTop: 3 }}
                             />
                         </View>
-
-                        <FlatList
-                            data={pickerValuesCity}
-                            nestedScrollEnabled={true}
-                            renderItem={({ item, index }) =>
-                                <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                                    <TouchableOpacity onPress={() => selectPickerValueCityFN(index)}>
-                                        <View>
-                                            <Text style={styles.textSelectedCity}>{item}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-
-                            }
-                            keyExtractor={item => item.id}
-                            style={{ borderRadius: 100, marginTop: 3 }}
-                        />
-                        {/* <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisibleCity(!modalVisibleCity)}
-                        >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable> */}
                     </View>
-                </View>
+                </SafeAreaView>
             </Modal>
 
 
             {/* /////////////Deliver */}
-
             <Modal
                 animationType="slide"
-                transparent={true}
+                transparent={false}
                 visible={modalVisibleCityDeliver}
                 onRequestClose={() => {
-                    setModalVisibleCityDeliver(!modalVisibleCityDeliver);
+                    setModalCity(!modalCity);
                 }}
+
             >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        {/* <Text style={styles.modalText}>Hello World!</Text> */}
+                <SafeAreaView style={{ flex: 1 }}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            {/* <Text style={styles.modalText}>Hello World!</Text> */}
 
-                        <View style={styles.modalCitySearchContainer}>
-                            <TouchableOpacity onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
-                                <Image
-                                    style={styles.cityModalClose}
-                                    resizeMode='stretch'
-                                    source={require('../../../images/cross.png')}
+                            <View style={styles.modalCitySearchContainer}>
+                                <TouchableOpacity onPress={() => setModalVisibleCityDeliver(!modalVisibleCityDeliver)}>
+                                    <Image
+                                        style={styles.cityModalClose}
+                                        resizeMode='stretch'
+                                        source={require('../../../images/cross.png')}
+                                    />
+
+                                </TouchableOpacity>
+
+                                <TextInput style={styles.inputCityModal}
+                                    placeholder="Enter city name"
+                                    placeholderTextColor="#656F85"
+                                    onChangeText={text => searchCitiesOrigin(text)}
+                                    secureTextEntry={false}
+
                                 />
+                            </View>
 
-                            </TouchableOpacity>
+                            <FlatList
+                                data={pickerValuesCityDeliver}
+                                nestedScrollEnabled={true}
+                                renderItem={({ item, index }) =>
+                                    <View style={{ marginLeft: 10, paddingVertical: 16, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
+                                        <TouchableOpacity onPress={() => selectPickerValueCityDeliverFN(index)}>
+                                            <View>
+                                                <Text style={styles.textSelectedCity}>{item}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
 
-                            <TextInput style={styles.inputCityModal}
-                                placeholder="Enter city name"
-                                placeholderTextColor="#656F85"
-                                onChangeText={text => searchCitiesDestination(text)}
-                                secureTextEntry={false}
-
+                                }
+                                keyExtractor={(item, index) => item + index}
+                                style={{ marginTop: 3 }}
                             />
                         </View>
-
-                        <FlatList
-                            data={pickerValuesCityDeliver}
-                            nestedScrollEnabled={true}
-                            renderItem={({ item, index }) =>
-                                <View style={{ marginLeft: 10, paddingVertical: 5, borderBottomColor: '#ddd', borderBottomWidth: 1, }}>
-                                    <TouchableOpacity onPress={() => selectPickerValueCityDeliverFN(index)}>
-                                        <View>
-                                            <Text style={styles.textSelectedCity}>{item}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-
-                            }
-                            keyExtractor={item => item.id}
-                            style={{ borderRadius: 100, marginTop: 3 }}
-                        />
-                        {/* <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisibleCity(!modalVisibleCity)}
-                        >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </Pressable> */}
                     </View>
-                </View>
+                </SafeAreaView>
             </Modal>
 
 
 
 
         </View>
+        </SafeAreaView>
     );
 
 }

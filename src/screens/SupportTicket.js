@@ -7,11 +7,16 @@ import { styles } from '../Utility/Styles'
 import moment from 'moment';
 import {getTickets} from '../redux/actions/Auth'
 import TextBold from '../components/atoms/TextBold';
+import { useTranslation } from 'react-i18next';
+import TextMedium from '../components/atoms/TextMedium';
+import TextRegular from '../components/atoms/TextRegular';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const windowWidth = Dimensions.get('window').width;
 
 export default function SupportTicket({ navigation }) {
     const { loading, supportTickets, currentUser, token } = useSelector(({ authRed }) => authRed)
     const dispatch = useDispatch()
+    const {t} = useTranslation()
 
     useEffect(() => {
         var data = {
@@ -20,7 +25,8 @@ export default function SupportTicket({ navigation }) {
         dispatch(getTickets(data, token))
     }, [])
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <SafeAreaView style={{flex:1}}>
+ <View style={{ flex: 1, backgroundColor: 'white' }}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
                     style={styles.backImg}
@@ -28,12 +34,12 @@ export default function SupportTicket({ navigation }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Support</TextBold>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%', textAlign:'left' }]}>{t('support.support')}</TextBold>
             <View style={[Styles.userDataPortion, { borderBottomWidth: 0, }]}>
                 <FlatList
                     data={supportTickets}
                     renderItem={({ item, index }) => (
-                        <View>
+                        <View key={item._id}>
                             <TouchableOpacity onPress={() => navigation.navigate("SupportReply", { ticket: item })}>
                                 <View style={{
                                     borderRadius: 20,
@@ -55,18 +61,18 @@ export default function SupportTicket({ navigation }) {
                                     </View>
                                     <View style={Styles.suportFlattxtView}>
                                         <View style={{ flexDirection: 'row', }}>
-                                            <Text style={[Styles.suportno, { width: '65%' }]}>
+                                            <TextMedium style={[Styles.suportno, { width: '65%' }]}>
                                                 {item._id}
-                                            </Text>
-                                            <Text style={[Styles.suportno, {
+                                            </TextMedium>
+                                            <TextMedium style={[Styles.suportno, {
                                                 color: item.status == "pending" ? '#FFA800' : "#10CF73", marginLeft: 'auto',
                                                 marginRight: (windowWidth * 5.3) / 100, textTransform: "capitalize"
-                                            }]}>{item.status}</Text>
+                                            }]}>{item.status}</TextMedium>
                                         </View>
-                                        <Text numberOfLines={2} style={Styles.suportTxt}>{item.message}</Text>
-                                        <Text style={Styles.suportTxtDate}>
+                                        <TextMedium numberOfLines={2} style={Styles.suportTxt}>{item.message}</TextMedium>
+                                        <TextMedium style={Styles.suportTxtDate}>
                                             {moment(item.created_date.$date.$numberLong, 'x').format("MM/DD/YYYY")}
-                                        </Text>
+                                        </TextMedium>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -79,12 +85,13 @@ export default function SupportTicket({ navigation }) {
             </View>
             <View style={{ position: "absolute", bottom: 20, width: '100%' }}>
                 <ButtonLarge
-                    title="Send New Ticket"
+                    title={t('support.sendNewTicket')}
                     onPress={() => navigation.navigate("Support")}
                     loader={loading}
                 />
             </View>
         </View>
+        </SafeAreaView>
     );
 }
 

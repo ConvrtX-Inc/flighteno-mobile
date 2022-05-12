@@ -13,6 +13,9 @@ import { useNavigation } from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 import { sendEditOffer } from '../../redux/actions/Chat';
 import { formatAmount } from '../../Utility/Utils';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
+import TextMedium from '../../components/atoms/TextMedium';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -28,6 +31,9 @@ export default function EditOffer({ route }) {
     const [notes, setNotes] = useState("")
     const [orderDetail, setOrderDetail] = useState({})
     const [orderDetailId, setOrderDetailId] = useState("")
+    const {t} = useTranslation()
+
+    
     useEffect(() => {
         ordersToDestination.forEach(element => {
             if (element._id == route.params.ID) {
@@ -42,7 +48,7 @@ export default function EditOffer({ route }) {
         setShow(false);
         setDateValue(moment(currentDate).format("MM/DD/YYYY"));
     };
-
+    
     const sendOffer = () => {
         if (offerPrice == "") {
             Toast.show({ type: 'error', text2: "Please enter a delivery fee", })
@@ -75,7 +81,7 @@ export default function EditOffer({ route }) {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: color.backgroundColor }}>
+        <View style={{ flex: 1, backgroundColor: color.backgroundColor, marginLeft:18, marginRight:18 }}>
             <ScrollView>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image
@@ -84,16 +90,16 @@ export default function EditOffer({ route }) {
                         source={require('../../images/back.png')}
                     />
                 </TouchableOpacity>
-                <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Edit offer</Text>
+                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('travelHome.editOffer')}</TextBold>
                 {orderDetail == {} ? null
                     :
                     <View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '5%', marginTop: 20 }}>
-                            <Text style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5 }]}>Estimated Delivery Fee</Text>
-                            <Text style={Styles.priceText}>{formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+                            <TextBold style={[Styles.userName, { marginLeft: 0, minWidth: '24%', marginRight: 5,textAlign:'left' }]}>{t('track.estimatedDelFee')}</TextBold>
+                            <TextMedium style={Styles.priceText}>{formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}</TextMedium>
                         </View>
-                        <View style={{ alignSelf: 'center', width: '90%' }}>
-                            <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Your Delivery Fee Offer</Text>
+                        <View style={{ alignSelf: 'center', width: '100%' }}>
+                            <TextBold style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.yourDelFeeOffer')}</TextBold>
                         </View>
                         <Input
                             placeholder="$90.00"
@@ -104,15 +110,15 @@ export default function EditOffer({ route }) {
                         />
                         <View style={styles.ordernumberStyle}>
 
-                            <View style={[styles.orderNumberIst, { paddingLeft: '5%' }]}>
-                                <Text style={styles.loginInputHeading}>Order No.</Text>
+                            <View style={[styles.orderNumberIst]}>
+                                <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.orderNo')}.</TextBold>
 
                             </View>
                             <View style={styles.orderNumberSecond}>
 
-                                <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify',textAlign:'left' }]}>
                                     {orderDetailId}
-                                </Text>
+                                </TextMedium>
                             </View>
 
                         </View>
@@ -121,13 +127,13 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={styles.billLeft}>
-                                    <Text style={styles.loginInputHeading}>Order price</Text>
+                                    <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('buyerHome.orderPrice')}</TextBold>
                                 </View>
 
                                 <View style={styles.billRight}>
-                                    <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                         {formatAmount(orderDetail.product_price)}
-                                    </Text>
+   s     s                                   </TextMedium>
                                 </View>
 
                             </View>
@@ -135,13 +141,13 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.loginInputHeading}>Estimated Delivery Fee</Text>
+                                    <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.estimatedDelFee')}</TextBold>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
-                                    <Text style={[styles.termText, { color: 'white', opacity: 10, marginHorizontal: '5%', textAlign: 'justify', backgroundColor: color.lightBlue, width: '50%' }]}>
+                                    <TextMedium style={[styles.termText, { color: 'white', opacity: 10, marginHorizontal: '5%', textAlign: 'justify', backgroundColor: color.lightBlue, width: '50%' }]}>
                                         {formatAmount(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10))}
-                                    </Text>
+                                    </TextMedium>
                                 </View>
 
                             </View>
@@ -150,13 +156,13 @@ export default function EditOffer({ route }) {
                                 <View style={styles.orderBillStyle}>
 
                                     <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                        <Text style={styles.loginInputHeading}>VIP Service Fee</Text>
+                                        <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.vipServFee')}</TextBold>
                                     </View>
 
                                     <View style={[styles.billRight, { marginTop: 2 }]}>
-                                        <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                        <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                             {formatAmount(orderDetail.vip_service_fee)}
-                                        </Text>
+                                        </TextMedium>
                                     </View>
 
                                 </View>
@@ -165,13 +171,13 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.loginInputHeading}>Flightneno cost</Text>
+                                    <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>Flighteno {t('track.cost')}</TextBold>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
-                                    <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                         {formatAmount(Math.round((orderDetail.product_price / 100) * 7))}
-                                    </Text>
+                                    </TextMedium>
                                 </View>
 
                             </View>
@@ -180,13 +186,13 @@ export default function EditOffer({ route }) {
                             <View style={styles.orderBillStyle}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.loginInputHeading}>Tax</Text>
+                                    <TextBold style={[styles.loginInputHeading, {textAlign:'left'}]}>{t('track.tax')}</TextBold>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
-                                    <Text style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    <TextMedium style={[styles.termText, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                         {formatAmount(orderDetail.tax)}
-                                    </Text>
+                                    </TextMedium>
                                 </View>
 
                             </View>
@@ -194,23 +200,23 @@ export default function EditOffer({ route }) {
                             <View style={[styles.orderBillStyle, { marginTop: 20 }]}>
 
                                 <View style={[styles.billLeft, { marginTop: 2 }]}>
-                                    <Text style={styles.textLarge}>Total</Text>
+                                    <TextBold style={[styles.textLarge, {textAlign:'left'}]}>{t('track.total')}</TextBold>
                                 </View>
 
                                 <View style={[styles.billRight, { marginTop: 2 }]}>
-                                    <Text style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
+                                    <TextMedium style={[styles.textLarge, { color: color.countrtTextColor, opacity: 10, marginHorizontal: '5%', textAlign: 'justify', }]}>
                                         {formatAmount(parseInt(orderDetail.product_price) + parseInt(orderDetail.tax) + parseInt(orderDetail.vip_service_fee) + parseInt(Math.round((orderDetail.product_price / 100) * 7)) + parseInt(Math.round((orderDetail.product_price / 100) * 10) < 50 ? 50 : Math.round((orderDetail.product_price / 100) * 10)))}
-                                    </Text>
+                                    </TextMedium>
                                 </View>
 
                             </View>
-                            <View style={{ alignSelf: 'center', width: '90%', marginTop: 30 }}>
-                                <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Preferred Delivery Date</Text>
+                            <View style={{ alignSelf: 'center', width: '100%', marginTop: 30 }}>
+                                <TextBold style={[styles.loginInputHeading, { marginVertical: 20, textAlign:'left' }]}>{t('buyerHome.prefDelDate')}</TextBold>
                             </View>
                             <Pressable style={{ marginTop: 5 }} onPress={() => setShow(!show)}>
                                 <View style={styles.pickerVIew}>
                                     <View style={styles.pickerLeftView}>
-                                        <Text style={styles.textSelected}>{dateValue}</Text>
+                                        <TextMedium style={styles.textSelected}>{dateValue}</TextMedium>
                                     </View>
                                     <View style={{ width: '10%', justifyContent: 'center', alignItems: 'center' }}>
                                         <Image
@@ -222,8 +228,8 @@ export default function EditOffer({ route }) {
 
                                 </View>
                             </Pressable>
-                            <View style={{ alignSelf: 'center', width: '90%', }}>
-                                <Text style={[styles.loginInputHeading, { marginVertical: 20 }]}>Notes</Text>
+                            <View style={{ alignSelf: 'center', width: '100%', }}>
+                                <TextMedium style={[styles.loginInputHeading, { marginVertical: 20,textAlign:'left' }]}>{t('travelHome.notes')}</TextMedium>
                             </View>
                             <InputMulti
                                 placeholder="Let's meet in the morning"
@@ -233,7 +239,7 @@ export default function EditOffer({ route }) {
                             <View style={{ marginTop: 80, marginBottom: 20 }}>
                                 <ButtonTraveller
                                     loader={loading}
-                                    title="Edit Offer"
+                                    title={t('travelHome.editOffer')}
                                     onPress={() => sendOffer()}
                                 />
                             </View>
@@ -257,9 +263,9 @@ export default function EditOffer({ route }) {
 }
 
 const Styles = StyleSheet.create({
-    upperView: {
-        paddingHorizontal: '5%'
-    },
+    // upperView: {
+    //     paddingHorizontal: '5%'
+    // },
     userName: {
         fontSize: 16,
         fontWeight: 'bold',

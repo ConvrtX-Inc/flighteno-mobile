@@ -7,6 +7,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { NotificationsList } from '../redux/actions/Auth';
 import moment from 'moment';
 import ScreenLoader from '../components/ScreenLoader';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../components/atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -16,6 +19,7 @@ export default function Notifications({ route }) {
     const dispatch = useDispatch()
     const { token, currentUser, notificationsData, loading } = useSelector(({ authRed }) => authRed)
     const [showList, setShowList] = useState(false)
+    const {t} = useTranslation()
 
     useEffect(() => {
         var data = {
@@ -29,7 +33,8 @@ export default function Notifications({ route }) {
     }, [])
 
     return (
-        <View style={styles.ScreenCss}>
+        <SafeAreaView style={{flex:1}}>
+<View style={[styles.ScreenCss, {marginLeft:18, marginRight:18}]}>
             <ScreenLoader loader={loading} />
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -38,7 +43,7 @@ export default function Notifications({ route }) {
                     source={require('../images/back.png')}
                 />
             </TouchableOpacity>
-            <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Notifications</Text>
+            <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, textAlign:'left' }]}>{t('common.notifications')}</TextBold>
             {showList ?
                 <FlatList
                     data={notificationsData}
@@ -56,11 +61,12 @@ export default function Notifications({ route }) {
                             </View>
                         </TouchableOpacity>
                     }
-                    keyExtractor={item => item.id}
-                    ListEmptyComponent={<Text style={styles.emptyListText}>There are no notifications!</Text>}
+                    keyExtractor={(item, index) => item + index}
+                    ListEmptyComponent={<Text style={styles.emptyListText}>{t('common.noNotifications')}!</Text>}
                 />
                 : null}
         </View>
+        </SafeAreaView>
     );
 
 }
@@ -71,7 +77,7 @@ const Styles = StyleSheet.create({
         marginLeft: '5%'
     },
     listView: {
-        width: '90%',
+        width: '100%',
         flexDirection: 'row',
         alignSelf: 'center',
         marginTop: 25,

@@ -56,6 +56,12 @@ import KYCSelectIDCameraScreen from '../screens/KYC/KYCSelectIDCameraScreen';
 import { color } from '../Utility/Color';
 import { colors } from 'react-native-elements';
 import KYCTestScreen from '../screens/KYC/KYCTestScreen';
+import LatestTransactionsScreen from '../screens/Payment/LatestTransactions';
+import PaymentAddNewCard from '../screens/Payment/AddNewCard';
+import ManageCards from '../screens/CardManagement/ManageCards';
+import ManageBankAccountScreen from '../screens/ManageBankAccount/ManageBankAccountScreen';
+import AddNewCardScreen from '../screens/ManageBankAccount/AddNewCardScreen';
+import CreateStripeAccount from '../screens/CreateStripeAccount';
 // https://extreme-ip-lookup.com/json/
 // https://geolocation-db.com/json/
 
@@ -141,13 +147,13 @@ function Navigation() {
         //          }}}    
         //      />
         // </Stack.Navigator>
-       currentUser ?
-           <Stack.Navigator
-               initialRouteName={currentProfile ? "BottomTab" : "SelectProfile"}
-            //    initialRouteName="KYCTestScreen"
-               screenOptions={{
-                   headerShown: false
-               }}
+        currentUser ?
+            <Stack.Navigator
+                initialRouteName={currentProfile ? "BottomTab" : "SelectProfile"}
+                //    initialRouteName="ManageBankAccount"
+                screenOptions={{
+                    headerShown: false
+                }}
             >
                 <Stack.Screen name="SelectProfile" component={SelectProfile} />
                 <Stack.Screen name="KYCTestScreen" component={KYCTestScreen} />
@@ -184,76 +190,118 @@ function Navigation() {
                 <Stack.Screen name="SupportTicket" component={SupportTicket} />
                 <Stack.Screen name="OrderDetailBaseOnOrderId" component={OrderDetailBaseOnOrderId} />
                 <Stack.Screen name="SupportReply" component={SupportReply} />
-                <Stack.Screen 
-                    name="KYCIntro" 
-                    component={KYCIntroScreen} 
-                    options={() => {return {
-                        headerShown:true,
-                        headerTransparent:true,
-                        headerBackTitleVisible:false,
-                        headerTitle:false
-                    }}}
+                <Stack.Screen name="LatestTransactions" component={LatestTransactionsScreen} />
+                <Stack.Screen name="ManageCards" component={ManageCards} />
+                <Stack.Screen name="PaymentAddNewCard" component={PaymentAddNewCard} />
+                <Stack.Screen
+                    name="BankAddNewCard"
+                    component={AddNewCardScreen}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerTitle: false
+                        }
+                    }}
                 />
-                <Stack.Screen 
-                    name='KYCFillOut' 
-                    component={KYCFillOutScreen} 
-                    options={() => {return {
-                        headerShown:true,
-                        headerTransparent:true,
-                        headerBackTitleVisible:false,
-                        headerTitle:false
-                    }}}    
+                <Stack.Screen
+                    name="ManageBankAccount"
+                    component={ManageBankAccountScreen}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerTitle: false
+                        }
+                    }}
                 />
-                <Stack.Screen 
-                    name="KYCSelectID" 
-                    component={KYCSelectIDScreen} 
-                    options={() => {return {
-                    headerShown:true,
-                    headerTransparent:true,
-                    headerBackTitleVisible:false,
-                    headerTitle:false
-                  }}}
+                <Stack.Screen
+                    name="KYCIntro"
+                    component={KYCIntroScreen}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerTransparent: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: false
+                        }
+                    }}
+                />
+                <Stack.Screen
+                    name='KYCFillOut'
+                    component={KYCFillOutScreen}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerTransparent: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: false
+                        }
+                    }}
+                />
+                <Stack.Screen
+                    name="KYCSelectID"
+                    component={KYCSelectIDScreen}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerTransparent: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: false
+                        }
+                    }}
                 />
                 <Stack.Screen
                     name="KYCSelectIDCamera"
                     component={KYCSelectIDCameraScreen}
-                    options={() => {return {
-                        headerShown:true,
-                        headerStyle:{backgroundColor:color.lightBlue},
-                        headerTintColor:color.backgroundColor,
-                        headerBackTitleVisible:false,
-                        headerTitle:"Id Verification"
-                      }}}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerStyle: { backgroundColor: color.lightBlue },
+                            headerTintColor: color.backgroundColor,
+                            headerBackTitleVisible: false,
+                            headerTitle: "Id Verification"
+                        }
+                    }}
                 />
                 <Stack.Screen
-                    name='KYCSendVerification' 
-                    component={KYCSelfieVerificationScreen} 
-                    options={() => {return {
-                        headerShown:true,
-                        headerTransparent:true,
-                        headerBackTitleVisible:false,
-                        headerTitle:false
-                    }}}    
+                    name='KYCSendVerification'
+                    component={KYCSelfieVerificationScreen}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerTransparent: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: false
+                        }
+                    }}
                 />
-                <Stack.Screen 
-                 name='KYCTermsPrivacy' 
-                 component={KYCTermsPrivacyScreen} options={() => {
-                    return {
-                        headerShown:true,
-                        headerBackTitleVisible:false,
-                        headerTitle:false
-                    }
-                }} />
                 <Stack.Screen
-                   name='KYCSelfieVerificationCamera'
-                   component={KYCSelfieVerificationCameraScreen} 
-                   options={() => {return {
-                    headerShown:true,
-                    headerTransparent:true,
-                    headerBackTitleVisible:false,
-                    headerTitle:false
-                }}}    
+                    name='KYCTermsPrivacy'
+                    component={KYCTermsPrivacyScreen} options={() => {
+                        return {
+                            headerShown: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: false
+                        }
+                    }} />
+                <Stack.Screen
+                    name='KYCSelfieVerificationCamera'
+                    component={KYCSelfieVerificationCameraScreen}
+                    options={() => {
+                        return {
+                            headerShown: true,
+                            headerTransparent: true,
+                            headerBackTitleVisible: false,
+                            headerTitle: false
+                        }
+                    }}
                 />
+
+                <Stack.Screen name="CreateStripeAccount" component={CreateStripeAccount} options={() => {
+                        return {
+                            headerShown: true,
+                            headerTitle: false
+                        }
+                    }} />
             </Stack.Navigator>
             :
             firstLaunch == 0
@@ -282,7 +330,8 @@ function Navigation() {
                     <Stack.Screen name="VerifyCode" component={VerifyCode} />
                     <Stack.Screen name="NewPassword" component={NewPassword} />
                     <Stack.Screen name="HomeScreen" component={HomeScreen} />
-                   
+
+
 
                 </Stack.Navigator>
                 :
@@ -299,7 +348,7 @@ function Navigation() {
                     <Stack.Screen name="VerifyCode" component={VerifyCode} />
                     <Stack.Screen name="NewPassword" component={NewPassword} />
                     <Stack.Screen name="HomeScreen" component={HomeScreen} />
-            </Stack.Navigator>
+                </Stack.Navigator>
     );
 }
 

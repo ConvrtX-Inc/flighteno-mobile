@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
-import PhoneInput from "react-native-phone-number-input";
+// import PhoneInput from "react-native-phone-number-input";
+import CountryPicker from 'react-native-country-picker-modal';
+import PhoneInput from 'react-native-phone-input'
 
 import Input from '../../components/InputField';
 import ButtonLarge from '../../components/ButtonLarge';
@@ -12,6 +14,8 @@ import { otpResetPasswordAction } from '../../redux/actions/Auth';
 import { IS_LOADING } from '../../redux/constants';
 import TextBold from '../../components/atoms/TextBold';
 import TextMedium from '../../components/atoms/TextMedium';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 var windowWidth = Dimensions.get('window').width;
@@ -19,29 +23,52 @@ export default function ResetPassword() {
 
     const navigation = useNavigation();
     const dispatch = useDispatch()
-    // useEffect(() => {
-    //     dispatch({type: IS_LOADING, isloading: false})
-    // })
-    const { loading } = useSelector(({ authRed }) => authRed)
 
+    const countryPicker = useRef()
+  
+    const { loading } = useSelector(({ authRed }) => authRed)
+    const {t} = useTranslation()
 
 
     const [email, setEmail] = useState('');
     const [cellno, setCellNo] = useState('');
     const [cellnoShow, setCellNoShow] = useState('');
 
+    const [isPhoneEnabled, setPhoneEnabled] = useState(true)
+    const [isEmailEnabled, setEmailEnabled] = useState(true)
 
+    const [initialCountry, setInitialCountry] = useState('us')
+    const [isPickerOpen, setPikckerOpen] = useState(false)
     const phoneInput = useRef();
+    const [phoneInputVal, setPhoneInputVal] = useState('') 
+
+    useEffect(() => {
+
+    },[])
 
     const resetPasswordFN = () => {
 
-        if (email == "" && cellno == "") {
+       
+        if(isPhoneEnabled && isEmailEnabled){
             Toast.show({
                 type: 'info',
                 text1: 'Alert!',
                 text2: "Please, enter your email address or phone number",
-            })
-            return
+           })
+
+           return 
+        }
+
+
+        if(isPhoneEnabled){
+            if(phoneInputVal.length <= 10){
+                Toast.show({
+                    type: 'info',
+                    text1: 'Alert!',
+                    text2: "Phone number not valid",
+                })
+                return 
+            }
         }
 
         const form_data = new FormData()
@@ -63,11 +90,10 @@ export default function ResetPassword() {
         }
         else {
             form_data.append("type", "phone")
-            form_data.append("data", cellno)
+            form_data.append("data", phoneInputVal)
         }
 
-        
-        console.log("DATA", form_data)
+    
         dispatch(otpResetPasswordAction(
             form_data,
             () => {
@@ -76,7 +102,17 @@ export default function ResetPassword() {
                 setEmail("")
             },
             (cellNo) => {
-                navigation.navigate("VerifyCode", { cellNo: cellno.length >= 6 ? cellno : cellNo })
+            
+                if(isEmailEnabled){
+                    navigation.navigate("VerifyCode", { cellNo:  cellNo })
+                }
+
+                if(isPhoneEnabled){
+                    // console.log(phoneInputVal)
+                    navigation.navigate("VerifyCode", { cellNo:  phoneInputVal })
+                }
+
+                
             },
             () => {
                 Toast.show({
@@ -91,78 +127,151 @@ export default function ResetPassword() {
     }
 
     return (
+        <SafeAreaView style={{flex:1}}>
         <View style={styles.ScreenCss}>
 
-            <ScrollView>
+<ScrollView style={{marginLeft:18, marginRight: 18}}>
 
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Image
-                        style={styles.backImg}
-                        resizeMode='stretch'
-                        source={require('../../images/back.png')}
-                    />
-                </TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Image
+            style={styles.backImg}
+            resizeMode='stretch'
+            source={require('../../images/back.png')}
+        />
+    </TouchableOpacity>
 
-                <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Reset password</TextBold>
+    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('common.resetPassword')}</TextBold>
 
-                <TextMedium style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100 }]}>
-                    Enter your email ID  or phone number associated with your account and we’ll send an verification code for reset your password
-                </TextMedium>
-
-
-                {/* TextInputs For Reset Password */}
+    <TextMedium style={[styles.loginInputHeading, {  marginTop: (windowWidth * 12) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>
+        {t('common.enterEmailAd')}
+    </TextMedium>
 
 
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</TextBold>
-
-                <Input
-                    placeholder="myemail@flighteno.com"
-                    onChangeText={text => { setEmail(text) }}
-                    value={email}
-                    secureTextEntry={false}
-                />
-
-                <TextBold style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</TextBold>
-
-                <PhoneInput
-                    ref={phoneInput}
-                    defaultValue={cellno}
-                    defaultCode="AU"
-                    onChangeFormattedText={(text) => {
-                        setCellNo(text)
-
-                    }}
-                    onChangeText={(text) => {
-                            setCellNoShow(text)
-                    }}
-                    // onChangeCountry={(country) => setCellNo("+" + country.callingCode)}
-                    containerStyle={styles.phoneContainer}
-                    textInputStyle={styles.phoneInput}
-                    textContainerStyle={styles.phoneTextContainer}
-                    codeTextStyle={styles.phoneCodeText}
-                    textInputProps={{
-                        placeholderTextColor: "#707070",
-                        keyboardType: "phone-pad",
-                        value: cellnoShow,
-                        placeholder: "123-456-789"
-                    }}
-                />
+        {/* TextInputs For Reset Password */}
 
 
-                <View style={{ marginTop: (windowWidth * 20) / 100, marginBottom: 35 }}>
-                    <ButtonLarge
-                        title="Verify Account"
-                        loader={loading}
-                        onPress={() => resetPasswordFN()}
-                    />
-                </View>
+    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
+
+    <Input
+        placeholder="myemail@flighteno.com"
+        onChangeText={text => {
+            setEmail(text)
+            
+            if(text === ""){
+                setPhoneEnabled(true)
+            }else{
+                setPhoneEnabled(false)
+            }
+         }}
+        value={email}
+        secureTextEntry={false}
+        editable={isEmailEnabled}
+        // editable={cellnoShow ? false : true}
+    />
+
+    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
+         <PhoneInput
+            ref={phoneInput}
+            onPressFlag={() => {
+                // countryPicker.current?.open()
+                setPickerOpen(!isPickerOpen)
+            }}
+            textProps={{
+                placeholder:'123-456-789'
+            }}
+            onChangePhoneNumber={(displayValue) => {
+            if(displayValue.length >1){
+                setEmailEnabled(false)
+            }else{
+                setEmailEnabled(true)
+            }
+             setPhoneInputVal(displayValue)
+            }}
+            
+            // disabled={email ? true : false}
+            disabled={!isPhoneEnabled}
+            style={[styles.phoneContainer, {padding:16}]}
+         />
+    {/* <PhoneInput
+        ref={phoneInput}
+        defaultValue={cellno}
+        defaultCode="AU"
+        // disableArrowIcon={email ? true : false}
+       
+        autoFocus
+        // disabled={email ? true : false}
+        countryPickerProps={{
+        //    withFilt  er:false,
+        //    withCallingCodeButton:false,
+        //    withFilter:false,
+        //    withCurrency:false,
+        //    withCallingCode:false,
+        //    withAlphaFilter:false
+        }}
+        
+        onChangeFormattedText={(text) => {
+            setCellNo(text)
+
+            if(text === ""){
+                setEmailEnabled(true)
+            }else{
+                setEmailEnabled(false)
+            }
+        }}
+        onChangeText={(text) => {
+            setCellNoShow(text)
+        }}
+        // onChangeCountry={(country) => setCellNo("+" + country.callingCode)}
+        containerStyle={styles.phoneContainer}
+        textInputStyle={styles.phoneInput}
+        textContainerStyle={styles.phoneTextContainer}
+        codeTextStyle={styles.phoneCodeText}
+        textInputProps={{
+            placeholderTextColor: email ? "#CDCDCD" : "#707070",
+            keyboardType: "phone-pad",
+            value: cellnoShow,
+            placeholder: "123-456-789",
+            editable:email ? false : true,         
+        }}
+    /> */}
+
+
+    <View style={{ marginTop: (windowWidth * 20) / 100, marginBottom: 35 }}>
+        <ButtonLarge
+            title={t('common.verifyAccount')}
+            loader={loading}
+            onPress={() => resetPasswordFN()}
+        />
+    </View>
 
 
 
 
-            </ScrollView>
+</ScrollView>
+    
 
-        </View>
+{isPickerOpen &&
+(
+<CountryPicker 
+// ref={countryPicker}
+// ref={countryPicker}
+visible={true}
+onClose={() => {
+    setPickerOpen(!isPickerOpen)
+}}
+onSelect={(country) => {
+    // console.log(country?.cca2)
+    // setInitialCountry(country?.cca2.toLowerCase())
+    setInitialCountry(country)
+    phoneInput.current?.selectCountry(country?.cca2.toLowerCase())
+}}
+withFilter={true}
+
+/>)}
+
+</View>
+        </SafeAreaView>
+
     );
 
 }

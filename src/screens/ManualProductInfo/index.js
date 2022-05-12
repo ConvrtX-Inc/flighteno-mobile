@@ -7,8 +7,6 @@ import Toast from 'react-native-toast-message';
 
 
 
-
-
 var windowWidth = Dimensions.get('window').width;
 export default function ManualProductInfo({ route }) {
 
@@ -17,7 +15,6 @@ export default function ManualProductInfo({ route }) {
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState('');
-
 
 
     return (
@@ -32,9 +29,6 @@ export default function ManualProductInfo({ route }) {
                 />
 
                 <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Manual information</Text>
-
-
-
 
 
             </ScrollView>

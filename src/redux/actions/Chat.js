@@ -4,6 +4,7 @@ import { CHAT_MESSAGES } from '../constants';
 import moment from 'moment';
 
 export function getChatMessages(data, token) {
+    console.log("data",data)
     return async dispatch => {
         axios({
             method: 'post',
@@ -16,16 +17,27 @@ export function getChatMessages(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
-            console.log("MESSAGES \n\n", Response.data.messagesData)
-            var sortedData = Response.data.messagesData.sort(function (a, b) {
+        
+            var messages = Response.data.messagesData.filter((chat) => chat.messages && chat.messages.length > 0 );
+
+            messages.forEach(chat =>{
+                chat.messages = chat.messages.filter(message => message.currentMessage != null);
+                chat.messages.forEach((msg) =>{
+                    msg.currentMessage.text =  msg.currentMessage.text.replace(new RegExp("<br>","g"),'\n');
+                })
+            })
+
+            var sortedData = messages.sort(function (a, b) {
                 return new Date(b.messages[0]?.currentMessage.createdAt) - new Date(a.messages[0]?.currentMessage.createdAt);
             });
+
+            
             dispatch({ type: CHAT_MESSAGES, data: sortedData })
         })
     }
 }
 
-export function sendEditOffer(data, token) {
+export function sendEditOffer(data, token, success) {
     return async dispatch => {
         axios({
             method: 'post',
@@ -38,6 +50,9 @@ export function sendEditOffer(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(Response => {
+
+            success(Response.data)
+            // console.log(Response)
         })
     }
 }

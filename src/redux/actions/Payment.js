@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { BASE_URL } from '../../BASE_URL/index'
-import { IS_LOADING, LOGIN_DATA } from '../constants';
+import { Linking } from 'react-native';
+import { BASE_URL, PAYMENT_BASE_URL } from '../../BASE_URL/index'
+import { addCustomerDetails } from '../../services/Stripe/Customer';
+import { IS_LOADING, LOGIN_DATA, UPDATE_CUSTOMER_ID } from '../constants';
 
-export function ConfigureStripeAccount(data, token, navigation) {
+export function ConfigureStripeAccount(data, token, navigation, userDetails) {
+
+    console.log("TOKEN", token)
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
             method: 'post',
-            url: `http://3.124.117.144:3000/create-connected-account`,
+            url: `${PAYMENT_BASE_URL}/create-connected-account`,
             data: data,
             headers: { "Authorization": token },
             validateStatus: (status) => {
@@ -16,14 +20,17 @@ export function ConfigureStripeAccount(data, token, navigation) {
         }).catch(error => {
             dispatch({ type: IS_LOADING, isloading: false })
             console.log(error)
-        }).then(Response => {
+        }).then(async Response => {
+            console.log("RES:", Response.data)
             dispatch({ type: IS_LOADING, isloading: false })
-            navigation.navigate('StripeWebView', { url: Response.data.conected_account_id })
+
+            navigation.replace('StripeWebView', { url: Response.data.conected_account_id })
         })
     }
 }
 
 export function RespondToOffer(data, token, sendOfferMessage, callback) {
+    console.log('Offer Data',data);
     return async dispatch => {
         dispatch({ type: IS_LOADING, isloading: true })
         axios({
@@ -60,7 +67,124 @@ export function GetUserStipeAccountDetail(data, token) {
         }).catch(error => {
             console.log("Error", error)
         }).then(response => {
+            console.log("Stripe Data", response.data.data)
             dispatch({ type: LOGIN_DATA, data: response.data.data });
         });
     }
 }
+
+
+export async function SetupStripeAccount(data, token) {
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/createStripeAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+
+export async function OnBoardStripeAccount(data, token) {
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/onBoardAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+
+export async function CreateTransferIntent(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/transferToAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+
+export async function ConfirmTransferToAccount(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/confirmTransferToAccount`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+
+
+export async function GetPaymentMethodId(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/getPaymentMethodByOrderId`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+export async function GetLatestTransactions(data,token){
+    try {
+        const res = await axios({
+            method: 'post',
+            url: `${BASE_URL}Rest_calls/getUserLatestTransactions`,
+            data: data,
+            headers: { "Authorization": token },
+            validateStatus: (status) => {
+                return true;
+            },
+        });
+
+        return res.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+

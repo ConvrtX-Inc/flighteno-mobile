@@ -1,17 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet, Platform, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../Utility/Styles';
-import PhoneInput from "react-native-phone-number-input";
+import PhoneInput from 'react-native-phone-input'
 import { launchImageLibrary } from 'react-native-image-picker';
 import Input from '../components/InputField';
 import ButtonLarge from '../components/ButtonLarge';
 import { useDispatch, useSelector } from 'react-redux';
 import Toast from 'react-native-toast-message';
 import { UpdateProfile } from '../redux/actions/Auth';
-import { generateUID } from '../Utility/Utils';
+import { generateImagePublicURLFirebase, generateUID } from '../Utility/Utils';
 import { RNS3 } from 'react-native-aws3';
 import { IS_LOADING } from '../redux/constants';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../components/atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import CountryPicker from 'react-native-country-picker-modal';
+import storage from '@react-native-firebase/storage';
+import { Header } from '@react-navigation/stack';
+
 
 var windowWidth = Dimensions.get('window').width;
 
@@ -20,11 +27,17 @@ export default function EditProfile() {
     const navigation = useNavigation();
     const dispatch = useDispatch()
     const { currentUser, loading, token } = useSelector(({ authRed }) => authRed)
-    const [fullName, setFullName] = useState(currentUser.full_name);
+    const [fullName, setFullName] = useState(currentUser?.full_name);
     const [image, setImage] = useState(null)
-    const[phone,setPhone] = useState("")
+    const[phone,setPhone] = useState(currentUser?.phone_number)
     const phoneInput = useRef()
+   
+    const {t} = useTranslation()
+    const [isPickerOpen, setPickerOpen] = useState(false)
+    const [imageValid, setImageValid] = useState(true)
+    const [transferred, setTransferred] = useState(0)
     
+
     const chooseFile = () => {
         let options = {
             selectionLimit: 1,
@@ -32,23 +45,73 @@ export default function EditProfile() {
             includeBase64: false,
         };
         launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
+
+            if(response?.didCancel){
                 console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log(
-                    'User tapped custom button: ',
-                    response.customButton
-                );
-                alert(response.customButton);
-            } else {
-                setImage(response.assets[0]);
+            }else{
+                setImage(response?.assets[0])
             }
+
+            // if (response.didCancel) {
+            //     console.log('User cancelled image picker');
+            // } else if (response.error) {
+            //     console.log('ImagePicker Error: ', response.error);
+            // } else if (response.customButton) {
+            //     console.log(
+            //         'User tapped custom button: ',
+            //         response.customButton
+            //     );
+            //     alert(response.customButton);
+            // } else {
+            //     setImage(response.assets[0]);
+            // }
         });
     };
 
+    const uploadImgToFirebase = async (uri) => {
+
+        const filename = uri.substring(uri.lastIndexOf('/') + 1)
+        const uploadUri = Platform.OS == 'ios' ? uri.replace('file://', '') : uri
+        const task = storage()
+        .ref(`${filename}`)
+        .putFile(`${uploadUri}`)
+
+        task.on('state_changed', snapshot => {
+            const percentUploaded = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) *100)
+            setTransferred(percentUploaded)
+        })
+
+        try{
+
+            const resImg = await task
+
+            const idImage = generateImagePublicURLFirebase(resImg.metadata.name)
+
+            var obj = {
+                admin_id: currentUser._id,
+                full_name: fullName,
+                phone_number:phone,
+                profile_image: idImage,
+            }
+
+            dispatch(UpdateProfile(
+                obj, token,
+                () => {
+                    dispatch({ type: IS_LOADING, isloading: false})
+                    navigation.goBack()
+                }
+            ))
+
+        }catch(e){
+            console.log('errooooorrrrr', e);
+        }
+
+    }
+
     const updateProfile = () => {
+
+         const phoneVal = phoneInput?.current.state.value
+    
         if (fullName == "") {
             Toast.show({
                 type: 'error',
@@ -57,7 +120,7 @@ export default function EditProfile() {
             })
             return
         }
-        if (image == null && (fullName == currentUser.full_name)) {
+        if (image == null && (fullName == currentUser.full_name) && phone == null) {
             Toast.show({
                 type: 'error',
                 text1: 'Alert!',
@@ -65,11 +128,23 @@ export default function EditProfile() {
             })
             return
         }
+
+
+        if(phoneVal?.length <= 10){
+           Toast.show({
+                type: 'info',
+                text1: 'Alert!',
+                text2: "Phone number not valid",
+            })
+            return 
+        }
+
         if (!image) {
             var obj = {
                 admin_id: currentUser._id,
                 full_name: fullName,
                 profile_image: currentUser.profile_image,
+                phone_number: phoneVal
             }
 
             dispatch(UpdateProfile(
@@ -80,45 +155,18 @@ export default function EditProfile() {
             ))
         }
         else {
+            
             dispatch({ type: IS_LOADING, isloading: true })
-            const file = {
-                uri: image.uri,
-                name: generateUID() + ".jpg",
-                type: 'image/jpeg'
-            }
-            const options = {
-                keyPrefix: "flighteno/users/",
-                bucket: "memee-bucket",
-                region: "eu-central-1",
-                accessKey: "AKIA2YJH3TLHCODGDKFV",
-                secretKey: "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",
-                successActionStatus: 201
-            }
-            RNS3.put(file, options).then(response => {
-                if (response.status !== 201)
-                    throw new Error("Failed to upload image to S3");
-                var obj = {
-                    admin_id: currentUser._id,
-                    full_name: fullName,
-                    profile_image: response.body.postResponse.location,
-                }
-
-                dispatch(UpdateProfile(
-                    obj, token,
-                    () => {
-                        navigation.goBack()
-                    }
-                ))
-
-            });
+            uploadImgToFirebase(image?.uri)
+            
         }
     }
 
     return (
-        <View style={styles.ScreenCss}>
-            {currentUser ?
-                <ScrollView>
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18}}>
+            <KeyboardAvoidingView  behavior={Platform.OS === "ios" ? "padding" : "height"} style={{flex:1}}  >
 
+<ScrollView style={{flex:1}}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Image
                             style={styles.backImg}
@@ -127,15 +175,17 @@ export default function EditProfile() {
                         />
                     </TouchableOpacity>
 
-                    <Text style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100, marginLeft: '5%' }]}>Edit Profile</Text>
+                    <TextBold style={[styles.HeadingText, { marginTop: (windowWidth * 4) / 100,  textAlign:'left' }]}>{t('common.editProfile')}</TextBold>
 
                     <TouchableOpacity onPress={chooseFile} style={Styles.profileButton}>
                         <Image
-                            source={!currentUser.profile_image && image == null ? require("../images/manProfile.png") : { uri: image == null ? currentUser.profile_image : image.uri }}
-                            style={styles.profileImage} />
+                          source={imageValid ? {uri: currentUser.profile_image } : require("../images/manProfile.png")}
+                          style={styles.profileImage} 
+                          onError={() => setImageValid(false)}
+                          />
                     </TouchableOpacity>
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Full Name</Text>
+                    <TextBold style={[styles.loginInputHeading, {  marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.fullName')}</TextBold>
 
                     <Input
                         placeholder={fullName}
@@ -143,7 +193,7 @@ export default function EditProfile() {
                         value={fullName}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Email</Text>
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.email')}</TextBold>
 
                     <Input
                         placeholder="myemail@flighteno.com"
@@ -153,35 +203,64 @@ export default function EditProfile() {
                         editable={false}
                     />
 
-                    <Text style={[styles.loginInputHeading, { marginLeft: '5%', marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100 }]}>Phone number</Text>
+                    <TextBold style={[styles.loginInputHeading, { marginTop: (windowWidth * 8) / 100, marginBottom: (windowWidth * 2) / 100, textAlign:'left' }]}>{t('common.phoneNum')}</TextBold>
                    
-                    <PhoneInput
-                        ref={phoneInput}
-                        defaultValue={currentUser.phone_number}
-                        defaultCode={currentUser.country_code}
-                        disabled={true}
-                        containerStyle={styles.phoneContainer}
-                        textInputStyle={styles.phoneInput}
-                        textContainerStyle={styles.phoneTextContainer}
-                        codeTextStyle={styles.phoneCodeText}
-                        textInputProps={{
-                            placeholderTextColor: "#707070",
-                            keyboardType: "phone-pad",
-                            placeholder: "123-456-789",
-
-                        }}
+                <PhoneInput
+                    ref={phoneInput}
+                    onPressFlag={() => {
+                    // countryPicker.current?.open()
+                        setPickerOpen(!isPickerOpen)
+                    }}
+                    initialValue={phone}
+                    textProps={{
+                        placeholder:'123-456-789'
+                    }}
+                    onChangePhoneNumber={setPhone}
+                    textStyle={styles.phoneContainer}
+                    // style={[styles.phoneContainer, {marginBottom:40, height:55}]}
+                    
                     />
+                
+             
+
+                    {/* <Input
+                        placeholder="myemail@flighteno.com"
+                        onChangeText={text => setEmail(text)}
+                        value={currentUser.email_address}
+                        secureTextEntry={false}
+                        editable={true}
+                    /> */}
 
                     <View style={{ marginTop: (windowWidth * 10) / 100, marginBottom: 20 }}>
                         <ButtonLarge
-                            title="Save"
+                            title={t('common.save')}
                             loader={loading}
                             onPress={updateProfile}
                         />
                     </View>
-                </ScrollView>
-                : null}
-        </View>
+               
+        {isPickerOpen && (
+        <CountryPicker 
+            visible={true}
+            onClose={() => {
+                setPickerOpen(!isPickerOpen)
+            }}
+            
+            onSelect={(country) => {
+                // console.log(country?.cca2)
+                // setInitialCountry(country?.cca2.toLowerCase())
+                // setInitialCountry(country)
+                phoneInput.current?.selectCountry(country?.cca2.toLowerCase())
+            }}
+            withFilter={true}
+        />    
+        )}
+
+</ScrollView>
+           
+
+        </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 
 }

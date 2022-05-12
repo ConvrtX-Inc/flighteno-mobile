@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextInput, StyleSheet, View, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { TextInput, StyleSheet, View, TouchableOpacity, Image, ActivityIndicator, Platform } from 'react-native';
 import { color } from '../Utility/Color';
 
 const Input = ({ placeholder, value, onChangeText, secureTextEntry, onPress, loader }) => {
@@ -12,6 +12,7 @@ const Input = ({ placeholder, value, onChangeText, secureTextEntry, onPress, loa
                     value={value}
                     onChangeText={onChangeText}
                     secureTextEntry={secureTextEntry}
+                    multiline={false}
                 />
 
             </View>
@@ -57,9 +58,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         fontSize: 14,
         color: '#656F85',
-        fontFamily: 'GilroyMedium',
+        fontFamily: Platform.OS == 'ios' ?  'Gilroy-Medium' : 'GilroyMedium',
         backgroundColor: '#F6F9FF',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        textAlign:'left'
     },
     urlNavigateImg: {
         height: 57,

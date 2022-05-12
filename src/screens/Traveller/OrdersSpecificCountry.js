@@ -1,10 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, ScrollView, Dimensions, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../../Utility/Styles';
 import { color } from '../../Utility/Color';
 import moment from 'moment';
 import CardOrderUser from '../../components/CardOrderUser';
+import { useTranslation } from 'react-i18next';
+import TextBold from '../../components/atoms/TextBold';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 var storeNamesList = [
     {
@@ -17,8 +20,14 @@ var storeNamesList = [
 export default function OrdersSpecificCountry({ route }) {
     const { flightBaseOrders, date } = route.params
     const navigation = useNavigation();
+    const {t} = useTranslation()
+
+    useEffect(() => {
+        console.log('OrdersSpecificCountry', flightBaseOrders)
+    },[])
 
     return (
+        <SafeAreaView style={{flex:1, marginLeft:18, marginRight:18 }}>
         <View style={styles.ScreenCss}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Image
@@ -29,9 +38,7 @@ export default function OrdersSpecificCountry({ route }) {
             </TouchableOpacity>
 
             <View style={Styles.header}>
-
-                <Text style={[styles.HeadingText, { marginTop: 0 }]}>Orders - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</Text>
-
+                <TextBold style={[styles.HeadingText, { marginTop: 0, textAlign:'left' }]}>{t('track.orders')} - {moment(date.$date.$numberLong, "x").format("MMMM DD, YYYY")}</TextBold>
             </View>
             <FlatList
                 data={flightBaseOrders}
@@ -40,9 +47,11 @@ export default function OrdersSpecificCountry({ route }) {
                         <CardOrderUser order={item.traveler_orders[0]} />
                     </TouchableOpacity>
                 }
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
             />
         </View>
+        </SafeAreaView>
+
     );
 
 }
@@ -51,14 +60,14 @@ const Styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginHorizontal: '5%',
+        // marginHorizontal: '5%',
         alignItems: 'center',
         marginVertical: 20
     },
     listView: {
         paddingVertical: 20,
         backgroundColor: color.inputBackColor,
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         borderRadius: 10,
         marginBottom: 20
