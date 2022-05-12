@@ -330,8 +330,22 @@ export default function OrderDetails({ route }) {
                     {/* Order history */}
                     <View style={{ marginTop:16}}>
                         { orderHistory.map((item,index) => {
+                            if(item.status=="new")
+                            {
+                                item.status=" Order has been placed"
+                            }
+                            else if(item.status=="accepted"){
+                                item.status=" Order accepted by the traveler"
+                            }
+                            else if(item.status=="complete"){
+                                item.status=" Order complete"
+                            }
+                            else if(item.status=="rejected")
+                            {
+                                item.status=" Order has been cancelled"
+                            }
                             return (
-                                 <TextMedium style={{color:color.countrtTextColor}} key={index} >{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}  order is {item?.status}</TextMedium>
+                                 <TextMedium style={{color:color.countrtTextColor}} key={index} >{moment.unix(orderHistory[0]?.created_date?.$date?.$numberLong/1000).format("MM/DD/YY")}{item?.status}</TextMedium>
                             )
                         }) }
                         {/* <FlatList
