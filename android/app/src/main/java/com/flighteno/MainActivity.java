@@ -1,4 +1,4 @@
-package com.flighteno;
+package com.flighteno2;
 
 import com.facebook.react.ReactActivity;
 
